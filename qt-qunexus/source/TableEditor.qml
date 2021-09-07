@@ -1,4 +1,7 @@
-import QtQuick 2.0
+import QtQuick 2.5
+import QtQml 2.1
+
+//import QtQuick.Controls 2.5
 
 Item {
 
@@ -9,7 +12,7 @@ Item {
     Rectangle
     {
         id: mainwindow
-        objectName: "mainwindow"
+        //objectName: "mainwindow"
         width: 540
         height: 540;
         color: Qt.rgba(0.2,0.2,0.2,1)
@@ -21,7 +24,7 @@ Item {
     MouseArea
     {
         id: mousearea
-        objectName: "mousearea"
+        //objectName: "mousearea"
         anchors.fill: parent
         propagateComposedEvents: true
         hoverEnabled: true         //this line will enable mouseArea.containsMouse
@@ -43,7 +46,7 @@ Item {
     Rectangle
     {
         id: tableFrame
-        objectName: "tableFrame"
+        //objectName: "tableFrame"
         width:  512
         height: 514
         x: 14
@@ -72,40 +75,18 @@ Item {
             repeater.colVal[col] = val;
         }
 
-        Connections
-        {
-            target: TableInterface
-            function onSignalUpdateCol(col, val)
-            {
-              console.log("draw column: " + col + " value: " + val)
-              repeater.itemAt(col).colVal = val
-            }
-
-            //target: TableInterface
-            function onSignalSetTableColorWriteEnabled(flag)
-            {
-                var thisColor = (flag) ? Qt.rgba(0, 1, 0, .5) : Qt.rgba(1, 0, 0, .5)
-                for (var i = 0; i < 128; i++)
-                {
-                    repeater.itemAt(i).blockColor = thisColor
-                }
-            }
-
-
-        }
-
         //-------- Creates 128 Steps
         Repeater
         {
             id: repeater
-            objectName: "repeater"
+            //objectName: "repeater"
             model:  128
 
             //--------- Create Columns
             Rectangle
             {
                 id:     column
-                objectName: "column"
+                //objectName: "column"
                 width:  tableFrame.unitSize
                 height: tableFrame.height
                 x:      index*tableFrame.unitSize
@@ -118,7 +99,7 @@ Item {
                 Rectangle
                 {
                     id:     block
-                    objectName: "block"
+                    //objectName: "block"
                     /*gradient: Gradient {
                         GradientStop { position: 0.0; color: Qt.rgba(0,1,0) }
                         GradientStop { position: 1.0; color: Qt.rgba(0,0.5,0) }
@@ -155,7 +136,7 @@ Item {
         Rectangle
         {
             id: yLoc
-            objectName: "yLoc"
+            //objectName: "yLoc"
             x: 0
             y:
             {
@@ -179,7 +160,7 @@ Item {
         Rectangle
         {
             id: xLoc
-            objectName: "xLoc"
+            //objectName: "xLoc"
             x:
             {
                 if(Math.floor(mousearea.mouseX/tableFrame.unitSize)*tableFrame.unitSize < tableFrame.width + tableFrame.x && Math.floor(mousearea.mouseX/tableFrame.unitSize)*tableFrame.unitSize >= tableFrame.x)
@@ -203,7 +184,7 @@ Item {
         Rectangle
         {
             id: coordinateBox
-            objectName: "coordinateBox"
+            //objectName: "coordinateBox"
             width: 50
             height: 15
             x:
@@ -245,7 +226,7 @@ Item {
             Text
             {
                 id: coordinateText
-                objectName: "coordinateText"
+                //objectName: "coordinateText"
                 x:2
                 y:2
                 text: Math.floor(xLoc.x/4) + ", " + (127 - Math.floor(yLoc.y/4))
@@ -254,4 +235,27 @@ Item {
             }
         }
     }
+
+    Connections
+    {
+        target: TableInterface
+        function onSignalUpdateCol(col, val)
+        {
+          console.log("draw column: " + col + " value: " + val)
+          repeater.itemAt(col).colVal = val
+        }
+
+        //target: TableInterface
+        function onSignalSetTableColorWriteEnabled(flag)
+        {
+            var thisColor = (flag) ? Qt.rgba(0, 1, 0, .5) : Qt.rgba(1, 0, 0, .5)
+            for (var i = 0; i < 128; i++)
+            {
+                repeater.itemAt(i).blockColor = thisColor
+            }
+        }
+
+
+    }
+
 }

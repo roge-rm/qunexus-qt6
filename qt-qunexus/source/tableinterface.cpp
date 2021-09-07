@@ -3,11 +3,11 @@
 // If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
 #include "tableinterface.h"
 #include "ui_tableviewerform.h"
-#include "qquickview.h"
+//#include "qquickview.h"
 #include <QQmlContext>
-#include <qqmlengine.h>
-#include <qqmlcomponent.h>
-#include <qquickitem.h>
+//#include <qqmlengine.h>
+//#include <qqmlcomponent.h>
+//#include <qquickitem.h>
 
 unsigned char linear[128] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127};
 unsigned char exponential[128] = {0, 3, 7, 10, 13, 16, 19, 22, 24, 27, 29, 32, 34, 36, 38, 40, 42, 43, 45, 47, 49, 50, 52, 53, 55, 56, 58, 59, 60, 62, 63, 64, 65, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 81, 81, 82, 83, 84, 85, 85, 86, 87, 88, 89, 89, 90, 91, 92, 92, 93, 94, 95, 95, 96, 97, 97, 98, 99, 99, 100, 101, 101, 102, 103, 103, 104, 104, 105, 106, 106, 107, 107, 108, 108, 109, 110, 110, 111, 111, 112, 112, 113, 113, 114, 114, 115, 115, 116, 116, 117, 117, 118, 118, 119, 119, 119, 120, 120, 121, 121, 122, 122, 123, 123, 123, 124, 124, 125, 125, 125, 126, 126, 127, 127, 127};
@@ -47,13 +47,43 @@ TableInterface::TableInterface(QWidget *parent) :
 
     //-------- Setup QML Ui
 
-    rootObject = tableViewerForm.quickWidget->rootObject(); // root object to find other objects with
+    qDebug() << "Setup QML ui";
 
-    tableViewerForm.quickWidget->rootContext()->setContextProperty("TableInterface", this); // connects QML class references to this object
+    QUrl source("qrc:/qml/source/TableEditor.qml");
+
+    if (source.isValid())
+    {
+        qDebug() << "QML file valid";
+    }
+    else
+    {
+        qDebug() << "QML file invalid";
+    }
+
+    qDebug() << "new quickwidget";
+    tableQuickWidget = new QQuickWidget(this);
+
+    qDebug() << "root context";
+    tableQuickWidget->rootContext()->setContextProperty("TableInterface", this); // this has to happen before we set the source
+    qDebug() << "set source";
+    tableQuickWidget->setSource(source);
+    qDebug() << "geometry";
+    tableQuickWidget->setGeometry(0, 0, 540, 540);
+    tableQuickWidget->setResizeMode(QQuickWidget::SizeViewToRootObject);
+    qDebug() << "show";
+    tableQuickWidget->show();
+
+    //rootObject = tableQuickWidget->rootObject();
+
+    //rootObject = tableViewerForm.quickWidget->rootObject(); // root object to find other objects with
+    //tableViewerForm.quickWidget->rootContext()->setContextProperty("TableInterface", this); // connects QML class references to this object
+
+
 
     // style buttons
 
     //StyleSheets for "blue" (red) pushbuttons
+    qDebug() << "setup stylesheets";
     blueStyleFile = new QFile(":stylesheets/resources/stylesheets/BlueButtonStyleSheet.qss");
     blueStyleFile->open(QFile::ReadOnly);
     blueStyleString = QLatin1String(blueStyleFile->readAll());
@@ -67,7 +97,7 @@ TableInterface::TableInterface(QWidget *parent) :
 
 
 
-    qDebug() << "connect";
+    qDebug() << "connect buttons";
     //Connect Buttons
     connect(tableViewerForm.Cosine, SIGNAL(clicked()), this, SLOT(slotSetCustomTemplate()));
     connect(tableViewerForm.Sine, SIGNAL(clicked()), this, SLOT(slotSetCustomTemplate()));
@@ -76,13 +106,18 @@ TableInterface::TableInterface(QWidget *parent) :
     connect(tableViewerForm.Linear, SIGNAL(clicked()), this, SLOT(slotSetCustomTemplate()));
     connect(tableViewerForm.Exponential, SIGNAL(clicked()), this, SLOT(slotSetCustomTemplate()));
 
+    qDebug() << "connect menu";
     //Connect Menu
     connect(tableViewerForm.TableMenu, SIGNAL(currentTextChanged(QString)), this, SLOT(slotMenuChanged(QString)));
 
+    qDebug() << "set menu to Linear";
     //Init Viewer to User Table 1
     slotMenuChanged("Linear");
-    tableViewerForm.TableMenu->setCurrentIndex(tableViewerForm.TableMenu->findText("Linear"));
 
+    //qDebug() << "set dropdown text";
+    //tableViewerForm.TableMenu->setCurrentIndex(tableViewerForm.TableMenu->findText("Linear"));
+
+    qDebug() << "end tableinterface";
     //qDebug() << qmlView->rootObject()->property("editable");
 }
 
@@ -124,9 +159,10 @@ void TableInterface::slotLoadTableTemplate()
 void TableInterface::slotMenuChanged(QString itemName)
 {
 
+    qDebug() << "slotMenuChanged called - itemName: " << itemName;
     if(!itemName.contains("Custom"))
     {
-        rootObject->setProperty("editable", 0);
+        //rootObject->setProperty("editable", 0);
 
         tableViewerForm.Cosine->hide();
         tableViewerForm.Sine->hide();
@@ -150,7 +186,7 @@ void TableInterface::slotMenuChanged(QString itemName)
     }
     else
     {
-        rootObject->setProperty("editable", 1);
+        //rootObject->setProperty("editable", 1);
 
         tableViewerForm.Cosine->show();
         tableViewerForm.Sine->show();
@@ -190,6 +226,7 @@ void TableInterface::slotEditUserTable(int x, int y)
 
 void TableInterface::slotSendTablesToBoard()
 {
+    qDebug() << "slotSendTablesToBoard called";
     if(tableViewerForm.TableMenu->currentText().contains("Custom"))
     {
         qDebug() << "Send Tables to Board--- update globals";
@@ -200,6 +237,7 @@ void TableInterface::slotSendTablesToBoard()
 // display one of the stock tables
 void TableInterface::slotDisplayTable(QString tableName)
 {
+    qDebug() << "slotDisplayTable called";
     unsigned char *table;
 
     table = tableMap.value(tableName);
@@ -248,15 +286,16 @@ void TableInterface::slotSetCustomTemplate()
 
 void TableInterface::slotEnable(bool state)
 {
+    qDebug() << "slotEnable called: " << state;
     if(state)
     {
-        tableViewerForm.masterFrame->hide();
+        //tableViewerForm.masterFrame->hide();
         //qmlWidget->show();
 
     }
     else
     {
-        tableViewerForm.masterFrame->show();
+        //tableViewerForm.masterFrame->show();
         //qmlWidget->hide();
     }
 }

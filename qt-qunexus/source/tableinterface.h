@@ -34,6 +34,8 @@ public:
     unsigned char userTable2[128];
     QQuickItem* rootObject;
 
+    QQuickWidget* tableQuickWidget;
+
     QWidget *qmlWidget;
 
     QMap<QString, unsigned char *> tableMap;

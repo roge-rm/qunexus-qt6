@@ -30,7 +30,7 @@ echo
 read -n 1 -s -r -p ""
 
 # copy the .app and resources
-\cp -r "$app_source" "$package_path"
+\cp -R "$app_source" "$package_path"
 
 # update info.plist
 plutil -insert "App Category" -string "Music" "$app_path/Contents/Info.plist"

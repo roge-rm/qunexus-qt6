@@ -378,61 +378,7 @@ QPushButton:pressed {
     </property>
    </widget>
   </widget>
-  <widget class="QLabel" name="masterFrame">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>541</width>
-     <height>601</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">QLabel {
-	background: rgb(51,51,51);
-	font-family: &quot;Arial&quot;;
-	font-size: 10px;
-	font-style:bold;
-	color: white;
-	border: none;
-}</string>
-   </property>
-   <property name="text">
-    <string>Receiving Data...</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-  </widget>
-  <widget class="QQuickWidget" name="quickWidget">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>540</width>
-     <height>540</height>
-    </rect>
-   </property>
-   <property name="resizeMode">
-    <enum>QQuickWidget::SizeViewToRootObject</enum>
-   </property>
-   <property name="source">
-    <url>
-     <string>qrc:/qml/source/TableEditor.qml</string>
-    </url>
-   </property>
-  </widget>
-  <zorder>masterFrame</zorder>
-  <zorder>widget</zorder>
-  <zorder>quickWidget</zorder>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>QQuickWidget</class>
-   <extends>QWidget</extends>
-   <header location="global">QtQuickWidgets/QQuickWidget</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

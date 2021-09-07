@@ -117,6 +117,8 @@ macx{
     LIBS += -framework CoreMidi
     LIBS += -framework CoreAudio
     LIBS += -framework CoreFoundation
+
+    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.12
 }
 
 linux{

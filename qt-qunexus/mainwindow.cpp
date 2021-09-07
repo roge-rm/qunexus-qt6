@@ -205,8 +205,8 @@ MainWindow::MainWindow(QWidget *parent) :
     syncQuNexusDialog = new SyncQuNexusDialog(this);
 
     ///Globals Iterator
-    globalsRequestIterator = new QTimer(this);
-    connect(globalsRequestIterator, SIGNAL(timeout()), this, SLOT(slotIterateGlobalsRequest()));
+    //globalsRequestIterator = new QTimer(this);
+    //connect(globalsRequestIterator, SIGNAL(timeout()), this, SLOT(slotIterateGlobalsRequest()));
 
 #ifdef Q_OS_MAC // EB - attempt to make this cross platform
     //StyleSheets for Preset Library
