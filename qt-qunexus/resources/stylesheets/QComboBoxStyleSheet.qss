@@ -1,0 +1,68 @@
+QComboBox {
+        font-family: "Droid Sans";
+        font-size: 10px;
+        background: #666;
+        padding: 2px 4px;
+        border-style: outset;
+        border-radius: 4px;
+        border-width: 1px;
+        border-color: black;
+        color: white;
+}
+
+QComboBox::drop-down {
+        border-radius:0;
+        border-left-color: darkgray;
+        border-left-style: solid;
+        border-width: 1pt;
+        border: 1px;
+        margin: 0px;
+        padding: 0px;
+        background-color: transparent;
+}
+
+
+QComboBox::drop-down:button {
+        width: 15px;
+        height: 15px;
+}
+
+QComboBox::down-arrow {
+        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
+        width: 10px;
+        height: 10px;
+        top: 2px;
+        right: 3px;
+}
+QComboBox::down-arrow:disabled {
+        image: url(url(:/images/resources/images/Arrow.png));
+        right: 30px;
+}
+
+QListView {
+        background: rgba(67, 67, 67, 255);
+        color: rgb(220, 220, 220);
+        min-height: 90px;
+        margin: 0 0 0 0;
+}
+
+QListView::item {
+        background: rgba(67, 67, 67, 255);
+        border: 0px;
+}
+
+QListView::item:hover {
+        background: rgba(67, 67, 67, 255);
+        border: 0;
+}
+
+QComboBox QAbstractItemView
+{
+    min-width: %1px;
+    min-height: %2px;
+}
+
+QToolTip {
+    background: #006599;
+    color: white;
+}

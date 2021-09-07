@@ -1,0 +1,10 @@
+QLabel {
+    background-color: rgba(0,0,0,0);
+    border-top-left-radius:4.0;
+    border-top-right-radius:4.0;
+    border-bottom-left-radius:0;
+    border-bottom-right-radius:0;
+    border: none;
+    color: rgb(225,225,225);
+    font: italic 14pt "Arial";
+}

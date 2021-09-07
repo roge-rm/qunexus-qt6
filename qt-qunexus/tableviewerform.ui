@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>TableViewerForm</class>
+ <widget class="QWidget" name="TableViewerForm">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>540</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QComboBox::drop-down {
+	border-radius:0;
+    border-left-color: darkgray;
+    border-left-style: solid; 
+	margin: 0px;
+	padding: 0px;
+	background-color: rgb(121, 121,0 ,0);
+}
+
+QWidget {
+	background: rgb(51,51,51);
+	border: none;
+}
+
+QTabWidget::pane {
+	background: rgba(200, 200, 200, 255);
+	border-bottom-left-radius:4px;
+	border-bottom-right-radius:4px;
+	border-top-right-radius:4px;
+
+}
+
+QTabWidget::tab-bar {
+	left: 0px;
+}
+
+
+QTabBar::tab {
+	background: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(150, 150, 150, 255), stop:1 rgba(67, 67, 67, 255));
+/*
+	border-top-style:inset;
+	border-left-style:inset;
+	border-right-style:inset;
+*/
+	border-color: rgba(67, 67, 67, 255);
+	border-width:1px;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+width: 45px;
+	padding: 8px;
+	color: white;
+}
+
+QTabBar::tab:selected, QTabBar::tab:hover {
+	background: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(150, 150, 150, 255), stop:1 rgba(100, 100, 100, 255));
+	border-top-style:inset;
+	border-left-style:inset;
+	border-right-style:inset;
+	border-color: rgba(80, 80, 80, 255);
+	border-width:1px;
+	border-style:none;
+	color:white;
+}
+
+QTabBar::tab:selected {
+	background: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(175, 175, 175, 255), stop:1 rgba(200, 200, 200, 255));
+	color:black;
+}
+
+QComboBox {
+	font-family: &quot;Arial&quot;;
+	font-size: 10px;
+	background: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(150, 150, 150, 255), stop:1 rgba(67, 67, 67, 255));
+	padding: 2px 4px;
+	border-style: outset;
+	border-radius: 4px;
+	border-width: 1px;
+	border-color: black;
+	color: white;
+}
+
+/*QComboBox:!editable:off {
+	background: rgba(67, 67, 67, 255);
+	border-radius: 0px;
+	image: url(noimage);
+}
+
+QComboBox:!editable:on {
+	background: rgba(67, 67, 67, 255);
+}
+
+
+
+QComboBox::drop-down:editable:on {
+	background: rgba(200, 67, 67, 255);
+	image: url(noimage);
+	border-radius: 4px;
+	width
+}
+QComboBox QAbstractItemView {
+	background: rgba(67, 67, 67, 255);
+	border-width:1;
+	color: white;
+	min-height: 150;
+	min-width:120;
+	border-radius:4;
+	border-style:none;
+	image: url(noimage);
+	selection-background-color: lightgray;
+}
+
+
+
+
+
+*/
+QComboBox::down-arrow {
+	image: url(noimage);
+	
+	background-color: rgb(121, 121,0 ,0);
+}
+
+QGroupBox {
+background: rgba(120, 120, 120, 255);
+border-color: rgba(120, 120, 120, 255);
+
+}
+
+
+
+
+QListView {
+	background: rgba(67, 67, 67, 255);
+    color: rgb(220, 220, 220);
+    min-height: 90px;
+    margin: 0 0 0 0;
+}
+
+QListView::item {
+	background: rgba(67, 67, 67, 255);
+}
+
+QListView::item:hover {
+	background: rgba(67, 67, 67, 255);
+}</string>
+  </property>
+  <widget class="QWidget" name="widget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>540</y>
+     <width>521</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <widget class="QPushButton" name="Sine">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>10</y>
+      <width>62</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	font:10px &quot;Arial&quot;;
+	background-color: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgb(255, 255, 255), stop:1 rgb(150, 150, 150));
+	border-style: outset;
+	border-radius: 4.0;
+	border-width: 1px;
+	border-color: rgba(50, 50, 50, 255);
+	color: rgba(0, 0, 0, 255);
+}
+
+QPushButton:pressed {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(67, 67, 67, 255), stop:1 rgba(150, 150, 150, 255));
+}</string>
+    </property>
+    <property name="text">
+     <string>Sine</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="TableMenu">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>14</y>
+      <width>101</width>
+      <height>26</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>Linear</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Logarithmic</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Sine</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Cosine</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Exponential</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Invert</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Custom 1</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Custom 2</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QPushButton" name="Logarithmic">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>10</y>
+      <width>62</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	font:10px &quot;Arial&quot;;
+	background-color: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgb(255, 255, 255), stop:1 rgb(150, 150, 150));
+	border-style: outset;
+	border-radius: 4.0;
+	border-width: 1px;
+	border-color: rgba(50, 50, 50, 255);
+	color: rgba(0, 0, 0, 255);
+}
+
+QPushButton:pressed {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(67, 67, 67, 255), stop:1 rgba(150, 150, 150, 255));
+}</string>
+    </property>
+    <property name="text">
+     <string>Logarithmic</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Linear">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>10</y>
+      <width>62</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	font:10px &quot;Arial&quot;;
+	background-color: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgb(255, 255, 255), stop:1 rgb(150, 150, 150));
+	border-style: outset;
+	border-radius: 4.0;
+	border-width: 1px;
+	border-color: rgba(50, 50, 50, 255);
+	color: rgba(0, 0, 0, 255);
+}
+
+QPushButton:pressed {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(67, 67, 67, 255), stop:1 rgba(150, 150, 150, 255));
+}</string>
+    </property>
+    <property name="text">
+     <string>Linear</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Cosine">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>10</y>
+      <width>62</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	font:10px &quot;Arial&quot;;
+	background-color: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgb(255, 255, 255), stop:1 rgb(150, 150, 150));
+	border-style: outset;
+	border-radius: 4.0;
+	border-width: 1px;
+	border-color: rgba(50, 50, 50, 255);
+	color: rgba(0, 0, 0, 255);
+}
+
+QPushButton:pressed {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(67, 67, 67, 255), stop:1 rgba(150, 150, 150, 255));
+}</string>
+    </property>
+    <property name="text">
+     <string>Cosine</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Exponential">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>10</y>
+      <width>62</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	font:10px &quot;Arial&quot;;
+	background-color: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgb(255, 255, 255), stop:1 rgb(150, 150, 150));
+	border-style: outset;
+	border-radius: 4.0;
+	border-width: 1px;
+	border-color: rgba(50, 50, 50, 255);
+	color: rgba(0, 0, 0, 255);
+}
+
+QPushButton:pressed {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(67, 67, 67, 255), stop:1 rgba(150, 150, 150, 255));
+}</string>
+    </property>
+    <property name="text">
+     <string>Exponential</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Invert">
+    <property name="geometry">
+     <rect>
+      <x>350</x>
+      <y>10</y>
+      <width>62</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	font:10px &quot;Arial&quot;;
+	background-color: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgb(255, 255, 255), stop:1 rgb(150, 150, 150));
+	border-style: outset;
+	border-radius: 4.0;
+	border-width: 1px;
+	border-color: rgba(50, 50, 50, 255);
+	color: rgba(0, 0, 0, 255);
+}
+
+QPushButton:pressed {
+	background-color: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(67, 67, 67, 255), stop:1 rgba(150, 150, 150, 255));
+}</string>
+    </property>
+    <property name="text">
+     <string>Invert</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QLabel" name="masterFrame">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>541</width>
+     <height>601</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel {
+	background: rgb(51,51,51);
+	font-family: &quot;Arial&quot;;
+	font-size: 10px;
+	font-style:bold;
+	color: white;
+	border: none;
+}</string>
+   </property>
+   <property name="text">
+    <string>Receiving Data...</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QQuickWidget" name="quickWidget">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>540</width>
+     <height>540</height>
+    </rect>
+   </property>
+   <property name="resizeMode">
+    <enum>QQuickWidget::SizeViewToRootObject</enum>
+   </property>
+   <property name="source">
+    <url>
+     <string>qrc:/qml/source/TableEditor.qml</string>
+    </url>
+   </property>
+  </widget>
+  <zorder>masterFrame</zorder>
+  <zorder>widget</zorder>
+  <zorder>quickWidget</zorder>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QQuickWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">QtQuickWidgets/QQuickWidget</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

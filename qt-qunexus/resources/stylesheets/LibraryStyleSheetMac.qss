@@ -1,0 +1,31 @@
+QListView
+{
+    background:#323232;
+        outline: 0;
+    border-bottom-left-radius:4.0;
+    border-bottom-right-radius:4.0;
+    border-top-left-radius:4.0;
+    border-top-right-radius:4.0;
+    border: 1px solid black;
+    padding: 6 0 6 0;
+    color: rgba(175,175,175,255);
+    font: 14pt "Open Sans Semibold";
+ }
+
+
+ QListView::item:hover
+ {
+    background:rgba(67, 67, 67, 255);
+    border: 0px solid black;
+    color: rgba(175,175,175,255);
+    font: 14pt "Open Sans Semibold";
+ }
+
+ QListView::item:selected
+ {
+ background: rgba(162, 0, 0, 200);
+ color: white;
+ }
+
+
+

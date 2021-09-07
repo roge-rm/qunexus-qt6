@@ -1,0 +1,107 @@
+QComboBox::drop-down
+{
+        border-radius:0;
+        border-left-color: darkgray;
+        border-left-style: solid;
+        margin: 0px;
+        padding: 0px;
+        background-color: transparent;
+}
+
+
+
+
+QWidget
+{
+        background-color: 127;
+        border: none;
+}
+
+QTabWidget::pane
+{
+        background: rgba(200, 200, 200, 255);
+        border-bottom-left-radius:4px;
+        border-bottom-right-radius:4px;
+        border-top-right-radius:4px;
+
+}
+
+QTabWidget::tab-bar
+{
+        left: 0px;
+}
+
+
+QTabBar::tab
+{
+        background: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(150, 150, 150, 255), stop:1 rgba(67, 67, 67, 255));
+/*
+        border-top-style:inset;
+        border-left-style:inset;
+        border-right-style:inset;
+*/
+        border-color: rgba(67, 67, 67, 255);
+        border-width:1px;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+        padding: 8px;
+        color: white;
+        font: 10px;
+        width: 80px;
+}
+
+QTabBar::tab:selected, QTabBar::tab:hover
+{
+        background: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(150, 150, 150, 255), stop:1 rgba(100, 100, 100, 255));
+        border-top-style:inset;
+        border-left-style:inset;
+        border-right-style:inset;
+        border-color: rgba(80, 80, 80, 255);
+        border-width:1px;
+        border-style:none;
+        color:white;
+}
+
+QTabBar::tab:selected
+{
+        background: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(175, 175, 175, 255), stop:1 rgba(200, 200, 200, 255));
+        color:black;
+}
+
+QComboBox
+{
+        font-family: "Arial";
+        font-size: 10px;
+        background-color: #666666;
+        padding: 2px 4px;
+        border-style: outset;
+        border-radius: 4px;
+        border-width: 1px;
+        border-color: black;
+        color: white;
+}
+
+
+QGroupBox {
+background: rgba(120, 120, 120, 255);
+border-color: rgba(120, 120, 120, 255);
+
+}
+
+
+
+
+QListView {
+        background: rgba(67, 67, 67, 255);
+        color: rgb(220, 220, 220);
+        min-height: 90px;
+        margin: 0 0 0 0;
+}
+
+QListView::item {
+        background: rgba(67, 67, 67, 255);
+}
+
+QListView::item:hover {
+        background: rgba(67, 67, 67, 255);
+}

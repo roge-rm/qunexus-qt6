@@ -1,0 +1,119 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>resources/images/Arrow.png</file>
+        <file>resources/images/Arrow.psd</file>
+        <file>resources/images/MIDIIcon.png</file>
+        <file>resources/images/Untitled-1.psd</file>
+        <file>resources/images/Volts.png</file>
+        <file>resources/images/Volts.psd</file>
+        <file>resources/images/qunexus_logo.svg</file>
+        <file>resources/images/qunexus_logo.png</file>
+        <file>resources/images/QuNexusKeyHighlight.png</file>
+        <file>resources/images/QuNexusTemplate.png</file>
+        <file>resources/images/arrow-flow-left.png</file>
+        <file>resources/images/arrow-flow-right.png</file>
+        <file>resources/images/midi_symbol.png</file>
+        <file>resources/images/arrowRoundedRight.png</file>
+        <file>resources/images/cv_symbol.png</file>
+        <file>resources/images/usbIconVertical.png</file>
+        <file>resources/images/QuNexusTemplateSmall.png</file>
+        <file>resources/images/KMi_Logo300_transparent.png</file>
+        <file>resources/images/qunexus_red_gray_logo.png</file>
+        <file>resources/images/qunexus_red_logo.png</file>
+        <file>resources/images/qunexus_trans_logo.png</file>
+        <file>resources/images/qunexus_white_trans_logo.png</file>
+        <file>resources/images/kmi_white_trans_logo.png</file>
+        <file>resources/images/QuNexusRedTemplate.png</file>
+        <file>resources/images/QuNexusRedTemplateSmall.png</file>
+        <file>resources/images/qunexus_white_trans_large_logo.png</file>
+        <file>resources/images/combo-down-arrow.png</file>
+        <file>resources/images/white-drop-down-arrow.png</file>
+        <file>resources/images/white-drop-down-arrow-small.png</file>
+        <file>resources/images/white-drop-down-arrow-small-clean.png</file>
+        <file>resources/images/white-drop-down-arrow-gray.png</file>
+        <file>resources/images/dest-tracks-group.png</file>
+        <file>resources/images/QuNexusRedDevice.png</file>
+        <file>resources/stylesheets/GeneralStyles.qss</file>
+        <file>resources/stylesheets/GeneralStylesWindows.qss</file>
+        <file>resources/images/cat_plum.png</file>
+        <file>resources/images/cat_sugar.png</file>
+    </qresource>
+    <qresource prefix="/stylesheets">
+        <file>resources/stylesheets/BlueButtonStyleSheet.qss</file>
+        <file>resources/stylesheets/GrayButtonStyleSheet.qss</file>
+        <file>resources/stylesheets/LibrarySelectedCleanStyleSheet.qss</file>
+        <file>resources/stylesheets/LibrarySelectedModifiedStyleSheet.qss</file>
+        <file>resources/stylesheets/LibrarySelectedModifiedStyleSheetWindows.qss</file>
+        <file>resources/stylesheets/LibrarySelectedCleanStyleSheetWindows.qss</file>
+        <file>resources/stylesheets/TabWidgetStyleSheetWindows.qss</file>
+        <file>resources/stylesheets/GeneralStyles.qss</file>
+        <file>resources/stylesheets/GeneralStylesWindows.qss</file>
+        <file>resources/stylesheets/QComboBoxStyleSheet.qss</file>
+        <file>resources/stylesheets/MenuBarWinStyleSheet.qss</file>
+        <file>resources/stylesheets/LabelH1Win.qss</file>
+        <file>resources/stylesheets/LibraryStyleSheetWindows.qss</file>
+        <file>resources/stylesheets/LabelH1Mac.qss</file>
+        <file>resources/stylesheets/LibraryStyleSheetMac.qss</file>
+        <file>resources/stylesheets/ParamLabelsWin.qss</file>
+        <file>resources/stylesheets/ParamLabelsMac.qss</file>
+        <file>resources/stylesheets/LabelH2Win.qss</file>
+        <file>resources/stylesheets/LabelH2Mac.qss</file>
+    </qresource>
+    <qresource prefix="/firmware"/>
+    <qresource prefix="/versioning">
+        <file>resources/versioning/version.txt</file>
+    </qresource>
+    <qresource prefix="/factorypresets">
+        <file>resources/factorypresets/Reason Controls.qunexuspreset</file>
+        <file>resources/factorypresets/SymphonixEvolution.qunexuspreset</file>
+        <file>resources/factorypresets/Basic 2.0.qunexuspreset</file>
+        <file>resources/factorypresets/Drums and Clips 2.0.qunexuspreset</file>
+        <file>resources/factorypresets/Aftertouch and Modulation.qunexuspreset</file>
+        <file>resources/factorypresets/MPE and Sequencer.qunexuspreset</file>
+    </qresource>
+    <qresource prefix="/qml">
+        <file>source/TableEditor.qml</file>
+    </qresource>
+    <qresource prefix="/help">
+        <file>resources/help.txt</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>resources/images/qunexus_white_trans_logo.png</file>
+        <file>resources/firmware/QuNexus_Firmware_v2.0.1.syx</file>
+        <file>resources/fonts/Aller/Aller Font License.txt</file>
+        <file>resources/fonts/Aller/Aller_Bd.ttf</file>
+        <file>resources/fonts/Aller/Aller_BdIt.ttf</file>
+        <file>resources/fonts/Aller/Aller_It.ttf</file>
+        <file>resources/fonts/Aller/Aller_Lt.ttf</file>
+        <file>resources/fonts/Aller/Aller_LtIt.ttf</file>
+        <file>resources/fonts/Aller/Aller_Rg.ttf</file>
+        <file>resources/fonts/Aller/AllerDisplay.ttf</file>
+        <file>resources/fonts/droid-sans/Apache License.txt</file>
+        <file>resources/fonts/droid-sans/DroidSans-Bold.ttf</file>
+        <file>resources/fonts/droid-sans/DroidSans.ttf</file>
+        <file>resources/fonts/open-sans/Apache License.txt</file>
+        <file>resources/fonts/open-sans/OpenSans-Bold.ttf</file>
+        <file>resources/fonts/open-sans/OpenSans-BoldItalic.ttf</file>
+        <file>resources/fonts/open-sans/OpenSans-ExtraBold.ttf</file>
+        <file>resources/fonts/open-sans/OpenSans-ExtraBoldItalic.ttf</file>
+        <file>resources/fonts/open-sans/OpenSans-Italic.ttf</file>
+        <file>resources/fonts/open-sans/OpenSans-Light.ttf</file>
+        <file>resources/fonts/open-sans/OpenSans-LightItalic.ttf</file>
+        <file>resources/fonts/open-sans/OpenSans-Regular.ttf</file>
+        <file>resources/fonts/open-sans/OpenSans-Semibold.ttf</file>
+        <file>resources/fonts/open-sans/OpenSans-SemiboldItalic.ttf</file>
+        <file>resources/fonts/source-sans-pro/SIL Open Font License.txt</file>
+        <file>resources/fonts/source-sans-pro/SourceSansPro-Black.otf</file>
+        <file>resources/fonts/source-sans-pro/SourceSansPro-BlackIt.otf</file>
+        <file>resources/fonts/source-sans-pro/SourceSansPro-Bold.otf</file>
+        <file>resources/fonts/source-sans-pro/SourceSansPro-BoldIt.otf</file>
+        <file>resources/fonts/source-sans-pro/SourceSansPro-ExtraLight.otf</file>
+        <file>resources/fonts/source-sans-pro/SourceSansPro-ExtraLightIt.otf</file>
+        <file>resources/fonts/source-sans-pro/SourceSansPro-It.otf</file>
+        <file>resources/fonts/source-sans-pro/SourceSansPro-Light.otf</file>
+        <file>resources/fonts/source-sans-pro/SourceSansPro-LightIt.otf</file>
+        <file>resources/fonts/source-sans-pro/SourceSansPro-Regular.otf</file>
+        <file>resources/fonts/source-sans-pro/SourceSansPro-Semibold.otf</file>
+        <file>resources/fonts/source-sans-pro/SourceSansPro-SemiboldIt.otf</file>
+    </qresource>
+</RCC>

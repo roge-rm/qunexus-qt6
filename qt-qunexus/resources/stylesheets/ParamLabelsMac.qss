@@ -1,0 +1,6 @@
+QLabel {
+        font-family: "Open Sans Semibold";
+        font-size: 10pt;
+        color: white;
+        background-color: rgba(0,0,0,0);
+}
