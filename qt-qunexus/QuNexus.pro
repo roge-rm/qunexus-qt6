@@ -14,6 +14,10 @@ QT       += core gui \
 TARGET = "QuNexus Editor"
 TEMPLATE = app
 
+macx{
+    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.12
+}
+
 INCLUDEPATH +=  source \
                 source/datamanagement \
                 source/midiio
@@ -117,8 +121,6 @@ macx{
     LIBS += -framework CoreMidi
     LIBS += -framework CoreAudio
     LIBS += -framework CoreFoundation
-
-    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.12
 }
 
 linux{

@@ -12,7 +12,11 @@ int main(int argc, char *argv[])
     QGuiApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
 
     QApplication a(argc, argv);
+#if QT_VERSION >= 0x060000
     QQuickWindow::setGraphicsApi(QSGRendererInterface::OpenGL);
+#else
+    //QSGRendererInterface::GraphicsApi(QSGRendererInterface::OpenGL);
+#endif
 
     MainWindow w;
     //w.resize(800, 600);

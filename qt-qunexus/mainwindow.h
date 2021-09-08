@@ -7,6 +7,7 @@
 #include <QMainWindow>
 #include <QDebug>
 #include <QFontMetrics>
+#include <QtGlobal>
 
 // midi overhaul
 #include "kmi_ports.h"
@@ -98,6 +99,10 @@ public:
     // Header2
     QFile*              labelH2StyleSheetFile;
     QString             labelH2StyleString;
+
+    // combo boxes
+    QFile*              comboStyleFile;
+    QString             comboStyleString;
 
     //Library
     QFile*              libraryStyleSheetFile;

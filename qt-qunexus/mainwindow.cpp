@@ -323,6 +323,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     qDebug() << "non-os specific stylesheets";
 
+    // combobox stlyes
+    comboStyleFile = new QFile(":stylesheets/resources/stylesheets/QComboBoxStyleSheet.qss");
+    comboStyleFile->open(QFile::ReadOnly);
+    comboStyleString = QLatin1String(comboStyleFile->readAll());
+
     // parameter labels
     paramLabelStyleSheetFile->open(QFile::ReadOnly);
     paramLabelStyleString = QLatin1String(paramLabelStyleSheetFile->readAll());
@@ -3896,13 +3901,6 @@ void MainWindow::slotFixDropDownWidth(QComboBox* thisDropDown)
     int pixelsHeight = 14 * thisDropDown->count();
     if (pixelsHeight > 500) pixelsHeight = 500;
 
-    QFile comboStyleFile = QFile(":stylesheets/resources/stylesheets/QComboBoxStyleSheet.qss");
-    QString comboStyleString;
-
-    comboStyleFile.open(QFile::ReadOnly);
-    comboStyleString = QLatin1String(comboStyleFile.readAll());
-
-    comboStyleString = comboStyleString.arg(pixelsWide).arg(pixelsHeight);
-    //qDebug() << "SetComboBox- " << thisDropDown->objectName() << ": " << comboStyleString;
-    thisDropDown->setStyleSheet(comboStyleString);
+    QString thisComboStyleString = comboStyleString.arg(pixelsWide).arg(pixelsHeight);
+    thisDropDown->setStyleSheet(thisComboStyleString);
 }
