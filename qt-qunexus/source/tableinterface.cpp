@@ -286,7 +286,7 @@ void TableInterface::slotSetCustomTemplate()
 
 void TableInterface::slotEnable(bool state)
 {
-    qDebug() << "slotEnable called: " << state;
+    qDebug() << "tableinterface::slotEnable called: " << state;
     if(state)
     {
         //tableViewerForm.masterFrame->hide();

@@ -1833,23 +1833,26 @@ void PresetManager::slotImportPreset()
 
     filename = QFileDialog::getOpenFileName(this, tr("Import Preset"), settings.value(DEFAULT_DIR_KEY).toString(),tr("QuNexus Preset Files (*.qunexuspreset)"));
 
-    if (slotLoadPresetFileIntoEditBuffer(filename))
+    if(!filename.isEmpty() && !filename.isNull())
     {
-        // store this folder location for the next time we open a file
-        QDir CurrentDir;
-        settings.setValue(DEFAULT_DIR_KEY, CurrentDir.absoluteFilePath(filename));
+        if (slotLoadPresetFileIntoEditBuffer(filename))
+        {
+            // store this folder location for the next time we open a file
+            QDir CurrentDir;
+            settings.setValue(DEFAULT_DIR_KEY, CurrentDir.absoluteFilePath(filename));
 
-        // update library
-        slotSaveEditBufferToLibrary(editBufferPresetMap.value("Preset_Name").toString());
+            // update library
+            slotSaveEditBufferToLibrary(editBufferPresetMap.value("Preset_Name").toString());
 
-        // update parameter UI
-        emit signalUpdateParameterUi(editBufferPresetMap);
-        emit signalControlLayerSelectedComponents(controllerLayerSelectedComponents);
-        emit signalUpdateLibraryPresetsUi(QVariantMap(), LOAD_PRESET, 0);
-    }
-    else
-    {
-        qDebug() << "Error loading file: " << filename;
+            // update parameter UI
+            emit signalUpdateParameterUi(editBufferPresetMap);
+            emit signalControlLayerSelectedComponents(controllerLayerSelectedComponents);
+            emit signalUpdateLibraryPresetsUi(QVariantMap(), LOAD_PRESET, 0);
+        }
+        else
+        {
+            qDebug() << "Error loading file: " << filename;
+        }
     }
 
 }
@@ -1910,44 +1913,46 @@ void PresetManager::slotExportPreset()
     QString filename = QFileDialog::getSaveFileName(this, tr("Save Preset"),
                                                     settings.value(DEFAULT_DIR_KEY).toString().append(editBufferPresetMap.value("Preset_Name").toString()),
                                                     tr("QuNexus Preset Files (*.qunexuspreset)"));
+    if(!filename.isEmpty() && !filename.isNull())
+    {
+        // store this file location for the next time we open/save a file
+        // store this folder location for the next time we open a file
+        QDir CurrentDir;
+        settings.setValue(DEFAULT_DIR_KEY, CurrentDir.absoluteFilePath(filename));
 
-    // store this file location for the next time we open/save a file
-    // store this folder location for the next time we open a file
-    QDir CurrentDir;
-    settings.setValue(DEFAULT_DIR_KEY, CurrentDir.absoluteFilePath(filename));
 
+        //This gets the file name without the path
+        QFileInfo fileInfo(filename);
 
-    //This gets the file name without the path
-    QFileInfo fileInfo(filename);
+        //Open new file to be saved
+        QFile* presetFile = new QFile(filename);
 
-    //Open new file to be saved
-    QFile* presetFile = new QFile(filename);
+        //Remove extension from filename
+        QString exportedPresetName = fileInfo.fileName().remove(".qunexuspreset");
 
-    //Remove extension from filename
-    QString exportedPresetName = fileInfo.fileName().remove(".qunexuspreset");
+        qDebug() << "filename:" << fileInfo.fileName().remove(".qunexuspreset");
 
-    qDebug() << "filename:" << fileInfo.fileName().remove(".qunexuspreset");
+        //Make new map to export
+        QVariantMap exportMap = editBufferPresetMap;
 
-    //Make new map to export
-    QVariantMap exportMap = editBufferPresetMap;
+        //Replace "Preset_Name" with filename typed in dialog
+        exportMap.insert("Preset_Name", exportedPresetName);
 
-    //Replace "Preset_Name" with filename typed in dialog
-    exportMap.insert("Preset_Name", exportedPresetName);
+        //-------------- Open, Write, and Close
+        presetFile->open(QIODevice::WriteOnly | QIODevice::Text);
 
-    //-------------- Open, Write, and Close
-    presetFile->open(QIODevice::WriteOnly | QIODevice::Text);
+    //    QByteArray presetByteArray = serializer.serialize(editBufferPresetMap);
 
-//    QByteArray presetByteArray = serializer.serialize(editBufferPresetMap);
+        presetFile->resize(0);
 
-    presetFile->resize(0);
+        QJsonDocument jsonPresets = QJsonDocument::fromVariant(editBufferPresetMap);
 
-    QJsonDocument jsonPresets = QJsonDocument::fromVariant(editBufferPresetMap);
+        //Write Byte Array into File
+        presetFile->write(jsonPresets.toJson()); //write json byte array to file
 
-    //Write Byte Array into File
-    presetFile->write(jsonPresets.toJson()); //write json byte array to file
-
-    //Close File
-    presetFile->close(); //close file and finalize write
+        //Close File
+        presetFile->close(); //close file and finalize write
+    }
 }
 
 //-------- Opens Dialog for New Preset Naming --------//

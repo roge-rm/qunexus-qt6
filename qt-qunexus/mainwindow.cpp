@@ -768,10 +768,11 @@ void MainWindow::slotFindAndConnectUi()
     connect(QuNexus, SIGNAL(signalFwConsoleMessage(QString)), fwUpdateWindow, SLOT(slotAppendTextToConsole(QString)));      // messaging
     connect(QuNexus, SIGNAL(signalFwProgress(int)), fwUpdateWindow, SLOT(slotUpdateProgressBar(int)));                      // console
     connect(QuNexus, SIGNAL(signalFirmwareUpdateComplete(bool)), fwUpdateWindow, SLOT(slotFwUpdateComplete(bool)));         // Update Complete
-    connect(fwUpdateWindow, SIGNAL(signalFwUpdateSuccess()), QuNexus, SLOT(slotFirmwareUpdateSuccess()));                   // stop timeout timers
+    connect(fwUpdateWindow, SIGNAL(signalFwUpdateSuccess()), QuNexus, SLOT(slotFirmwareUpdateReset()));                   // stop timeout timers
     connect(fwUpdateWindow, SIGNAL(signalFwUpdateSuccessCloseDialog(bool)), this, SLOT(slotFwUpdateSuccessCloseDialog(bool)));      // close fw dialog and connect
     connect(QuNexus, SIGNAL(signalRequestGlobals()), this, SLOT(slotSendGlobalsRequest()));                                 // request globals
     connect(sysExEncDecode, SIGNAL(signalGlobalsReceived()), QuNexus, SLOT(slotRequestFirmwareUpdate()));                      // if fwupdate requested globals then alert that we've saved them
+    connect(sysExEncDecode, SIGNAL(signalGlobalsReceived()), this, SLOT(slotEnableGlobalsWindows()));                       // enable globals window when we receive this
     connect(QuNexus, SIGNAL(signalRestoreGlobals()), this, SLOT(slotEncodeGlobals()));                                      // restore the globals after fw update
 
     // handle device unexpectedly in bootloader mode
@@ -2427,6 +2428,8 @@ void MainWindow::slotQuNexusConnected(bool state)
         }
         connected = false;
 
+        slotDisableGlobalsWindows(); // just in case
+
         syncQuNexusDialog->done(1); // close the sync dialog if it's open
 
         presetManager->syncFlag = false; // update presetmanager
@@ -3277,6 +3280,7 @@ void MainWindow::slotDisableGlobalsWindows()
 
 void MainWindow::slotEnableGlobalsWindows()
 {
+    qDebug() << "slotEnableGlobalsWindows called";
     sensitivitiesUi->masterFrame->hide();
     tableInterface->slotEnable(true);
     cvTrimsInterface->slotEnable(true);
@@ -3293,7 +3297,8 @@ void MainWindow::slotSendGlobalsRequest()
     // MIDI overhaul
     QuNexus->slotSendSysEx(sens, 17);
 
-    QTimer::singleShot(3000, this, SLOT(slotEnableGlobalsWindows()));
+    // connecting this to sysExEncDecode::slotGlobalsReceived
+    //QTimer::singleShot(3000, this, SLOT(slotEnableGlobalsWindows()));
 }
 
 // --- Request Preset packet ------------------------------------------
@@ -3775,8 +3780,7 @@ void MainWindow::slotFwUpdateSuccessCloseDialog(bool success)
     }
     else
     {
-        QuNexus->fwUpdateRequested = false;
-
+        QuNexus->slotFirmwareUpdateReset();
         slotQuNexusConnected(false);
         slotEnableDisableMidiFunctions(false);
     }
@@ -3802,6 +3806,10 @@ void MainWindow::slotFirmwareDetected(MidiDeviceManager *thisMDM, bool matches)
     else
     {
         qDebug() << "Firmware MisMatch: " << thisMDM->PID << "name:" << thisMDM->deviceName;
+
+        // setup sysex connections to receive globals data
+        QuNexus->disconnect(SIGNAL(signalRxSysExBA(QByteArray))); // disconnect to be safe
+        connect(QuNexus, SIGNAL(signalRxSysExBA(QByteArray)), sysExEncDecode, SLOT(slotProcessSysEx(QByteArray)));
 
         fwUpdateWindow->slotClearText();
         fwUpdateWindow->slotAppendTextToConsole(deviceBootloaderVersionString());
