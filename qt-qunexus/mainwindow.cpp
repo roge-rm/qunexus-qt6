@@ -2657,19 +2657,19 @@ void MainWindow::slotSetupMenuBar()
 {
     menubar = new QMenuBar(this);
 
-#ifdef Q_OS_MAC
-#else
-    menubar->setGeometry(0,0,this->width(), 25);
-#endif
-
 #ifdef Q_OS_WIN
-    QFile menuStyleFile = QFile(":stylesheets/resources/stylesheets/MenuBarWinStyleSheet.qss");
-    QString menuStyleString;
+    menubar->setGeometry(0,0,this->width(), 25);
+//    QFile menuStyleFile = QFile(":stylesheets/resources/stylesheets/MenuBarWinStyleSheet.qss");
+//    QString menuStyleString;
+//    qDebug() << "Menubar stylestring: " << menuStyleString;
 
-    menuStyleFile.open(QFile::ReadOnly);
-    menuStyleString = QLatin1String(menuStyleFile.readAll());
+//    menuStyleFile.open(QFile::ReadOnly);
+//    menuStyleString = QLatin1String(menuStyleFile.readAll());
 
-    menubar->setStyleSheet(menuStyleString);
+    //menubar->setStyleSheet(menuStyleString);
+    //menubar->setStyleSheet("color:white;");
+
+    //qDebug() << "menubar stylesheet: " << menubar->styleSheet();
 
 #endif
 

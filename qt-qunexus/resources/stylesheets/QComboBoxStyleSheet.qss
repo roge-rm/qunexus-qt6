@@ -19,6 +19,7 @@ QComboBox::drop-down {
         margin: 0px;
         padding: 0px;
         background-color: transparent;
+        color: white;
 }
 
 
@@ -49,17 +50,20 @@ QListView {
 QListView::item {
         background: rgba(67, 67, 67, 255);
         border: 0px;
+        color: white;
 }
 
 QListView::item:hover {
         background: rgba(67, 67, 67, 255);
         border: 0;
+        color: white;
 }
 
 QComboBox QAbstractItemView
 {
     min-width: %1px;
     min-height: %2px;
+    color:white;
 }
 
 QToolTip {
