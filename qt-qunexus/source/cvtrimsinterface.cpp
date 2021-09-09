@@ -33,7 +33,7 @@ CvTrimsInterface::CvTrimsInterface(QWidget *parent) :
 void CvTrimsInterface::slotSetVars()
 {
     qDebug() << "object name" << QObject::sender()->objectName();
-    timeout->stop();
+    if (timeout != NULL) timeout->stop();
 
     //qDebug() << "slot set vars called in cv interface................";
 
@@ -82,7 +82,7 @@ void CvTrimsInterface::slotShowOffsets()
 
 void CvTrimsInterface::slotTimeout()
 {
-    timeout->stop();
+    if (timeout != NULL) timeout->stop();
     emit signalSendToBoard();
 }
 
