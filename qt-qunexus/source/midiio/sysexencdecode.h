@@ -167,6 +167,7 @@ signals:
 
     // store/restore globals
     void signalGlobalsReceived();
+    void signalGlobalsReceivedDoFwUd();
     void signalRestoreGlobals();
 
 public slots:

@@ -152,7 +152,11 @@ Item {
 
             width: tableFrame.width
             height: tableFrame.unitSize
-            color: Qt.rgba(.8,.8,.8,.2)
+            color:
+            {
+                var opacity = mainwindow.editable * 0.2;
+                Qt.rgba(.8, .8, .8, opacity)
+            }
             //border.width: 1
             //border.color: Qt.rgba(1,1,1,0.25);
         }
@@ -175,7 +179,11 @@ Item {
             y: 2
             width: tableFrame.unitSize
             height: tableFrame.height - 2
-            color: Qt.rgba(.8,.8,.8,.2)
+            color:
+            {
+                var opacity = mainwindow.editable * 0.2;
+                Qt.rgba(.8, .8, .8, opacity)
+            }
             //border.width: 1
             //border.color: Qt.rgba(1,1,1,0.25);
         }
@@ -212,13 +220,15 @@ Item {
             }
             color:
             {
+                var opacity = mainwindow.editable * 0.5;
+
                 if(xLoc.x <= tableFrame.width && xLoc.x >= 0 && yLoc.y <= tableFrame.height && yLoc.y >= 0)
                 {
-                    return Qt.rgba(1,1,1,0.5)
+                    return Qt.rgba(1, 1, 1, opacity)
                 }
                 else
                 {
-                    return Qt.rgba(1,0,0,0.5)
+                    return Qt.rgba(1, 0, 0, opacity)
                 }
             }
 
@@ -231,7 +241,11 @@ Item {
                 y:2
                 text: Math.floor(xLoc.x/4) + ", " + (127 - Math.floor(yLoc.y/4))
                 font.pointSize: 12
-                color: Qt.rgba(0,0,0,0.5)
+                color:
+                {
+                    var opacity = mainwindow.editable * 0.5;
+                    Qt.rgba(0, 0, 0, opacity)
+                }
             }
         }
     }
@@ -248,14 +262,13 @@ Item {
         //target: TableInterface
         function onSignalSetTableColorWriteEnabled(flag)
         {
+            mainwindow.editable = flag;
             var thisColor = (flag) ? Qt.rgba(0, 1, 0, .5) : Qt.rgba(1, 0, 0, .5)
             for (var i = 0; i < 128; i++)
             {
                 repeater.itemAt(i).blockColor = thisColor
             }
         }
-
-
     }
 
 }

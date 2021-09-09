@@ -773,10 +773,11 @@ void MainWindow::slotFindAndConnectUi()
     connect(QuNexus, SIGNAL(signalFwConsoleMessage(QString)), fwUpdateWindow, SLOT(slotAppendTextToConsole(QString)));      // messaging
     connect(QuNexus, SIGNAL(signalFwProgress(int)), fwUpdateWindow, SLOT(slotUpdateProgressBar(int)));                      // console
     connect(QuNexus, SIGNAL(signalFirmwareUpdateComplete(bool)), fwUpdateWindow, SLOT(slotFwUpdateComplete(bool)));         // Update Complete
-    connect(fwUpdateWindow, SIGNAL(signalFwUpdateSuccess()), QuNexus, SLOT(slotFirmwareUpdateSuccess()));                   // stop timeout timers
+    connect(fwUpdateWindow, SIGNAL(signalFwUpdateSuccess()), QuNexus, SLOT(slotFirmwareUpdateReset()));                   // stop timeout timers
     connect(fwUpdateWindow, SIGNAL(signalFwUpdateSuccessCloseDialog(bool)), this, SLOT(slotFwUpdateSuccessCloseDialog(bool)));      // close fw dialog and connect
     connect(QuNexus, SIGNAL(signalRequestGlobals()), this, SLOT(slotSendGlobalsRequest()));                                 // request globals
-    connect(sysExEncDecode, SIGNAL(signalGlobalsReceived()), QuNexus, SLOT(slotRequestFirmwareUpdate()));                      // if fwupdate requested globals then alert that we've saved them
+    connect(sysExEncDecode, SIGNAL(signalGlobalsReceivedDoFwUd()), QuNexus, SLOT(slotRequestFirmwareUpdate()));                      // if fwupdate requested globals then alert that we've saved them
+    connect(sysExEncDecode, SIGNAL(signalGlobalsReceived()), this, SLOT(slotEnableGlobalsWindows()));                       // enable globals window when we receive this
     connect(QuNexus, SIGNAL(signalRestoreGlobals()), this, SLOT(slotEncodeGlobals()));                                      // restore the globals after fw update
 
     // handle device unexpectedly in bootloader mode
@@ -1495,13 +1496,13 @@ void MainWindow::slotUpdateLibraryPresetsListUi(QVariantMap presetMaps, int acti
                         itemText.remove("*");
                     }
                 }
-                if(itemText.contains("["))
+                if(itemText.contains("[ "))
                 {
-                    itemText.remove("[");
+                    itemText.remove("[ ");
                 }
-                if(itemText.contains("]"))
+                if(itemText.contains(" ]"))
                 {
-                    itemText.remove("]");
+                    itemText.remove(" ]");
                 }
 
                 item->setText(itemText);
@@ -1538,8 +1539,8 @@ void MainWindow::slotUpdateLibraryPresetsListUi(QVariantMap presetMaps, int acti
 
             // add brackets to current loaded preset
             QString bracketText = thisItem->text();
-            bracketText.prepend("[");
-            bracketText.append("]");
+            bracketText.prepend("[ ");
+            bracketText.append(" ]");
             thisItem->setText(bracketText);
 
             // set text to red
@@ -2432,6 +2433,8 @@ void MainWindow::slotQuNexusConnected(bool state)
         }
         connected = false;
 
+        slotDisableGlobalsWindows(); // just in case
+
         syncQuNexusDialog->done(1); // close the sync dialog if it's open
 
         presetManager->syncFlag = false; // update presetmanager
@@ -2662,19 +2665,19 @@ void MainWindow::slotSetupMenuBar()
 {
     menubar = new QMenuBar(this);
 
-#ifdef Q_OS_MAC
-#else
-    menubar->setGeometry(0,0,this->width(), 25);
-#endif
-
 #ifdef Q_OS_WIN
-    QFile menuStyleFile = QFile(":stylesheets/resources/stylesheets/MenuBarWinStyleSheet.qss");
-    QString menuStyleString;
+    menubar->setGeometry(0,0,this->width(), 25);
+//    QFile menuStyleFile = QFile(":stylesheets/resources/stylesheets/MenuBarWinStyleSheet.qss");
+//    QString menuStyleString;
+//    qDebug() << "Menubar stylestring: " << menuStyleString;
 
-    menuStyleFile.open(QFile::ReadOnly);
-    menuStyleString = QLatin1String(menuStyleFile.readAll());
+//    menuStyleFile.open(QFile::ReadOnly);
+//    menuStyleString = QLatin1String(menuStyleFile.readAll());
 
-    menubar->setStyleSheet(menuStyleString);
+    //menubar->setStyleSheet(menuStyleString);
+    //menubar->setStyleSheet("color:white;");
+
+    //qDebug() << "menubar stylesheet: " << menubar->styleSheet();
 
 #endif
 
@@ -3282,6 +3285,7 @@ void MainWindow::slotDisableGlobalsWindows()
 
 void MainWindow::slotEnableGlobalsWindows()
 {
+    qDebug() << "slotEnableGlobalsWindows called";
     sensitivitiesUi->masterFrame->hide();
     tableInterface->slotEnable(true);
     cvTrimsInterface->slotEnable(true);
@@ -3298,7 +3302,8 @@ void MainWindow::slotSendGlobalsRequest()
     // MIDI overhaul
     QuNexus->slotSendSysEx(sens, 17);
 
-    QTimer::singleShot(3000, this, SLOT(slotEnableGlobalsWindows()));
+    // connecting this to sysExEncDecode::slotGlobalsReceived
+    //QTimer::singleShot(3000, this, SLOT(slotEnableGlobalsWindows()));
 }
 
 // --- Request Preset packet ------------------------------------------
@@ -3780,8 +3785,7 @@ void MainWindow::slotFwUpdateSuccessCloseDialog(bool success)
     }
     else
     {
-        QuNexus->fwUpdateRequested = false;
-
+        QuNexus->slotFirmwareUpdateReset();
         slotQuNexusConnected(false);
         slotEnableDisableMidiFunctions(false);
     }
@@ -3807,6 +3811,10 @@ void MainWindow::slotFirmwareDetected(MidiDeviceManager *thisMDM, bool matches)
     else
     {
         qDebug() << "Firmware MisMatch: " << thisMDM->PID << "name:" << thisMDM->deviceName;
+
+        // setup sysex connections to receive globals data
+        QuNexus->disconnect(SIGNAL(signalRxSysExBA(QByteArray))); // disconnect to be safe
+        connect(QuNexus, SIGNAL(signalRxSysExBA(QByteArray)), sysExEncDecode, SLOT(slotProcessSysEx(QByteArray)));
 
         fwUpdateWindow->slotClearText();
         fwUpdateWindow->slotAppendTextToConsole(deviceBootloaderVersionString());

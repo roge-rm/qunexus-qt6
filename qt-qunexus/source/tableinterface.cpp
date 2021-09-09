@@ -171,6 +171,8 @@ void TableInterface::slotMenuChanged(QString itemName)
         tableViewerForm.Linear->hide();
         tableViewerForm.Exponential->hide();
 
+        tableViewerForm.warningLabel->show();
+
 //        tableViewerForm.Cosine->setStyleSheet("QPushButton{border-radius: 4.0; border: 1px solid rgb(50,50,50); background: rgb(10,10,10); font:10px \"Arial\"; color: rgb(100,100,100);}");
 //        tableViewerForm.Sine->setStyleSheet("QPushButton{border-radius: 4.0; border: 1px solid rgb(50,50,50); background: rgb(10,10,10); font:10px \"Arial\"; color: rgb(100,100,100);}");
 //        tableViewerForm.Logarithmic->setStyleSheet("QPushButton{border-radius: 4.0; border: 1px solid rgb(50,50,50); background: rgb(10,10,10); font:10px \"Arial\"; color: rgb(100,100,100);}");
@@ -194,6 +196,8 @@ void TableInterface::slotMenuChanged(QString itemName)
         tableViewerForm.Invert->show();
         tableViewerForm.Linear->show();
         tableViewerForm.Exponential->show();
+
+        tableViewerForm.warningLabel->hide();
 
 //        tableViewerForm.Cosine->setStyleSheet("QPushButton:pressed {background-color: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(67, 67, 67, 255), stop:1 rgba(150, 150, 150, 255));}QPushButton{border-radius: 4.0; border: 1px solid rgb(50,50,50); background: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgb(255, 255, 255), stop:1 rgb(150, 150, 150)); font:10px \"Arial\";}");
 //        tableViewerForm.Sine->setStyleSheet("QPushButton:pressed {background-color: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(67, 67, 67, 255), stop:1 rgba(150, 150, 150, 255));}QPushButton{border-radius: 4.0; border: 1px solid rgb(50,50,50); background: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgb(255, 255, 255), stop:1 rgb(150, 150, 150)); font:10px \"Arial\";}");
@@ -286,7 +290,7 @@ void TableInterface::slotSetCustomTemplate()
 
 void TableInterface::slotEnable(bool state)
 {
-    qDebug() << "slotEnable called: " << state;
+    qDebug() << "tableinterface::slotEnable called: " << state;
     if(state)
     {
         //tableViewerForm.masterFrame->hide();

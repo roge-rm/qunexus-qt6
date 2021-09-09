@@ -2250,12 +2250,13 @@ void SysExEncDecode::slotProcessSysEx(QByteArray sysExMessageByteArray)
         {
             globals.clear();
             globals = sysExMessageByteArray;
-            emit signalGlobalsReceived();
+            emit signalGlobalsReceivedDoFwUd();
         }
         else
         {
             //Sends to GUI
             //emit signalSendPerKeySensitivities(sysExMessageByteArray);
+            emit signalGlobalsReceived();
             slotProcessGlobals(sysExMessageByteArray);
         }
     }
