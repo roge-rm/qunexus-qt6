@@ -6,4 +6,4 @@
 	url = https://EricKMI@bitbucket.org/kmilabs/kmi_midi_device_manager.git
 [submodule "qt-qunexus/inc/rtmidi"]
 	path = qt-qunexus/inc/rtmidi
-	url = https://EricKMI@bitbucket.org/kmilabs/rtmidi.git
+url=https://github.com/thestk/rtmidi.git
