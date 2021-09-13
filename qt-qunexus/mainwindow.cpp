@@ -21,7 +21,6 @@
 #include "sendpresetsdialog.h"
 #include "syncqunexusdialog.h"
 #include "KMI_FwVersions.h"
-#include "fwupdate.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),

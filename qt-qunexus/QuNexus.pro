@@ -25,7 +25,7 @@ INCLUDEPATH +=  source \
 
 
 SOURCES +=  main.cpp\
-    fwupdate.cpp \
+    inc/KMI_MIDI_Device_Manager/fwupdate/fwupdate.cpp \
     inc/KMI_MIDI_Device_Manager/KMI_mdm.cpp \
     inc/KMI_Ports/kmi_ports.cpp \
     inc/rtmidi/RtMidi.cpp \
@@ -39,7 +39,7 @@ SOURCES +=  main.cpp\
             source/cvtrimsinterface.cpp
 
 HEADERS  += mainwindow.h \
-    fwupdate.h \
+    inc/KMI_MIDI_Device_Manager/fwupdate/fwupdate.h \
     inc/KMI_MIDI_Device_Manager/KMI_DevData.h \
     inc/KMI_MIDI_Device_Manager/KMI_FwVersions.h \
     inc/KMI_MIDI_Device_Manager/KMI_SysexMessages.h \
@@ -48,18 +48,17 @@ HEADERS  += mainwindow.h \
     inc/KMI_Ports/kmi_ports.h \
     inc/rtmidi/RtMidi.h \
             source/datamanagement/presetmanager.h \
-            source/midiio/Qn_preset_struct.h \
             source/datamanagement/presetnamedialog.h \
-            source/midiio/midi.h \
-            source/midiio/sysexencdecode.h \
             source/sendpresetsdialog.h \
             source/syncqunexusdialog.h \
             source/tableinterface.h \
             source/cvtrimsinterface.h \
+            source/midiio/Qn_preset_struct.h \
+            source/midiio/sysexencdecode.h \
             source/midiio/Qn_preset_struct.h
 
 FORMS    += mainwindow.ui \
-            fwupdate.ui \
+            inc/KMI_MIDI_Device_Manager/fwupdate/fwupdate.ui \
             perkeysensitivities.ui \
             tableviewerform.ui \
             cvtrimsviewerform.ui
@@ -68,52 +67,18 @@ FORMS    += mainwindow.ui \
 RESOURCES += \
     resources.qrc
 
-#-------------------QJson-------------------#
-#-------------------------------------------#
-static{
-DEFINES += STATIC_BUILD
-}
-
-INCLUDEPATH += qjson/src
-
-SOURCES += \
-  #qjson/src/json_parser.cc \
-  #qjson/src/json_scanner.cpp \
-  #qjson/src/parser.cpp \
-  #qjson/src/qobjecthelper.cpp \
-  #qjson/src/serializer.cpp
-
 
 #-------------------MIDI--------------------#
 #-------------------------------------------#
-#macx {
-#INCLUDEPATH += ./source/midiio/mac
-
-## source/midiio/mac/mididevice.h \
-#HEADERS +=  \
-#    source/midiio/mac/qunexusmidi.h
-#SOURCES +=  \
-#    source/midiio/mac/qunexusmidi.cpp
-#LIBS += -framework CoreMIDI
-#LIBS += -framework CoreFoundation
-#LIBS += -framework Cocoa
-#LIBS += -framework CoreServices
-#}
-
-#win32{
-#INCLUDEPATH += ./source/midiio/windows
-#HEADERS += ./source/midiio/windows/mididevicemanager.h
-#SOURCES  += ./source/midiio/windows/mididevicemanager10.cpp
-#LIBS += -lwinmm
-#}
 
 INCLUDEPATH += \
     inc/rtmidi \
     inc/KMI_Ports \
-    inc/KMI_MIDI_Device_Manager
+    inc/KMI_MIDI_Device_Manager \
+    inc/KMI_MIDI_Device_Manager/fwupdate
 
 #DEFINES += \
-    #MDM_DEBUG_ENABLED
+    #MDM_DEBUG_ENABLED # enable deeper deebugging for KMI Midi Device Manager
 
 # These defines set RtMidi to the correct OS API
 macx{
@@ -173,9 +138,6 @@ DISTFILES += \
 #--------------- contents/resources --------
 
 macx{
-#    softStepSysEx.files = $$PWD/../../shared/SoftStep.syx
-#    softStepSysEx.path = Contents/Resources
-#    QMAKE_BUNDLE_DATA += softStepSysEx
 
     qunexusPresets.files = $$PWD/presets
     qunexusPresets.path = Contents/Resources
@@ -183,21 +145,12 @@ macx{
 }
 
 win32{
-#    pedalTable.commands = $(COPY_DIR) $$shell_path(\"$$PWD/resources/pedalTable.txt\") $$shell_path(\"$$OUT_PWD/Resources/\")
-#    export(pedalTable.commands)
-
-#    sysex.commands = $(COPY_DIR) $$shell_path(\"$$PWD/../../shared/SoftStep.syx\") $$shell_path(\"$$OUT_PWD/Resources\")
-#    export(sysex.commands)
 
     presets.commands = $(COPY_DIR) $$shell_path(\"$$PWD/presets\") $$shell_path(\"$$OUT_PWD/Resources/presets\")
     export(presets.commands)
 
-#    first.depends += $(first) pedalTable
     first.depends += $(first) presets
-#    first.depends += $(first) sysex
     export(first.depends)
 
-#    QMAKE_EXTRA_TARGETS += first pedalTable
     QMAKE_EXTRA_TARGETS += first presets
-#    QMAKE_EXTRA_TARGETS += first sysex
 }

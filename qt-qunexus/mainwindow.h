@@ -27,7 +27,7 @@
 #include "cvtrimsinterface.h"
 
 #include "ui_perkeysensitivities.h"
-#include "fwupdate.h"
+#include <fwupdate.h>
 
 #include "midi.h"
 
