@@ -188,7 +188,6 @@ public slots:
     // presets
     bool slotIsPreset(QByteArray ba);
     void slotProcessPreset(QByteArray presetPacket);
-    void slotDecodePreset(QVariantMap * preset);
 
     bool slotTestQListRange(QStringList *thisList, int thisIndex, int thisJSONCounter); // tests QStringLists for out of range errors
 };

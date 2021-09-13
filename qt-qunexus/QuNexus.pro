@@ -83,7 +83,6 @@ INCLUDEPATH += \
 # These defines set RtMidi to the correct OS API
 macx{
     DEFINES += __MACOSX_CORE__=1
-    DEFINES += __MACOSX_SYX_XMIT_SIZE__=1023 #32767
     LIBS += -framework CoreMidi
     LIBS += -framework CoreAudio
     LIBS += -framework CoreFoundation

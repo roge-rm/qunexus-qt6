@@ -193,8 +193,28 @@ Item {
         {
             id: coordinateBox
             //objectName: "coordinateBox"
-            width: 50
-            height: 15
+            width:
+            {
+                if (Q_OS === "WIN")
+                {
+                    return 70;
+                }
+                else
+                {
+                    return 50;
+                }
+            }
+            height:
+            {
+                if (Q_OS === "WIN")
+                {
+                    return 22;
+                }
+                else
+                {
+                    return 15;
+                }
+            }
             x:
             {
                 if((mousearea.mouseX/tableFrame.unitSize)*tableFrame.unitSize < tableFrame.width/2)
@@ -255,7 +275,7 @@ Item {
         target: TableInterface
         function onSignalUpdateCol(col, val)
         {
-          console.log("draw column: " + col + " value: " + val)
+          //console.log("draw column: " + col + " value: " + val)
           repeater.itemAt(col).colVal = val
         }
 

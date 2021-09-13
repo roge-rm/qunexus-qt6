@@ -94,6 +94,6 @@ void CvTrimsInterface::slotEnable(bool state)
     }
     else
     {
-       cvViewerForm.masterFrame->show();
+       //cvViewerForm.masterFrame->show();
     }
 }

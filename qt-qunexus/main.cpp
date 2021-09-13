@@ -7,16 +7,19 @@
 
 int main(int argc, char *argv[])
 {
-    // fonts
-    //QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    // set highdpi scale factor rounding
     QGuiApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
 
     QApplication a(argc, argv);
+
+    // this sets the correct OpenGL api depending on which version of Qt we are using
 #if QT_VERSION >= 0x060000
     QQuickWindow::setGraphicsApi(QSGRendererInterface::OpenGL);
 #else
     //QSGRendererInterface::GraphicsApi(QSGRendererInterface::OpenGL);
 #endif
+
+
 
     MainWindow w;
     //w.resize(800, 600);

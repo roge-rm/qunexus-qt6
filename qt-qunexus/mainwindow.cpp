@@ -3275,7 +3275,7 @@ void MainWindow::slotOpenCvTrimsInterface()
 void MainWindow::slotDisableGlobalsWindows()
 {
     qDebug() << "slotDisableGlobalsWindows called";
-    sensitivitiesUi->masterFrame->show();
+    //sensitivitiesUi->masterFrame->show();
     qDebug() << "table disable";
     tableInterface->slotEnable(false);
     qDebug() << "cvtrims disable";
@@ -3581,23 +3581,10 @@ void MainWindow::slotSyncEditorToQn()
 void MainWindow::slotPresetProcessed(unsigned char presetNum)
 {
     qDebug() << "slotPresetProcessed called, presetNum: " << presetNum;
-    //sysExEncDecode->slotDecodePreset(&presetManager->editBufferPresetMap); // copy qn struct into edit buffer
 
-    //presetManager->presetLoading = true; // continue to block preset data being sent to QuNexus
-    //presetManager->syncFlag = false; // block presetManager from adjusting the presetLoading flag
     slotUpdateParametersUi(presetManager->editBufferPresetMap); // update ui
-
     presetManager->presetLoading = false; // clear flag
-    //presetManager->syncFlag = true; // allows presetManager to adjust the presetLoading flag
 }
-
-//void MainWindow::slotProcessPreset(QByteArray sysExMessageByteArray)
-//{
-//    qDebug() << "MainWindow::slotProcessPreset called";
-//    // flag
-//    presetManager->presetLoading = true;
-//    sysExEncDecode->slotProcessPreset(sysExMessageByteArray);
-//}
 
 void MainWindow::closeEvent(QCloseEvent *event)
  {

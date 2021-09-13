@@ -40,6 +40,8 @@ TIMEOUT 5
 
 powershell compress-archive "'%output_dir%' '%output_dir%.zip'" 
 
+rmdir /S/Q "%output_dir%"
+
 pause
 
 

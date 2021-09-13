@@ -73,6 +73,13 @@ TableInterface::TableInterface(QWidget *parent) :
     qDebug() << "show";
     tableQuickWidget->show();
 
+    // set OS variables for formatting
+    #ifdef Q_OS_WIN
+        tableQuickWidget->rootContext()->setContextProperty("Q_OS", QVariant("WIN"));
+    #else
+        tableQuickWidget->rootContext()->setContextProperty("Q_OS", QVariant("MAC"));
+    #endif
+
     //rootObject = tableQuickWidget->rootObject();
 
     //rootObject = tableViewerForm.quickWidget->rootObject(); // root object to find other objects with

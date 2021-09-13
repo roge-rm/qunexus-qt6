@@ -1275,6 +1275,9 @@ color: white;
    </widget>
   </widget>
   <widget class="QLabel" name="masterFrame">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>-10</x>
@@ -1313,6 +1316,8 @@ QLabel {
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
+  <zorder>masterFrame</zorder>
+  <zorder>Library_Frame</zorder>
  </widget>
  <resources/>
  <connections/>

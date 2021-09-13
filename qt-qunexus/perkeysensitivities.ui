@@ -4148,7 +4148,7 @@ QPushButton:focus
   </widget>
   <widget class="QLabel" name="masterFrame">
    <property name="enabled">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="geometry">
     <rect>
@@ -4185,6 +4185,8 @@ QLabel {
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
+  <zorder>masterFrame</zorder>
+  <zorder>keyboard</zorder>
  </widget>
  <resources/>
  <connections/>
