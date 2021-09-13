@@ -56,4 +56,4 @@ compile_commands.json
 *.dmg
 *.app
 *.exe
-/win-build
+/win-build/*.zip
