@@ -438,12 +438,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     slotToolTipHandler();
 
-    // deprecated by MIDI Overhaul
-
     qDebug() << "--------------------- selected Preset" << presetManager->selectedLibraryPreset;
-
-    // connect MIDI signals
-    //connect(qunexusMidi, SIGNAL(signalProcessPreset(QByteArray)), this, SLOT(slotProcessPreset(QByteArray)));
 
     // connect preset warnings
     connect(presetManager, SIGNAL(signalCallUnsavedChangesDialog(QListWidgetItem*)), this, SLOT(slotUnsavedChangesDialog(QListWidgetItem*)));
@@ -2242,6 +2237,7 @@ void MainWindow::slotOpenAboutScreen()
     msgBox->exec();
 }
 
+// MIDI OVERHAUL --------------------------------------
 QString MainWindow::deviceBootloaderVersionString()
 {
     return QString("Device Bootloader Version: %1.%2.%3\n\n")
@@ -2266,7 +2262,7 @@ QString MainWindow::applicationFirmwareVersionString()
             .arg(uchar(thisFw.at(1)))
             .arg(uchar(thisFw.at(2)));
 }
-
+// END MIDI OVERHAUL --------------------------------------
 
 //void MainWindow::slotFirmwareUpdateCompleteDialog()
 //{

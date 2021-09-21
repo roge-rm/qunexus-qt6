@@ -6,6 +6,7 @@
 
 #define SIZE_OF_PRESET_HEADER 8
 #define SIZE_OF_OLD_PRESET_JSON 457
+#define SYX_DEBUG_PRESET_PACKET
 
 SysExEncDecode::SysExEncDecode(QWidget *parent) :
     QWidget(parent)

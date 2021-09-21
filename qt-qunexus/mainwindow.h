@@ -14,6 +14,7 @@
 #include "KMI_mdm.h"
 #include "RtMidi.h"
 #include "KMI_DevData.h"
+#include <fwupdate.h>
 
 // qunexus
 //#include "qunexusmidi.h" // renamed from mididevicemanager.h for midi overhaul
@@ -27,7 +28,7 @@
 #include "cvtrimsinterface.h"
 
 #include "ui_perkeysensitivities.h"
-#include <fwupdate.h>
+
 
 #include "midi.h"
 
@@ -192,10 +193,14 @@ public:
 
     void closeEvent(QCloseEvent *event); // handle save before quit
 
+    // ------ midi overhaul --------------------------------------------------------
+
     // version strings for console and about window
     QString deviceBootloaderVersionString();
     QString deviceFirmwareVersionString();
     QString applicationFirmwareVersionString();
+
+    // ------ end midi overhaul --------------------------------------------------------
 
 protected:
     void keyPressEvent(QKeyEvent*);
