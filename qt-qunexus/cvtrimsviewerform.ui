@@ -327,7 +327,7 @@ QLabel {
        </font>
       </property>
       <property name="toolTip">
-       <string/>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Adjust the tracking per octave. Minimum value 0.94, maximum 1.06.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="styleSheet">
        <string notr="true">QDoubleSpinBox {
@@ -341,7 +341,7 @@ QLabel {
 }
 
 QToolTip {
-background: #006599;
+background:rgba(120, 120, 120, 255);
 color: white;
 }</string>
       </property>
@@ -374,7 +374,7 @@ color: white;
        </rect>
       </property>
       <property name="toolTip">
-       <string/>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Voltage offset. Minimum value -127, maximum value 127.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="layoutDirection">
        <enum>Qt::LeftToRight</enum>
@@ -394,7 +394,7 @@ color: white;
 }
 
 QToolTip {
-background: #006599;
+background:rgba(120, 120, 120, 255);
 color: white;
 }</string>
       </property>
@@ -411,10 +411,10 @@ color: white;
        <enum>QAbstractSpinBox::NoButtons</enum>
       </property>
       <property name="minimum">
-       <number>-1095</number>
+       <number>-127</number>
       </property>
       <property name="maximum">
-       <number>1095</number>
+       <number>127</number>
       </property>
       <property name="value">
        <number>0</number>
@@ -724,7 +724,7 @@ color: white;
        </font>
       </property>
       <property name="toolTip">
-       <string/>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Adjust the tracking per octave. Minimum value 0.94, maximum 1.06.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="styleSheet">
        <string notr="true">QDoubleSpinBox {
@@ -738,7 +738,7 @@ color: white;
 }
 
 QToolTip {
-background: #006599;
+background:rgba(120, 120, 120, 255);
 color: white;
 }</string>
       </property>
@@ -771,7 +771,7 @@ color: white;
        </rect>
       </property>
       <property name="toolTip">
-       <string/>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Voltage offset. Minimum value -127, maximum value 127.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="layoutDirection">
        <enum>Qt::LeftToRight</enum>
@@ -789,9 +789,8 @@ color: white;
 	color: white;
 	padding:0, 3, 0, 0;
 }
-
 QToolTip {
-background: #006599;
+background:rgba(120, 120, 120, 255);
 color: white;
 }</string>
       </property>
@@ -808,10 +807,10 @@ color: white;
        <enum>QAbstractSpinBox::NoButtons</enum>
       </property>
       <property name="minimum">
-       <number>-1314</number>
+       <number>-127</number>
       </property>
       <property name="maximum">
-       <number>1314</number>
+       <number>127</number>
       </property>
       <property name="value">
        <number>0</number>
@@ -1084,7 +1083,7 @@ color: white;
        </font>
       </property>
       <property name="toolTip">
-       <string/>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Adjust the tracking per octave. Minimum value 0.94, maximum 1.06.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="styleSheet">
        <string notr="true">QDoubleSpinBox {
@@ -1098,7 +1097,7 @@ color: white;
 }
 
 QToolTip {
-background: #006599;
+background:rgba(120, 120, 120, 255);
 color: white;
 }</string>
       </property>
@@ -1131,7 +1130,7 @@ color: white;
        </rect>
       </property>
       <property name="toolTip">
-       <string/>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Voltage offset. Minimum value -127, maximum value 127.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="layoutDirection">
        <enum>Qt::LeftToRight</enum>
@@ -1151,7 +1150,7 @@ color: white;
 }
 
 QToolTip {
-background: #006599;
+background:rgba(120, 120, 120, 255);
 color: white;
 }</string>
       </property>
@@ -1168,10 +1167,10 @@ color: white;
        <enum>QAbstractSpinBox::NoButtons</enum>
       </property>
       <property name="minimum">
-       <number>-2000</number>
+       <number>-127</number>
       </property>
       <property name="maximum">
-       <number>2000</number>
+       <number>127</number>
       </property>
       <property name="value">
        <number>0</number>
