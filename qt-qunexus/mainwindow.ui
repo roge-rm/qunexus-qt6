@@ -678,7 +678,7 @@ QTabBar::tab:selected {
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <property name="elideMode">
       <enum>Qt::ElideRight</enum>
@@ -7303,9 +7303,9 @@ qproperty-alignment: AlignCenter;
       <widget class="QLabel" name="label_115">
        <property name="geometry">
         <rect>
-         <x>121</x>
+         <x>119</x>
          <y>310</y>
-         <width>51</width>
+         <width>54</width>
          <height>16</height>
         </rect>
        </property>
@@ -7339,9 +7339,9 @@ qproperty-alignment: AlignCenter;
       <widget class="QLabel" name="label_114">
        <property name="geometry">
         <rect>
-         <x>121</x>
+         <x>119</x>
          <y>277</y>
-         <width>51</width>
+         <width>54</width>
          <height>16</height>
         </rect>
        </property>
@@ -8243,7 +8243,7 @@ QToolTip {
        </widget>
        <widget class="QComboBox" name="SEQ_clock_source">
         <property name="enabled">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
         <property name="geometry">
          <rect>
@@ -8272,7 +8272,7 @@ QToolTip {
          </font>
         </property>
         <property name="cursor">
-         <cursorShape>ForbiddenCursor</cursorShape>
+         <cursorShape>PointingHandCursor</cursorShape>
         </property>
         <property name="contextMenuPolicy">
          <enum>Qt::DefaultContextMenu</enum>
@@ -8281,20 +8281,41 @@ QToolTip {
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;External clocks not yet implemented&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox {
+         <string notr="true">QComboBox QAbstractItemView
+{
+    min-width: 140px;
+    min-height: 55;
+	color:white;
+}
+
+QComboBox {
         font-family: &quot;Droid Sans&quot;;
         font-size: 10px;
         background: #666;
         padding: 2px 4px;
         border-style: outset;
         border-radius: 4px;
-        border-width: 0px;
-		color: #888888
+        border-width: 1px;
+        border-color: black;
+        color: white;
 }
+
+QComboBox::drop-down {
+        border-radius:0;
+        border-left-color: darkgray;
+        border-left-style: solid;
+        border-width: 1pt;
+        border: 1px;
+        margin: 0px;
+        padding: 0px;
+        background-color: transparent;
+        color: white;
+}
+
+
 QComboBox::drop-down:button {
         width: 15px;
         height: 15px;
-		left: 30px;
 }
 
 QComboBox::down-arrow {
@@ -8307,7 +8328,32 @@ QComboBox::down-arrow {
 QComboBox::down-arrow:disabled {
         image: url(url(:/images/resources/images/Arrow.png));
         right: 30px;
-}</string>
+}
+
+QListView {
+        background: rgba(67, 67, 67, 255);
+        color: rgb(220, 220, 220);
+        min-height: 90px;
+        margin: 0 0 0 0;
+}
+
+QListView::item {
+        background: rgba(67, 67, 67, 255);
+        border: 0px;
+        color: white;
+}
+
+QListView::item:hover {
+        background: rgba(67, 67, 67, 255);
+        border: 0;
+        color: white;
+}
+
+QToolTip {
+    background: #006599;
+    color: white;
+}
+</string>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -8326,17 +8372,32 @@ QComboBox::down-arrow:disabled {
         </property>
         <item>
          <property name="text">
+          <string>Auto</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
           <string>Internal</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>MIDI</string>
+          <string>USB Port 1</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>CV Clock</string>
+          <string>Expander In</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>CV In 1</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>CV In 2</string>
          </property>
         </item>
        </widget>

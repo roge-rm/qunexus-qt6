@@ -498,7 +498,7 @@
     "SEQ_KB_split": 0,
     "SEQ_KB_upper": 1,
     "SEQ_clock_dest": "USB 1 + Expander",
-    "SEQ_clock_source": "Internal",
+    "SEQ_clock_source": "Auto",
     "SEQ_swing": 50,
     "SEQ_tempo": 126,
     "SEQ_track_1_arp_pattern": "Order",

@@ -847,6 +847,7 @@ void MainWindow::slotFindAndConnectUi()
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void MainWindow::slotUpdateParametersUi(QVariantMap map)
 {
+    qDebug() << "slotUpdateParametersUi called";
     QMapIterator<QString, QVariant> i(map);
 
     while(i.hasNext())
@@ -877,6 +878,23 @@ void MainWindow::slotUpdateParametersUi(QVariantMap map)
             if(!presetManager->specialProcessingParamList.contains(i.key()))
             {
 
+                if(i.key() == "Globals_LED_Refresh_Style")
+                {
+                    qDebug() << i.key() << i.value().toString();
+
+                    if(i.value().toString() == "Normal")
+                    {
+                        ledRefreshNormal->setChecked(true);
+                    }
+                    else if(i.value().toString() == "Control Only")
+                    {
+                        ledRefreshSilent->setChecked(true);
+                    }
+                    else if(i.value().toString() == "All Off")
+                    {
+                        ledRefreshAllOff->setChecked(true);
+                    }
+                }
                 if(QComboBox* menu = this->findChild<QComboBox *>(i.key()))
                 {
                     int textIndex = menu->findText(i.value().toString());
@@ -3857,8 +3875,7 @@ void MainWindow::slotFixDropDownWidth(QComboBox* thisDropDown)
 {
     int i, length = 0, index = 0;
 
-    if (thisDropDown->objectName() == "SEQ_clock_source" ||
-        thisDropDown->objectName() == "SEQ_track_1_poly" ||
+    if (thisDropDown->objectName() == "SEQ_track_1_poly" ||
         thisDropDown->objectName() == "SEQ_track_2_poly" ||
         thisDropDown->objectName() == "SEQ_track_3_poly" )
     {

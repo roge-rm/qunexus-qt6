@@ -675,7 +675,7 @@ void PresetManager::slotCreateDefaultParamMap()
     // new 2.0 params - mirrors Qn_preset_struct.h in firmware
     defaultParamMap["Preset_Struct_is_V2"] = 36; // structValidV2 - magic number to verify that this is a 2.0 preset
 
-    defaultParamMap["SEQ_clock_source"] = "Internal";        // 4 bits are the sources (int/usb/exp/gate/CV)
+    defaultParamMap["SEQ_clock_source"] = "Auto";        // 4 bits are the sources (int/usb/exp/gate/CV)
     defaultParamMap["SEQ_clock_dest"] = "USB 1 + Expander";            // 4 bits are the destinations (usb/exp)
     defaultParamMap["SEQ_tempo"] = 126;
     defaultParamMap["SEQ_swing"] = 50;
@@ -737,6 +737,7 @@ void PresetManager::slotCreateDefaultParamMap()
 
     //Gain Params
     specialProcessingParamList.append("Globals_Gain");
+    specialProcessingParamList.append("Globals_LED_Refresh_Style");
     specialProcessingParamList.append("Keyboard_Velocity_Gain");
     specialProcessingParamList.append("Keyboard_Pitch_Bend_Gain");
     specialProcessingParamList.append("Keyboard_Channel_Pressure_Gain");

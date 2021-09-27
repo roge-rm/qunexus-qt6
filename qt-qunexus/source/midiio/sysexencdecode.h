@@ -99,7 +99,7 @@ public:
     void lineInit();
 
     // 2.0 funcs
-    void encodeSequencerPreset(QVariantMap preset); // encodes preset into the qnSeq struct
+    //void encodeSequencerPreset(QVariantMap preset); // encodes preset into the qnSeq struct
 
 
     ///////////////////////////////////////

@@ -861,11 +861,12 @@ SysExEncDecode::SysExEncDecode(QWidget *parent) :
                "Legato";
     SEQ_clock_source
             <<
+               "Auto"<<
                "Internal"<<
-               "USB"<<
-               "Expander"<<
-               "CV1"<<
-               "CV2";
+               "USB Port 1"<<
+               "Expander In"<<
+               "CV In 1"<<
+               "CV In 2";
     SEQ_track_mode
             <<
                "Off"<<
@@ -983,6 +984,14 @@ SysExEncDecode::SysExEncDecode(QWidget *parent) :
     dictionary.insert("Expander" , 1);
     dictionary.insert("USB 1 + Expander" , 2);
     dictionary.insert("Disabled", 3);
+
+    //*** clock inputs
+    dictionary.insert("Auto" , 0);
+    dictionary.insert("Internal" , 1);
+    dictionary.insert("USB Port 1" , 2);
+    dictionary.insert("Expander In" , 3);
+    dictionary.insert("CV In 1" , 4);
+    dictionary.insert("CV In 2" , 5);
 
     //*** sources
     dictionary.insert("None" , 0);
@@ -1870,121 +1879,121 @@ void SysExEncDecode::lineInit()
 ///////////////////////////////////////
 ///////////////// 2.0 /////////////////
 ///////////////////////////////////////
-void SysExEncDecode::encodeSequencerPreset(QVariantMap preset) // encodes a preset into the qnSeq struct
-{
-    QVariant tempPresetValue;
+//void SysExEncDecode::encodeSequencerPreset(QVariantMap preset) // encodes a preset into the qnSeq struct
+//{
+//    QVariant tempPresetValue;
 
-    // sequencer
-    qnSeq.clock_source = preset.value("SEQ_clock_source").toUInt();
-    qnSeq.clock_dest = preset.value("SEQ_clock_dest").toUInt();
-    qnSeq.BPM = preset.value("SEQ_tempo").toUInt();
-    qnSeq.swingPercent = preset.value("SEQ_swing").toUInt();
-    qnSeq.kbSplit = preset.value("SEQ_KB_split").toUInt();
-    qnSeq.kbSplitLower = preset.value("SEQ_KB_lower").toUInt();
-    qnSeq.kbSplitUpper = preset.value("SEQ_KB_upper").toUInt();
+//    // sequencer
+//    qnSeq.clock_source = preset.value("SEQ_clock_source").toUInt();
+//    qnSeq.clock_dest = preset.value("SEQ_clock_dest").toUInt();
+//    qnSeq.BPM = preset.value("SEQ_tempo").toUInt();
+//    qnSeq.swingPercent = preset.value("SEQ_swing").toUInt();
+//    qnSeq.kbSplit = preset.value("SEQ_KB_split").toUInt();
+//    qnSeq.kbSplitLower = preset.value("SEQ_KB_lower").toUInt();
+//    qnSeq.kbSplitUpper = preset.value("SEQ_KB_upper").toUInt();
 
-    // track 1
-    tempPresetValue = dictionary.value( preset.value("SEQ_track_1_mode").toString() );
-    qnSeq.track[0].mode = tempPresetValue.toUInt();
+//    // track 1
+//    tempPresetValue = dictionary.value( preset.value("SEQ_track_1_mode").toString() );
+//    qnSeq.track[0].mode = tempPresetValue.toUInt();
 
-    tempPresetValue = dictionary.value( preset.value("SEQ_track_1_poly").toString() );
-    qnSeq.track[0].polyphony = tempPresetValue.toUInt();
+//    tempPresetValue = dictionary.value( preset.value("SEQ_track_1_poly").toString() );
+//    qnSeq.track[0].polyphony = tempPresetValue.toUInt();
 
-    tempPresetValue = dictionary.value( preset.value("SEQ_track_1_arp_pattern").toString() );
-    qnSeq.track[0].patternPlay = tempPresetValue.toUInt();
+//    tempPresetValue = dictionary.value( preset.value("SEQ_track_1_arp_pattern").toString() );
+//    qnSeq.track[0].patternPlay = tempPresetValue.toUInt();
 
-    tempPresetValue = dictionary.value( preset.value("SEQ_track_1_seq_pattern").toString() );
-    qnSeq.track[0].patternSeq = tempPresetValue.toUInt();
+//    tempPresetValue = dictionary.value( preset.value("SEQ_track_1_seq_pattern").toString() );
+//    qnSeq.track[0].patternSeq = tempPresetValue.toUInt();
 
-    tempPresetValue = dictionary.value( preset.value("SEQ_track_1_division").toString() );
-    qnSeq.track[0].division = tempPresetValue.toUInt();
+//    tempPresetValue = dictionary.value( preset.value("SEQ_track_1_division").toString() );
+//    qnSeq.track[0].division = tempPresetValue.toUInt();
 
-    tempPresetValue = dictionary.value( preset.value("SEQ_track_1_dot").toString() );
-    qnSeq.track[0].dotTrip = tempPresetValue.toUInt();
+//    tempPresetValue = dictionary.value( preset.value("SEQ_track_1_dot").toString() );
+//    qnSeq.track[0].dotTrip = tempPresetValue.toUInt();
 
-    qnSeq.track[0].gatePercent = preset.value("SEQ_track_1_gate").toUInt();
-    qnSeq.track[0].chainX = 44; // hard coded at ABCD, this form may change in 2.1
-    qnSeq.track[0].chainY = 224;
-    qnSeq.track[0].chainZ = 0;
-    qnSeq.track[0].length = preset.value("SEQ_track_1_length").toUInt();
+//    qnSeq.track[0].gatePercent = preset.value("SEQ_track_1_gate").toUInt();
+//    qnSeq.track[0].chainX = 44; // hard coded at ABCD, this form may change in 2.1
+//    qnSeq.track[0].chainY = 224;
+//    qnSeq.track[0].chainZ = 0;
+//    qnSeq.track[0].length = preset.value("SEQ_track_1_length").toUInt();
 
-    tempPresetValue = dictionary.value( preset.value("SEQ_track_1_dest").toString() );
-    qnSeq.track[0].dest = tempPresetValue.toUInt();
+//    tempPresetValue = dictionary.value( preset.value("SEQ_track_1_dest").toString() );
+//    qnSeq.track[0].dest = tempPresetValue.toUInt();
 
-    tempPresetValue = dictionary.value( preset.value("SEQ_track_1_midi_ch").toString() );
-    qnSeq.track[0].channel = tempPresetValue.toUInt();
-    //qDebug() << "channel: " << qnSeq.track[0].channel;
+//    tempPresetValue = dictionary.value( preset.value("SEQ_track_1_midi_ch").toString() );
+//    qnSeq.track[0].channel = tempPresetValue.toUInt();
+//    //qDebug() << "channel: " << qnSeq.track[0].channel;
 
-    qnSeq.track[0].transpose = preset.value("SEQ_track_1_transp").toUInt();
+//    qnSeq.track[0].transpose = preset.value("SEQ_track_1_transp").toUInt();
 
-    // track 2
-    tempPresetValue = dictionary.value( preset.value("SEQ_track_2_mode").toString() );
-    qnSeq.track[1].mode = tempPresetValue.toUInt();
+//    // track 2
+//    tempPresetValue = dictionary.value( preset.value("SEQ_track_2_mode").toString() );
+//    qnSeq.track[1].mode = tempPresetValue.toUInt();
 
-    tempPresetValue = dictionary.value( preset.value("SEQ_track_2_poly").toString() );
-    qnSeq.track[1].polyphony = tempPresetValue.toUInt();
+//    tempPresetValue = dictionary.value( preset.value("SEQ_track_2_poly").toString() );
+//    qnSeq.track[1].polyphony = tempPresetValue.toUInt();
 
-    tempPresetValue = dictionary.value( preset.value("SEQ_track_2_arp_pattern").toString() );
-    qnSeq.track[1].patternPlay = tempPresetValue.toUInt();
+//    tempPresetValue = dictionary.value( preset.value("SEQ_track_2_arp_pattern").toString() );
+//    qnSeq.track[1].patternPlay = tempPresetValue.toUInt();
 
-    tempPresetValue = dictionary.value( preset.value("SEQ_track_2_seq_pattern").toString() );
-    qnSeq.track[1].patternSeq = tempPresetValue.toUInt();
+//    tempPresetValue = dictionary.value( preset.value("SEQ_track_2_seq_pattern").toString() );
+//    qnSeq.track[1].patternSeq = tempPresetValue.toUInt();
 
-    tempPresetValue = dictionary.value( preset.value("SEQ_track_2_division").toString() );
-    qnSeq.track[1].division = tempPresetValue.toUInt();
+//    tempPresetValue = dictionary.value( preset.value("SEQ_track_2_division").toString() );
+//    qnSeq.track[1].division = tempPresetValue.toUInt();
 
-    tempPresetValue = dictionary.value( preset.value("SEQ_track_2_dot").toString() );
-    qnSeq.track[1].dotTrip = tempPresetValue.toUInt();
+//    tempPresetValue = dictionary.value( preset.value("SEQ_track_2_dot").toString() );
+//    qnSeq.track[1].dotTrip = tempPresetValue.toUInt();
 
-    qnSeq.track[1].gatePercent = preset.value("SEQ_track_2_gate").toUInt();
-    qnSeq.track[1].chainX = 44; // hard coded at ABCD, this form may change in 2.1
-    qnSeq.track[1].chainY = 224;
-    qnSeq.track[1].chainZ = 0;
-    qnSeq.track[1].length = preset.value("SEQ_track_2_length").toUInt();
+//    qnSeq.track[1].gatePercent = preset.value("SEQ_track_2_gate").toUInt();
+//    qnSeq.track[1].chainX = 44; // hard coded at ABCD, this form may change in 2.1
+//    qnSeq.track[1].chainY = 224;
+//    qnSeq.track[1].chainZ = 0;
+//    qnSeq.track[1].length = preset.value("SEQ_track_2_length").toUInt();
 
-    tempPresetValue = dictionary.value( preset.value("SEQ_track_2_dest").toString() );
-    qnSeq.track[1].dest = tempPresetValue.toUInt();
+//    tempPresetValue = dictionary.value( preset.value("SEQ_track_2_dest").toString() );
+//    qnSeq.track[1].dest = tempPresetValue.toUInt();
 
-    tempPresetValue = dictionary.value( preset.value("SEQ_track_2_midi_ch").toString() );
-    qnSeq.track[1].channel = tempPresetValue.toUInt();
-    //qDebug() << "channel: " << qnSeq.track[1].channel;
+//    tempPresetValue = dictionary.value( preset.value("SEQ_track_2_midi_ch").toString() );
+//    qnSeq.track[1].channel = tempPresetValue.toUInt();
+//    //qDebug() << "channel: " << qnSeq.track[1].channel;
 
-    qnSeq.track[1].transpose = preset.value("SEQ_track_2_transp").toUInt();
+//    qnSeq.track[1].transpose = preset.value("SEQ_track_2_transp").toUInt();
 
-    // track 3
-    tempPresetValue = dictionary.value( preset.value("SEQ_track_3_mode").toString() );
-    qnSeq.track[2].mode = tempPresetValue.toUInt();
+//    // track 3
+//    tempPresetValue = dictionary.value( preset.value("SEQ_track_3_mode").toString() );
+//    qnSeq.track[2].mode = tempPresetValue.toUInt();
 
-    tempPresetValue = dictionary.value( preset.value("SEQ_track_3_poly").toString() );
-    qnSeq.track[2].polyphony = tempPresetValue.toUInt();
+//    tempPresetValue = dictionary.value( preset.value("SEQ_track_3_poly").toString() );
+//    qnSeq.track[2].polyphony = tempPresetValue.toUInt();
 
-    tempPresetValue = dictionary.value( preset.value("SEQ_track_3_arp_pattern").toString() );
-    qnSeq.track[2].patternPlay = tempPresetValue.toUInt();
+//    tempPresetValue = dictionary.value( preset.value("SEQ_track_3_arp_pattern").toString() );
+//    qnSeq.track[2].patternPlay = tempPresetValue.toUInt();
 
-    tempPresetValue = dictionary.value( preset.value("SEQ_track_3_seq_pattern").toString() );
-    qnSeq.track[2].patternSeq = tempPresetValue.toUInt();
+//    tempPresetValue = dictionary.value( preset.value("SEQ_track_3_seq_pattern").toString() );
+//    qnSeq.track[2].patternSeq = tempPresetValue.toUInt();
 
-    tempPresetValue = dictionary.value( preset.value("SEQ_track_3_division").toString() );
-    qnSeq.track[2].division = tempPresetValue.toUInt();
+//    tempPresetValue = dictionary.value( preset.value("SEQ_track_3_division").toString() );
+//    qnSeq.track[2].division = tempPresetValue.toUInt();
 
-    tempPresetValue = dictionary.value( preset.value("SEQ_track_3_dot").toString() );
-    qnSeq.track[2].dotTrip = tempPresetValue.toUInt();
+//    tempPresetValue = dictionary.value( preset.value("SEQ_track_3_dot").toString() );
+//    qnSeq.track[2].dotTrip = tempPresetValue.toUInt();
 
-    qnSeq.track[2].gatePercent = preset.value("SEQ_track_3_gate").toUInt();
-    qnSeq.track[2].chainX = 44; // hard coded at ABCD, this form may change in 2.1
-    qnSeq.track[2].chainY = 224;
-    qnSeq.track[2].chainZ = 0;
-    qnSeq.track[2].length = preset.value("SEQ_track_3_length").toUInt();
+//    qnSeq.track[2].gatePercent = preset.value("SEQ_track_3_gate").toUInt();
+//    qnSeq.track[2].chainX = 44; // hard coded at ABCD, this form may change in 2.1
+//    qnSeq.track[2].chainY = 224;
+//    qnSeq.track[2].chainZ = 0;
+//    qnSeq.track[2].length = preset.value("SEQ_track_3_length").toUInt();
 
-    tempPresetValue = dictionary.value( preset.value("SEQ_track_3_dest").toString() );
-    qnSeq.track[2].dest = tempPresetValue.toUInt();
+//    tempPresetValue = dictionary.value( preset.value("SEQ_track_3_dest").toString() );
+//    qnSeq.track[2].dest = tempPresetValue.toUInt();
 
-    tempPresetValue = dictionary.value( preset.value("SEQ_track_3_midi_ch").toString() );
-    qnSeq.track[2].channel = tempPresetValue.toUInt();
-    //qDebug() << "channel: " << qnSeq.track[2].channel;
+//    tempPresetValue = dictionary.value( preset.value("SEQ_track_3_midi_ch").toString() );
+//    qnSeq.track[2].channel = tempPresetValue.toUInt();
+//    //qDebug() << "channel: " << qnSeq.track[2].channel;
 
-    qnSeq.track[2].transpose = preset.value("SEQ_track_3_transp").toUInt();
-}
+//    qnSeq.track[2].transpose = preset.value("SEQ_track_3_transp").toUInt();
+//}
 
 ///////////////////////////////////////
 /////////////QuNexusSysex//////////////
@@ -2117,7 +2126,7 @@ void SysExEncDecode::slotSysExEncodePreset(QVariantMap preset, unsigned char pre
 
     // ------------------- 2.0 parameters -----------------------
 
-    encodeSequencerPreset(preset); // encode this preset into the qnSeq struct
+    //encodeSequencerPreset(preset); // encode this preset into the qnSeq struct
 
     //qDebug() << "------------ begin 2.0 sequencer encoding --------";
     encode(qnSeq.valid); // magic number to confirm that this is the valid 2.0 format
@@ -2618,6 +2627,9 @@ void SysExEncDecode::slotProcessPreset(QByteArray presetPacket)
                         // test if ranges are valid
                         if (slotTestQListRange(&SEQ_clock_source, thisRight, JSONCounter))
                         {
+#ifdef SYX_DEBUG_PRESET_PACKET
+                            qDebug() << "SEQ_clock_source[thisRight]: " << SEQ_clock_source[thisRight];
+#endif
                             // source
                             editBufferPresetMap->insert(keyLayerJSON[JSONCounter], SEQ_clock_source[thisRight]); // write value to edit buffer
                         }
@@ -2755,9 +2767,6 @@ void SysExEncDecode::slotProcessPreset(QByteArray presetPacket)
                 {
 
                     // EB TODO - implement signed chars
- #ifdef SYX_DEBUG_PRESET_PACKET
-                    qDebug() << "******* SIGNED CHAR *********";
- #endif
                     int thisFixedChar = (signed char)buffer[thisByte];
 #ifdef SYX_DEBUG_PRESET_PACKET
                     qDebug() << "Counter: " << counter << " JSONCounter: " << JSONCounter << "signed char: " << buffer[thisByte] << " -- " << keyLayerJSON[JSONCounter] << " fixed char" << thisFixedChar;
@@ -3054,7 +3063,7 @@ bool SysExEncDecode::slotTestQListRange(QStringList *thisList, int thisIndex, in
     }
     else
     {
-        qDebug() << "******* Out of Range Value ******* keyLayerJSON: " << keyLayerJSON[thisJSONCounter] << " JSONCounter:" << thisJSONCounter;
+        qDebug() << "******* Out of Range Value ******* keyLayerJSON: " << keyLayerJSON[thisJSONCounter] << " JSONCounter:" << thisJSONCounter << "index/value: " << thisIndex;
         OORParams = OORParams.append(QString(keyLayerJSON[thisJSONCounter]).append("\n"));
         outOfRangeFlag = true;
         return false;
