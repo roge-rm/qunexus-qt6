@@ -473,30 +473,33 @@ void MainWindow::slotFindAndConnectUi()
 
     while(i.hasNext())
     {
+        qDebug() << "Next...";
         i.next();
 
         //Look for Keyboard Params
+        qDebug() << "ThisKey: " << i.key();
+
         if(i.key().startsWith("Keyboard") || i.key().startsWith("SEQ") )
         {
 
-            //qDebug() << "MAPS" << i.key() << ":" << i.value();
+            qDebug() << "MAPS" << i.key() << ":" << i.value();
 
             if(QComboBox* menu = this->findChild<QComboBox *>(i.key()))
             {
-                //qDebug() << "QComboBox" << menu->objectName();
+                qDebug() << "QComboBox" << menu->objectName();
                 connect(menu, SIGNAL(currentIndexChanged(int)), presetManager, SLOT(slotValueChanged()));
                 slotFixDropDownWidth(menu);
 
             }
             else if(QSpinBox* numberBox = this->findChild<QSpinBox *>(i.key()))
             {
-                //qDebug() << "QSpinBox" << numberBox->objectName();
+                qDebug() << "QSpinBox" << numberBox->objectName();
                 connect(numberBox, SIGNAL(editingFinished()), presetManager, SLOT(slotValueChanged()));
                 //numberBox->setStyleSheet("QToolTip {background: #006599;color: white;}");
             }
             else if(QDoubleSpinBox* floatBox = this->findChild<QDoubleSpinBox *>(i.key()))
             {
-                //qDebug() << "QDoubleSpinBox" << floatBox->objectName();
+                qDebug() << "QDoubleSpinBox" << floatBox->objectName();
                 connect(floatBox, SIGNAL(editingFinished()), presetManager, SLOT(slotValueChanged()));
                 //floatBox->setStyleSheet("QToolTip {background: #006599;color: white;}");
             }
@@ -508,7 +511,7 @@ void MainWindow::slotFindAndConnectUi()
             else
             {
                 //------------ Handle Special Keyboard Params: ----------//
-
+                qDebug() << "Did not find: " << i.key();
                 //
                 if(i.key() == "Keyboard_Global_LED_Mode")
                 {
@@ -919,7 +922,7 @@ void MainWindow::slotUpdateParametersUi(QVariantMap map)
             //----- If in the special list...
             else
             {
-                //qDebug() << "Special Param:" << i.key();
+                qDebug() << "Special Param:" << i.key();
 
                 //Gain & Spin Boxes
                 if(QDoubleSpinBox* floatBox = this->findChild<QDoubleSpinBox *>(i.key()))

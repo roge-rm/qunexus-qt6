@@ -678,7 +678,7 @@ QTabBar::tab:selected {
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <property name="elideMode">
       <enum>Qt::ElideRight</enum>
@@ -5781,6 +5781,11 @@ QComboBox::drop-down:button{
           <string>Pressure</string>
          </property>
         </item>
+        <item>
+         <property name="text">
+          <string>Tilt</string>
+         </property>
+        </item>
        </widget>
       </widget>
       <widget class="QFrame" name="frame_30">
@@ -6609,9 +6614,9 @@ border: none;
        <property name="frameShadow">
         <enum>QFrame::Raised</enum>
        </property>
-       <widget class="QSpinBox" name="Keyboard_Global_Program_Change_D">
+       <widget class="QDoubleSpinBox" name="Keyboard_Global_Bend_Pad_Sensitivity">
         <property name="enabled">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
         <property name="geometry">
          <rect>
@@ -6631,13 +6636,19 @@ border: none;
          <bool>false</bool>
         </property>
         <property name="styleSheet">
-         <string notr="true">QSpinBox {
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 0px;
-		color: #888888
+         <string notr="true">QDoubleSpinBox {
+	font-family:&quot;Arial&quot;;
+	border-radius:4.0;
+	border-color:black;
+	background-color: rgba(67, 67, 67, 255);
+	font-size: 11px;
+	color: white;
+	padding:0, 3, 0, 0;
+}
+
+QToolTip {
+background: #006599;
+color: red;
 }</string>
         </property>
         <property name="wrapping">
@@ -6656,13 +6667,13 @@ border: none;
          <string/>
         </property>
         <property name="minimum">
-         <number>10</number>
+         <double>0.500000000000000</double>
         </property>
         <property name="maximum">
-         <number>250</number>
+         <double>2.000000000000000</double>
         </property>
         <property name="value">
-         <number>12</number>
+         <double>1.000000000000000</double>
         </property>
        </widget>
       </widget>
@@ -15500,6 +15511,11 @@ QToolTip {
         </property>
         <item>
          <property name="text">
+          <string>Off</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
           <string>Expander Port</string>
          </property>
         </item>
@@ -21273,6 +21289,11 @@ QToolTip {
         </property>
         <item>
          <property name="text">
+          <string>Off</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
           <string>Expander Port</string>
          </property>
         </item>
@@ -26288,6 +26309,63 @@ QToolTip {
         <string/>
        </property>
       </widget>
+      <widget class="QSpinBox" name="Keyboard_Global_Program_Change_D">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>560</x>
+         <y>20</y>
+         <width>31</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="toolTip">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;(not yet implemented) Sets the sensitivity of the pitch bend pad (10 to 250, default 100).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QSpinBox {
+        background: #666;
+        padding: 2px 4px;
+        border-style: outset;
+        border-radius: 4px;
+        border-width: 0px;
+		color: #888888
+}</string>
+       </property>
+       <property name="wrapping">
+        <bool>false</bool>
+       </property>
+       <property name="frame">
+        <bool>true</bool>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+       <property name="buttonSymbols">
+        <enum>QAbstractSpinBox::NoButtons</enum>
+       </property>
+       <property name="specialValueText">
+        <string/>
+       </property>
+       <property name="minimum">
+        <number>10</number>
+       </property>
+       <property name="maximum">
+        <number>250</number>
+       </property>
+       <property name="value">
+        <number>12</number>
+       </property>
+      </widget>
+      <zorder>Keyboard_Global_Program_Change_D</zorder>
       <zorder>Tab_settings_bg</zorder>
       <zorder>label_92</zorder>
       <zorder>midi_outputs</zorder>
@@ -26705,7 +26783,7 @@ QPushButton:disabled {
   <tabstop>Keyboard_Global_Transpose</tabstop>
   <tabstop>Keyboard_Global_LED_Mode</tabstop>
   <tabstop>Keyboard_Global_LED_Remote_Channel</tabstop>
-  <tabstop>Keyboard_Global_Program_Change_D</tabstop>
+  <tabstop>Keyboard_Global_Bend_Pad_Sensitivity</tabstop>
   <tabstop>saveAndSend</tabstop>
   <tabstop>presetLibraryList</tabstop>
   <tabstop>deletePreset</tabstop>

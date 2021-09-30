@@ -66,7 +66,7 @@ SysExEncDecode::SysExEncDecode(QWidget *parent) :
                "Keyboard_Global_Pressure_Active"<<
                "Keyboard_Global_Tilt_Active"<<
                "Keyboard_Global_Channel_Pressure_Active"<<
-               "Keyboard_Global_Pitch_Bend_Active"<<
+               "Keyboard_Global_Bend_Pad_Sensitivity"<<
                "Keyboard_Global_Poly_Aftertouch_Active"<<
                "Keyboard_Global_CC_Active"<<
                "Keyboard_Global_Channel_Rotation_Offset"<<
@@ -1268,7 +1268,7 @@ SysExEncDecode::SysExEncDecode(QWidget *parent) :
     paramTypeMap.insert("Keyboard_Global_Pressure_Active", "char");
     paramTypeMap.insert("Keyboard_Global_Tilt_Active", "char");
     paramTypeMap.insert("Keyboard_Global_Channel_Pressure_Active", "char");
-    paramTypeMap.insert("Keyboard_Global_Pitch_Bend_Active", "char");
+    paramTypeMap.insert("Keyboard_Global_Bend_Pad_Sensitivity", "char");
     paramTypeMap.insert("Keyboard_Global_Poly_Aftertouch_Active", "char");
     paramTypeMap.insert("Keyboard_Global_CC_Active", "char");
     paramTypeMap.insert("Keyboard_Global_Channel_Rotation_Offset", "char");
@@ -1879,121 +1879,128 @@ void SysExEncDecode::lineInit()
 ///////////////////////////////////////
 ///////////////// 2.0 /////////////////
 ///////////////////////////////////////
-//void SysExEncDecode::encodeSequencerPreset(QVariantMap preset) // encodes a preset into the qnSeq struct
-//{
-//    QVariant tempPresetValue;
+void SysExEncDecode::encodeSequencerPreset(QVariantMap preset) // encodes a preset into the qnSeq struct
+{
+    QVariant tempPresetValue;
 
-//    // sequencer
-//    qnSeq.clock_source = preset.value("SEQ_clock_source").toUInt();
-//    qnSeq.clock_dest = preset.value("SEQ_clock_dest").toUInt();
-//    qnSeq.BPM = preset.value("SEQ_tempo").toUInt();
-//    qnSeq.swingPercent = preset.value("SEQ_swing").toUInt();
-//    qnSeq.kbSplit = preset.value("SEQ_KB_split").toUInt();
-//    qnSeq.kbSplitLower = preset.value("SEQ_KB_lower").toUInt();
-//    qnSeq.kbSplitUpper = preset.value("SEQ_KB_upper").toUInt();
+    // sequencer
+    tempPresetValue = dictionary.value( preset.value("SEQ_clock_source").toString() );
+    qnSeq.clock_source = tempPresetValue.toUInt();
+    qDebug() << "SEQ_clock_source: " << qnSeq.clock_source;
 
-//    // track 1
-//    tempPresetValue = dictionary.value( preset.value("SEQ_track_1_mode").toString() );
-//    qnSeq.track[0].mode = tempPresetValue.toUInt();
+    tempPresetValue = dictionary.value( preset.value("SEQ_clock_dest").toString() );
+    qnSeq.clock_dest = tempPresetValue.toUInt();
+    qDebug() << "SEQ_clock_dest: " << qnSeq.clock_dest;
 
-//    tempPresetValue = dictionary.value( preset.value("SEQ_track_1_poly").toString() );
-//    qnSeq.track[0].polyphony = tempPresetValue.toUInt();
 
-//    tempPresetValue = dictionary.value( preset.value("SEQ_track_1_arp_pattern").toString() );
-//    qnSeq.track[0].patternPlay = tempPresetValue.toUInt();
+    qnSeq.BPM = preset.value("SEQ_tempo").toUInt();
+    qnSeq.swingPercent = preset.value("SEQ_swing").toUInt();
+    qnSeq.kbSplit = preset.value("SEQ_KB_split").toUInt();
+    qnSeq.kbSplitLower = preset.value("SEQ_KB_lower").toUInt();
+    qnSeq.kbSplitUpper = preset.value("SEQ_KB_upper").toUInt();
 
-//    tempPresetValue = dictionary.value( preset.value("SEQ_track_1_seq_pattern").toString() );
-//    qnSeq.track[0].patternSeq = tempPresetValue.toUInt();
+    // track 1
+    tempPresetValue = dictionary.value( preset.value("SEQ_track_1_mode").toString() );
+    qnSeq.track[0].mode = tempPresetValue.toUInt();
 
-//    tempPresetValue = dictionary.value( preset.value("SEQ_track_1_division").toString() );
-//    qnSeq.track[0].division = tempPresetValue.toUInt();
+    tempPresetValue = dictionary.value( preset.value("SEQ_track_1_poly").toString() );
+    qnSeq.track[0].polyphony = tempPresetValue.toUInt();
 
-//    tempPresetValue = dictionary.value( preset.value("SEQ_track_1_dot").toString() );
-//    qnSeq.track[0].dotTrip = tempPresetValue.toUInt();
+    tempPresetValue = dictionary.value( preset.value("SEQ_track_1_arp_pattern").toString() );
+    qnSeq.track[0].patternPlay = tempPresetValue.toUInt();
 
-//    qnSeq.track[0].gatePercent = preset.value("SEQ_track_1_gate").toUInt();
-//    qnSeq.track[0].chainX = 44; // hard coded at ABCD, this form may change in 2.1
-//    qnSeq.track[0].chainY = 224;
-//    qnSeq.track[0].chainZ = 0;
-//    qnSeq.track[0].length = preset.value("SEQ_track_1_length").toUInt();
+    tempPresetValue = dictionary.value( preset.value("SEQ_track_1_seq_pattern").toString() );
+    qnSeq.track[0].patternSeq = tempPresetValue.toUInt();
 
-//    tempPresetValue = dictionary.value( preset.value("SEQ_track_1_dest").toString() );
-//    qnSeq.track[0].dest = tempPresetValue.toUInt();
+    tempPresetValue = dictionary.value( preset.value("SEQ_track_1_division").toString() );
+    qnSeq.track[0].division = tempPresetValue.toUInt();
 
-//    tempPresetValue = dictionary.value( preset.value("SEQ_track_1_midi_ch").toString() );
-//    qnSeq.track[0].channel = tempPresetValue.toUInt();
-//    //qDebug() << "channel: " << qnSeq.track[0].channel;
+    tempPresetValue = dictionary.value( preset.value("SEQ_track_1_dot").toString() );
+    qnSeq.track[0].dotTrip = tempPresetValue.toUInt();
 
-//    qnSeq.track[0].transpose = preset.value("SEQ_track_1_transp").toUInt();
+    qnSeq.track[0].gatePercent = preset.value("SEQ_track_1_gate").toUInt();
+    qnSeq.track[0].chainX = 44; // hard coded at ABCD, this form may change in 2.1
+    qnSeq.track[0].chainY = 224;
+    qnSeq.track[0].chainZ = 0;
+    qnSeq.track[0].length = preset.value("SEQ_track_1_length").toUInt();
 
-//    // track 2
-//    tempPresetValue = dictionary.value( preset.value("SEQ_track_2_mode").toString() );
-//    qnSeq.track[1].mode = tempPresetValue.toUInt();
+    tempPresetValue = dictionary.value( preset.value("SEQ_track_1_dest").toString() );
+    qnSeq.track[0].dest = tempPresetValue.toUInt();
 
-//    tempPresetValue = dictionary.value( preset.value("SEQ_track_2_poly").toString() );
-//    qnSeq.track[1].polyphony = tempPresetValue.toUInt();
+    tempPresetValue = dictionary.value( preset.value("SEQ_track_1_midi_ch").toString() );
+    qnSeq.track[0].channel = tempPresetValue.toUInt();
+    //qDebug() << "channel: " << qnSeq.track[0].channel;
 
-//    tempPresetValue = dictionary.value( preset.value("SEQ_track_2_arp_pattern").toString() );
-//    qnSeq.track[1].patternPlay = tempPresetValue.toUInt();
+    qnSeq.track[0].transpose = preset.value("SEQ_track_1_transp").toUInt();
 
-//    tempPresetValue = dictionary.value( preset.value("SEQ_track_2_seq_pattern").toString() );
-//    qnSeq.track[1].patternSeq = tempPresetValue.toUInt();
+    // track 2
+    tempPresetValue = dictionary.value( preset.value("SEQ_track_2_mode").toString() );
+    qnSeq.track[1].mode = tempPresetValue.toUInt();
 
-//    tempPresetValue = dictionary.value( preset.value("SEQ_track_2_division").toString() );
-//    qnSeq.track[1].division = tempPresetValue.toUInt();
+    tempPresetValue = dictionary.value( preset.value("SEQ_track_2_poly").toString() );
+    qnSeq.track[1].polyphony = tempPresetValue.toUInt();
 
-//    tempPresetValue = dictionary.value( preset.value("SEQ_track_2_dot").toString() );
-//    qnSeq.track[1].dotTrip = tempPresetValue.toUInt();
+    tempPresetValue = dictionary.value( preset.value("SEQ_track_2_arp_pattern").toString() );
+    qnSeq.track[1].patternPlay = tempPresetValue.toUInt();
 
-//    qnSeq.track[1].gatePercent = preset.value("SEQ_track_2_gate").toUInt();
-//    qnSeq.track[1].chainX = 44; // hard coded at ABCD, this form may change in 2.1
-//    qnSeq.track[1].chainY = 224;
-//    qnSeq.track[1].chainZ = 0;
-//    qnSeq.track[1].length = preset.value("SEQ_track_2_length").toUInt();
+    tempPresetValue = dictionary.value( preset.value("SEQ_track_2_seq_pattern").toString() );
+    qnSeq.track[1].patternSeq = tempPresetValue.toUInt();
 
-//    tempPresetValue = dictionary.value( preset.value("SEQ_track_2_dest").toString() );
-//    qnSeq.track[1].dest = tempPresetValue.toUInt();
+    tempPresetValue = dictionary.value( preset.value("SEQ_track_2_division").toString() );
+    qnSeq.track[1].division = tempPresetValue.toUInt();
 
-//    tempPresetValue = dictionary.value( preset.value("SEQ_track_2_midi_ch").toString() );
-//    qnSeq.track[1].channel = tempPresetValue.toUInt();
-//    //qDebug() << "channel: " << qnSeq.track[1].channel;
+    tempPresetValue = dictionary.value( preset.value("SEQ_track_2_dot").toString() );
+    qnSeq.track[1].dotTrip = tempPresetValue.toUInt();
 
-//    qnSeq.track[1].transpose = preset.value("SEQ_track_2_transp").toUInt();
+    qnSeq.track[1].gatePercent = preset.value("SEQ_track_2_gate").toUInt();
+    qnSeq.track[1].chainX = 44; // hard coded at ABCD, this form may change in 2.1
+    qnSeq.track[1].chainY = 224;
+    qnSeq.track[1].chainZ = 0;
+    qnSeq.track[1].length = preset.value("SEQ_track_2_length").toUInt();
 
-//    // track 3
-//    tempPresetValue = dictionary.value( preset.value("SEQ_track_3_mode").toString() );
-//    qnSeq.track[2].mode = tempPresetValue.toUInt();
+    tempPresetValue = dictionary.value( preset.value("SEQ_track_2_dest").toString() );
+    qnSeq.track[1].dest = tempPresetValue.toUInt();
 
-//    tempPresetValue = dictionary.value( preset.value("SEQ_track_3_poly").toString() );
-//    qnSeq.track[2].polyphony = tempPresetValue.toUInt();
+    tempPresetValue = dictionary.value( preset.value("SEQ_track_2_midi_ch").toString() );
+    qnSeq.track[1].channel = tempPresetValue.toUInt();
+    //qDebug() << "channel: " << qnSeq.track[1].channel;
 
-//    tempPresetValue = dictionary.value( preset.value("SEQ_track_3_arp_pattern").toString() );
-//    qnSeq.track[2].patternPlay = tempPresetValue.toUInt();
+    qnSeq.track[1].transpose = preset.value("SEQ_track_2_transp").toUInt();
 
-//    tempPresetValue = dictionary.value( preset.value("SEQ_track_3_seq_pattern").toString() );
-//    qnSeq.track[2].patternSeq = tempPresetValue.toUInt();
+    // track 3
+    tempPresetValue = dictionary.value( preset.value("SEQ_track_3_mode").toString() );
+    qnSeq.track[2].mode = tempPresetValue.toUInt();
 
-//    tempPresetValue = dictionary.value( preset.value("SEQ_track_3_division").toString() );
-//    qnSeq.track[2].division = tempPresetValue.toUInt();
+    tempPresetValue = dictionary.value( preset.value("SEQ_track_3_poly").toString() );
+    qnSeq.track[2].polyphony = tempPresetValue.toUInt();
 
-//    tempPresetValue = dictionary.value( preset.value("SEQ_track_3_dot").toString() );
-//    qnSeq.track[2].dotTrip = tempPresetValue.toUInt();
+    tempPresetValue = dictionary.value( preset.value("SEQ_track_3_arp_pattern").toString() );
+    qnSeq.track[2].patternPlay = tempPresetValue.toUInt();
 
-//    qnSeq.track[2].gatePercent = preset.value("SEQ_track_3_gate").toUInt();
-//    qnSeq.track[2].chainX = 44; // hard coded at ABCD, this form may change in 2.1
-//    qnSeq.track[2].chainY = 224;
-//    qnSeq.track[2].chainZ = 0;
-//    qnSeq.track[2].length = preset.value("SEQ_track_3_length").toUInt();
+    tempPresetValue = dictionary.value( preset.value("SEQ_track_3_seq_pattern").toString() );
+    qnSeq.track[2].patternSeq = tempPresetValue.toUInt();
 
-//    tempPresetValue = dictionary.value( preset.value("SEQ_track_3_dest").toString() );
-//    qnSeq.track[2].dest = tempPresetValue.toUInt();
+    tempPresetValue = dictionary.value( preset.value("SEQ_track_3_division").toString() );
+    qnSeq.track[2].division = tempPresetValue.toUInt();
 
-//    tempPresetValue = dictionary.value( preset.value("SEQ_track_3_midi_ch").toString() );
-//    qnSeq.track[2].channel = tempPresetValue.toUInt();
-//    //qDebug() << "channel: " << qnSeq.track[2].channel;
+    tempPresetValue = dictionary.value( preset.value("SEQ_track_3_dot").toString() );
+    qnSeq.track[2].dotTrip = tempPresetValue.toUInt();
 
-//    qnSeq.track[2].transpose = preset.value("SEQ_track_3_transp").toUInt();
-//}
+    qnSeq.track[2].gatePercent = preset.value("SEQ_track_3_gate").toUInt();
+    qnSeq.track[2].chainX = 44; // hard coded at ABCD, this form may change in 2.1
+    qnSeq.track[2].chainY = 224;
+    qnSeq.track[2].chainZ = 0;
+    qnSeq.track[2].length = preset.value("SEQ_track_3_length").toUInt();
+
+    tempPresetValue = dictionary.value( preset.value("SEQ_track_3_dest").toString() );
+    qnSeq.track[2].dest = tempPresetValue.toUInt();
+
+    tempPresetValue = dictionary.value( preset.value("SEQ_track_3_midi_ch").toString() );
+    qnSeq.track[2].channel = tempPresetValue.toUInt();
+    //qDebug() << "channel: " << qnSeq.track[2].channel;
+
+    qnSeq.track[2].transpose = preset.value("SEQ_track_3_transp").toUInt();
+}
 
 ///////////////////////////////////////
 /////////////QuNexusSysex//////////////
@@ -2092,7 +2099,7 @@ void SysExEncDecode::slotSysExEncodePreset(QVariantMap preset, unsigned char pre
         QString tempParamName = keyLayerJSON[i];
         QVariant tempPresetValue = preset.value(tempParamName);
 
-        //qDebug() << "JSON Param: " << tempParamName << "Value: " << tempPresetValue;
+        qDebug() << "JSON Param: " << tempParamName << "Value: " << tempPresetValue;
 
 
         if(tempPresetValue.typeName() == QString("QString"))
@@ -2116,6 +2123,13 @@ void SysExEncDecode::slotSysExEncodePreset(QVariantMap preset, unsigned char pre
         {
             encodeInt(tempPresetValue.toInt());
         }
+        else if (tempParamName == "Keyboard_Global_Bend_Pad_Sensitivity")
+        {
+            float thisVal = tempPresetValue.toFloat();
+            thisVal = thisVal * 100.0; // (convert 1.0 to 100)
+            qDebug() << "Encode pad sensitivity - val: " << thisVal << " int: " << tempPresetValue.toInt() << " float: " << tempPresetValue.toFloat() << " string: " << tempPresetValue.toString();
+            encode(tempPresetValue.toInt());
+        }
         else
         {
             encode(tempPresetValue.toInt());
@@ -2126,9 +2140,9 @@ void SysExEncDecode::slotSysExEncodePreset(QVariantMap preset, unsigned char pre
 
     // ------------------- 2.0 parameters -----------------------
 
-    //encodeSequencerPreset(preset); // encode this preset into the qnSeq struct
+    encodeSequencerPreset(preset); // encode this preset into the qnSeq struct
 
-    //qDebug() << "------------ begin 2.0 sequencer encoding --------";
+    qDebug() << "------------ begin 2.0 sequencer encoding --------";
     encode(qnSeq.valid); // magic number to confirm that this is the valid 2.0 format
 
     // qnSeq uses bitfields < 8, so once it's encoded we then combine and encode/transmit the bit fields as 8 bit chars
@@ -2136,9 +2150,9 @@ void SysExEncDecode::slotSysExEncodePreset(QVariantMap preset, unsigned char pre
     // COMBINE macros are (MSb , LSb), LSb comes first in the struct order
 
     // sequencer data
-    //qDebug() << "source/dest: " << COMBINE44(qnSeq.clock_dest, qnSeq.clock_source);
+    qDebug() << "source/dest: " << qnSeq.clock_dest << "/" << qnSeq.clock_source << " combine: " << COMBINE44(qnSeq.clock_dest, qnSeq.clock_source);
     encode( COMBINE44(qnSeq.clock_dest, qnSeq.clock_source) );
-    //qDebug() << "bpm: " << qnSeq.BPM;
+    qDebug() << "bpm: " << qnSeq.BPM;
     encodeInt(qnSeq.BPM); // the one lonely integer
     //qDebug() << "Swing: ";
     encode(qnSeq.swingPercent);
@@ -3015,11 +3029,11 @@ void SysExEncDecode::slotProcessPreset(QByteArray presetPacket)
 
         if (presetIsV2)
         {
-            dialogText = QString("Error: Corrupt or Invalid QuNexus 2.0 Preset Data!\nWe recommend you load the factory default presets and send them to your QuNexus preset slots.");
+            dialogText = QString("Error: Corrupt or Invalid QuNexus 2.0 Preset Data!\nWe recommend you load the factory default\n presets and send them to your QuNexus preset slots.");
         }
         else
         {
-            dialogText = QString("Error: Corrupt or Incompatible QuNexus 1.0 Preset Data!\nWe recommend you load the factory default presets and send them to your QuNexus preset slots.");
+            dialogText = QString("Error: Corrupt or Incompatible QuNexus 1.0 Preset Data!\nWe recommend you load the factory default\n presets and send them to your QuNexus preset slots.");
         }
 
         QLabel* text = new QLabel(dialogText, msgBox, Qt::WindowFlags());
@@ -3030,9 +3044,9 @@ void SysExEncDecode::slotProcessPreset(QByteArray presetPacket)
 
         QLabel* errorList = new QLabel(OORParams, msgBox, Qt::WindowFlags());
         errorList->setText(OORParams);
-        errorList->setMinimumSize(280, 50);
-        errorList->setFixedSize(280, 50);
-        errorList->move(10, 40);
+        errorList->setMinimumSize(280, 70);
+        errorList->setFixedSize(280, 70);
+        errorList->move(10, 60);
 
         int buttonWidth = 70;
         int buttonHeight = 28;
