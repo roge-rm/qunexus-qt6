@@ -144,7 +144,7 @@ void PresetManager::slotCreateDefaultParamMap()
     defaultParamMap["Keyboard_Global_Pressure_Active"] = 1;
     defaultParamMap["Keyboard_Global_Tilt_Active"] = 1;
 
-    defaultParamMap["Keyboard_Global_Channel_Pressure_Active"] = 1;
+    defaultParamMap["Keyboard_Global_Pressure_Sensitivity"] = 1;
     defaultParamMap["Keyboard_Global_Bend_Pad_Sensitivity"] = 1;
     defaultParamMap["Keyboard_Global_Pitch_Bend_Range"] = 1;
     defaultParamMap["Keyboard_Global_Poly_Aftertouch_Active"] = 1;
@@ -739,6 +739,7 @@ void PresetManager::slotCreateDefaultParamMap()
     specialProcessingParamList.append("Globals_Gain");
     specialProcessingParamList.append("Globals_LED_Refresh_Style");
     specialProcessingParamList.append("Keyboard_Global_Bend_Pad_Sensitivity"); // should covert from 100 to 1.0
+    specialProcessingParamList.append("Keyboard_Global_Pressure_Sensitivity");
     specialProcessingParamList.append("Keyboard_Velocity_Gain");
     specialProcessingParamList.append("Keyboard_Pitch_Bend_Gain");
     specialProcessingParamList.append("Keyboard_Channel_Pressure_Gain");
@@ -1459,7 +1460,9 @@ void PresetManager::slotValueChanged()
         else
         {
             //---- Gains
-            if(QObject::sender()->objectName().contains("Gain") || QObject::sender()->objectName() == "Keyboard_Global_Bend_Pad_Sensitivity")
+            if( QObject::sender()->objectName().contains("Gain") ||
+                    QObject::sender()->objectName() == "Keyboard_Global_Bend_Pad_Sensitivity" ||
+                    QObject::sender()->objectName() == "Keyboard_Global_Pressure_Sensitivity")
             {
                 //Multiply gain by 100 to store correctly in JSON.
                 QDoubleSpinBox *floatBox = reinterpret_cast<QDoubleSpinBox *>(QObject::sender());

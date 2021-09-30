@@ -65,7 +65,7 @@ SysExEncDecode::SysExEncDecode(QWidget *parent) :
                "Keyboard_Global_Velocity_Active"<<
                "Keyboard_Global_Pressure_Active"<<
                "Keyboard_Global_Tilt_Active"<<
-               "Keyboard_Global_Channel_Pressure_Active"<<
+               "Keyboard_Global_Pressure_Sensitivity"<<
                "Keyboard_Global_Bend_Pad_Sensitivity"<<
                "Keyboard_Global_Poly_Aftertouch_Active"<<
                "Keyboard_Global_CC_Active"<<
@@ -1267,7 +1267,7 @@ SysExEncDecode::SysExEncDecode(QWidget *parent) :
     paramTypeMap.insert("Keyboard_Global_Velocity_Active", "char");
     paramTypeMap.insert("Keyboard_Global_Pressure_Active", "char");
     paramTypeMap.insert("Keyboard_Global_Tilt_Active", "char");
-    paramTypeMap.insert("Keyboard_Global_Channel_Pressure_Active", "char");
+    paramTypeMap.insert("Keyboard_Global_Pressure_Sensitivity", "char");
     paramTypeMap.insert("Keyboard_Global_Bend_Pad_Sensitivity", "char");
     paramTypeMap.insert("Keyboard_Global_Poly_Aftertouch_Active", "char");
     paramTypeMap.insert("Keyboard_Global_CC_Active", "char");
@@ -2123,13 +2123,13 @@ void SysExEncDecode::slotSysExEncodePreset(QVariantMap preset, unsigned char pre
         {
             encodeInt(tempPresetValue.toInt());
         }
-        else if (tempParamName == "Keyboard_Global_Bend_Pad_Sensitivity")
-        {
-            float thisVal = tempPresetValue.toFloat();
-            thisVal = thisVal * 100.0; // (convert 1.0 to 100)
-            qDebug() << "Encode pad sensitivity - val: " << thisVal << " int: " << tempPresetValue.toInt() << " float: " << tempPresetValue.toFloat() << " string: " << tempPresetValue.toString();
-            encode(tempPresetValue.toInt());
-        }
+//        else if (tempParamName == "Keyboard_Global_Bend_Pad_Sensitivity")
+//        {
+//            float thisVal = tempPresetValue.toFloat();
+//            thisVal = thisVal * 100.0; // (convert 1.0 to 100)
+//            qDebug() << "Encode pad sensitivity - val: " << thisVal << " int: " << tempPresetValue.toInt() << " float: " << tempPresetValue.toFloat() << " string: " << tempPresetValue.toString();
+//            encode(tempPresetValue.toInt());
+//        }
         else
         {
             encode(tempPresetValue.toInt());
