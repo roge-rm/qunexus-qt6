@@ -79,7 +79,6 @@
     </qresource>
     <qresource prefix="/">
         <file>resources/images/qunexus_white_trans_logo.png</file>
-        <file>resources/firmware/QuNexus_Firmware_v2.0.1.syx</file>
         <file>resources/fonts/Aller/Aller Font License.txt</file>
         <file>resources/fonts/Aller/Aller_Bd.ttf</file>
         <file>resources/fonts/Aller/Aller_BdIt.ttf</file>
@@ -115,5 +114,6 @@
         <file>resources/fonts/source-sans-pro/SourceSansPro-Regular.otf</file>
         <file>resources/fonts/source-sans-pro/SourceSansPro-Semibold.otf</file>
         <file>resources/fonts/source-sans-pro/SourceSansPro-SemiboldIt.otf</file>
+        <file>resources/firmware/QuNexus_Firmware_v2.0.2.syx</file>
     </qresource>
 </RCC>

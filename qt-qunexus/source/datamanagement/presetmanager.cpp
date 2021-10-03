@@ -150,7 +150,8 @@ void PresetManager::slotCreateDefaultParamMap()
     defaultParamMap["Keyboard_Global_Poly_Aftertouch_Active"] = 1;
     defaultParamMap["Keyboard_Global_CC_Active"] = 1;
     defaultParamMap["Keyboard_Global_Transpose"] = 0;
-    defaultParamMap["Keyboard_Global_Channel_Rotation_Offset"] = 0;
+    //globalTrack3CVinClockMode
+    defaultParamMap["Keyboard_Global_CV_Clock_3_Mode"] = 1;
     defaultParamMap["Keyboard_Global_LED_Mode"] = 1;
     defaultParamMap["Keyboard_Global_LED_Remote_Channel"] = 0;
     defaultParamMap["Keyboard_Global_Polyphony_Number"] = 10;
@@ -679,7 +680,7 @@ void PresetManager::slotCreateDefaultParamMap()
     defaultParamMap["SEQ_clock_dest"] = "USB 1 + Expander";            // 4 bits are the destinations (usb/exp)
     defaultParamMap["SEQ_tempo"] = 126;
     defaultParamMap["SEQ_swing"] = 50;
-    defaultParamMap["SEQ_KB_split"] = 0;            // keyboard can be split between two tracks
+    defaultParamMap["SEQ_CV_Clock_Divide"] = 0;            // cv clock divider
     defaultParamMap["SEQ_KB_lower"] = 0;			// which track is assigned to the lower half of the split
     defaultParamMap["SEQ_KB_upper"] = 1;			// which track is assigned to the upper half of the split
 
@@ -1538,31 +1539,33 @@ void PresetManager::slotValueChanged()
 //                }
             }
 
+            // EB removed, this is all handled in firmware now and these values are deprecated
+
             //---- Channels (to be linked to "Keyboard_Global_Channel_Rotation_Offset")
-            else if(QObject::sender()->objectName().startsWith("Keyboard_Global_USB") && QObject::sender()->objectName().endsWith("Channel"))
-            {
+//            else if(QObject::sender()->objectName().startsWith("Keyboard_Global_USB") && QObject::sender()->objectName().endsWith("Channel"))
+//            {
 
-                //--------------- Handle Rotation Offset
+//                //--------------- Handle Rotation Offset
 
-                QSpinBox *channelSpinBox = reinterpret_cast<QSpinBox *>(QObject::sender());
+//                QSpinBox *channelSpinBox = reinterpret_cast<QSpinBox *>(QObject::sender());
 
-                //-------------- Handle UI OBOE Offset and Save
-                editBufferPresetMap.insert(QObject::sender()->objectName(), channelSpinBox->value() - 1);
+//                //-------------- Handle UI OBOE Offset and Save
+//                editBufferPresetMap.insert(QObject::sender()->objectName(), channelSpinBox->value() - 1);
 
-                //Analyze both values, if 2 is greater, set offset to usb 2 channel number
-                if(editBufferPresetMap.value("Keyboard_Global_USB_2_Channel").toInt() > editBufferPresetMap.value("Keyboard_Global_USB_1_Channel").toInt())
-                {
-                    //qDebug() << "Insert USB 2 into Offset:" << editBufferPresetMap.value("Keyboard_Global_USB_2_Channel").toInt();
-                    editBufferPresetMap.insert("Keyboard_Global_Channel_Rotation_Offset", editBufferPresetMap.value("Keyboard_Global_USB_2_Channel").toInt());
-                }
+//                //Analyze both values, if 2 is greater, set offset to usb 2 channel number
+//                if(editBufferPresetMap.value("Keyboard_Global_USB_2_Channel").toInt() > editBufferPresetMap.value("Keyboard_Global_USB_1_Channel").toInt())
+//                {
+//                    //qDebug() << "Insert USB 2 into Offset:" << editBufferPresetMap.value("Keyboard_Global_USB_2_Channel").toInt();
+//                    editBufferPresetMap.insert("Keyboard_Global_Channel_Rotation_Offset", editBufferPresetMap.value("Keyboard_Global_USB_2_Channel").toInt());
+//                }
 
-                //If the same or 1 is greater, set offset to usb 1 channel number
-                else
-                {
-                    //qDebug() << "Insert USB 1 into Offset:" << editBufferPresetMap.value("Keyboard_Global_USB_1_Channel").toInt();
-                    editBufferPresetMap.insert("Keyboard_Global_Channel_Rotation_Offset", editBufferPresetMap.value("Keyboard_Global_USB_1_Channel").toInt());
-                }
-            }
+//                //If the same or 1 is greater, set offset to usb 1 channel number
+//                else
+//                {
+//                    //qDebug() << "Insert USB 1 into Offset:" << editBufferPresetMap.value("Keyboard_Global_USB_1_Channel").toInt();
+//                    editBufferPresetMap.insert("Keyboard_Global_Channel_Rotation_Offset", editBufferPresetMap.value("Keyboard_Global_USB_1_Channel").toInt());
+//                }
+//            }
 
             //---- Keyboard LED Layer OBOE
             else if(QObject::sender()->objectName().contains("Keyboard_Global_LED_Remote_Channel"))

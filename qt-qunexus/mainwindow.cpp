@@ -37,7 +37,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     applicationVersion[0] = 2;
     applicationVersion[1] = 0;
-    applicationVersion[2] = 0;
+    applicationVersion[2] = 2;
 
     thisFw = QByteArray(reinterpret_cast<char*>(_fw_ver_qunexus), sizeof(_fw_ver_qunexus));
 
@@ -3068,9 +3068,14 @@ void MainWindow::slotSetupMenuBar()
 //------------------------------------------------------------------------------------------------------------------------------------------------------//
 void MainWindow::slotOpenDocumentation()
 {
+    QString manualURL = "https://files.keithmcmillen.com/products/qunexus/Manuals/QuNexus_RED_Manual_2.0.2.pdf";
+
     QFile *file = new QFile(":help/resources/help.txt");
     file->open(QFile::ReadOnly);
-    QDesktopServices::openUrl(QUrl((QLatin1String)file->readLine(0)));
+
+    //QDesktopServices::openUrl(QUrl((QLatin1String)file->readLine(0)));
+    QDesktopServices::openUrl(QUrl(manualURL));
+
 }
 
 void MainWindow::slotShowHideControllerTab()

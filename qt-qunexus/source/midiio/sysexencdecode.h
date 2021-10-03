@@ -123,6 +123,8 @@ public:
     QStringList LED_Refresh;
     QStringList Key_Priority;
     QStringList Preset_Struct_is_V2;
+    QStringList CV_Clock_Modes;
+    QStringList CV_Clock_Divisions;
     QStringList MIDI_Out;
     QStringList CV_MIDI_Out;
     QStringList MIDI_CH;

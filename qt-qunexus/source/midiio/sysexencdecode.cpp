@@ -69,7 +69,7 @@ SysExEncDecode::SysExEncDecode(QWidget *parent) :
                "Keyboard_Global_Bend_Pad_Sensitivity"<<
                "Keyboard_Global_Poly_Aftertouch_Active"<<
                "Keyboard_Global_CC_Active"<<
-               "Keyboard_Global_Channel_Rotation_Offset"<<
+               "Keyboard_Global_CV_Clock_3_Mode"<<
                "Keyboard_Global_LED_Mode"<<
                "Keyboard_Global_LED_Remote_Channel"<<
                "Keyboard_Global_Polyphony_Number"<<
@@ -579,7 +579,7 @@ SysExEncDecode::SysExEncDecode(QWidget *parent) :
                "SEQ_clock_dest"<<
                "SEQ_tempo"<<
                "SEQ_swing"<<
-               "SEQ_KB_split"<<
+               "SEQ_CV_Clock_Divide"<<
                "SEQ_KB_lower"<<
                "SEQ_KB_upper"<<
                "SEQ_track_1_mode"<<
@@ -821,6 +821,17 @@ SysExEncDecode::SysExEncDecode(QWidget *parent) :
                "Earliest"<<
                "Highest"<<
                "Lowest";
+    CV_Clock_Modes
+            <<
+               "OR"<<
+               "AND"<<
+               "XOR";
+    CV_Clock_Divisions
+            <<
+               "1"<<
+               "2"<<
+               "3"<<
+               "24";
     MIDI_Out
             <<
                "USB 1"<<
@@ -865,12 +876,11 @@ SysExEncDecode::SysExEncDecode(QWidget *parent) :
                "Internal"<<
                "USB Port 1"<<
                "Expander In"<<
-               "CV In 1"<<
-               "CV In 2";
+               "CV In 1&2";
     SEQ_track_mode
             <<
                "Off"<<
-               "Arpeggiate"<<
+               "Arpeggiator"<<
                "Step Sequencer"<<
                "Step Sequencer"<<
                "Step Sequencer"<<
@@ -894,7 +904,7 @@ SysExEncDecode::SysExEncDecode(QWidget *parent) :
                "Pend Exc"<<
                "Pend Inc"<<
                "Random"<<
-               "Drunk";
+               "Brownian";
 
     SEQ_track_seq_division
             <<
@@ -990,8 +1000,18 @@ SysExEncDecode::SysExEncDecode(QWidget *parent) :
     dictionary.insert("Internal" , 1);
     dictionary.insert("USB Port 1" , 2);
     dictionary.insert("Expander In" , 3);
-    dictionary.insert("CV In 1" , 4);
-    dictionary.insert("CV In 2" , 5);
+    dictionary.insert("CV In 1&2" , 4);
+
+    //*** CV clock 3 input modes
+    dictionary.insert("OR", 0);
+    dictionary.insert("AND", 1);
+    dictionary.insert("XOR", 2);
+
+    //*** CV clock output divisions
+    dictionary.insert("1", 0);
+    dictionary.insert("2", 1);
+    dictionary.insert("3", 2);
+    dictionary.insert("24", 3);
 
     //*** sources
     dictionary.insert("None" , 0);
@@ -1198,7 +1218,7 @@ SysExEncDecode::SysExEncDecode(QWidget *parent) :
     dictionary.insert("Pend Exc", 7);
     dictionary.insert("Pend Inc", 8);
     dictionary.insert("Random", 9);
-    dictionary.insert("Drunk", 10);
+    dictionary.insert("Brownian", 10);
     dictionary.insert("Strum", 11);
 
     dictionary.insert("Mono", 1);
@@ -1271,7 +1291,7 @@ SysExEncDecode::SysExEncDecode(QWidget *parent) :
     paramTypeMap.insert("Keyboard_Global_Bend_Pad_Sensitivity", "char");
     paramTypeMap.insert("Keyboard_Global_Poly_Aftertouch_Active", "char");
     paramTypeMap.insert("Keyboard_Global_CC_Active", "char");
-    paramTypeMap.insert("Keyboard_Global_Channel_Rotation_Offset", "char");
+    paramTypeMap.insert("Keyboard_Global_CV_Clock_3_Mode", "CV_Clock_Modes");
     paramTypeMap.insert("Keyboard_Global_LED_Mode", "Checkbox");
     paramTypeMap.insert("Keyboard_Global_LED_Remote_Channel", "char");
     paramTypeMap.insert("Keyboard_Global_Polyphony_Number", "char");
@@ -1713,7 +1733,7 @@ SysExEncDecode::SysExEncDecode(QWidget *parent) :
     paramTypeMap.insert("SEQ_clock_dest", "bs44left");
     paramTypeMap.insert("SEQ_tempo", "16b_int");
     paramTypeMap.insert("SEQ_swing", "char");
-    paramTypeMap.insert("SEQ_KB_split", "char");
+    paramTypeMap.insert("SEQ_CV_Clock_Divide", "CV_Clock_Divisions");
     paramTypeMap.insert("SEQ_KB_lower", "bs44right");
     paramTypeMap.insert("SEQ_KB_upper", "bs44left");
     paramTypeMap.insert("SEQ_track_1_mode", "bs44right");
@@ -1895,7 +1915,11 @@ void SysExEncDecode::encodeSequencerPreset(QVariantMap preset) // encodes a pres
 
     qnSeq.BPM = preset.value("SEQ_tempo").toUInt();
     qnSeq.swingPercent = preset.value("SEQ_swing").toUInt();
-    qnSeq.kbSplit = preset.value("SEQ_KB_split").toUInt();
+
+    tempPresetValue = dictionary.value( preset.value("SEQ_CV_Clock_Divide").toString() );
+    qnSeq.kbSplit = tempPresetValue.toUInt(); // qnSeq.kbSplit is now euroClockDivideIndex in firmware, potential bug waiting to happen here
+    qDebug() << "SEQ_CV_Clock_Divide: " << qnSeq.kbSplit;
+
     qnSeq.kbSplitLower = preset.value("SEQ_KB_lower").toUInt();
     qnSeq.kbSplitUpper = preset.value("SEQ_KB_upper").toUInt();
 
@@ -2672,6 +2696,7 @@ void SysExEncDecode::slotProcessPreset(QByteArray presetPacket)
                         if (slotTestQListRange(&SEQ_track_mode, thisRight, JSONCounter))
                         {
                             // mode
+                            qDebug() << "*** mode: " << keyLayerJSON[JSONCounter] << "SEQ_track_mode: " << SEQ_track_mode[thisRight];
                             editBufferPresetMap->insert(keyLayerJSON[JSONCounter], SEQ_track_mode[thisRight]); // write value to edit buffer
                         }
                         JSONCounter++;
@@ -2937,6 +2962,46 @@ void SysExEncDecode::slotProcessPreset(QByteArray presetPacket)
 #endif
                     JSONCounter++;
                     presetIsV2 = true;
+                }
+
+                // CV_Clock_Modes
+                else if (paramTypeMap[ keyLayerJSON[JSONCounter] ] == "CV_Clock_Modes")
+                {
+                    // special fix for this parameter, we shipped units with a 9 value in the preset
+                    if (buffer[thisByte] > 2)
+                        buffer[thisByte] = 0;
+
+                    // test if ranges are valid
+
+                    if (slotTestQListRange(&CV_Clock_Modes, buffer[thisByte], JSONCounter))
+                    {
+#ifdef SYX_DEBUG_PRESET_PACKET
+                        qDebug() << "Counter: " << counter << " JSONCounter: " << JSONCounter << "CV_Clock_Modes: " << buffer[thisByte] << " -- " << keyLayerJSON[JSONCounter] << "CV_Clock_Modes translated: " << CV_Clock_Modes[buffer[thisByte]];
+#endif
+                        editBufferPresetMap->insert( keyLayerJSON[JSONCounter], CV_Clock_Modes[buffer[thisByte]] ); // write value to edit buffer
+#ifdef SYX_DEBUG_PRESET_PACKET
+                        qDebug() << "New editBufferPresetMap value: " << editBufferPresetMap->value(keyLayerJSON[JSONCounter]);
+#endif
+                    }
+                    JSONCounter++;
+
+                }
+                // CV_Clock_Divisions
+                else if (paramTypeMap[ keyLayerJSON[JSONCounter] ] == "CV_Clock_Divisions")
+                {
+                    // test if ranges are valid
+                    if (slotTestQListRange(&CV_Clock_Divisions, buffer[thisByte], JSONCounter))
+                    {
+#ifdef SYX_DEBUG_PRESET_PACKET
+                        qDebug() << "Counter: " << counter << " JSONCounter: " << JSONCounter << "CV_Clock_Divisions: " << buffer[thisByte] << " -- " << keyLayerJSON[JSONCounter] << "CV_Clock_Divisions translated: " << CV_Clock_Divisions[buffer[thisByte]];
+#endif
+                        editBufferPresetMap->insert( keyLayerJSON[JSONCounter], CV_Clock_Divisions[buffer[thisByte]] ); // write value to edit buffer
+#ifdef SYX_DEBUG_PRESET_PACKET
+                        qDebug() << "New editBufferPresetMap value: " << editBufferPresetMap->value(keyLayerJSON[JSONCounter]);
+#endif
+                    }
+                    JSONCounter++;
+
                 }
 
                 // MIDI_Out
