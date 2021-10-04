@@ -910,7 +910,7 @@ void MainWindow::slotUpdateParametersUi(QVariantMap map)
 
                 }
                 else if(QDoubleSpinBox* floatBox = this->findChild<QDoubleSpinBox *>(i.key()))
-                {
+                {    
                     floatBox->setValue(i.value().toDouble());
                 }
                 else
@@ -927,8 +927,26 @@ void MainWindow::slotUpdateParametersUi(QVariantMap map)
                 //Gain & Spin Boxes
                 if(QDoubleSpinBox* floatBox = this->findChild<QDoubleSpinBox *>(i.key()))
                 {
-                    //Divide by 100 to make X.00
-                    floatBox->setValue(i.value().toDouble()/100.00);
+                    if(i.key() == "Keyboard_Global_Bend_Pad_Sensitivity" || "Keyboard_Global_Pressure_Sensitivity")
+                    {
+                        qDebug() << "FIX: " << i.key() << " value: " << i.value().toInt();
+
+                        if (i.value().toInt() < 25) // filter out leftver bad values from pre 2.0.2 firmware
+                        {
+                            floatBox->setValue(1.00);
+                            qDebug() << "setValue 1.0";
+                        }
+                        else
+                        {
+                           floatBox->setValue(i.value().toDouble()/100.00);
+                           qDebug() << "setvalue: " << i.value().toDouble();
+                        }
+                    }
+                    else
+                    {
+                        //Divide by 100 to make X.00
+                        floatBox->setValue(i.value().toDouble()/100.00);
+                    }
                 }
 
                 //If Checkboxes in Keyboard Mode
