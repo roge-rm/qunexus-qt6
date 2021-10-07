@@ -19,7 +19,8 @@
 #include <QQuickWidget>
 #include <QQuickItem>
 #include <QQmlProperty>
-
+#include <QQmlApplicationEngine>
+#include <QQmlComponent>
 
 #include "ui_tableviewerform.h"
 
@@ -29,6 +30,9 @@ class TableInterface : public QWidget
     Q_OBJECT
 public:
     explicit TableInterface(QWidget *parent = 0);
+
+    QQmlEngine *tableEngine;
+    //QQmlApplicationEngine *tableEngine;
 
     unsigned char userTable1[128];
     unsigned char userTable2[128];

@@ -19,6 +19,10 @@ unsigned char invert[128] = {127, 126, 125, 124, 123, 122, 121, 120, 119, 118, 1
 TableInterface::TableInterface(QWidget *parent) :
     QWidget(parent)
 {
+    // setup QML Engine
+    tableEngine = new QQmlEngine;
+    //tableEngine = new QQmlApplicationEngine;
+
     //Make Window a Tool Window, Set Size
     this->setWindowFlags(Qt::Tool | Qt::WindowCloseButtonHint | Qt::CustomizeWindowHint| Qt::WindowStaysOnTopHint);
     this->setFixedSize(540,600);
@@ -49,6 +53,8 @@ TableInterface::TableInterface(QWidget *parent) :
 
     qDebug() << "Setup QML ui";
 
+    tableEngine->addImportPath("qrc:/");
+
     QUrl source("qrc:/qml/source/TableEditor.qml");
 
     if (source.isValid())
@@ -60,8 +66,19 @@ TableInterface::TableInterface(QWidget *parent) :
         qDebug() << "QML file invalid";
     }
 
+    //tableEngine->load(QUrl(source));
+
     qDebug() << "new quickwidget";
-    tableQuickWidget = new QQuickWidget(this);
+    tableQuickWidget = new QQuickWidget(tableEngine, this);
+
+    QQmlComponent component(tableEngine, source);
+
+    QObject *myObject = component.create();
+    QQuickItem *item = qobject_cast<QQuickItem*>(myObject);
+    int width = item->width();  // width = 200
+
+    qDebug() << "QQuickItem width = " << width;
+
 
     qDebug() << "root context";
     tableQuickWidget->rootContext()->setContextProperty("TableInterface", this); // this has to happen before we set the source

@@ -4,6 +4,7 @@
 #include <QtWidgets/QApplication>
 #include "mainwindow.h"
 #include <QFontDatabase>
+#include <QQmlApplicationEngine>
 
 int main(int argc, char *argv[])
 {
@@ -19,7 +20,8 @@ int main(int argc, char *argv[])
     //QSGRendererInterface::GraphicsApi(QSGRendererInterface::OpenGL);
 #endif
 
-
+    QQmlApplicationEngine engine;
+    engine.load(QUrl(QStringLiteral("qrc:/qml/source/TableEditor.qml")));
 
     MainWindow w;
     //w.resize(800, 600);

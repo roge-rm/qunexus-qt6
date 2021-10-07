@@ -473,33 +473,33 @@ void MainWindow::slotFindAndConnectUi()
 
     while(i.hasNext())
     {
-        qDebug() << "Next...";
+        //qDebug() << "Next...";
         i.next();
 
         //Look for Keyboard Params
-        qDebug() << "ThisKey: " << i.key();
+        //qDebug() << "ThisKey: " << i.key();
 
         if(i.key().startsWith("Keyboard") || i.key().startsWith("SEQ") )
         {
 
-            qDebug() << "MAPS" << i.key() << ":" << i.value();
+            //qDebug() << "MAPS" << i.key() << ":" << i.value();
 
             if(QComboBox* menu = this->findChild<QComboBox *>(i.key()))
             {
-                qDebug() << "QComboBox" << menu->objectName();
+                //qDebug() << "QComboBox" << menu->objectName();
                 connect(menu, SIGNAL(currentIndexChanged(int)), presetManager, SLOT(slotValueChanged()));
                 slotFixDropDownWidth(menu);
 
             }
             else if(QSpinBox* numberBox = this->findChild<QSpinBox *>(i.key()))
             {
-                qDebug() << "QSpinBox" << numberBox->objectName();
+                //qDebug() << "QSpinBox" << numberBox->objectName();
                 connect(numberBox, SIGNAL(editingFinished()), presetManager, SLOT(slotValueChanged()));
                 //numberBox->setStyleSheet("QToolTip {background: #006599;color: white;}");
             }
             else if(QDoubleSpinBox* floatBox = this->findChild<QDoubleSpinBox *>(i.key()))
             {
-                qDebug() << "QDoubleSpinBox" << floatBox->objectName();
+                //qDebug() << "QDoubleSpinBox" << floatBox->objectName();
                 connect(floatBox, SIGNAL(editingFinished()), presetManager, SLOT(slotValueChanged()));
                 //floatBox->setStyleSheet("QToolTip {background: #006599;color: white;}");
             }
@@ -883,7 +883,7 @@ void MainWindow::slotUpdateParametersUi(QVariantMap map)
 
                 if(i.key() == "Globals_LED_Refresh_Style")
                 {
-                    qDebug() << i.key() << i.value().toString();
+                    //qDebug() << i.key() << i.value().toString();
 
                     if(i.value().toString() == "Normal")
                     {
@@ -922,24 +922,24 @@ void MainWindow::slotUpdateParametersUi(QVariantMap map)
             //----- If in the special list...
             else
             {
-                qDebug() << "Special Param:" << i.key();
+                //qDebug() << "Special Param:" << i.key();
 
                 //Gain & Spin Boxes
                 if(QDoubleSpinBox* floatBox = this->findChild<QDoubleSpinBox *>(i.key()))
                 {
                     if(i.key() == "Keyboard_Global_Bend_Pad_Sensitivity" || "Keyboard_Global_Pressure_Sensitivity")
                     {
-                        qDebug() << "FIX: " << i.key() << " value: " << i.value().toInt();
+                        //qDebug() << "FIX: " << i.key() << " value: " << i.value().toInt();
 
                         if (i.value().toInt() < 25) // filter out leftver bad values from pre 2.0.2 firmware
                         {
                             floatBox->setValue(1.00);
-                            qDebug() << "setValue 1.0";
+                            //qDebug() << "setValue 1.0";
                         }
                         else
                         {
                            floatBox->setValue(i.value().toDouble()/100.00);
-                           qDebug() << "setvalue: " << i.value().toDouble();
+                           //qDebug() << "setvalue: " << i.value().toDouble();
                         }
                     }
                     else

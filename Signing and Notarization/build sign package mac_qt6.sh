@@ -44,7 +44,7 @@ plutil -replace "Bundle version" -string "$version" "$app_path/Contents/Info.pli
 xattr -cr "$package_path"
 
 #run macdeployqt
-$path_to_dqt "$app_path" -verbose=2 -codesign="$developer_id" -executable="$app_path/Contents/MacOS/$app_name"
+$path_to_dqt "$app_path" -verbose=2 -codesign="$developer_id" -qmldir=../qt-qunexus/source/ -executable="$app_path/Contents/MacOS/$app_name"
 
 #fix parts of deployqt that don't sign correctly
 #codesign -s "$developer_id" --options runtime --timestamp --force --deep --entitlements ./entitlements.mac.plist -f "$app_path/Contents/Frameworks/QtPrintSupport.framework/Versions/5/Resources/QtPrintSupport.prl"

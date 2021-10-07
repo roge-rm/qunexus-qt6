@@ -15,6 +15,8 @@ bundle_id="com.keithmcmillen.QuNexus Editor"
 app_path=./dmg/QuNexus\ Editor.app
 package_path=./dmg/
 path_to_dqt=~/Qt/5.14.2/clang_64/bin/macdeployqt
+
+qml_dur=../qt-qunexus/source
 developer_id="Developer ID Application: Kesumo, LLC (${APPLE_TEAM_ID})"
 
 temp_dmg_name=./QuNexus\ Editor\ Mac\ v$version.p.dmg
@@ -46,9 +48,9 @@ plutil -replace "Bundle version" -string "$version" "$app_path/Contents/Info.pli
 xattr -cr "$package_path"
 
 #run macdeployqt
-$path_to_dqt "$app_path" -verbose=2 -codesign="$developer_id" -executable="$app_path/Contents/MacOS/$app_name"
+$path_to_dqt "$app_path" -verbose=2 -codesign="$developer_id" -qmldir=../qt-qunexus/source/ -executable="$app_path/Contents/MacOS/$app_name"
 codesign -s "$developer_id" --options runtime --timestamp --force --deep --entitlements ./entitlements.mac.plist -f "$app_path/Contents/Frameworks/QtPrintSupport.framework/Versions/5/Resources/QtPrintSupport.prl"
-
+codesign -s "$developer_id" --options runtime --timestamp --force --deep --entitlements ./entitlements.mac.plist -f "$app_path/Contents/Frameworks/QtQuickWidgets.framework/Versions/5/Resources/QtQuickWidgets.prl"
 # sign the code
 # QT frameworks plists copied. See: http://barenka.blogspot.com/2014/04/signing-qt5-520-applications-in-mac-osx.html
 codesign -s "$developer_id" --options runtime --timestamp --force --deep --entitlements ./entitlements.mac.plist -f "$app_path"

@@ -678,7 +678,7 @@ QTabBar::tab:selected {
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <property name="elideMode">
       <enum>Qt::ElideRight</enum>
@@ -6417,16 +6417,25 @@ color: white;
           <x>25</x>
           <y>74</y>
           <width>81</width>
-          <height>91</height>
+          <height>121</height>
          </rect>
         </property>
         <property name="styleSheet">
-         <string notr="true">QLabel {
+         <string notr="true">QPlainTextEdit {
         font-family: &quot;Open Sans Semibold&quot;;
         font-size: 11pt;
         color: white;
         background-color: rgba(0,0,0,0);
 }</string>
+        </property>
+        <property name="verticalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOff</enum>
+        </property>
+        <property name="horizontalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOff</enum>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
         </property>
         <property name="plainText">
          <string>All route 
@@ -26642,7 +26651,7 @@ color: white;
 border:0px;</string>
         </property>
         <property name="text">
-         <string>QuNeuxus MIDI Thru</string>
+         <string>QuNexus MIDI Thru</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>

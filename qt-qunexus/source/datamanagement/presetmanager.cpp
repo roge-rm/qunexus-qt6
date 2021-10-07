@@ -1159,7 +1159,7 @@ void PresetManager::slotValueChanged()
             thisValue = QString::number(floatBox->value());
         }
 
-        qDebug() << "thisKey: " << thisKey << " previousKey: " << previousKey << " thisValue: " << thisValue << " previousValue: " << previousValue;
+        //qDebug() << "thisKey: " << thisKey << " previousKey: " << previousKey << " thisValue: " << thisValue << " previousValue: " << previousValue;
         if (thisKey == previousKey && thisValue == previousValue) return; // ignore
 
         previousKey = thisKey;
@@ -1185,7 +1185,7 @@ void PresetManager::slotValueChanged()
 
                     QString paramKey = QObject::sender()->objectName();
 
-                    qDebug() << "Controller Object Name" << QObject::sender()->objectName();
+                    //qDebug() << "Controller Object Name" << QObject::sender()->objectName();
 
                     if(paramKey.contains("Bend"))
                     {
@@ -1209,7 +1209,7 @@ void PresetManager::slotValueChanged()
 
                             if(!bendParamKey.endsWith("Channel"))
                             {
-                                qDebug() << "bend param key" << bendParamKey;
+                                //qDebug() << "bend param key" << bendParamKey;
 
                                 if(QObject::sender()->metaObject()->className() == QString("QComboBox"))
                                 {
@@ -1314,7 +1314,7 @@ void PresetManager::slotValueChanged()
                     QDoubleSpinBox *floatBox = reinterpret_cast<QDoubleSpinBox *>(QObject::sender());
                     editBufferPresetMap.insert(floatBox->objectName(), floatBox->value());
 
-                    qDebug() << "Value Changed  :" << QObject::sender()->metaObject()->className() << QObject::sender()->objectName() << floatBox->value();
+                    //qDebug() << "Value Changed  :" << QObject::sender()->metaObject()->className() << QObject::sender()->objectName() << floatBox->value();
                 }
                 else if(QObject::sender()->metaObject()->className() == QString("QCheckBox"))
                 {
@@ -1340,7 +1340,7 @@ void PresetManager::slotValueChanged()
                 {
                     QComboBox *menu = reinterpret_cast<QComboBox *>(QObject::sender());
                     editBufferPresetMap.insert(menu->objectName(), menu->currentText());
-                    qDebug() << "Value Changed  :" << QObject::sender()->metaObject()->className() << menu->objectName() << menu->currentText();
+                    //qDebug() << "Value Changed  :" << QObject::sender()->metaObject()->className() << menu->objectName() << menu->currentText();
                 }
                 else if(QObject::sender()->metaObject()->className() == QString("QSpinBox"))
                 {

@@ -15,7 +15,7 @@ TARGET = "QuNexus Editor"
 TEMPLATE = app
 
 macx{
-    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.12
+    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.13
 }
 
 INCLUDEPATH +=  source \
@@ -67,6 +67,10 @@ FORMS    += mainwindow.ui \
 RESOURCES += \
     resources.qrc
 
+## QML stuff
+
+QML_IMPORT_PATH =
+CONFIG += qtquickcompiler
 
 #-------------------MIDI--------------------#
 #-------------------------------------------#
