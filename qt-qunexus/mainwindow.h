@@ -54,6 +54,8 @@ public:
 
     QByteArray applicationVersion, thisFw;
 
+    QString betaVersion;
+
     // ------ midi overhaul --------------------------------------------------------
 
     // kmiPorts handles MIDI I/O changes

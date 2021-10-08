@@ -37,7 +37,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     applicationVersion[0] = 2;
     applicationVersion[1] = 0;
-    applicationVersion[2] = 2;
+    applicationVersion[2] = 3;
+
+    betaVersion = ""; // release, do not show beta string
+    //betaVersion = " Beta A"; // show beta
+
 
     thisFw = QByteArray(reinterpret_cast<char*>(_fw_ver_qunexus), sizeof(_fw_ver_qunexus));
 
@@ -2189,6 +2193,13 @@ void MainWindow::slotOpenAboutScreen()
                                .arg(uchar(applicationVersion.at(1)))
                                .arg(uchar(applicationVersion.at(2))), msgBox, Qt::WindowFlags());
 
+    if (betaVersion != "")
+    {
+        QString addToThis = title->text();
+        addToThis.append(betaVersion);
+        title->setText(addToThis);
+    }
+
     title->setMinimumSize(300, 50);
     title->setFixedSize(300, 50);
     title->setStyleSheet("font: bold 16pt;");
@@ -2634,13 +2645,27 @@ void MainWindow::slotEncodeGlobals()
 
     //---------------------------------- CV Trims and Offsets
 
-    globalsList.append(cvTrimsInterface->voltPerOctaveTrim*100);
-    globalsList.append(cvTrimsInterface->_1_2_voltPerOctaveTrim*100);
-    globalsList.append(cvTrimsInterface->hzPerVoltTrim*100);
+    if (QuNexus->fwUpdateRequested) // reset these on a firmware update, not ideal but will avoid many zendesk tickets
+    {
+        globalsList.append(100);
+        globalsList.append(100);
+        globalsList.append(100);
 
-    globalsList.append(cvTrimsInterface->voltPerOctaveOffset);
-    globalsList.append(cvTrimsInterface->_1_2_voltPerOctaveOffset);
-    globalsList.append(cvTrimsInterface->hzPerVoltOffset);
+        globalsList.append(0);
+        globalsList.append(0);
+        globalsList.append(0);
+        fwUpdateWindow->slotAppendTextToConsole("Setting CV Trims to default settings...\n");
+    }
+    else
+    {
+        globalsList.append(cvTrimsInterface->voltPerOctaveTrim*100);
+        globalsList.append(cvTrimsInterface->_1_2_voltPerOctaveTrim*100);
+        globalsList.append(cvTrimsInterface->hzPerVoltTrim*100);
+
+        globalsList.append(cvTrimsInterface->voltPerOctaveOffset);
+        globalsList.append(cvTrimsInterface->_1_2_voltPerOctaveOffset);
+        globalsList.append(cvTrimsInterface->hzPerVoltOffset);
+    }
 
     //---------------------------------- Sequencer LED brightness
 
