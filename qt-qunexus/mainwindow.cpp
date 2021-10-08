@@ -314,6 +314,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->Library_Pane_Label->move(632, 100);
     ui->SEQ_settings_label->move(6, 15);
     ui->SEQ_track_settings_label->move(6, 115);
+    ui->plainTextEdit->setStyleSheet("QPlainTextEdit {font-family: \"Open Sans Semibold\";font-size: 8pt;color: white;background-color: rgba(0,0,0,0);})");
 
     //ui->tabWidget->setAutoFillBackground(true);
 //    ui->tab_kb->setAutoFillBackground(true);

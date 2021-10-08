@@ -1,6 +1,6 @@
 :: app specific variables - adjust these to match your system and the script should do the rest
 set app_name=QuNexus Editor
-set app_version=2.0.2
+set app_version=2.0.3
 set output_dir=%app_name% WIN %app_version%
 set qunexus_binary="C:\Users\eric\Dropbox (KMI)\00_Editors\00_Windows\Build\build-QuNexus-Desktop_Qt_6_0_1_MSVC2019_64bit-Release\release\QuNexus Editor.exe"
 set qunexus_output_binary="%output_dir%\QuNexus Editor.exe"
