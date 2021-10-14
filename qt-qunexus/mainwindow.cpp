@@ -3742,7 +3742,7 @@ void MainWindow::slotMIDIPortChange(QString portName, uchar inOrOut, uchar messa
     case PORT_CONNECT:
 
         // update dropdown
-        if (inOrOut == PORT_OUT && !portName.contains("QuNexus Port"))
+        if (inOrOut == PORT_OUT && portName != QUNEXUS_OUT_P1) // don't create feedback loop
         {
             QComboBox *thisDropDown = ui->midi_outputs;
 
