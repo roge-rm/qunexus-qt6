@@ -32,6 +32,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QCoreApplication::setOrganizationName("Keith McMillen Instruments");
     QCoreApplication::setOrganizationDomain("keithmcmillen.com");
 
+    qDebug() << "System Locale: " << QLocale::system().name();
+
     // application version
     applicationVersion.resize(3);
 
@@ -3112,7 +3114,7 @@ void MainWindow::slotSetupMenuBar()
 //------------------------------------------------------------------------------------------------------------------------------------------------------//
 void MainWindow::slotOpenDocumentation()
 {
-    QString manualURL = "https://files.keithmcmillen.com/products/qunexus/Manuals/QuNexus_RED_Manual_2.0.2.pdf";
+    QString manualURL = "https://files.keithmcmillen.com/products/qunexus/Manuals/QuNexus_RED_Manual_2.0.3.pdf";
 
     QFile *file = new QFile(":help/resources/help.txt");
     file->open(QFile::ReadOnly);
@@ -3810,7 +3812,7 @@ void MainWindow::slotBootloaderMode(bool fwUpdateRequested)
     if (!fwUpdateRequested)
     {
         QMessageBox msgBox;
-        msgBox.setText("Your device is in bootloader mode. Hit OK to attempt a firmware update.");
+        msgBox.setText("Your device is in bootloader mode. Click OK to attempt a firmware update.");
         msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
         msgBox.setDefaultButton(QMessageBox::Ok);
         int ret = msgBox.exec();
