@@ -12,6 +12,9 @@ KMI_Updates::KMI_Updates(QWidget *p, QString an, QSettings *_sessionSettings, QB
     applicationVersion[2] = uchar(av.at(2));
 
     networkAccessManager = new(QNetworkAccessManager);
+    //networkAccessManager->set
+
+
     appName = an;
 
     connect(networkAccessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(slotUpdateCheckReply(QNetworkReply*)));
@@ -31,6 +34,7 @@ void KMI_Updates::slotCheckForUpdates()
 {
     qDebug() << "slotCheckForUpdates called";
 
+    //QSslSocket::setProtocol()
     qDebug() << QSslSocket::supportsSsl() << QSslSocket::sslLibraryBuildVersionString() << QSslSocket::sslLibraryVersionString();
     qDebug() << "checking for updates";
     networkAccessManager->get(QNetworkRequest(QUrl("https://files.keithmcmillen.com/products/qunexus/editor/softwareVersionCheck.json")));
