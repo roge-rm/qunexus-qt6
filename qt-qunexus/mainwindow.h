@@ -29,6 +29,7 @@
 
 #include "ui_perkeysensitivities.h"
 
+#include "kmi_updates.h"
 
 #include "midi.h"
 
@@ -55,6 +56,8 @@ public:
     QByteArray applicationVersion, thisFw;
 
     QString betaVersion;
+
+    KMI_Updates * checkUpdates;
 
     // ------ midi overhaul --------------------------------------------------------
 

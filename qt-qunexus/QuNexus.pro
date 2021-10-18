@@ -28,6 +28,7 @@ SOURCES +=  main.cpp\
     inc/KMI_MIDI_Device_Manager/fwupdate/fwupdate.cpp \
     inc/KMI_MIDI_Device_Manager/KMI_mdm.cpp \
     inc/KMI_Ports/kmi_ports.cpp \
+    inc/KMI_Updates/kmi_updates.cpp \
     inc/rtmidi/RtMidi.cpp \
             mainwindow.cpp \
             source/datamanagement/presetmanager.cpp \
@@ -46,6 +47,7 @@ HEADERS  += mainwindow.h \
     inc/KMI_MIDI_Device_Manager/KMI_mdm.h \
     inc/KMI_MIDI_Device_Manager/midi.h \
     inc/KMI_Ports/kmi_ports.h \
+    inc/KMI_Updates/kmi_updates.h \
     inc/rtmidi/RtMidi.h \
             source/datamanagement/presetmanager.h \
             source/datamanagement/presetnamedialog.h \
@@ -79,7 +81,8 @@ INCLUDEPATH += \
     inc/rtmidi \
     inc/KMI_Ports \
     inc/KMI_MIDI_Device_Manager \
-    inc/KMI_MIDI_Device_Manager/fwupdate
+    inc/KMI_MIDI_Device_Manager/fwupdate \
+    inc/KMI_Updates
 
 #DEFINES += \
     MDM_DEBUG_ENABLED # enable deeper deebugging for KMI Midi Device Manager
@@ -103,6 +106,11 @@ win32{
 }
 # end rtmidi defines
 
+# SSL support for checking for updates on windows
+win32{
+    LIBS += -LC:\Qt6\Tools\OpenSSL\Win_x64\lib -llibcrypto
+    INCLUDEPATH+= C:\Qt6\Tools\OpenSSL\Win_x64\include\openssl
+}
 
 
 OTHER_FILES += \

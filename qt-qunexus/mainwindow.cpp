@@ -21,6 +21,7 @@
 #include "sendpresetsdialog.h"
 #include "syncqunexusdialog.h"
 #include "KMI_FwVersions.h"
+#include "inc/KMI_Updates/kmi_updates.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -39,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     applicationVersion[0] = 2;
     applicationVersion[1] = 0;
-    applicationVersion[2] = 3;
+    applicationVersion[2] = 4;
 
     betaVersion = ""; // release, do not show beta string
     //betaVersion = " Beta A"; // show beta
@@ -104,6 +105,10 @@ MainWindow::MainWindow(QWidget *parent) :
     settings = new QSettings();
 
     qDebug() << "Qsettings file name" << settings->fileName();
+
+    // check for updates
+    checkUpdates = new KMI_Updates(this, "QuNexus", settings, applicationVersion);
+
 
     // default file location
     const QString DEFAULT_DIR_KEY("default_dir");
@@ -3104,6 +3109,10 @@ void MainWindow::slotSetupMenuBar()
 
     help->addAction(unsavedWarningsEnabled);
 
+    QAction *updateCheckAct = new QAction("Check for Updates...", help);
+    connect(updateCheckAct, SIGNAL(triggered()), checkUpdates, SLOT(slotManualCheckForUpdates()));
+    help->addAction(updateCheckAct);
+    updateCheckAct->setEnabled(true);
 
     menubar->addMenu(help);
 
