@@ -1136,7 +1136,7 @@ void PresetManager::slotValueChanged()
     static QString previousKey, previousValue;
     QString thisKey, thisValue;
 
-    //qDebug() << "slotValueChanged called - presetLoading: " << presetLoading << " newControllerKeySelected: " << newControllerKeySelected << " Sender:" << QObject::sender()->objectName();
+    qDebug() << "slotValueChanged called - presetLoading: " << presetLoading << " newControllerKeySelected: " << newControllerKeySelected << " Sender:" << QObject::sender()->objectName();
 
     // value has changed, deselect any UI objects
     emit signalClearFocus();
@@ -2005,6 +2005,7 @@ void PresetManager::slotSaveEditBufferToLibrary(QString presetName)
 //-------- Sends current edit buffer in editor to device edit buffer (RAM) --------//
 void PresetManager::slotSyncEditBufferToDevice()
 {
+    qDebug() << "slotSyncEditBufferToDevice called";
     if (!syncFlag || presetLoading || JSONLoading)
     {
         //qDebug() << "slotSyncEditBufferToDevice called and blocked - presetloading:" << presetLoading << " JSONLoading:" << JSONLoading;

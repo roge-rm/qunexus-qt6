@@ -52,6 +52,8 @@ MainWindow::MainWindow(QWidget *parent) :
     // flag that the app has just started, avoid unsaved popup on open
     firstRunUnsavedFlag = true;
 
+    qApp->installEventFilter(this);     // catch all app mousemovements
+
     // ******************************
     // KMI_Ports
     // ******************************
@@ -187,7 +189,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // setup UI
     ui->setupUi(this);
-    connect(presetManager, SIGNAL(signalClearFocus()), this, SLOT(slotClearFocus()));
+    //connect(presetManager, SIGNAL(signalClearFocus()), this, SLOT(slotClearFocus()));
 
     // connect dropdowns and connection status to MIDI aux ports
     connect(ui->midi_outputs, SIGNAL(currentIndexChanged(int)), this, SLOT(slotUpdateMIDIaux()));
@@ -508,6 +510,8 @@ void MainWindow::slotFindAndConnectUi()
                 //qDebug() << "QSpinBox" << numberBox->objectName();
                 connect(numberBox, SIGNAL(editingFinished()), presetManager, SLOT(slotValueChanged()));
                 //numberBox->setStyleSheet("QToolTip {background: #006599;color: white;}");
+
+                //numberBox.focusInEvent = lambda _: QTimer.singleShot(0, b.selectAll)
             }
             else if(QDoubleSpinBox* floatBox = this->findChild<QDoubleSpinBox *>(i.key()))
             {
@@ -3521,6 +3525,11 @@ void MainWindow::keyReleaseEvent(QKeyEvent* event)
 
 bool MainWindow::eventFilter(QObject *obj, QEvent *event)
 {
+//    if (obj->objectName() == "Globals_Tilt_Sensitivity")
+//    {
+//        qDebug() << "Event: " << event->type() << " object: " << obj->objectName();
+//    }
+
     if(event->type() == QEvent::ToolTip)
     {
         // set stylesheet for tooltip
@@ -3554,6 +3563,46 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
         if(keysPressed->matches(QKeySequence::Paste)){
             slotPasteControllerElements();
         }
+        if (keysPressed->key() == Qt::Key_Enter ||
+            keysPressed->key() == Qt::Key_Return ||
+            keysPressed->key() == Qt::Key_Tab ||
+            keysPressed->key() == Qt::Key_Escape)
+        {
+            slotClearFocus(); // get out of the number/entry box
+        }
+    }
+
+
+    if (event->type() == QEvent::MouseButtonPress)
+    {
+        //slotClearFocus();
+        //qDebug() << "Clicked: " << obj->objectName();
+
+        if (obj->objectName() == "MainWindowWindow")
+        {
+            slotClearFocus(); // clear focus when clicking on any other part of the window
+        }
+
+    }
+
+    if (event->type() == QEvent::FocusIn)
+    {
+        //qDebug() << "FocusIn: " << obj->objectName();
+        if(QSpinBox* numberBox = this->findChild<QSpinBox *>(obj->objectName()))
+        {
+            //qDebug() << "focusin numbox: " << obj->objectName();
+            QTimer::singleShot(3, [numberBox](){
+                    numberBox->findChild<QLineEdit*>()->selectAll(); // select all contents on click
+                });
+
+            //numberBox->findChild<QLineEdit*>()->selectAll();
+        }
+        else if(QDoubleSpinBox* floatBox = this->findChild<QDoubleSpinBox *>(obj->objectName()))
+        {
+            QTimer::singleShot(3, [floatBox](){
+                floatBox->findChild<QLineEdit*>()->selectAll(); // select all contents on click
+                });
+        }
     }
 
     return false;
@@ -3575,10 +3624,12 @@ void MainWindow::slotToolTipHandler()
         else if(QSpinBox* numberBox = this->findChild<QSpinBox *>(i.key()))
         {
             numberBox->installEventFilter(this);
+            numberBox->setMouseTracking(true);
         }
         else if(QDoubleSpinBox* floatBox = this->findChild<QDoubleSpinBox *>(i.key()))
         {
             floatBox->installEventFilter(this);
+            floatBox->setMouseTracking(true);
         }
         else if(QCheckBox* checkBox = this->findChild<QCheckBox *>(i.key()))
         {

@@ -9,6 +9,7 @@
 #include "Qn_preset_struct.h"
 #include "KMI_mdm.h"
 #include "presetmanager.h"
+#include <QElapsedTimer>
 
 //********************************************
 //*****	Macros
@@ -62,6 +63,8 @@ public:
 
     QVariantMap*    editBufferPresetMap;
     QVariantMap     paramTypeMap;
+
+    QElapsedTimer presetSendTimer;
 
     ///////////////////////////////////////
     ///////////_midi_sx_encode ////////////

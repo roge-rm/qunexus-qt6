@@ -4,6 +4,7 @@
 #include "sysexencdecode.h"
 #include "mainwindow.h"
 
+
 #define SIZE_OF_PRESET_HEADER 8
 #define SIZE_OF_OLD_PRESET_JSON 457
 //#define SYX_DEBUG_PRESET_PACKET
@@ -11,6 +12,8 @@
 SysExEncDecode::SysExEncDecode(QWidget *parent) :
     QWidget(parent)
 {
+
+    presetSendTimer.start(); // timer to limit preset sends
 
     thisParent = parent;
     qnSeq.valid = PRESET_STRUCT_IS_V2; // magic number to prove this struct is a valid 2.0 format
@@ -1906,11 +1909,11 @@ void SysExEncDecode::encodeSequencerPreset(QVariantMap preset) // encodes a pres
     // sequencer
     tempPresetValue = dictionary.value( preset.value("SEQ_clock_source").toString() );
     qnSeq.clock_source = tempPresetValue.toUInt();
-    qDebug() << "SEQ_clock_source: " << qnSeq.clock_source;
+    //qDebug() << "SEQ_clock_source: " << qnSeq.clock_source;
 
     tempPresetValue = dictionary.value( preset.value("SEQ_clock_dest").toString() );
     qnSeq.clock_dest = tempPresetValue.toUInt();
-    qDebug() << "SEQ_clock_dest: " << qnSeq.clock_dest;
+    //qDebug() << "SEQ_clock_dest: " << qnSeq.clock_dest;
 
 
     qnSeq.BPM = preset.value("SEQ_tempo").toUInt();
@@ -1918,7 +1921,7 @@ void SysExEncDecode::encodeSequencerPreset(QVariantMap preset) // encodes a pres
 
     tempPresetValue = dictionary.value( preset.value("SEQ_CV_Clock_Divide").toString() );
     qnSeq.kbSplit = tempPresetValue.toUInt(); // qnSeq.kbSplit is now euroClockDivideIndex in firmware, potential bug waiting to happen here
-    qDebug() << "SEQ_CV_Clock_Divide: " << qnSeq.kbSplit;
+    //qDebug() << "SEQ_CV_Clock_Divide: " << qnSeq.kbSplit;
 
     qnSeq.kbSplitLower = preset.value("SEQ_KB_lower").toUInt();
     qnSeq.kbSplitUpper = preset.value("SEQ_KB_upper").toUInt();
@@ -2069,6 +2072,16 @@ void SysExEncDecode::encodeInt(int i)
 
 void SysExEncDecode::slotSysExEncodePreset(QVariantMap preset, unsigned char presetNumChar)
 {
+
+    if (presetSendTimer.hasExpired(20)) // if at least xx ms has passed
+    {
+        presetSendTimer.restart();
+    }
+    else
+    {
+        return; // avoids double sends
+    }
+
     qDebug() << "***[ BEGIN slotSysExEncodePreset ] ********************************************************************";
     encodedSysexByteArray.clear();
 
@@ -2123,7 +2136,7 @@ void SysExEncDecode::slotSysExEncodePreset(QVariantMap preset, unsigned char pre
         QString tempParamName = keyLayerJSON[i];
         QVariant tempPresetValue = preset.value(tempParamName);
 
-        qDebug() << "JSON Param: " << tempParamName << "Value: " << tempPresetValue;
+        //qDebug() << "JSON Param: " << tempParamName << "Value: " << tempPresetValue;
 
 
         if(tempPresetValue.typeName() == QString("QString"))
@@ -2174,9 +2187,9 @@ void SysExEncDecode::slotSysExEncodePreset(QVariantMap preset, unsigned char pre
     // COMBINE macros are (MSb , LSb), LSb comes first in the struct order
 
     // sequencer data
-    qDebug() << "source/dest: " << qnSeq.clock_dest << "/" << qnSeq.clock_source << " combine: " << COMBINE44(qnSeq.clock_dest, qnSeq.clock_source);
+    //qDebug() << "source/dest: " << qnSeq.clock_dest << "/" << qnSeq.clock_source << " combine: " << COMBINE44(qnSeq.clock_dest, qnSeq.clock_source);
     encode( COMBINE44(qnSeq.clock_dest, qnSeq.clock_source) );
-    qDebug() << "bpm: " << qnSeq.BPM;
+    //qDebug() << "bpm: " << qnSeq.BPM;
     encodeInt(qnSeq.BPM); // the one lonely integer
     //qDebug() << "Swing: ";
     encode(qnSeq.swingPercent);

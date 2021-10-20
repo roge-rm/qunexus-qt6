@@ -308,4 +308,6 @@ private:
     Ui::PerKeySensitivities *sensitivitiesUi;
 };
 
+
+
 #endif // MAINWINDOW_H

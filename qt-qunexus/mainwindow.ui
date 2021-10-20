@@ -678,7 +678,7 @@ QTabBar::tab:selected {
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <property name="elideMode">
       <enum>Qt::ElideRight</enum>
@@ -13736,7 +13736,7 @@ QSpinBox:disabled {
          </rect>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The minimum value to send.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Disabled for Gate&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
@@ -13749,11 +13749,12 @@ QSpinBox:disabled {
 	font-family:&quot;Arial&quot;;
 	border-radius:4.0;
 	border-color:black;
-	background-color: rgba(67, 67, 67, 255);
+	background-color: rgb(30,30,30);
 	font-size: 11px;
-	color: white;
+	color: rgba(100, 100, 100, 255);
 	padding:0, 3, 0, 0;
-}</string>
+}
+</string>
         </property>
         <property name="wrapping">
          <bool>false</bool>
@@ -14055,6 +14056,9 @@ QToolTip {
         </property>
         <property name="contextMenuPolicy">
          <enum>Qt::DefaultContextMenu</enum>
+        </property>
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Disabled for Gate&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="autoFillBackground">
          <bool>false</bool>
@@ -14753,7 +14757,7 @@ QComboBox::down-arrow:disabled {
          </rect>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The maximum value to send.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Disabled for Gate&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
@@ -14766,11 +14770,12 @@ QComboBox::down-arrow:disabled {
 	font-family:&quot;Arial&quot;;
 	border-radius:4.0;
 	border-color:black;
-	background-color: rgba(67, 67, 67, 255);
+	background-color: rgb(30,30,30);
 	font-size: 11px;
-	color: white;
+	color: rgba(100, 100, 100, 255);
 	padding:0, 3, 0, 0;
-}</string>
+}
+</string>
         </property>
         <property name="wrapping">
          <bool>false</bool>
@@ -14839,6 +14844,9 @@ QComboBox::down-arrow:disabled {
         </property>
         <property name="contextMenuPolicy">
          <enum>Qt::DefaultContextMenu</enum>
+        </property>
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Disabled for Gate&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
          <string notr="true">QComboBox {
@@ -14923,7 +14931,7 @@ QComboBox::down-arrow:disabled {
          </rect>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shift the incomming value by this (-127 to 127).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Disabled for Gate&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
@@ -14936,11 +14944,12 @@ QComboBox::down-arrow:disabled {
 	font-family:&quot;Arial&quot;;
 	border-radius:4.0;
 	border-color:black;
-	background-color: rgba(67, 67, 67, 255);
+	background-color: rgb(30,30,30);
 	font-size: 11px;
-	color: white;
+	color: rgba(100, 100, 100, 255);
 	padding:0, 3, 0, 0;
-}</string>
+}
+</string>
         </property>
         <property name="wrapping">
          <bool>false</bool>
@@ -14976,63 +14985,63 @@ QComboBox::down-arrow:disabled {
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
              <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
+              <red>100</red>
+              <green>100</green>
+              <blue>100</blue>
              </color>
             </brush>
            </colorrole>
            <colorrole role="Button">
             <brush brushstyle="SolidPattern">
              <color alpha="255">
-              <red>67</red>
-              <green>67</green>
-              <blue>67</blue>
+              <red>30</red>
+              <green>30</green>
+              <blue>30</blue>
              </color>
             </brush>
            </colorrole>
            <colorrole role="Text">
             <brush brushstyle="SolidPattern">
              <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
+              <red>100</red>
+              <green>100</green>
+              <blue>100</blue>
              </color>
             </brush>
            </colorrole>
            <colorrole role="ButtonText">
             <brush brushstyle="SolidPattern">
              <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
+              <red>100</red>
+              <green>100</green>
+              <blue>100</blue>
              </color>
             </brush>
            </colorrole>
            <colorrole role="Base">
             <brush brushstyle="SolidPattern">
              <color alpha="255">
-              <red>67</red>
-              <green>67</green>
-              <blue>67</blue>
+              <red>30</red>
+              <green>30</green>
+              <blue>30</blue>
              </color>
             </brush>
            </colorrole>
            <colorrole role="Window">
             <brush brushstyle="SolidPattern">
              <color alpha="255">
-              <red>67</red>
-              <green>67</green>
-              <blue>67</blue>
+              <red>30</red>
+              <green>30</green>
+              <blue>30</blue>
              </color>
             </brush>
            </colorrole>
            <colorrole role="PlaceholderText">
             <brush brushstyle="NoBrush">
              <color alpha="128">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
+              <red>100</red>
+              <green>100</green>
+              <blue>100</blue>
              </color>
             </brush>
            </colorrole>
@@ -15041,63 +15050,63 @@ QComboBox::down-arrow:disabled {
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
              <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
+              <red>100</red>
+              <green>100</green>
+              <blue>100</blue>
              </color>
             </brush>
            </colorrole>
            <colorrole role="Button">
             <brush brushstyle="SolidPattern">
              <color alpha="255">
-              <red>67</red>
-              <green>67</green>
-              <blue>67</blue>
+              <red>30</red>
+              <green>30</green>
+              <blue>30</blue>
              </color>
             </brush>
            </colorrole>
            <colorrole role="Text">
             <brush brushstyle="SolidPattern">
              <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
+              <red>100</red>
+              <green>100</green>
+              <blue>100</blue>
              </color>
             </brush>
            </colorrole>
            <colorrole role="ButtonText">
             <brush brushstyle="SolidPattern">
              <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
+              <red>100</red>
+              <green>100</green>
+              <blue>100</blue>
              </color>
             </brush>
            </colorrole>
            <colorrole role="Base">
             <brush brushstyle="SolidPattern">
              <color alpha="255">
-              <red>67</red>
-              <green>67</green>
-              <blue>67</blue>
+              <red>30</red>
+              <green>30</green>
+              <blue>30</blue>
              </color>
             </brush>
            </colorrole>
            <colorrole role="Window">
             <brush brushstyle="SolidPattern">
              <color alpha="255">
-              <red>67</red>
-              <green>67</green>
-              <blue>67</blue>
+              <red>30</red>
+              <green>30</green>
+              <blue>30</blue>
              </color>
             </brush>
            </colorrole>
            <colorrole role="PlaceholderText">
             <brush brushstyle="NoBrush">
              <color alpha="128">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
+              <red>100</red>
+              <green>100</green>
+              <blue>100</blue>
              </color>
             </brush>
            </colorrole>
@@ -15106,63 +15115,63 @@ QComboBox::down-arrow:disabled {
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
              <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
+              <red>100</red>
+              <green>100</green>
+              <blue>100</blue>
              </color>
             </brush>
            </colorrole>
            <colorrole role="Button">
             <brush brushstyle="SolidPattern">
              <color alpha="255">
-              <red>67</red>
-              <green>67</green>
-              <blue>67</blue>
+              <red>30</red>
+              <green>30</green>
+              <blue>30</blue>
              </color>
             </brush>
            </colorrole>
            <colorrole role="Text">
             <brush brushstyle="SolidPattern">
              <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
+              <red>100</red>
+              <green>100</green>
+              <blue>100</blue>
              </color>
             </brush>
            </colorrole>
            <colorrole role="ButtonText">
             <brush brushstyle="SolidPattern">
              <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
+              <red>100</red>
+              <green>100</green>
+              <blue>100</blue>
              </color>
             </brush>
            </colorrole>
            <colorrole role="Base">
             <brush brushstyle="SolidPattern">
              <color alpha="255">
-              <red>67</red>
-              <green>67</green>
-              <blue>67</blue>
+              <red>30</red>
+              <green>30</green>
+              <blue>30</blue>
              </color>
             </brush>
            </colorrole>
            <colorrole role="Window">
             <brush brushstyle="SolidPattern">
              <color alpha="255">
-              <red>67</red>
-              <green>67</green>
-              <blue>67</blue>
+              <red>30</red>
+              <green>30</green>
+              <blue>30</blue>
              </color>
             </brush>
            </colorrole>
            <colorrole role="PlaceholderText">
             <brush brushstyle="NoBrush">
              <color alpha="128">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
+              <red>100</red>
+              <green>100</green>
+              <blue>100</blue>
              </color>
             </brush>
            </colorrole>
@@ -15176,18 +15185,19 @@ QComboBox::down-arrow:disabled {
          </font>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Multiply the incomming value by this gain&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Disabled for Gate&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
          <string notr="true">QDoubleSpinBox {
 	font-family:&quot;Arial&quot;;
 	border-radius:4.0;
 	border-color:black;
-	background-color: rgba(67, 67, 67, 255);
+	background-color: rgb(30,30,30);
 	font-size: 11px;
-	color: white;
+	color: rgba(100, 100, 100, 255);
 	padding:0, 3, 0, 0;
-}</string>
+}
+</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
