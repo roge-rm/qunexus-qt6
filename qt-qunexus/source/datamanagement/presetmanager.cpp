@@ -150,8 +150,7 @@ void PresetManager::slotCreateDefaultParamMap()
     defaultParamMap["Keyboard_Global_Poly_Aftertouch_Active"] = 1;
     defaultParamMap["Keyboard_Global_CC_Active"] = 1;
     defaultParamMap["Keyboard_Global_Transpose"] = 0;
-    //globalTrack3CVinClockMode
-    defaultParamMap["Keyboard_Global_CV_Clock_3_Mode"] = 1;
+
     defaultParamMap["Keyboard_Global_LED_Mode"] = 1;
     defaultParamMap["Keyboard_Global_LED_Remote_Channel"] = 0;
     defaultParamMap["Keyboard_Global_Polyphony_Number"] = 10;
@@ -219,14 +218,14 @@ void PresetManager::slotCreateDefaultParamMap()
     defaultParamMap["Keyboard_CC_02_Curve"] =  "Linear";
     defaultParamMap["Keyboard_CC_02_MIDI_Output_Device"] =  "USB 1";
 
-    defaultParamMap["Keyboard_CC_03_Control_Number"] =  1;
-    defaultParamMap["Keyboard_CC_03_Source"] =  "None";
-    defaultParamMap["Keyboard_CC_03_Gain"] = 100;
-    defaultParamMap["Keyboard_CC_03_Offset"] = 0;
-    defaultParamMap["Keyboard_CC_03_Min"] =  0;
-    defaultParamMap["Keyboard_CC_03_Max"] =  127;
-    defaultParamMap["Keyboard_CC_03_Curve"] =  "Linear";
-    defaultParamMap["Keyboard_CC_03_MIDI_Output_Device"] =  "USB 1";
+//    defaultParamMap["Keyboard_CC_03_Control_Number"] =  1;
+//    defaultParamMap["Keyboard_CC_03_Source"] =  "None";
+//    defaultParamMap["Keyboard_CC_03_Gain"] = 100;
+//    defaultParamMap["Keyboard_CC_03_Offset"] = 0;
+//    defaultParamMap["Keyboard_CC_03_Min"] =  0;
+//    defaultParamMap["Keyboard_CC_03_Max"] =  127;
+//    defaultParamMap["Keyboard_CC_03_Curve"] =  "Linear";
+//    defaultParamMap["Keyboard_CC_03_MIDI_Output_Device"] =  "USB 1";
 
 
     //******Controller Layer*********//
@@ -680,10 +679,10 @@ void PresetManager::slotCreateDefaultParamMap()
     defaultParamMap["SEQ_clock_dest"] = "USB 1 + Expander";            // 4 bits are the destinations (usb/exp)
     defaultParamMap["SEQ_tempo"] = 126;
     defaultParamMap["SEQ_swing"] = 50;
-    defaultParamMap["SEQ_CV_Clock_Divide"] = 0;            // cv clock divider
+    defaultParamMap["SEQ_CV_Clock_Divide"] = 1;            // cv clock divider
     defaultParamMap["SEQ_KB_lower"] = 0;			// which track is assigned to the lower half of the split
     defaultParamMap["SEQ_KB_upper"] = 1;			// which track is assigned to the upper half of the split
-
+    defaultParamMap["Keyboard_Global_CV_Clock_3_Mode"] = "OR";
     // ************* track 1 ******************************************************************************
 
     defaultParamMap["SEQ_track_1_mode"] = "Step Sequencer";     // left 4 bits mode (off/arp/step) (2 = step sequencer, stopped)
@@ -696,7 +695,7 @@ void PresetManager::slotCreateDefaultParamMap()
     defaultParamMap["SEQ_track_1_chain"] = "ABCD";              // CHAIN struct has (8) 3 bit links. 41/225/156 is ABCD0000.
     defaultParamMap["SEQ_track_1_length"] = 16;                 // length of the arp/seq, 0 = empty
     defaultParamMap["SEQ_track_1_dest"] = "USB 1 + Expander";   // left 2 bits destination (2 = USB & Expander),
-    defaultParamMap["SEQ_track_1_midi_ch"] = 0;                 // right 6 bits MIDI channel (17 = MPE)
+    defaultParamMap["SEQ_track_1_midi_ch"] = "ch. 1";           // right 6 bits MIDI channel (17 = MPE)
     defaultParamMap["SEQ_track_1_transp"] = 0;                  // per track transposition
 
     // ************* track 2 ******************************************************************************
@@ -711,7 +710,7 @@ void PresetManager::slotCreateDefaultParamMap()
     defaultParamMap["SEQ_track_2_chain"] = "ABCD";              // CHAIN struct has (8) 3 bit links. 41/225/156 is ABCD0000.
     defaultParamMap["SEQ_track_2_length"] = 16;                 // length of the arp/seq, 0 = empty
     defaultParamMap["SEQ_track_2_dest"] = "USB 1 + Expander";   // left 2 bits destination (2 = USB & Expander),
-    defaultParamMap["SEQ_track_2_midi_ch"] = 1;                 // right 6 bits MIDI channel (17 = MPE)
+    defaultParamMap["SEQ_track_2_midi_ch"] = "ch. 2";                 // right 6 bits MIDI channel (17 = MPE)
     defaultParamMap["SEQ_track_2_transp"] = 0;                  // per track transposition
 
     // ************* track 3 ******************************************************************************
@@ -726,7 +725,7 @@ void PresetManager::slotCreateDefaultParamMap()
     defaultParamMap["SEQ_track_3_chain"] = "ABCD";              // CHAIN struct has (8) 3 bit links. 41/225/156 is ABCD0000.
     defaultParamMap["SEQ_track_3_length"] = 16;                 // length of the arp/seq, 0 = empty
     defaultParamMap["SEQ_track_3_dest"] = "USB 1 + Expander";   // left 2 bits destination (2 = USB & Expander),
-    defaultParamMap["SEQ_track_3_midi_ch"] = 2;                 // right 6 bits MIDI channel (17 = MPE)
+    defaultParamMap["SEQ_track_3_midi_ch"] = "ch. 3";                 // right 6 bits MIDI channel (17 = MPE)
     defaultParamMap["SEQ_track_3_transp"] = 0;                  // per track transposition
 
     //------------------------------------------------------------------//
@@ -852,7 +851,7 @@ void PresetManager::slotCreateDefaultParamMap()
 //-------- Loads JSON from file and checks validity --------//
 void PresetManager::slotLoadJSON()
 {
-
+    qDebug() << "slotLoadJSON called";
     QString jsonPath = QCoreApplication::applicationDirPath(); //get bundle path
 
 #if defined(Q_OS_MAC) && !defined(QT_DEBUG)
@@ -926,7 +925,7 @@ void PresetManager::slotLoadJSON()
                     //Check preset contents
                     if(tempPresetMap.contains(mapIterator.key()))
                     {
-//                        qDebug() << mapIterator.key() << "FOUND IN JSON";
+                        qDebug() << mapIterator.key() << "FOUND IN JSON";
                     }
                     else
                     {
@@ -1035,7 +1034,7 @@ void PresetManager::slotWritePresetToJSON(QVariantMap preset, int newOrOld)
         break;
 
     case NEW_PRESET:
-qDebug() << "-------- slotWritePresetToJSON:pre open NEW_PRESET ------";
+        qDebug() << "-------- slotWritePresetToJSON:pre open NEW_PRESET ------";
         //If not opened
         if(jsonFile->open(QIODevice::ReadWrite | QIODevice::Text))
         {
@@ -1136,7 +1135,7 @@ void PresetManager::slotValueChanged()
     static QString previousKey, previousValue;
     QString thisKey, thisValue;
 
-    qDebug() << "slotValueChanged called - presetLoading: " << presetLoading << " newControllerKeySelected: " << newControllerKeySelected << " Sender:" << QObject::sender()->objectName();
+    //qDebug() << "slotValueChanged called - presetLoading: " << presetLoading << " newControllerKeySelected: " << newControllerKeySelected << " Sender:" << QObject::sender()->objectName();
 
     // value has changed, deselect any UI objects
     emit signalClearFocus();
@@ -1784,10 +1783,15 @@ bool PresetManager::slotLoadPresetFileIntoEditBuffer(QString filename)
         {
             i.next();
 
-            if(!importedPresetMap.contains(i.key()))
+            if(importedPresetMap.contains(i.key()))
+            {
+                qDebug() << i.key() << "FOUND IN JSON";
+            }
+            else
             {
                 //If imported preset map does not contain a value in default map, insert it
                 importedPresetMap.insert(i.key(), i.value());
+                qDebug() << i.key() << "**** NOT FOUND in JSON ****" << i.value() ;
             }
         }
 
@@ -2005,7 +2009,7 @@ void PresetManager::slotSaveEditBufferToLibrary(QString presetName)
 //-------- Sends current edit buffer in editor to device edit buffer (RAM) --------//
 void PresetManager::slotSyncEditBufferToDevice()
 {
-    qDebug() << "slotSyncEditBufferToDevice called";
+    //qDebug() << "slotSyncEditBufferToDevice called";
     if (!syncFlag || presetLoading || JSONLoading)
     {
         //qDebug() << "slotSyncEditBufferToDevice called and blocked - presetloading:" << presetLoading << " JSONLoading:" << JSONLoading;

@@ -217,6 +217,7 @@ public slots:
 
     // ------ midi overhaul --------------------------------------------------------
     void slotMIDIPortChange(QString, uchar, uchar, int); // handles changes to MIDI i/o
+    void slotRefreshConnection();
     void slotBootloaderMode(bool fwUpdateRequested);
     void slotFwUpdateSuccessCloseDialog(bool);
     void slotForceFirmwareUpdate();

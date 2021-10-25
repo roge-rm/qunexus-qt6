@@ -796,6 +796,10 @@ void MainWindow::slotFindAndConnectUi()
     // handle device unexpectedly in bootloader mode
     connect(QuNexus, SIGNAL(signalBootloaderMode(bool)), this, SLOT(slotBootloaderMode(bool)));
 
+    // reset portlist after sending bootloader commands, catch changes to port names
+    connect(QuNexus, SIGNAL(signalBeginBlTimer()), this, SLOT(slotRefreshConnection()));
+    connect(QuNexus, SIGNAL(signalBeginFwTimer()), this, SLOT(slotRefreshConnection()));
+
     // v1.0 firmware
     //connect(QuNexus, SIGNAL(signalFirmwareMismatch(QString,QString,QString)), this, SLOT(slotFirmwareOutOfDateDialog(QString,QString,QString)));
     //connect(qunexusMidi, SIGNAL(signalFirmwareOutOfDate(QString,QString,QString,QString)), this, SLOT(slotFirmwareOutOfDateDialog(QString,QString,QString,QString)));
@@ -3848,7 +3852,7 @@ void MainWindow::slotMIDIPortChange(QString portName, uchar inOrOut, uchar messa
 
         break;
     case PORT_CHANGED:
-        qDebug() << " PORT CHANGED - name: " << portName << portName << " inOrOut: " << kmiPorts->inOut[inOrOut] << " messageType: " << kmiPorts->mType[messageType] << " portNum: " << portNum << "\n";
+        //qDebug() << " PORT CHANGED - name: " << portName << portName << " inOrOut: " << kmiPorts->inOut[inOrOut] << " messageType: " << kmiPorts->mType[messageType] << " portNum: " << portNum << "\n";
 
         // **** QuNexus renumber ****************************************
         if (portName == QUNEXUS_IN_P1 && inOrOut == PORT_IN)
@@ -3865,6 +3869,15 @@ void MainWindow::slotMIDIPortChange(QString portName, uchar inOrOut, uchar messa
         break;
     }
 }
+
+// close and then reopen the QuNexus ports
+// this is needed when the bootloader and app port names do not match
+void MainWindow::slotRefreshConnection()
+{
+    qDebug() << "slotRefreshConnection called";
+    QuNexus->slotResetConnections(QUNEXUS_IN_P1);
+}
+
 
 void MainWindow::slotBootloaderMode(bool fwUpdateRequested)
 {

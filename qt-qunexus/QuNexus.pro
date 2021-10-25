@@ -85,7 +85,7 @@ INCLUDEPATH += \
     inc/KMI_Updates
 
 #DEFINES += \
-    MDM_DEBUG_ENABLED # enable deeper deebugging for KMI Midi Device Manager
+#    MDM_DEBUG_ENABLED # enable deeper deebugging for KMI Midi Device Manager
 
 # These defines set RtMidi to the correct OS API
 macx{

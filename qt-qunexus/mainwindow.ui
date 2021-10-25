@@ -678,7 +678,7 @@ QTabBar::tab:selected {
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <property name="elideMode">
       <enum>Qt::ElideRight</enum>
@@ -24309,7 +24309,7 @@ QToolTip {
 }</string>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="keyEditPanes">
         <widget class="QFrame" name="noteToggleFrame">
@@ -24340,7 +24340,7 @@ QToolTip {
          <widget class="QCheckBox" name="Controller_Key_Toggle_On_Off">
           <property name="geometry">
            <rect>
-            <x>83</x>
+            <x>86</x>
             <y>47</y>
             <width>20</width>
             <height>20</height>
@@ -24386,7 +24386,7 @@ border-radius: 0px;
          <widget class="QSpinBox" name="Controller_Key_Note_Velocity">
           <property name="geometry">
            <rect>
-            <x>75</x>
+            <x>78</x>
             <y>25</y>
             <width>35</width>
             <height>20</height>
@@ -24440,7 +24440,7 @@ border-radius: 0px;
          <widget class="QSpinBox" name="Controller_Key_Note_Number">
           <property name="geometry">
            <rect>
-            <x>75</x>
+            <x>78</x>
             <y>3</y>
             <width>35</width>
             <height>20</height>
@@ -24494,7 +24494,7 @@ border-radius: 0px;
          <widget class="QLabel" name="label_50">
           <property name="geometry">
            <rect>
-            <x>2</x>
+            <x>5</x>
             <y>3</y>
             <width>68</width>
             <height>20</height>
@@ -24650,7 +24650,7 @@ border-radius: 0px;
          <widget class="QLabel" name="label_68">
           <property name="geometry">
            <rect>
-            <x>0</x>
+            <x>3</x>
             <y>25</y>
             <width>68</width>
             <height>20</height>
@@ -24728,7 +24728,7 @@ border-radius: 0px;
          <widget class="QLabel" name="label_55">
           <property name="geometry">
            <rect>
-            <x>3</x>
+            <x>6</x>
             <y>47</y>
             <width>68</width>
             <height>20</height>
@@ -24871,7 +24871,7 @@ border-radius: 0px;
 }</string>
           </property>
           <property name="text">
-           <string>Pressure CC Return</string>
+           <string>Return Val</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -25051,7 +25051,7 @@ border-radius: 0px;
 }</string>
           </property>
           <property name="text">
-           <string>Tilt CC Return</string>
+           <string>Return Val</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -25301,8 +25301,8 @@ border-radius: 0px;
          <widget class="QSpinBox" name="Controller_Bend_Pad_Note_Number">
           <property name="geometry">
            <rect>
-            <x>75</x>
-            <y>25</y>
+            <x>50</x>
+            <y>32</y>
             <width>35</width>
             <height>20</height>
            </rect>
@@ -25355,21 +25355,32 @@ border-radius: 0px;
          <widget class="QLabel" name="label_57">
           <property name="geometry">
            <rect>
-            <x>10</x>
-            <y>25</y>
-            <width>61</width>
+            <x>4</x>
+            <y>10</y>
+            <width>125</width>
             <height>20</height>
            </rect>
           </property>
+          <property name="styleSheet">
+           <string notr="true">QLabel
+{
+background: rgb(120,120,120);
+color: white;
+border-radius: 0px;
+}</string>
+          </property>
           <property name="text">
            <string>Note Number</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
           </property>
          </widget>
          <widget class="QSpinBox" name="Controller_Bend_Pad_Note_Velocity">
           <property name="geometry">
            <rect>
-            <x>208</x>
-            <y>25</y>
+            <x>166</x>
+            <y>32</y>
             <width>35</width>
             <height>20</height>
            </rect>
@@ -25422,14 +25433,25 @@ border-radius: 0px;
          <widget class="QLabel" name="label_71">
           <property name="geometry">
            <rect>
-            <x>145</x>
-            <y>25</y>
-            <width>61</width>
+            <x>120</x>
+            <y>10</y>
+            <width>125</width>
             <height>20</height>
            </rect>
           </property>
+          <property name="styleSheet">
+           <string notr="true">QLabel
+{
+background: rgb(120,120,120);
+color: white;
+border-radius: 0px;
+}</string>
+          </property>
           <property name="text">
            <string>Note Velocity</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </widget>
@@ -25461,7 +25483,7 @@ border-radius: 0px;
          <widget class="QLabel" name="label_103">
           <property name="geometry">
            <rect>
-            <x>3</x>
+            <x>1</x>
             <y>32</y>
             <width>93</width>
             <height>20</height>
@@ -25476,7 +25498,7 @@ border-radius: 0px;
 }</string>
           </property>
           <property name="text">
-           <string>Pressure CC Return</string>
+           <string>Return Value</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -25485,7 +25507,7 @@ border-radius: 0px;
          <widget class="QLabel" name="label_104">
           <property name="geometry">
            <rect>
-            <x>3</x>
+            <x>1</x>
             <y>10</y>
             <width>93</width>
             <height>20</height>
@@ -25509,7 +25531,7 @@ border-radius: 0px;
          <widget class="QLabel" name="label_105">
           <property name="geometry">
            <rect>
-            <x>3</x>
+            <x>1</x>
             <y>70</y>
             <width>93</width>
             <height>20</height>
@@ -25533,7 +25555,7 @@ border-radius: 0px;
          <widget class="QLabel" name="label_106">
           <property name="geometry">
            <rect>
-            <x>3</x>
+            <x>1</x>
             <y>90</y>
             <width>93</width>
             <height>20</height>
@@ -25548,7 +25570,7 @@ border-radius: 0px;
 }</string>
           </property>
           <property name="text">
-           <string>Tilt CC Return</string>
+           <string>Return Value</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -25557,7 +25579,7 @@ border-radius: 0px;
          <widget class="QSpinBox" name="Controller_Bend_Pad_Pressure_Control_Number">
           <property name="geometry">
            <rect>
-            <x>100</x>
+            <x>98</x>
             <y>10</y>
             <width>35</width>
             <height>20</height>
@@ -25611,7 +25633,7 @@ border-radius: 0px;
          <widget class="QSpinBox" name="Controller_Bend_Pad_Pressure_Return_Value">
           <property name="geometry">
            <rect>
-            <x>100</x>
+            <x>98</x>
             <y>32</y>
             <width>35</width>
             <height>20</height>
@@ -25665,7 +25687,7 @@ border-radius: 0px;
          <widget class="QSpinBox" name="Controller_Bend_Pad_Tilt_Control_Number">
           <property name="geometry">
            <rect>
-            <x>100</x>
+            <x>98</x>
             <y>69</y>
             <width>35</width>
             <height>20</height>
@@ -25719,7 +25741,7 @@ border-radius: 0px;
          <widget class="QSpinBox" name="Controller_Bend_Pad_Tilt_Return_Value">
           <property name="geometry">
            <rect>
-            <x>100</x>
+            <x>98</x>
             <y>91</y>
             <width>35</width>
             <height>20</height>
@@ -25801,7 +25823,7 @@ border-radius: 0px;
            <rect>
             <x>10</x>
             <y>10</y>
-            <width>16</width>
+            <width>156</width>
             <height>20</height>
            </rect>
           </property>
@@ -25814,7 +25836,7 @@ font: 10pt &quot;Arial&quot;;
 background:rgba(0,0,0,0);</string>
           </property>
           <property name="text">
-           <string/>
+           <string>Participate in Keyboard Layer</string>
           </property>
          </widget>
          <widget class="QCheckBox" name="Controller_Bend_Pad_Controller_Layer_Enable_Disable">
@@ -25822,7 +25844,7 @@ background:rgba(0,0,0,0);</string>
            <rect>
             <x>10</x>
             <y>30</y>
-            <width>21</width>
+            <width>156</width>
             <height>20</height>
            </rect>
           </property>
@@ -25835,7 +25857,7 @@ font: 10pt &quot;Arial&quot;;
 background:transparent;</string>
           </property>
           <property name="text">
-           <string/>
+           <string>Participate in Controller Layer</string>
           </property>
          </widget>
          <widget class="QSpinBox" name="Controller_Bend_Pad_Channel">
@@ -25892,59 +25914,19 @@ background:transparent;</string>
             <height>16</height>
            </rect>
           </property>
+          <property name="styleSheet">
+           <string notr="true">QLabel
+{
+background: rgb(120,120,120);
+color: white;
+border-radius: 0px;
+}</string>
+          </property>
           <property name="text">
            <string>Channel</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_107">
-          <property name="geometry">
-           <rect>
-            <x>30</x>
-            <y>10</y>
-            <width>141</width>
-            <height>20</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QLabel
-{
-background: rgb(120,120,120);
-color: white;
-border-radius: 0px;
-}</string>
-          </property>
-          <property name="text">
-           <string>Participate in Keyboard Layer</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_118">
-          <property name="geometry">
-           <rect>
-            <x>30</x>
-            <y>30</y>
-            <width>141</width>
-            <height>20</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QLabel
-{
-background: rgb(120,120,120);
-color: white;
-border-radius: 0px;
-}</string>
-          </property>
-          <property name="text">
-           <string>Participate in Controller Layer</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
           </property>
          </widget>
         </widget>
