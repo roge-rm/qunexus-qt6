@@ -2039,10 +2039,10 @@ void SysExEncDecode::encode(unsigned char ch)
     size--;
     midi_sx_encode_crc_char(ch);
 
-    if (ch < 0)			//write text file for use in explicitly initializing variables
-    {
-        ch += 256;
-    }
+//    if (ch < 0)			//write text file for use in explicitly initializing variables
+//    {
+//        ch += 256;
+//    }
 
     //	print('\t#', count++);
     //count++;
