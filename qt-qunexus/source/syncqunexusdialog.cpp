@@ -77,15 +77,15 @@ void SyncQuNexusDialog::slotCenterDialog()
 //    int mainX = 0;
 //    int mainY = 0;
 //#endif
-    int thisX = thisWindowPtr->x();
-    int thisY = thisWindowPtr->y();
+//    int thisX = thisWindowPtr->x();
+//    int thisY = thisWindowPtr->y();
 
     QPoint centerparent(
     mainX + ( (APP_WIDTH/2) - (SYNC_WINDOW_WIDTH/2)),
     mainY + 55 );
 
     thisWindowPtr->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint);
-    qDebug() << "Sync QuNexus Dialog centerparent: " << centerparent << " mx: " << mainX << " my: " << mainY << " tx: " << thisX << " ty: " << thisY;
+    //qDebug() << "Sync QuNexus Dialog centerparent: " << centerparent << " mx: " << mainX << " my: " << mainY << " tx: " << thisX << " ty: " << thisY;
     thisWindowPtr->move(centerparent);
 }
 

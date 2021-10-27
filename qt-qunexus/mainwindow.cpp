@@ -527,7 +527,7 @@ void MainWindow::slotFindAndConnectUi()
             else
             {
                 //------------ Handle Special Keyboard Params: ----------//
-                qDebug() << "Did not find: " << i.key();
+                //qDebug() << "Did not find: " << i.key();
                 //
                 if(i.key() == "Keyboard_Global_LED_Mode")
                 {
@@ -2387,6 +2387,7 @@ void MainWindow::slotSendPresetsToBoardDialog(QString presetName)
 void MainWindow::slotSyncQuNexusDialog()
 {
     qDebug() << "slotSyncQuNexusDialog called";
+    QuNexus->slotStopPolling(); // stop loop
     syncQuNexusDialog->slotCenterDialog();
     syncQuNexusDialog->open();
 }
@@ -2472,7 +2473,7 @@ void MainWindow::slotQuNexusConnected(bool state)
 
         QFrame* connectedFrame = this->findChild<QFrame *>("QuNexus_Connected_Frame");
         connectedFrame->setStyleSheet("border: 1px solid rgb(67,67,67); background:rgb(10,255,0); border-radius:6;");
-        qDebug() << "<< set connected: true";
+        //qDebug() << "<< set connected: true";
         connected = true;
 
         //presetManager->presetLoading = true; // block sending any data from editor until after initial sync
@@ -2485,7 +2486,7 @@ void MainWindow::slotQuNexusConnected(bool state)
 
         QFrame* connectedFrame = this->findChild<QFrame *>("QuNexus_Connected_Frame");
         connectedFrame->setStyleSheet("border: 1px solid rgb(67,67,67); background: rgb(100,100,100); border-radius:6;");
-        qDebug() << "<< set connected: false";
+        //qDebug() << "<< set connected: false";
 
         // safety to ensure we don't connect this twice
         if (connected)
@@ -2499,6 +2500,7 @@ void MainWindow::slotQuNexusConnected(bool state)
         syncQuNexusDialog->done(1); // close the sync dialog if it's open
 
         presetManager->syncFlag = false; // update presetmanager
+        QuNexus->hackStopTimer = false; // remove the hack to stop extra id replies
     }
 
     slotSetEndableUiElement("connected", connected);
@@ -3361,9 +3363,9 @@ void MainWindow::slotDisableGlobalsWindows()
 {
     qDebug() << "slotDisableGlobalsWindows called";
     //sensitivitiesUi->masterFrame->show();
-    qDebug() << "table disable";
+    //qDebug() << "table disable";
     tableInterface->slotEnable(false);
-    qDebug() << "cvtrims disable";
+    //qDebug() << "cvtrims disable";
     cvTrimsInterface->slotEnable(false);
 }
 
@@ -3956,7 +3958,7 @@ void MainWindow::slotFirmwareDetected(MidiDeviceManager *thisMDM, bool matches)
 // connect QuNexus midi input to to midi aux out
 void MainWindow::slotUpdateMIDIaux()
 {
-    qDebug() << "slotUpdateMIDIaux called";
+    //qDebug() << "slotUpdateMIDIaux called";
 
     QuNexus->disconnect(SIGNAL(signalRxMidi_raw(uchar, uchar, uchar, uchar)));
 

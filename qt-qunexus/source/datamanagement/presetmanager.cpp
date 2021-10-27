@@ -925,11 +925,11 @@ void PresetManager::slotLoadJSON()
                     //Check preset contents
                     if(tempPresetMap.contains(mapIterator.key()))
                     {
-                        qDebug() << mapIterator.key() << "FOUND IN JSON";
+                        //qDebug() << mapIterator.key() << "FOUND IN JSON";
                     }
                     else
                     {
-                        qDebug() << mapIterator.key() << "**** NOT FOUND in JSON ****" << mapIterator.value() ;
+                        //qDebug() << mapIterator.key() << "**** NOT FOUND in JSON ****" << mapIterator.value() ;
                         tempPresetMap.insert(mapIterator.key(), mapIterator.value()); //add new JSON params with default values if absent
                     }
                 }
@@ -1785,13 +1785,13 @@ bool PresetManager::slotLoadPresetFileIntoEditBuffer(QString filename)
 
             if(importedPresetMap.contains(i.key()))
             {
-                qDebug() << i.key() << "FOUND IN JSON";
+                //qDebug() << i.key() << "FOUND IN JSON";
             }
             else
             {
                 //If imported preset map does not contain a value in default map, insert it
                 importedPresetMap.insert(i.key(), i.value());
-                qDebug() << i.key() << "**** NOT FOUND in JSON ****" << i.value() ;
+                //qDebug() << i.key() << "**** NOT FOUND in JSON ****" << i.value() ;
             }
         }
 

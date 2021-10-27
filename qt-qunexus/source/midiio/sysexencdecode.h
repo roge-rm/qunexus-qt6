@@ -40,6 +40,28 @@
 
 //**********************************************
 
+// SysEx tx format defines
+
+// global packets, was 20/21/22 but reformatting for consistency and future product templates
+#define SYX_SYSTEM				0x11 // category
+#define SYX_SYS_RESET			0x00 // 0x1100 = command to reset the system to bootloader (ie 1100)
+#define SYX_SYS_GLOBALS  		0x10 // header for globals packet sent to editor
+#define SYX_SYS_CALIB			0x11 // header for calibration packet sent to editor
+#define SYX_SYS_DNAME			0x12 // header for device name packet sent to editor
+
+
+// preset packets
+#define SYX_PRESET				0x22 // category (dec 34)
+#define SYX_PRESET_COMPLETE		0x20 // 0x2220 = preset complete packet
+#define SYX_PRESET_GLOBAL		0x21 // 0x2221 = preset globals
+#define SYX_PRESET_CC0			0x22 // 0x2222 = CC0 packet
+#define SYX_PRESET_CHANPRESS	0x23
+#define SYX_PRESET_CVIN			0x24
+#define SYX_PRESET_CVOUT		0x25
+#define SYX_PRESET_SEQ			0x26
+
+//**********************************************
+
 class SysExEncDecode : public QWidget
 {
     Q_OBJECT
@@ -185,14 +207,19 @@ public slots:
     void slotProcessSysEx(QByteArray sysExMessageByteArray);
 
     // decode globals
-    void slotProcessGlobals(QByteArray sysExMessageByteArray);
+//    void slotProcessGlobals(QByteArray sysExMessageByteArray);
     void slotDecodeGlobals(QByteArray globalsByteArray);
-    bool slotIsGlobals(QByteArray ba);
     void slotRestoreGlobals(QByteArray globalsByteArray);
 
+    // old globals packet
+    bool isOldGlobals(QByteArray ba);
+
+    // sysex packet decoding
+    unsigned char packetType(QByteArray ba);
+    unsigned char packetCategory(QByteArray ba);
+
     // presets
-    bool slotIsPreset(QByteArray ba);
-    void slotProcessPreset(QByteArray presetPacket);
+    void slotProcessPreset(unsigned char packetType, QByteArray presetPacket);
 
     bool slotTestQListRange(QStringList *thisList, int thisIndex, int thisJSONCounter); // tests QStringLists for out of range errors
 };

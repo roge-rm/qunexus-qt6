@@ -58,8 +58,8 @@ void KMI_Updates::slotUpdateCheckReply(QNetworkReply *networkReply)
         QByteArray foundVersion = versionMap.value("Editor").toByteArray();
         //QString currentVersion = aboutDialogForm->editor_version->text();
 
-        qDebug() << uchar((foundVersion[0]) - 48) << uchar((foundVersion[2]) - 48) << uchar((foundVersion[4]) - 48);
-        qDebug() << uchar(applicationVersion[0]) << uchar(applicationVersion[1]) << uchar(applicationVersion[2]);
+        //qDebug() << uchar((foundVersion[0]) - 48) << uchar((foundVersion[2]) - 48) << uchar((foundVersion[4]) - 48);
+        //qDebug() << uchar(applicationVersion[0]) << uchar(applicationVersion[1]) << uchar(applicationVersion[2]);
         qDebug() << "foundVersion " << foundVersion << " editor_version" << applicationVersion;
 
         if ( (uchar(foundVersion[0]) - 48) <= uchar(applicationVersion[0]) &&

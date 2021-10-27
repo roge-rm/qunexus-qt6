@@ -843,7 +843,7 @@ SysExEncDecode::SysExEncDecode(QWidget *parent) :
                "Disabled";
     CV_MIDI_Out
             <<
-               "None"<<
+               "Off"<<
                "Expander Port"<<
                "USB 3"<<
                "None"<<
@@ -2302,66 +2302,76 @@ void SysExEncDecode::slotProcessSysEx(QByteArray sysExMessageByteArray)
 {
     qDebug() << "slotProcessSysEx called - size:" << sysExMessageByteArray.size();
 
-    if(slotIsGlobals(sysExMessageByteArray))
+    unsigned char thisPacketCategory = packetCategory(sysExMessageByteArray);
+    unsigned char thisPacketType = packetType(sysExMessageByteArray);
+
+    //*******************
+    // legacy
+    if (isOldGlobals(sysExMessageByteArray))
     {
-
-        qDebug() << "globals sysex received - fwupdateRequested: " << QuNexus_MDM->fwUpdateRequested << " globals byte count:" << sysExMessageByteArray.size();
-
-        if(QuNexus_MDM->fwUpdateRequested)
-        {
-            globals.clear();
-            globals = sysExMessageByteArray;
-            emit signalGlobalsReceivedDoFwUd();
-        }
-        else
-        {
-            //Sends to GUI
-            //emit signalSendPerKeySensitivities(sysExMessageByteArray);
-            emit signalGlobalsReceived();
-            slotProcessGlobals(sysExMessageByteArray);
-        }
+        thisPacketCategory = SYX_SYSTEM;
+        thisPacketType = SYX_SYS_GLOBALS;
     }
-    else if (slotIsPreset(sysExMessageByteArray))
+    //*******************
+
+    switch(thisPacketCategory)
     {
-        qDebug() << "RX preset packet - size: " << sysExMessageByteArray.size();
-        //SysExEncDecode->slotProcessPreset(sysExMessageByteArray);
+    case SYX_SYSTEM:
+        switch (thisPacketType)
+        {
+        case SYX_SYS_GLOBALS:
+            qDebug() << "globals sysex received - fwupdateRequested: " << QuNexus_MDM->fwUpdateRequested << " globals byte count:" << sysExMessageByteArray.size();
+
+            if(QuNexus_MDM->fwUpdateRequested)
+            {
+                globals.clear();
+                globals = sysExMessageByteArray;
+                emit signalGlobalsReceivedDoFwUd();
+            }
+            else
+            {
+                //Sends to GUI
+                //emit signalSendPerKeySensitivities(sysExMessageByteArray);
+                emit signalGlobalsReceived();
+                slotDecodeGlobals(sysExMessageByteArray);
+            }
+            break;
+        }
+        break;
+    case SYX_PRESET:
+        //qDebug() << "RX preset packet - size: " << sysExMessageByteArray.size();
         presetManager->presetLoading = true;
-        slotProcessPreset(sysExMessageByteArray);
+        slotProcessPreset(thisPacketType, sysExMessageByteArray);
+        break;
     }
 }
 
-void SysExEncDecode::slotProcessGlobals(QByteArray sysExMessageByteArray)
-{
-    char globalsHeader[] = {0x7E, 0x00, 0x20, 0x00};
+//void SysExEncDecode::slotProcessGlobals(QByteArray sysExMessageByteArray)
+//{
 
-    //----------------------------- Get header
-    QByteArray header;
+//    //----------------------------- translate to old format
+//    QByteArray newSysExArray;
 
-    for(int i = 1; i < 5; i++)
-    {
-        header.append(sysExMessageByteArray.at(i));
-    }
+//    for(int i = 8; i < sysExMessageByteArray.size(); i++)
+//    {
+//        newSysExArray.append(sysExMessageByteArray.at(i));
+//    }
 
-    if(sysExMessageByteArray.indexOf(QByteArray(globalsHeader, 4)) == 1)
-    {
-        slotDecodeGlobals(sysExMessageByteArray);
-    }
-}
+//    if(sysExMessageByteArray.indexOf(QByteArray(globalsHeader, 4)) == 1)
+//    {
+//        slotDecodeGlobals(sysExMessageByteArray);
+//    }
+//}
 
 void SysExEncDecode::slotDecodeGlobals(QByteArray globalsByteArray)
 {
-    //qDebug() << "decode globals" << globalsByteArray;
+    qDebug() << "decode globals" << globalsByteArray;
 
     QByteArray perKeySensitivities;
     QByteArray table1;
     QByteArray table2;
     QByteArray cvTrims;
     QByteArray cvOffsets;
-
-    //for(int i = 0; i < globalsByteArray.length(); i++)
-    //{
-        //qDebug() << "byte" << (unsigned int)globalsByteArray.at(i);
-    //}
 
     //An 8 byte packet of sysex chars
     unsigned char  buffer[8];
@@ -2432,7 +2442,7 @@ void SysExEncDecode::slotDecodeGlobals(QByteArray globalsByteArray)
 
 }
 
-bool SysExEncDecode::slotIsGlobals(QByteArray ba)
+bool SysExEncDecode::isOldGlobals(QByteArray ba)
 {
     char globalsHeader[] = {0x7E, 0x00, 0x20, 0x00};
 
@@ -2540,39 +2550,103 @@ void SysExEncDecode::slotRestoreGlobals(QByteArray globalsByteArray)
 
 }
 
-bool SysExEncDecode::slotIsPreset(QByteArray ba)
+unsigned char SysExEncDecode::packetCategory(QByteArray ba)
 {
-    char presetRxHeader[] = {0x00, 0x01, 0x5F, 0x19, 0x00, 0x22, 0x30};
-    //F0 00 01 5F 19 00 22 30
+    char packetCategoryHeader[] = {0x00, 0x01, 0x5F, 0x19, 0x00};
+    //F0 00 01 5F 19 00 22
 
-    qDebug() << "Preset check- index: " << ba.indexOf(QByteArray(presetRxHeader, 1));
-    if(ba.indexOf(QByteArray(presetRxHeader, 1)) == 1)
+    //qDebug() << "packetCategory check- index: " << ba.indexOf(QByteArray(packetCategoryHeader, 1));
+    if(ba.indexOf(QByteArray(packetCategoryHeader, 1)) == 1)
     {
-        return true;
+        return ba[6]; // returns the category of the packet
     }
 
-    return false;
+    return 0;
+}
+
+unsigned char SysExEncDecode::packetType(QByteArray ba)
+{
+    char packetTypeHeader[] = {0x00, 0x01, 0x5F, 0x19, 0x00, 0x22};
+    //F0 00 01 5F 19 00 22
+
+    //qDebug() << "packetType check- index: " << ba.indexOf(QByteArray(packetTypeHeader, 1));
+    if(ba.indexOf(QByteArray(packetTypeHeader, 1)) == 1)
+    {
+        return ba[7]; // returns the type of packet
+    }
+
+    return 0;
 }
 
 // load preset sysex packet into QUNEXUS JSON
-void SysExEncDecode::slotProcessPreset(QByteArray presetPacket)
+void SysExEncDecode::slotProcessPreset(unsigned char packetType, QByteArray presetPacket)
 {
     qDebug() << "---[ BEGIN slotProccessPreset ] --------------------------------------------------------------------";
-
+    //qDebug() << "packetType: " << packetType;
     //An 8 byte packet of sysex chars
     uchar   buffer[8];
-    uint    numPackets = 72; // (593-9)/8 - 1
-    uint    counter = 0;
-    int     JSONCounter = -1;
+    uint    numPackets;
+    uint    counter = 1; // 0 is for full preset packet, grabs preset #
+    int     JSONCounter;
     bool    presetIsV2;
     uchar   presetNum;
+    uint   packetLength; // checked against Counter to avoid spillover
 
     unsigned char lastByte; // store the last byte for ints and other special chars
-    bool skipFlag = 0;;
+    bool skipFlag = 0;
+
+    switch (packetType)
+    {
+    case SYX_PRESET_COMPLETE: // start at 0
+        qDebug() << "SYX_PRESET_COMPLETE";
+        numPackets = 72; // (593-9)/8 - 1
+        JSONCounter = -1;
+        counter = 0;
+        packetLength = 506;
+        break;
+    case SYX_PRESET_GLOBAL:
+        qDebug() << "SYX_PRESET_GLOBAL";
+        numPackets = 4;
+        JSONCounter = 4;
+        packetLength = 22;
+        break;
+    case SYX_PRESET_CC0:
+        qDebug() << "SYX_PRESET_CC0";
+        numPackets = 2;
+        JSONCounter = 26;
+        counter = 1;
+        packetLength = 9;
+        break;
+    case SYX_PRESET_CHANPRESS:
+        qDebug() << "SYX_PRESET_CHANPRESS";
+        numPackets = 2;
+        JSONCounter = 50;
+        packetLength = 8;
+        break;
+    case SYX_PRESET_CVIN:
+        qDebug() << "SYX_PRESET_CVIN";
+        numPackets = 3;
+        JSONCounter = 412;
+        packetLength = 18;
+        break;
+    case SYX_PRESET_CVOUT:
+        qDebug() << "SYX_PRESET_CVOUT";
+        numPackets = 4;
+        JSONCounter = 428;
+        packetLength = 29;
+        break;
+    case SYX_PRESET_SEQ:
+        qDebug() << "SYX_PRESET_SEQ";
+        numPackets = 6;
+        JSONCounter = 458;
+        packetLength = 36;
+        break;
+    }
 
     //For each of the 73 packets...
     for(uint thisPacket = 0; thisPacket <= numPackets; thisPacket++)
     {
+        //qDebug() << "thisPacket: " << thisPacket;
         //Load Buffer, starting with first packet, index 8
         for(int thisByte = 0; thisByte < 8; thisByte++)
         {
@@ -2614,6 +2688,9 @@ void SysExEncDecode::slotProcessPreset(QByteArray presetPacket)
 //                    qDebug() << "xxx Counter: " << counter << " JSONCounter: " << JSONCounter  << keyLayerJSON[JSONCounter] << "ThisByte: " << buffer[thisByte] << " param type: " << paramTypeMap[keyLayerJSON[JSONCounter]];
 //                    qDebug() << "xxx Counter: " << counter << " JSONCounter: " << JSONCounter+1 << keyLayerJSON[JSONCounter+1] << "ThisByte: " << buffer[thisByte] << " param type: " << paramTypeMap[keyLayerJSON[JSONCounter+1]];
 //                }
+
+                if (counter > packetLength) break; // ignore extra bytes
+
                 if (JSONCounter == -1)
                 {
                     JSONCounter++; // skip this, avoid out of range error
@@ -2709,7 +2786,9 @@ void SysExEncDecode::slotProcessPreset(QByteArray presetPacket)
                         if (slotTestQListRange(&SEQ_track_mode, thisRight, JSONCounter))
                         {
                             // mode
+#ifdef SYX_DEBUG_PRESET_PACKET
                             qDebug() << "*** mode: " << keyLayerJSON[JSONCounter] << "SEQ_track_mode: " << SEQ_track_mode[thisRight];
+#endif
                             editBufferPresetMap->insert(keyLayerJSON[JSONCounter], SEQ_track_mode[thisRight]); // write value to edit buffer
                         }
                         JSONCounter++;
