@@ -860,7 +860,7 @@ void PresetManager::slotLoadJSON()
 #elif defined(Q_OS_MAC) && defined(QT_DEBUG)
     jsonPath = QString("../../../presets/QuNexus.json");
 #elif !defined(Q_OS_MAC) // windows
-    jsonPath.append("/presets/QuNexus.json");
+    jsonPath.append("/../Resources/presets/QuNexus.json");
 #endif
 
     //Load json into QFile

@@ -110,6 +110,8 @@ win32{
 win32{
     LIBS += -LC:\Qt6\Tools\OpenSSL\Win_x64\lib -llibcrypto
     INCLUDEPATH+= C:\Qt6\Tools\OpenSSL\Win_x64\include\openssl
+    LIBS += -LC:\Qt\Tools\OpenSSL\Win_x64\lib -llibcrypto
+    INCLUDEPATH+= C:\Qt\Tools\OpenSSL\Win_x64\include\openssl
 }
 
 
