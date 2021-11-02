@@ -42,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent) :
     applicationVersion[1] = 0;
     applicationVersion[2] = 5;
 
-    betaVersion = "C"; // release, do not show beta string
+    betaVersion = "E"; // release, do not show beta string
     //betaVersion = " Beta A"; // show beta
 
 
@@ -143,6 +143,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // setup preset pointer for decoding sysex to edit buffer
     sysExEncDecode->editBufferPresetMap = &presetManager->editBufferPresetMap;
+
+    presetManager->sysExEncDecode = sysExEncDecode; // setup shared pointers
 
     // fonts
 //    fontOpenSans    = new QFont(":/resources/fonts/open-sans/OpenSans-Light.ttf");

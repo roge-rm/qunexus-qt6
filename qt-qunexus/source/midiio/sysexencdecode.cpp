@@ -3,9 +3,12 @@
 // If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
 #include "sysexencdecode.h"
 #include "mainwindow.h"
+#include "presetmanager.h"
+#include "KMI_mdm.h"
 
+#define SIZE_OF_PRESET_RX_HEADER 8
+#define SIZE_OF_PRESET_TX_HEADER 19 // should be the zero indexed position of presetNum
 
-#define SIZE_OF_PRESET_HEADER 8
 #define SIZE_OF_OLD_PRESET_JSON 457
 //#define SYX_DEBUG_PRESET_PACKET
 
@@ -41,6 +44,8 @@ SysExEncDecode::SysExEncDecode(QWidget *parent) :
 
     sysex_start = 0xF0;
     sysex_end   = 0xF7;
+
+    encodeDontSend = false;
 
     ///////////////////////////////////////
     /////////////_structList //////////////
@@ -1302,10 +1307,10 @@ SysExEncDecode::SysExEncDecode(QWidget *parent) :
     paramTypeMap.insert("Keyboard_Global_Transpose", "signed char");
     paramTypeMap.insert("Keyboard_CC_00_Control_Number", "char");
     paramTypeMap.insert("Keyboard_CC_00_Curve", "Curve");
-    paramTypeMap.insert("Keyboard_CC_00_Gain", "signed int");
+    paramTypeMap.insert("Keyboard_CC_00_Gain", "signed int"); // two bytes
     paramTypeMap.insert("Keyboard_CC_00_Max", "char");
     paramTypeMap.insert("Keyboard_CC_00_Min", "char");
-    paramTypeMap.insert("Keyboard_CC_00_Offset", "signed char");
+    paramTypeMap.insert("Keyboard_CC_00_Offset", "signed char"); // signed
     paramTypeMap.insert("Keyboard_CC_00_MIDI_Output_Device", "MIDI_Out");
     paramTypeMap.insert("Keyboard_CC_00_Source", "KB_Source");
     paramTypeMap.insert("Keyboard_CC_01_Control_Number", "char");
@@ -2029,10 +2034,46 @@ void SysExEncDecode::encodeSequencerPreset(QVariantMap preset) // encodes a pres
     qnSeq.track[2].transpose = preset.value("SEQ_track_3_transp").toUInt();
 }
 
+// find the byte position of a parameter within the QuNexus preset struct
+int SysExEncDecode::presetBytePosition(QString parameter)
+{
+    int bytePosition = 1; // start at 1 because keyLayerJSON does not include presetNum
+    int KLJindex = 0;
+
+    for (int i = 0; i < keyLayerJSON.size(); i++)
+    {
+        if (keyLayerJSON[i] == parameter)
+        {
+            KLJindex = i;
+            qDebug() << "presetBytePosition - keyLayerJSON index for " << parameter << " is: " << i;
+        }
+    }
+
+    for (int i = 0; i < KLJindex; i++)
+    {
+        // find parameters that are more than 1 byte
+        if (paramTypeMap[keyLayerJSON[i]] == "signed int" ||
+            paramTypeMap[keyLayerJSON[i]] == "16b_int"     )
+        {
+            bytePosition++; //
+        }
+        else if (paramTypeMap[keyLayerJSON[i]] == "bs26right" ||
+                 paramTypeMap[keyLayerJSON[i]] == "bs44right")
+        {
+            bytePosition--; // bitfields are two parameters per byte
+        }
+
+        bytePosition++; // increment the count
+    }
+    qDebug() << "bytePosition: " << bytePosition;
+    return bytePosition;
+}
+
 ///////////////////////////////////////
 /////////////QuNexusSysex//////////////
 ///////////////////////////////////////
 
+// encode will update crc AND sum byte (sum byte is not implemented in qunexus) and then encode the 8 bit value into 7 bit sysex
 void SysExEncDecode::encode(unsigned char ch)
 {
     //qDebug() << "size: " << size << " char:" << ch;
@@ -2106,8 +2147,8 @@ void SysExEncDecode::slotSysExEncodePreset(QVariantMap preset, unsigned char pre
     midi_sx_encode_crc_char(0x02);
 
     //itemName = "preset start"
-    midi_sx_encode_crc_char(0x22);
-    midi_sx_encode_crc_char(0x20);
+    midi_sx_encode_crc_char(SYX_PRESET);
+    midi_sx_encode_crc_char(SYX_PRESET_COMPLETE);
 
     //itemName = "CRC"
     midi_sx_encode_crc_int(crc);
@@ -2127,7 +2168,7 @@ void SysExEncDecode::slotSysExEncodePreset(QVariantMap preset, unsigned char pre
 
     size = PRESET_LENGTH - 13;
 
-    encode(presetNumChar); //0 == Prest Number
+    encode(presetNumChar); //0 == Prest Number, byte position 17
 
     // encode 1.0 parameters
     for (int i=0; i < SIZE_OF_OLD_PRESET_JSON; i++)
@@ -2221,11 +2262,136 @@ void SysExEncDecode::slotSysExEncodePreset(QVariantMap preset, unsigned char pre
     midi_sx_flush();
     sysex_out(sysex_end);
 
-    emit signalEncodedPreset(encodedSysexByteArray);
+    if (!encodeDontSend)
+    {
+        emit signalEncodedPreset(encodedSysexByteArray);
+    }
     qDebug() << "***[ END slotSysExEncodePreset ] ********************************************************************";
 }
 
+// send a single parameter to QuNexus
+void SysExEncDecode::slotSendParameter(QString parameter)
+{
+    qDebug() << QString("slotSendParameter called: %1").arg(parameter);
 
+    // test if we are already loading SysEx or JSON
+    if (!presetManager->syncFlag || presetManager->presetLoading || presetManager->JSONLoading)
+    {
+        qDebug() << "slotSendParameter called and blocked - presetloading:" << presetManager->presetLoading << " JSONLoading:" << presetManager->JSONLoading;
+        return; // do not send sysex if we are loading sysex or JSON preset data
+    }
+    else
+    {
+        qDebug() << "slotSendParameter called and executed";
+    }
+
+    // Continue
+    int value = 0;
+    int position = presetBytePosition(parameter); // position within the qunexus preset struct
+    unsigned char length = 0;
+
+    // encode the editor preset into byte array
+    encodeDontSend = true;
+    slotSysExEncodePreset(presetManager->editBufferPresetMap, 0x63); // encode the preset
+    encodeDontSend = false;
+
+    // decode the 7 bit sysex
+    QByteArray decodedSysexByteArray = QuNexus_MDM->decode8BitArray(encodedSysexByteArray.mid(16)); // 16 = skip first two octets
+
+    // skip PRESET_START and length msb/lsb
+    decodedSysexByteArray = decodedSysexByteArray.mid(3);
+
+    // convert to uchar array
+    unsigned char *decodedSysexUcharArray = reinterpret_cast<unsigned char*>(decodedSysexByteArray.data());
+
+    if (paramTypeMap[parameter] == "signed int" ||
+        paramTypeMap[parameter] == "16b_int"     )
+    {
+        //value = QByteArray(encodedSysexByteArray.mid(SIZE_OF_PRESET_TX_HEADER + position, 2)).toUInt(); // grab integer
+        value = (decodedSysexUcharArray[position] << 8) + decodedSysexUcharArray[position + 1]; // encode as int
+        length = 2;
+    }
+    else
+    {
+        for (int i = 0; i < (position + 1); i++)
+        {
+            qDebug() << "encodedSysexByteArray - " << i << ": " << decodedSysexUcharArray[i];
+        }
+
+        value = decodedSysexUcharArray[position]; // grab char
+        length = 1;
+    }
+    slotEncodePresetBytes(position, length, value); // encode and send
+}
+
+// encode a preset bytes packet
+void SysExEncDecode::slotEncodePresetBytes(int position, unsigned char length, int value)
+{
+//    if (presetSendTimer.hasExpired(20)) // if at least xx ms has passed
+//    {
+//        presetSendTimer.restart();
+//    }
+//    else
+//    {
+//        return; // avoids double sends
+//    }
+
+    qDebug() << QString("slotEncodePresetBytes - position: %1, length: %2, value: %3").arg(position).arg(length).arg(value);
+
+    encodedSysexByteArray.clear();
+
+    //----- SysEx Header
+    sysex_out(sysex_start);
+    sysex_out(sx_ident.value("manufacturer_id1"));
+    sysex_out(sx_ident.value("manufacturer_id2"));
+    sysex_out(sx_ident.value("manufacturer_id3"));
+    sysex_out(sx_ident.value("manufacturer_id4"));
+    sysex_out(sx_ident.value("product"));
+    sysex_out(sx_ident.value("format"));
+    sysex_out(SX_PACKET_START);
+
+    //----- Packet Preamble
+    crc_init(); // sends nothing
+    midi_chunk_init(); //sends nothing
+
+//    // "start text"
+//    midi_sx_encode_crc_char(0x00);
+//    midi_sx_encode_crc_char(0x02);
+
+    // "preset start"
+    midi_sx_encode_crc_char(SYX_PRESET);
+    midi_sx_encode_crc_char(SYX_PRESET_BYTES); // SYX_PRESET_BYTES
+
+//    midi_sx_encode_crc_int(crc);
+//    midi_sx_flush();
+
+    //----- Preset Body
+
+    midi_sx_encode_char((unsigned char)((position >> 8) & 0xFF)); // encode the MSB
+    midi_sx_encode_char((unsigned char)(position & 0xFF)); // encode the LSB
+
+    midi_sx_encode_char(length);
+
+    if (length == 2) // if this is an integer
+    {
+        midi_sx_encode_char((unsigned char)((value >> 8) & 0xFF)); // encode the MSB
+        qDebug() << "encode MSB";
+    }
+    else
+    {
+        qDebug() << "encode zero";
+        midi_sx_encode_char(0);
+    }
+
+    qDebug() << "encode LSB";
+    midi_sx_encode_char((unsigned char)(value & 0xFF)); // encode the LSB
+
+    midi_sx_flush(); // finish encoding
+    sysex_out(sysex_end); // end sysex
+
+    emit signalEncodedPreset(encodedSysexByteArray); // transmit
+
+}
 
 void SysExEncDecode::slotSysExEncodeGlobal(QString global, QList<int> vals)
 {
@@ -2650,7 +2816,7 @@ void SysExEncDecode::slotProcessPreset(unsigned char packetType, QByteArray pres
         //Load Buffer, starting with first packet, index 8
         for(int thisByte = 0; thisByte < 8; thisByte++)
         {
-            int thisIndex = SIZE_OF_PRESET_HEADER + (thisByte + (thisPacket * 8));
+            int thisIndex = SIZE_OF_PRESET_RX_HEADER + (thisByte + (thisPacket * 8));
             //qDebug() << "index:" << j + (i*8) << (unsigned char)globalsByteArray.at(j + (i*8));
             //Use packet num i to get index into preset Byte array
             buffer[thisByte] = presetPacket.at(thisIndex);

@@ -20,6 +20,9 @@
 enum {DELETE_PRESET, CREATE_PRESET, SET_HIGHLIGHT, SET_SELECTED, SET_MODIFIED, LOAD_PRESET};
 enum {NEW_PRESET, EXISTING_PRESET};
 
+// forward declarations for classes
+class SysExEncDecode;
+
 class PresetManager : public QWidget
 {
     Q_OBJECT
@@ -42,6 +45,9 @@ public:
 
     QVariantMap     editBufferPresetMap;
     QVariantMap     libraryPresetMaps;
+
+    // class pointers
+    SysExEncDecode*     sysExEncDecode;
 
     int             selectedLibraryPreset;
     int             highlightedLibraryPreset;

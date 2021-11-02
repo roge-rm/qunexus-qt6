@@ -7,8 +7,6 @@
 #include <QVariant>
 #include <QtWidgets> // was QT Gui
 #include "Qn_preset_struct.h"
-#include "KMI_mdm.h"
-#include "presetmanager.h"
 #include <QElapsedTimer>
 
 //********************************************
@@ -51,7 +49,7 @@
 
 
 // preset packets
-#define SYX_PRESET				0x22 // category (dec 34)
+#define SYX_PRESET				0x22 // category
 #define SYX_PRESET_COMPLETE		0x20 // 0x2220 = preset complete packet
 #define SYX_PRESET_GLOBAL		0x21 // 0x2221 = preset globals
 #define SYX_PRESET_CC0			0x22 // 0x2222 = CC0 packet
@@ -59,8 +57,14 @@
 #define SYX_PRESET_CVIN			0x24
 #define SYX_PRESET_CVOUT		0x25
 #define SYX_PRESET_SEQ			0x26
+#define SYX_PRESET_BYTES		0x99 // receive preset bytes
+
 
 //**********************************************
+
+// forward declarations for classes
+class PresetManager;
+class MidiDeviceManager;
 
 class SysExEncDecode : public QWidget
 {
@@ -74,10 +78,12 @@ public:
     // this byte array holds the 8bit-7bit encoded sysex payload
     QByteArray encodedSysexByteArray;
 
-    // this is no longer used and should be safely removed
+    // this is used to encode the 2.0 parameters
     struct QUNEXUS qn;
     SEQUENCER_PRESET qnSeq; // used to encode/prep sequencer parameters (which use mixed bit space) for SysEx transmit
                             // matches qnSeq in firmware
+
+    bool encodeDontSend; // flag to stop transmission when encoding encodedSysexByteArray
 
     // class pointers
     MidiDeviceManager*  QuNexus_MDM;
@@ -126,12 +132,12 @@ public:
     // 2.0 funcs
     void encodeSequencerPreset(QVariantMap preset); // encodes preset into the qnSeq struct
 
+    int presetBytePosition(QString parameter);
 
     ///////////////////////////////////////
     /////////////_structList //////////////
     ///////////////////////////////////////
     //------ _strucList vars
-    QStringList keyLayerC;
     QStringList keyLayerJSON;
     QMap<QString, unsigned char> dictionary; //holds key,value pairs to convert strings to specified ints
 
@@ -201,6 +207,8 @@ public slots:
 
     // encode
     void slotSysExEncodePreset(QVariantMap preset, unsigned char presetNumChar);
+    void slotSendParameter(QString parameter);
+    void slotEncodePresetBytes(int position, unsigned char length, int value);
     void slotSysExEncodeGlobal(QString global, QList<int> vals);
 
     // decode sysex

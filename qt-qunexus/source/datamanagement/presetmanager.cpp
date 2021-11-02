@@ -20,6 +20,7 @@
 */
 
 #include "presetmanager.h"
+#include <sysexencdecode.h>
 
 ///////////////////////////////////////////////////////////////
 ///////////// Initialization & Control Fucntions //////////////
@@ -1659,8 +1660,9 @@ void PresetManager::slotValueChanged()
         //Impose limits on source and output mappings
         emit signalLimitSourceOutputMenus();
 
-        // this will check if a preset or JSON is loading
-        slotSyncEditBufferToDevice();
+        // both of these will check if a preset or JSON is loading
+        //slotSyncEditBufferToDevice();
+        sysExEncDecode->slotSendParameter(QObject::sender()->objectName());
     }
 
     // dirty the preset in the library
