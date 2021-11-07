@@ -1723,7 +1723,8 @@ void PresetManager::slotSaveSelectedPreset()
         slotWritePresetToJSON(jsonMasterMapEDITABLE.value(slotGetPresetNameFromIndex(selectedLibraryPreset)).toMap(), EXISTING_PRESET);
 
         //emit signalUpdateParameterUi(editBufferPresetMap);
-        emit signalUpdateLibraryPresetsUi(QVariantMap(), LOAD_PRESET, 0);
+
+        emit signalUpdateLibraryPresetsUi(QVariantMap(), SAVE_PRESET, 0);
         qDebug() << "jsonMasterMapEDITABLE" << jsonMasterMapEDITABLE.value("Controller_Key_Pressure_Control_Number");
         emit signalSendPresetsToBoardDialog(jsonMasterMapEDITABLE.value(slotGetPresetNameFromIndex(selectedLibraryPreset)).toMap().value("Preset_Name").toString());
     }

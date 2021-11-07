@@ -294,6 +294,7 @@ public slots:
     void    slotSyncEditorToQn();
     //void    slotProcessPreset(QByteArray sysExMessageByteArray);
     void    slotPresetProcessed(unsigned char presetNum);
+    void    cancelCloseEditor();
     void    slotDiscardAndCloseEditor();
     void    slotSaveAndCloseEditor();
     void    slotRevertPreset();

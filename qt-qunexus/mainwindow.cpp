@@ -1532,6 +1532,8 @@ void MainWindow::slotUpdateLibraryPresetsListUi(QVariantMap presetMaps, int acti
 
     case LOAD_PRESET:
         qDebug() << "load preset";
+    case SAVE_PRESET:
+        qDebug() << "save preset, remove dirty asterisk";
     case SET_SELECTED:
         // this crashes the program when not called by a signal
         //qDebug() << "set selected - object sender: " << QObject::sender()->objectName();
@@ -1544,7 +1546,7 @@ void MainWindow::slotUpdateLibraryPresetsListUi(QVariantMap presetMaps, int acti
                 QListWidgetItem *item = libraryPresetsList->item(i);
                 QString itemText = item->text();
 
-                if (action == LOAD_PRESET)
+                if (action == SAVE_PRESET || action == LOAD_PRESET)
                 {
                     if(itemText.contains("*"))
                     {
@@ -1627,7 +1629,12 @@ void MainWindow::slotUpdateLibraryPresetsListUi(QVariantMap presetMaps, int acti
             // send to edit buffer
             qDebug() << "** send to preset buffer **";
             //presetManager->presetLoading = false; // enable preset send
-            presetManager->slotSyncEditBufferToDevice();
+
+            // if saving then we don't need to sync the preset
+            if (action != SAVE_PRESET)
+            {
+                presetManager->slotSyncEditBufferToDevice();
+            }
         }
         break;
     }
@@ -3769,18 +3776,24 @@ void MainWindow::closeEvent(QCloseEvent *event)
         cancelButton->setStyleSheet(grayStyleString);
         cancelButton->setText("Cancel");
         cancelButton->setGeometry(QRect(140, 60, 70, 28));
-        connect(cancelButton, SIGNAL(clicked()), this, SLOT(slotSaveAndCloseEditor()));
+        connect(cancelButton, SIGNAL(clicked()), msgBox, SLOT(close()));
+        connect(cancelButton, SIGNAL(clicked()), this, SLOT(cancelCloseEditor()));
 
         QPushButton* saveButton = new QPushButton(msgBox);
         saveButton->setStyleSheet(blueStyleString);
         saveButton->setText("Save");
         saveButton->setGeometry(QRect(220, 60, 70, 28));
         connect(saveButton, SIGNAL(clicked()), msgBox, SLOT(close()));
-        connect(saveButton, SIGNAL(clicked()), this, SLOT(slotSaveButton()));
+        connect(saveButton, SIGNAL(clicked()), this, SLOT(slotSaveAndCloseEditor()));
 
         msgBox->exec();
     }
  }
+
+void MainWindow::cancelCloseEditor()
+{
+    editorCloseEvent->ignore();
+}
 
 void MainWindow::slotDiscardAndCloseEditor()
 {
@@ -3791,8 +3804,10 @@ void MainWindow::slotDiscardAndCloseEditor()
 
 void MainWindow::slotSaveAndCloseEditor()
 {
+    qDebug() << "slotSaveAndCloseEditor called";
     presetManager->JSONLoading = true; // block update
     presetManager->slotSaveSelectedPreset();
+    qDebug() << "accept close event";
     editorCloseEvent->accept();
 }
 
