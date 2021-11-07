@@ -2113,7 +2113,7 @@ void SysExEncDecode::encodeInt(int i)
 
 void SysExEncDecode::slotSysExEncodePreset(QVariantMap preset, unsigned char presetNumChar)
 {
-
+    qDebug() << "slotSysExEncodePreset called - presetNumChar: " << presetNumChar;
     if (presetSendTimer.hasExpired(20)) // if at least xx ms has passed
     {
         presetSendTimer.restart();
@@ -2272,7 +2272,7 @@ void SysExEncDecode::slotSysExEncodePreset(QVariantMap preset, unsigned char pre
 // send a single parameter to QuNexus
 void SysExEncDecode::slotSendParameter(QString parameter)
 {
-    qDebug() << QString("slotSendParameter called: %1").arg(parameter);
+    //qDebug() << QString("slotSendParameter called: %1").arg(parameter);
 
     // test if we are already loading SysEx or JSON
     if (!presetManager->syncFlag || presetManager->presetLoading || presetManager->JSONLoading)
@@ -2280,10 +2280,10 @@ void SysExEncDecode::slotSendParameter(QString parameter)
         qDebug() << "slotSendParameter called and blocked - presetloading:" << presetManager->presetLoading << " JSONLoading:" << presetManager->JSONLoading;
         return; // do not send sysex if we are loading sysex or JSON preset data
     }
-    else
-    {
-        qDebug() << "slotSendParameter called and executed";
-    }
+//    else
+//    {
+//        qDebug() << "slotSendParameter called and executed";
+//    }
 
     // Continue
     int value = 0;
@@ -2313,10 +2313,10 @@ void SysExEncDecode::slotSendParameter(QString parameter)
     }
     else
     {
-        for (int i = 0; i < (position + 1); i++)
-        {
-            qDebug() << "encodedSysexByteArray - " << i << ": " << decodedSysexUcharArray[i];
-        }
+//        for (int i = 0; i < (position + 1); i++)
+//        {
+//            qDebug() << "encodedSysexByteArray - " << i << ": " << decodedSysexUcharArray[i];
+//        }
 
         value = decodedSysexUcharArray[position]; // grab char
         length = 1;

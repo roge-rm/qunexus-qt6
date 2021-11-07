@@ -5,9 +5,11 @@
     -------------------------------------------------------------------
     -------------------------------------------------------------------
 
-    Written by Conner Lacy - www.connerlacy.com | conner@connerlacy.com
+    Originally written by Conner Lacy - www.connerlacy.com | conner@connerlacy.com
 
-    Copyright (c) 2013 Keith McMillen Instruments
+    Updated in 2021 by Eric Bateman
+
+    Copyright (c) 2013-2021 Keith McMillen Instruments
 
     Description:
         - Updates preset parameter changes from UI
@@ -858,11 +860,57 @@ void PresetManager::slotLoadJSON()
 #if defined(Q_OS_MAC) && !defined(QT_DEBUG)
     jsonPath.remove(jsonPath.length() - 5, jsonPath.length()); //Remove "MacOS" from path string
     jsonPath.append("Resources/presets/QuNexus.json");
-#elif defined(Q_OS_MAC) && defined(QT_DEBUG)
-    jsonPath = QString("../../../presets/QuNexus.json");
+//#elif defined(Q_OS_MAC) && defined(QT_DEBUG)
+//    jsonPath = QString("../../../presets/QuNexus.json");
 #elif !defined(Q_OS_MAC) // windows
     jsonPath.append("/../Resources/presets/QuNexus.json");
 #endif
+
+    // -------- begin test for appdata directory to preserve presets after editor updates -----------
+
+    // Get path to writeable app data directory
+    QString appDataDirPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+
+    if (appDataDirPath.isEmpty()) {
+        qFatal("Cannot determine preset storage location");
+    }
+
+    // Create destination presets subdirectory if it doesn't exist
+    QString presetsDirDestPath = appDataDirPath;
+
+    if (!QDir(presetsDirDestPath).exists())
+    {
+        qDebug() << "making dir: " << presetsDirDestPath;
+        QDir().mkpath(presetsDirDestPath);
+    }
+
+    QString presetFileSrcPath = jsonPath;
+    QString presetFileDestPath = presetsDirDestPath + "/QuNexus.json";
+
+    qDebug() << "presetFileSrcPath: " << presetFileSrcPath;
+    qDebug() << "presetFileDestPath: " << presetFileDestPath;
+
+    // If the preset file doesn't exist at the destination, copy it there
+    if (!QFile::exists(presetFileDestPath))
+    {
+        if (QFile::copy(presetFileSrcPath, presetFileDestPath) == false)
+        {
+            qFatal("Cannot copy default preset file to application data path!");
+        }
+        else
+        {
+            qDebug() << "Copied preset json to appDataDir";
+        }
+    }
+    else
+    {
+        qDebug() << "System Application Directory Found";
+    }
+
+    jsonPath = presetFileDestPath; // reassign this
+
+    // -------- end test for app data dir ----------
+
 
     //Load json into QFile
     jsonFile = new QFile(jsonPath);
@@ -2049,8 +2097,9 @@ void PresetManager::slotSyncEditBufferToDevicePreset()
 
     settings->setValue(QString("boardPreset%1").arg(presetNumChar), selectedLibraryPreset);
 
-    emit signalUpdateLibraryPresetsUi(QVariantMap(), SET_SELECTED, presetNumChar);
     emit signalSysExEncodePreset(editBufferPresetMap, presetNumChar);
+    emit signalUpdateLibraryPresetsUi(QVariantMap(), SET_SELECTED, presetNumChar);
+
 }
 
 /*
