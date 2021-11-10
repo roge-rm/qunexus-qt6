@@ -2807,6 +2807,8 @@ void SysExEncDecode::slotProcessPreset(unsigned char packetType, QByteArray pres
         JSONCounter = 458;
         packetLength = 36;
         break;
+    default:
+        return; // bad value, avoid crash
     }
 
     //For each of the 73 packets...
