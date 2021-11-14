@@ -57,7 +57,9 @@
 #define SYX_PRESET_CVIN			0x24
 #define SYX_PRESET_CVOUT		0x25
 #define SYX_PRESET_SEQ			0x26
-#define SYX_PRESET_BYTES		0x99 // receive preset bytes
+#define SYX_PRESET_CHAR_CHAR	0x30 // send two addressed 8 bit parameters
+#define SYX_PRESET_CHAR_INT		0x31 // send two addressed parameters, one 8 bit char andone 16 bit integer
+#define SYX_PRESET_BYTES		0x99 // receive preset bytes (up to four)
 
 
 //**********************************************
@@ -133,6 +135,7 @@ public:
     void encodeSequencerPreset(QVariantMap preset); // encodes preset into the qnSeq struct
 
     int presetBytePosition(QString parameter);
+    QString presetBytePositionParameter(int bytePosition);
 
     ///////////////////////////////////////
     /////////////_structList //////////////
@@ -140,7 +143,7 @@ public:
     //------ _strucList vars
     QStringList keyLayerJSON;
     QMap<QString, unsigned char> dictionary; //holds key,value pairs to convert strings to specified ints
-
+    int presetByteKeyLayerJSONIndex;
 
     ///////////////////////////////////////
     //////// qn enum translators //////////
@@ -225,6 +228,9 @@ public slots:
     // sysex packet decoding
     unsigned char packetType(QByteArray ba);
     unsigned char packetCategory(QByteArray ba);
+    unsigned int presetPacketBytePosition(unsigned char firstOrSecond, QByteArray ba);
+    unsigned char presetPacketChar(unsigned char firstOrSecond, QByteArray ba);
+    unsigned char presetPacketInt(QByteArray ba);
 
     // presets
     void slotProcessPreset(unsigned char packetType, QByteArray presetPacket);

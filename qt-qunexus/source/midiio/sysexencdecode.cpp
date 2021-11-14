@@ -801,7 +801,8 @@ SysExEncDecode::SysExEncDecode(QWidget *parent) :
                "Pitch Bend CV"<<
                "Tilt CV"<<
                "Gate CV"<<
-               "Off";
+               "CV Off"<<
+               "Clock CV";
     CV_Scaling
             <<
                "1 Volt/Octave"<<
@@ -2034,6 +2035,45 @@ void SysExEncDecode::encodeSequencerPreset(QVariantMap preset) // encodes a pres
     qnSeq.track[2].transpose = preset.value("SEQ_track_3_transp").toUInt();
 }
 
+QString SysExEncDecode::presetBytePositionParameter(int bytePosition)
+{
+    int paramIndex = -1; // firmware packet starts at presetNum, offset keyLayerJSON which starts at ..program_change_A
+    int byteCount = 0;
+
+    while (byteCount < bytePosition && byteCount < keyLayerJSON.size())
+    {
+
+        byteCount++; // increment the count
+        paramIndex++;
+
+        // find parameters that are more than 1 byte
+        if (paramTypeMap[keyLayerJSON[paramIndex]] == "signed int" ||
+            paramTypeMap[keyLayerJSON[paramIndex]] == "16b_int"     )
+        {
+            byteCount++; //
+        }
+        else if (paramTypeMap[keyLayerJSON[paramIndex]] == "bs26right" ||
+                 paramTypeMap[keyLayerJSON[paramIndex]] == "bs44right")
+        {
+            byteCount--; // bitfields are two parameters per byte
+        }
+
+        //qDebug() << QString("byteCount: %1, bytePosition: %2, paramIndex: %3, param: %4").arg(byteCount).arg(bytePosition).arg(paramIndex).arg(keyLayerJSON[paramIndex]);
+    }
+    qDebug() << QString("presetBytePositionParameter - paramIndex: %1, byteCount: %2, keyLayerJSON: %3").arg(paramIndex).arg(byteCount).arg(keyLayerJSON[paramIndex]);
+
+    presetByteKeyLayerJSONIndex = paramIndex; // store this globally so we can use it after the value returns
+
+    // preset processing looks for the right side of bitspace
+    if (paramTypeMap[keyLayerJSON[paramIndex]] == "bs26left" ||
+        paramTypeMap[keyLayerJSON[paramIndex]] == "bs44left")
+    {
+        presetByteKeyLayerJSONIndex--;
+    }
+
+    return keyLayerJSON[paramIndex];
+}
+
 // find the byte position of a parameter within the QuNexus preset struct
 int SysExEncDecode::presetBytePosition(QString parameter)
 {
@@ -2277,7 +2317,7 @@ void SysExEncDecode::slotSendParameter(QString parameter)
     // test if we are already loading SysEx or JSON
     if (!presetManager->syncFlag || presetManager->presetLoading || presetManager->JSONLoading)
     {
-        qDebug() << "slotSendParameter called and blocked - presetloading:" << presetManager->presetLoading << " JSONLoading:" << presetManager->JSONLoading;
+        //qDebug() << "slotSendParameter called and blocked - presetloading:" << presetManager->presetLoading << " JSONLoading:" << presetManager->JSONLoading;
         return; // do not send sysex if we are loading sysex or JSON preset data
     }
 //    else
@@ -2744,19 +2784,75 @@ unsigned char SysExEncDecode::packetType(QByteArray ba)
     return 0;
 }
 
+enum // which parameter in the packet are we referencing?
+{
+    FIRST,
+    SECOND
+};
+
+// returns the address in the qn struct for the given SYX_PRESET_CHAR_xxxx packet, firstOrSecond determines which of the two parameters
+unsigned int SysExEncDecode::presetPacketBytePosition(unsigned char firstOrSecond, QByteArray ba)
+{
+    unsigned char indexMSB;
+    unsigned int index;
+
+    indexMSB = (firstOrSecond == FIRST) ? 0 : 3; // byte positions in the packet
+
+    index = ((uchar)ba[indexMSB] << 8) + (uchar)ba[indexMSB + 1];
+
+    qDebug() << "presetPacketBytePosition - " << firstOrSecond << ": " << index << ", MSB: " << (uchar)ba[indexMSB] << ", LSB: " << (uchar)ba[indexMSB + 1];
+    return index;
+}
+
+// returns the 8 bit value of the given SYX_PRESET_CHAR_xxxxx packet
+unsigned char SysExEncDecode::presetPacketChar(unsigned char firstOrSecond, QByteArray ba)
+{
+    unsigned char index;
+
+    index = (firstOrSecond == FIRST) ? 2 : 5; // byte positions in the packet
+
+    return (uchar)ba[index];
+}
+
+// returns the 8 bit value of the given SYX_PRESET_CHAR_xxxxx packet
+unsigned char SysExEncDecode::presetPacketInt(QByteArray ba)
+{
+    unsigned int data;
+
+    data = ((uchar)ba[5] << 8) + (uchar)ba[6];
+
+    return data;
+}
+
 // load preset sysex packet into QUNEXUS JSON
 void SysExEncDecode::slotProcessPreset(unsigned char packetType, QByteArray presetPacket)
 {
     qDebug() << "---[ BEGIN slotProccessPreset ] --------------------------------------------------------------------";
-    //qDebug() << "packetType: " << packetType;
+    qDebug() << "packetType: " << packetType;
     //An 8 byte packet of sysex chars
     uchar   buffer[8];
-    uint    numPackets;
+    uint    numPackets = 0;
     uint    counter = 1; // 0 is for full preset packet, grabs preset #
-    int     JSONCounter;
+    int     JSONCounter = 0, JSONCounter2 = 0;
     bool    presetIsV2;
     uchar   presetNum;
-    uint   packetLength; // checked against Counter to avoid spillover
+    uint   packetLength = 0; // checked against Counter to avoid spillover
+
+    // SYX_PRESET_CHAR_XXXX vars
+    int position1 = 0;
+    int position2 = 0;
+    uchar data1 = 0, data2 = 0;
+    int data2int = 0;
+    QString paramName1, paramName2;
+
+    // discard the preset packet header and sysex stop, then decode into a proper 8 bit array
+    QByteArray presetPacketDecoded = QuNexus_MDM->decode8BitArray(presetPacket.mid(8, presetPacket.size() - 9));
+
+//    for (int i = 0; i < presetPacketDecoded.size(); i++)
+//    {
+//        qDebug() << "presetPacketDecoded[" << i << "]: " << (uchar)presetPacketDecoded[i];
+//    }
+
 
     unsigned char lastByte; // store the last byte for ints and other special chars
     bool skipFlag = 0;
@@ -2807,6 +2903,49 @@ void SysExEncDecode::slotProcessPreset(unsigned char packetType, QByteArray pres
         JSONCounter = 458;
         packetLength = 36;
         break;
+    case SYX_PRESET_CHAR_CHAR: // fall through
+    case SYX_PRESET_CHAR_INT:
+        qDebug() << ((packetType == SYX_PRESET_CHAR_CHAR) ? "SYX_PRESET_CHAR_CHAR" : "SYX_PRESET_CHAR_INT");
+
+        numPackets = 1;
+
+        // get byte positions within the qn struct for these two parameters
+        position1 = presetPacketBytePosition(FIRST, presetPacketDecoded);
+        position2 = presetPacketBytePosition(SECOND, presetPacketDecoded);
+
+        if (position1)
+        {
+            // get first param data
+            data1 = presetPacketChar(FIRST, presetPacketDecoded);
+            paramName1 = presetBytePositionParameter(position1);
+
+            // set keyLayerJSON index and packet length
+            JSONCounter = presetByteKeyLayerJSONIndex; // this gets populated when presetBytePositionParameter is called
+            packetLength++; // first position is one byte if populated
+            qDebug() << QString("JSONCounter: %1, pos1: %2, data1: %3, param1: %4").arg(JSONCounter).arg(position1).arg(data1).arg(paramName1);
+        }
+
+        if (position2)
+        {
+            // get second param data
+            if (packetType == SYX_PRESET_CHAR_CHAR)
+            {
+                data2 = presetPacketChar(SECOND, presetPacketDecoded);
+            }
+            else
+            {
+                data2int = presetPacketInt(presetPacketDecoded);
+            }
+            paramName2 = presetBytePositionParameter(position2); // only look this up if the second address is not empty
+
+            // set keyLayerJSON index and packet length
+            JSONCounter2 = presetByteKeyLayerJSONIndex;
+            packetLength++; // second position is one byte if populated...
+            if (packetType == SYX_PRESET_CHAR_INT) packetLength++; // ...two if an integer
+             qDebug() << QString("JSONCounter2: %1, pos2: %2, data2: %3, param2: %4").arg(JSONCounter2).arg(position2).arg(data2).arg(paramName2);
+        }
+
+        break;
     default:
         return; // bad value, avoid crash
     }
@@ -2850,14 +2989,38 @@ void SysExEncDecode::slotProcessPreset(unsigned char packetType, QByteArray pres
                 break;
 
             default:
-//                if (JSONCounter == 494 ||
-//                    JSONCounter == 495)
-//                {
-//                    qDebug() << "xxx Counter: " << counter << " JSONCounter: " << JSONCounter  << keyLayerJSON[JSONCounter] << "ThisByte: " << buffer[thisByte] << " param type: " << paramTypeMap[keyLayerJSON[JSONCounter]];
-//                    qDebug() << "xxx Counter: " << counter << " JSONCounter: " << JSONCounter+1 << keyLayerJSON[JSONCounter+1] << "ThisByte: " << buffer[thisByte] << " param type: " << paramTypeMap[keyLayerJSON[JSONCounter+1]];
-//                }
 
                 if (counter > packetLength) break; // ignore extra bytes
+
+
+                // **************************************
+                // Handle presetByte packets
+                // **************************************
+                if (position1) // only set if this is SYX_PRESET_CHAR_xxxx, in which case length is 1
+                {
+                    buffer[thisByte] = data1; // replace decode buffer with correct data
+                }
+                else if (position2) // clear position 1 at the end of the loop and then this will work, also works with a char_int where char is empty
+                {
+                    if (packetType == SYX_PRESET_CHAR_CHAR)
+                    {
+                        buffer[thisByte] = data2;
+                    }
+                    else // integer
+                    {
+                        if (packetLength - counter == 1) // MSB
+                        {
+                            buffer[thisByte] = data2int << 8;
+                        }
+                        else // LSB
+                        {
+                            buffer[thisByte] = data2int;
+                        }
+                    }
+
+                    JSONCounter = JSONCounter2;
+                }
+                // ***************************************
 
                 if (JSONCounter == -1)
                 {
@@ -3322,6 +3485,8 @@ void SysExEncDecode::slotProcessPreset(unsigned char packetType, QByteArray pres
                 break;
             }
             counter++; // advance
+            position1 = 0; // clear this to properly handle two parameter packets from presetBytes
+
             if (counter >= PRESET_LENGTH) thisByte = 8; // exit for loop
 
         } // end decode packet

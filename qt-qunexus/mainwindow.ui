@@ -17059,7 +17059,7 @@ QToolTip {
         </property>
         <item>
          <property name="text">
-          <string>OFF</string>
+          <string>CV Off</string>
          </property>
         </item>
         <item>
@@ -17090,6 +17090,11 @@ QToolTip {
         <item>
          <property name="text">
           <string>Pitch Bend CV</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Clock CV</string>
          </property>
         </item>
         <item>
@@ -18701,7 +18706,7 @@ QToolTip {
         </property>
         <item>
          <property name="text">
-          <string>OFF</string>
+          <string>CV Off</string>
          </property>
         </item>
         <item>
@@ -18732,6 +18737,11 @@ QToolTip {
         <item>
          <property name="text">
           <string>Pitch Bend CV</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Clock CV</string>
          </property>
         </item>
         <item>
@@ -20343,7 +20353,7 @@ QToolTip {
         </property>
         <item>
          <property name="text">
-          <string>OFF</string>
+          <string>CV Off</string>
          </property>
         </item>
         <item>
@@ -20373,7 +20383,12 @@ QToolTip {
         </item>
         <item>
          <property name="text">
-          <string>Pitch Bend</string>
+          <string>Pitch Bend CV</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Clock CV</string>
          </property>
         </item>
         <item>
