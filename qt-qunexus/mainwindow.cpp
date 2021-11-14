@@ -2396,7 +2396,7 @@ void MainWindow::slotSendPresetsToBoardDialog(QString presetName)
 void MainWindow::slotSyncQuNexusDialog()
 {
     qDebug() << "slotSyncQuNexusDialog called";
-    QuNexus->slotStopPolling(); // stop loop
+    QuNexus->slotStopPolling("slotSyncQuNexusDialog"); // stop loop
     syncQuNexusDialog->slotCenterDialog();
     syncQuNexusDialog->open();
 }
@@ -3844,7 +3844,7 @@ void MainWindow::slotMIDIPortChange(QString portName, uchar inOrOut, uchar messa
         else if (portName == QUNEXUS_OUT_P1 && inOrOut == PORT_OUT)
         {
             QuNexus->updatePortOut(portNum);
-            QuNexus->slotStartPolling(); // start polling when output port is added
+            QuNexus->slotStartPolling("PORT_CONNECT"); // start polling when output port is added
         }
 
         break;
@@ -3865,7 +3865,7 @@ void MainWindow::slotMIDIPortChange(QString portName, uchar inOrOut, uchar messa
             // close ports and stop polling
             QuNexus->slotCloseMidiIn();
             QuNexus->slotCloseMidiOut();
-            QuNexus->slotStopPolling();
+            QuNexus->slotStopPolling("PORT_DISCONNECT");
             if (inOrOut == PORT_IN) fwUpdateWindow->slotAppendTextToConsole("\nQuNexus Disconnected\n");
         }
 
@@ -3895,7 +3895,7 @@ void MainWindow::slotRefreshConnection()
 {
     qDebug() << "slotRefreshConnection called";
 #ifndef Q_OS_WIN
-    QuNexus->slotResetConnections(QUNEXUS_IN_P1);
+    QuNexus->slotResetConnections(QUNEXUS_IN_P1, QUNEXUS_BL_PORT);
 #endif
 }
 
