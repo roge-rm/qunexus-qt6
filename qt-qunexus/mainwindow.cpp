@@ -42,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent) :
     applicationVersion[1] = 0;
     applicationVersion[2] = 5;
 
-    betaVersion = "F"; // release, do not show beta string
+    betaVersion = "G"; // release, do not show beta string
     //betaVersion = " Beta A"; // show beta
 
 
