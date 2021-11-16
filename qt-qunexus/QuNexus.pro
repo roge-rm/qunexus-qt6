@@ -95,6 +95,29 @@ macx{
     LIBS += -framework CoreFoundation
 }
 
+#ios{
+#    DEFINES += TARGET_OS_IPHONE=1
+#    LIBS += -framework CoreMidi
+#    LIBS += -framework CoreAudio
+#    LIBS += -framework CoreFoundation
+
+#}
+
+#VERSION = 1.2.3
+
+#android {
+#    androidmanifestupdate.commands =  sed -i \'\' -E -e \'s/(versionName=)(\"([0-9]\.?)+\")/\\1\"$$VERSION\"/g\' $$ANDROID_PACKAGE_SOURCE_DIR/AndroidManifest.xml
+#    QMAKE_EXTRA_TARGETS += androidmanifestupdate
+#    PRE_TARGETDEPS += androidmanifestupdate
+#}
+
+#ios {
+#    plistupdate.commands = /usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $$VERSION\" $$QMAKE_INFO_PLIST
+#    QMAKE_EXTRA_TARGETS += plistupdate
+#    PRE_TARGETDEPS += plistupdate
+#}
+
+
 linux{
     DEFINES += define __LINUX_ALSA__=1
     LIBS += -lasound
