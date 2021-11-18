@@ -9,4 +9,4 @@
 	url=https://github.com/thestk/rtmidi.git
 [submodule "qt-qunexus/inc/KMI_Updates"]
 	path = qt-qunexus/inc/KMI_Updates
-	url = https://EricKMI@bitbucket.org/keith-mcmillen-instruments/kmi_updates.git
+	url = https://bitbucket.org/keith-mcmillen-instruments/kmi_updates.git
