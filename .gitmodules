@@ -7,3 +7,6 @@
 [submodule "qt-qunexus/inc/rtmidi"]
 	path = qt-qunexus/inc/rtmidi
 	url=https://github.com/thestk/rtmidi.git
+[submodule "qt-qunexus/inc/KMI_Updates"]
+	path = qt-qunexus/inc/KMI_Updates
+	url = https://EricKMI@bitbucket.org/keith-mcmillen-instruments/kmi_updates.git
