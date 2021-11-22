@@ -678,7 +678,7 @@ QTabBar::tab:selected {
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <property name="elideMode">
       <enum>Qt::ElideRight</enum>
@@ -26647,9 +26647,9 @@ color: white;
        <widget class="QLabel" name="label_92">
         <property name="geometry">
          <rect>
-          <x>62</x>
+          <x>10</x>
           <y>33</y>
-          <width>161</width>
+          <width>261</width>
           <height>20</height>
          </rect>
         </property>
@@ -26670,10 +26670,10 @@ border:0px;</string>
         </property>
         <property name="geometry">
          <rect>
-          <x>82</x>
+          <x>60</x>
           <y>56</y>
-          <width>121</width>
-          <height>20</height>
+          <width>161</width>
+          <height>22</height>
          </rect>
         </property>
         <property name="sizePolicy">
@@ -26775,7 +26775,7 @@ QToolTip {
          <number>10</number>
         </property>
         <property name="sizeAdjustPolicy">
-         <enum>QComboBox::AdjustToMinimumContentsLength</enum>
+         <enum>QComboBox::AdjustToContentsOnFirstShow</enum>
         </property>
         <property name="iconSize">
          <size>

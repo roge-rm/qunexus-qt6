@@ -9,7 +9,7 @@ app_name="QuNexus Editor"
 app_name_fp=QuNexus\ Editor
 app_source=../../Build\ Directories/build-QuNexus-Desktop_Qt_5_14_2_clang_64bit-Release/QuNexus\ Editor.app
 
-version=2.0.5F
+version=2.0.6
 bundle_id="com.keithmcmillen.QuNexus Editor"
 app_path=./dmg/QuNexus\ Editor.app
 package_path=./dmg/
