@@ -81,8 +81,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QuNexus = new MidiDeviceManager(this, PID_QUNEXUS, "QuNexus");
 
     // setup firmware image
-
-    QString thisFwFile = QString(":/resources/firmware/QuNexus_Firmware_v%1.%2.%3.syx")
+    QString thisFwFile = QString("://resources/firmware/QuNexus_Firmware_v%1.%2.%3.syx")
             .arg(uchar(thisFw.at(0)))
             .arg(uchar(thisFw.at(1)))
             .arg(uchar(thisFw.at(2)));
