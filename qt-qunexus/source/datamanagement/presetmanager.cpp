@@ -863,8 +863,15 @@ void PresetManager::slotLoadJSON()
 //#elif defined(Q_OS_MAC) && defined(QT_DEBUG)
 //    jsonPath = QString("../../../presets/QuNexus.json");
 #elif !defined(Q_OS_MAC) // windows
-    jsonPath.append("/../Resources/presets/QuNexus.json");
+    // this is copied into the release directory by QuNexus.pro, take care when editing this line as it
+    // can break things when deploying to windows (ie it will work before but not after deployment,
+    // potentially driving me crazy when I can't figure out why the app won't run on windows machines
+    // other than my own)
+    jsonPath.append("/presets/QuNexus.json");
 #endif
+
+    qDebug() << "jsonPath: " << jsonPath;
+
 
     // -------- begin test for appdata directory to preserve presets after editor updates -----------
 
