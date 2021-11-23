@@ -2,7 +2,8 @@
 set app_name=QuNexus Editor
 set app_version=2.0.6
 set output_dir=%app_name% WIN %app_version%
-set qunexus_binary="C:\Users\eric\Dropbox (KMI)\00_Editors\00_Windows\QuNexus\build-QuNexus-Desktop_Qt_6_0_1_MSVC2019_64bit-Release\release\QuNexus Editor.exe"
+set build_dir=C:\Users\eric\Dropbox (KMI)\00_Editors\00_Windows\Build\build-QuNexus-Desktop_Qt_6_0_1_MSVC2019_64bit-Release\release
+set qunexus_binary="%build_dir%\QuNexus Editor.exe"
 set qunexus_output_binary="%output_dir%\QuNexus Editor.exe"
 set package_dir="C:\Users\eric\Dropbox (KMI)\00_Editors\00_Windows\QuNexus\win-build"
 set path_to_qtwindeploy="C:\Qt6\6.0.1\msvc2019_64\bin\windeployqt.exe"
