@@ -65,6 +65,7 @@ SyncQuNexusDialog::SyncQuNexusDialog(QWidget *parent) :
 
 void SyncQuNexusDialog::slotCancel()
 {
+    emit signalCloseWindow();
     this->done(1);
 }
 

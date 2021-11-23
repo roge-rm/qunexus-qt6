@@ -215,6 +215,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //dialogs
     syncQuNexusDialog = new SyncQuNexusDialog(this);
+    connect(syncQuNexusDialog, SIGNAL(signalCloseWindow()), this, SLOT(slotHideGreyRect()));
 
     ///Globals Iterator
     //globalsRequestIterator = new QTimer(this);
@@ -2207,6 +2208,11 @@ void MainWindow::slotSaveButton()
 
 void MainWindow::slotOpenAboutScreen()
 {
+
+    ui->greyRect->show();
+    ui->greyRect->activateWindow();
+    ui->greyRect->raise();
+
     QDialog *msgBox = new QDialog(this);
     msgBox->setMinimumSize(300, 325);
     msgBox->setFixedSize(300, 325);
@@ -2268,7 +2274,7 @@ void MainWindow::slotOpenAboutScreen()
     msgBox->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint);
     msgBox->move(centerparent);
 
-    msgBox->setStyleSheet("QWidget{background: rgba(120,120,120, 255);}");
+    msgBox->setStyleSheet("QWidget{background: rgba(120,120,120, 255)}; QDialog::QWidget {border: 3px solid black};");
 
     QLabel* aboutInfo = new QLabel(QString("Editor originally developed by Conner Lacey, "
                                          "\nDiane Douglas, and Sarah Howe."
@@ -2279,8 +2285,16 @@ void MainWindow::slotOpenAboutScreen()
 
     aboutInfo->setMinimumSize(300, 90);
     aboutInfo->setFixedSize(300, 90);
+#ifdef Q_OS_MAC // EB attempt to make this cross platform
     aboutInfo->setStyleSheet("font:  12pt;");
     aboutInfo->setGeometry(0, 160, 275, 90);
+#else
+    aboutInfo->setStyleSheet("font:  10pt;");
+    aboutInfo->setGeometry(0, 160, 275, 110);
+#endif
+
+
+
     aboutInfo->setAlignment(Qt::AlignCenter);
 
     // sugar
@@ -2308,6 +2322,11 @@ void MainWindow::slotOpenAboutScreen()
     connect(updateButton, SIGNAL(clicked()), msgBox, SLOT(close()));
 
     msgBox->exec();
+    slotHideGreyRect();
+}
+
+void MainWindow::slotHideGreyRect(){
+   ui->greyRect->hide();
 }
 
 // MIDI OVERHAUL --------------------------------------
@@ -2394,6 +2413,11 @@ void MainWindow::slotSendPresetsToBoardDialog(QString presetName)
 void MainWindow::slotSyncQuNexusDialog()
 {
     qDebug() << "slotSyncQuNexusDialog called";
+
+    ui->greyRect->show();
+    ui->greyRect->activateWindow();
+    ui->greyRect->raise();
+
     QuNexus->slotStopPolling("slotSyncQuNexusDialog"); // stop loop
     syncQuNexusDialog->slotCenterDialog();
     syncQuNexusDialog->open();

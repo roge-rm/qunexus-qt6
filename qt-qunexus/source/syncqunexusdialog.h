@@ -34,6 +34,7 @@ public:
 signals:
     void signalCancel();
     void signalCloseSyncQuNexusDialog(unsigned char);
+    void signalCloseWindow();
 
 public slots:
     void slotCancel();

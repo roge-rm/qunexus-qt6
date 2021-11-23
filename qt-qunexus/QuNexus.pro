@@ -182,7 +182,7 @@ macx{
 
 win32{
 
-    presets.commands = $(COPY_DIR) $$shell_path(\"$$PWD/presets\") $$shell_path(\"$$OUT_PWD/Resources/presets\")
+    presets.commands = $(COPY_DIR) $$shell_path(\"$$PWD/presets\") $$shell_path(\"$$OUT_PWD/release/presets\")
     export(presets.commands)
 
     first.depends += $(first) presets

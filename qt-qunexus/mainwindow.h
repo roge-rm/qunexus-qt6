@@ -257,6 +257,7 @@ public slots:
     void    slotSyncQuNexusDialog();
     void    slotOpenAboutScreen();
     void    slotOpenDocumentation();
+    void    slotHideGreyRect();
 
     void    slotDeletePresetQuery();
     void    slotQuNexusConnected(bool);

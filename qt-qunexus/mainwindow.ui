@@ -27163,6 +27163,23 @@ QPushButton:disabled {
      <string/>
     </property>
    </widget>
+   <widget class="QLabel" name="greyRect">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>901</width>
+      <height>900</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background:rgba(50,50,50,150);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <zorder>greyRect</zorder>
    <zorder>mainwindowbg</zorder>
    <zorder>Header_Frame</zorder>
    <zorder>Send_Frame</zorder>
