@@ -2846,7 +2846,8 @@ void SysExEncDecode::slotProcessPreset(unsigned char packetType, QByteArray pres
     QString paramName1, paramName2;
 
     // discard the preset packet header and sysex stop, then decode into a proper 8 bit array
-    QByteArray presetPacketDecoded = QuNexus_MDM->decode8BitArray(presetPacket.mid(8, presetPacket.size() - 9));
+    QByteArray presetPacketDecoded = presetPacket.mid(8, presetPacket.size() - 9);
+    presetPacketDecoded = QuNexus_MDM->decode8BitArray(presetPacketDecoded);
 
 //    for (int i = 0; i < presetPacketDecoded.size(); i++)
 //    {
