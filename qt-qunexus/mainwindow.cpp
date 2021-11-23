@@ -2773,7 +2773,7 @@ void MainWindow::slotSetupMenuBar()
 {
     menubar = new QMenuBar(this);
 
-#ifdef Q_OS_WIN
+#ifndef Q_OS_MAC
     menubar->setGeometry(0,0,this->width(), 25);
 //    QFile menuStyleFile = QFile(":stylesheets/resources/stylesheets/MenuBarWinStyleSheet.qss");
 //    QString menuStyleString;

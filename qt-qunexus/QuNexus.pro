@@ -95,6 +95,10 @@ macx{
     LIBS += -framework CoreFoundation
 }
 
+linux{
+    DEFINES += __LINUX_ALSA__
+}
+
 #ios{
 #    DEFINES += TARGET_OS_IPHONE=1
 #    LIBS += -framework CoreMidi
@@ -183,6 +187,16 @@ macx{
 win32{
 
     presets.commands = $(COPY_DIR) $$shell_path(\"$$PWD/presets\") $$shell_path(\"$$OUT_PWD/release/presets\")
+    export(presets.commands)
+
+    first.depends += $(first) presets
+    export(first.depends)
+
+    QMAKE_EXTRA_TARGETS += first presets
+}
+
+linux{
+    presets.commands = $(COPY_DIR) $$shell_path(\"$$PWD/presets\") $$shell_path(\"$$OUT_PWD/presets\")
     export(presets.commands)
 
     first.depends += $(first) presets
