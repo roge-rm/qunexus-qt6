@@ -2102,6 +2102,8 @@ void MainWindow::slotUnsavedChangesDialog(QListWidgetItem* newPresetItem)
 
     qDebug() << "slotUnsavedChangesDialog called";
 
+    slotShowGreyRect(); // darken QuNexus editor interface
+
     QDialog *msgBox = new QDialog(this);
     msgBox->setMinimumSize(300, 100);
     msgBox->setFixedSize(300, 100);
@@ -2151,6 +2153,7 @@ void MainWindow::slotUnsavedChangesDialog(QListWidgetItem* newPresetItem)
     connect(saveButton, SIGNAL(clicked()), this, SLOT(slotSaveButton()));
 
     msgBox->exec();
+    slotHideGreyRect(); // darken QuNexus editor interface
 }
 
 void MainWindow::slotDiscardButton()
@@ -2210,9 +2213,7 @@ void MainWindow::slotSaveButton()
 void MainWindow::slotOpenAboutScreen()
 {
 
-    ui->greyRect->show();
-    ui->greyRect->activateWindow();
-    ui->greyRect->raise();
+    slotShowGreyRect();
 
     QDialog *msgBox = new QDialog(this);
     msgBox->setMinimumSize(300, 325);
@@ -2326,7 +2327,14 @@ void MainWindow::slotOpenAboutScreen()
     slotHideGreyRect();
 }
 
-void MainWindow::slotHideGreyRect(){
+void MainWindow::slotShowGreyRect()
+{
+    ui->greyRect->show();
+    ui->greyRect->activateWindow();
+    ui->greyRect->raise();
+}
+void MainWindow::slotHideGreyRect()
+{
    ui->greyRect->hide();
 }
 
@@ -2415,9 +2423,7 @@ void MainWindow::slotSyncQuNexusDialog()
 {
     qDebug() << "slotSyncQuNexusDialog called";
 
-    ui->greyRect->show();
-    ui->greyRect->activateWindow();
-    ui->greyRect->raise();
+    slotShowGreyRect();
 
     QuNexus->slotStopPolling("slotSyncQuNexusDialog"); // stop loop
     syncQuNexusDialog->slotCenterDialog();
@@ -3753,9 +3759,11 @@ void MainWindow::slotPresetProcessed(unsigned char presetNum)
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
- {
+{
     if (presetManager->presetIsDirty)
     {
+        slotShowGreyRect();
+
         // store this global pointer to be called if save or discard are called
         editorCloseEvent = event;
 
@@ -3811,11 +3819,12 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
         msgBox->exec();
     }
- }
+}
 
 void MainWindow::cancelCloseEditor()
 {
     editorCloseEvent->ignore();
+    slotHideGreyRect();
 }
 
 void MainWindow::slotDiscardAndCloseEditor()
@@ -3960,7 +3969,7 @@ void MainWindow::slotFwUpdateSuccessCloseDialog(bool success)
         slotQuNexusConnected(false);
         slotEnableDisableMidiFunctions(false);
     }
-
+    slotHideGreyRect();
 }
 
 void MainWindow::slotForceFirmwareUpdate()

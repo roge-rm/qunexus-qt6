@@ -678,7 +678,7 @@ QTabBar::tab:selected {
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <property name="elideMode">
       <enum>Qt::ElideRight</enum>
@@ -26227,10 +26227,10 @@ color: white;</string>
       <widget class="QFrame" name="led_frame">
        <property name="geometry">
         <rect>
-         <x>22</x>
+         <x>19</x>
          <y>110</y>
          <width>277</width>
-         <height>111</height>
+         <height>130</height>
         </rect>
        </property>
        <property name="frameShape">
@@ -26243,7 +26243,7 @@ color: white;</string>
         <property name="geometry">
          <rect>
           <x>3</x>
-          <y>19</y>
+          <y>27</y>
           <width>271</width>
           <height>79</height>
          </rect>
@@ -26266,7 +26266,7 @@ color: white;</string>
         <property name="geometry">
          <rect>
           <x>150</x>
-          <y>34</y>
+          <y>38</y>
           <width>25</width>
           <height>20</height>
          </rect>
@@ -26318,7 +26318,7 @@ color: white;</string>
          <rect>
           <x>4</x>
           <y>6</y>
-          <width>270</width>
+          <width>271</width>
           <height>18</height>
          </rect>
         </property>
@@ -26336,7 +26336,7 @@ color: white;</string>
         <property name="geometry">
          <rect>
           <x>186</x>
-          <y>68</y>
+          <y>72</y>
           <width>81</width>
           <height>20</height>
          </rect>
@@ -26384,7 +26384,7 @@ color: white;
         <property name="geometry">
          <rect>
           <x>150</x>
-          <y>67</y>
+          <y>71</y>
           <width>25</width>
           <height>20</height>
          </rect>
@@ -26435,7 +26435,7 @@ color: white;
         <property name="geometry">
          <rect>
           <x>55</x>
-          <y>67</y>
+          <y>71</y>
           <width>71</width>
           <height>20</height>
          </rect>
@@ -26454,7 +26454,7 @@ color: white;
         <property name="geometry">
          <rect>
           <x>55</x>
-          <y>34</y>
+          <y>38</y>
           <width>91</width>
           <height>20</height>
          </rect>
@@ -26473,7 +26473,7 @@ color: white;
         <property name="geometry">
          <rect>
           <x>186</x>
-          <y>35</y>
+          <y>39</y>
           <width>71</width>
           <height>20</height>
          </rect>
@@ -26489,7 +26489,7 @@ color: white;
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>67</y>
+          <y>71</y>
           <width>25</width>
           <height>20</height>
          </rect>
@@ -26542,7 +26542,7 @@ color: white;
         <property name="geometry">
          <rect>
           <x>25</x>
-          <y>33</y>
+          <y>37</y>
           <width>21</width>
           <height>20</height>
          </rect>
@@ -26578,10 +26578,10 @@ color: white;
       <widget class="QFrame" name="Editor_Frame">
        <property name="geometry">
         <rect>
-         <x>309</x>
+         <x>306</x>
          <y>110</y>
          <width>277</width>
-         <height>101</height>
+         <height>130</height>
         </rect>
        </property>
        <property name="frameShape">
@@ -26594,7 +26594,7 @@ color: white;
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>19</y>
+          <y>27</y>
           <width>261</width>
           <height>79</height>
          </rect>
@@ -26648,7 +26648,7 @@ color: white;
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>33</y>
+          <y>39</y>
           <width>261</width>
           <height>20</height>
          </rect>
@@ -26671,7 +26671,7 @@ border:0px;</string>
         <property name="geometry">
          <rect>
           <x>60</x>
-          <y>56</y>
+          <y>62</y>
           <width>161</width>
           <height>22</height>
          </rect>
