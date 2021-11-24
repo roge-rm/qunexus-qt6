@@ -2954,12 +2954,12 @@ void SysExEncDecode::slotProcessPreset(unsigned char packetType, QByteArray pres
     //For each of the 73 packets...
     for(uint thisPacket = 0; thisPacket < numPackets; thisPacket++)
     {
-        qDebug() << "thisPacket: " << thisPacket;
+        //qDebug() << "thisPacket: " << thisPacket;
         //Load Buffer, starting with first packet, index 8
         for(int thisByte = 0; thisByte < 8; thisByte++)
         {
             int thisIndex = SIZE_OF_PRESET_RX_HEADER + (thisByte + (thisPacket * 8));
-            qDebug() << "index: " << thisIndex;
+            //qDebug() << "index: " << thisIndex;
             //Use packet num i to get index into preset Byte array
             if (thisIndex < presetPacket.length())
             {

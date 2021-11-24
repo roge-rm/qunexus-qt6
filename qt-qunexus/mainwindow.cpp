@@ -3926,9 +3926,9 @@ void MainWindow::slotMIDIPortChange(QString portName, uchar inOrOut, uchar messa
 void MainWindow::slotRefreshConnection()
 {
     qDebug() << "slotRefreshConnection called";
-#ifdef Q_OS_MAC
+//#ifdef Q_OS_MAC
     QuNexus->slotResetConnections(QUNEXUS_IN_P1, QUNEXUS_BL_PORT);
-#endif
+//#endif
 }
 
 
