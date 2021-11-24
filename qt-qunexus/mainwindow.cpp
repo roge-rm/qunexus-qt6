@@ -22,6 +22,7 @@
 #include "syncqunexusdialog.h"
 #include "KMI_FwVersions.h"
 #include "inc/KMI_Updates/kmi_updates.h"
+#include <qicon.h>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),

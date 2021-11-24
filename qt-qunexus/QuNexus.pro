@@ -171,6 +171,15 @@ ICON = resources/icons/quNexusIcon.icns
 
 
 DISTFILES += \
+    resources/icons/QuNexusIcons/quNexusIcon-1.png \
+    resources/icons/QuNexusIcons/quNexusIcon-2.png \
+    resources/icons/QuNexusIcons/quNexusIcon-3.png \
+    resources/icons/QuNexusIcons/quNexusIcon-4.png \
+    resources/icons/QuNexusIcons/quNexusIcon-5.png \
+    resources/icons/QuNexusIcons/quNexusIcon-6.png \
+    resources/icons/QuNexusIcons/quNexusIcon-7.png \
+    resources/icons/QuNexusIcons/quNexusIcon-8.png \
+    resources/icons/QuNexusIcons/quNexusIcon-9.png \
     resources/stylesheets/GeneralStyles.qss \
     resources/stylesheets/GeneralStylesWindows.qss
 

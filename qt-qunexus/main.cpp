@@ -27,6 +27,13 @@ int main(int argc, char *argv[])
     //w.resize(800, 600);
     w.setWindowTitle("QuNexus Editor");
 
+#ifdef Q_OS_LINUX
+    //parent->setWindowIcon(QIcon("qrc:/resources/images/quNexusIcon-9.png"));
+    w.setWindowIcon(QIcon(":/resources/images/quNexusIcon-9.png"));
+    a.setWindowIcon(QIcon(":/resources/images/quNexusIcon-9.png"));
+
+#endif
+
 #ifdef Q_OS_MAC
 
 #else

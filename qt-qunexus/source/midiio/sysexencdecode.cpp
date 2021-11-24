@@ -2862,7 +2862,7 @@ void SysExEncDecode::slotProcessPreset(unsigned char packetType, QByteArray pres
     {
     case SYX_PRESET_COMPLETE: // start at 0
         qDebug() << "SYX_PRESET_COMPLETE";
-        numPackets = 72; // (593-9)/8 - 1
+        numPackets = 73; // (593-9)/8
         JSONCounter = -1;
         counter = 0;
         packetLength = 506;
@@ -2952,16 +2952,24 @@ void SysExEncDecode::slotProcessPreset(unsigned char packetType, QByteArray pres
     }
 
     //For each of the 73 packets...
-    for(uint thisPacket = 0; thisPacket <= numPackets; thisPacket++)
+    for(uint thisPacket = 0; thisPacket < numPackets; thisPacket++)
     {
-        //qDebug() << "thisPacket: " << thisPacket;
+        qDebug() << "thisPacket: " << thisPacket;
         //Load Buffer, starting with first packet, index 8
         for(int thisByte = 0; thisByte < 8; thisByte++)
         {
             int thisIndex = SIZE_OF_PRESET_RX_HEADER + (thisByte + (thisPacket * 8));
-            //qDebug() << "index:" << j + (i*8) << (unsigned char)globalsByteArray.at(j + (i*8));
+            qDebug() << "index: " << thisIndex;
             //Use packet num i to get index into preset Byte array
-            buffer[thisByte] = presetPacket.at(thisIndex);
+            if (thisIndex < presetPacket.length())
+            {
+                buffer[thisByte] = presetPacket.at(thisIndex);
+            }
+            else
+            {
+                buffer[thisByte] = 0; // fill with zeros
+                qDebug() << "decode error: packet index overrun";
+            }
         }
 
         //Decode packet
