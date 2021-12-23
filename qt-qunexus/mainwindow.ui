@@ -1394,6 +1394,69 @@ QComboBox QAbstractItemView
          <number>127</number>
         </property>
        </widget>
+       <widget class="QSpinBox" name="dummy1_4">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>12</y>
+          <width>60</width>
+          <height>4</height>
+         </rect>
+        </property>
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;(5 to 255bpm)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="layoutDirection">
+         <enum>Qt::LeftToRight</enum>
+        </property>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QSpinBox {
+	font-family:&quot;Arial&quot;;
+	border-radius:4.0;
+	border-color:black;
+	background-color: rgba(67, 67, 67, 255);
+	font-size: 11px;
+	color: white;
+	padding:0, 3, 0, 0;
+}</string>
+        </property>
+        <property name="wrapping">
+         <bool>false</bool>
+        </property>
+        <property name="frame">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+        <property name="buttonSymbols">
+         <enum>QAbstractSpinBox::NoButtons</enum>
+        </property>
+        <property name="suffix">
+         <string> bpm</string>
+        </property>
+        <property name="minimum">
+         <number>5</number>
+        </property>
+        <property name="maximum">
+         <number>255</number>
+        </property>
+        <property name="value">
+         <number>120</number>
+        </property>
+       </widget>
+       <zorder>dummy1_4</zorder>
+       <zorder>Keyboard_Velocity_Max</zorder>
+       <zorder>Keyboard_Velocity_Min</zorder>
+       <zorder>label_25</zorder>
+       <zorder>Keyboard_Velocity_MIDI_Output_Device</zorder>
+       <zorder>Keyboard_Velocity_Curve</zorder>
+       <zorder>Keyboard_Velocity_Source</zorder>
+       <zorder>Keyboard_Velocity_Gain</zorder>
+       <zorder>Keyboard_Velocity_Offset</zorder>
       </widget>
       <widget class="QFrame" name="frame_17">
        <property name="geometry">
@@ -9822,56 +9885,19 @@ QToolTip {
          </property>
         </item>
        </widget>
-       <widget class="QLineEdit" name="SEQ_track_1_chain">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="geometry">
-         <rect>
-          <x>397</x>
-          <y>30</y>
-          <width>61</width>
-          <height>19</height>
-         </rect>
-        </property>
-        <property name="mouseTracking">
-         <bool>false</bool>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QLineEdit {
-	font-family:&quot;Arial&quot;;
-	border-radius:4.0;
-	border-color:black;
-	background-color: rgba(67, 67, 67, 255);
-	font-size: 11px;
-	color: white;
-	padding:1, 3, 1, 3;
-	padding-left: 4;
-}
-
-QLineEdit:disabled {
-	background-color: rgba(67, 67, 67, 100);
-	color: rgba(255,255,255,100);
-}</string>
-        </property>
-        <property name="text">
-         <string>ABCD</string>
-        </property>
-        <property name="maxLength">
-         <number>8</number>
-        </property>
-       </widget>
        <widget class="QLabel" name="label_119">
         <property name="geometry">
          <rect>
-          <x>363</x>
-          <y>30</y>
-          <width>25</width>
+          <x>250</x>
+          <y>29</y>
+          <width>81</width>
           <height>20</height>
          </rect>
         </property>
         <property name="styleSheet">
-         <string notr="true">QFrame {
+         <string notr="true">color:black;
+
+QFrame {
 	qproperty-alignment: AlignCenter;
 }
 
@@ -9881,7 +9907,10 @@ QToolTip {
 }</string>
         </property>
         <property name="text">
-         <string>Chain</string>
+         <string>Transpose:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
         </property>
        </widget>
        <widget class="QSpinBox" name="Keyboard_Global_Program_Change_A">
@@ -9933,22 +9962,6 @@ QToolTip {
         </property>
         <property name="maximum">
          <number>127</number>
-        </property>
-       </widget>
-       <widget class="QLabel" name="coverup1">
-        <property name="geometry">
-         <rect>
-          <x>320</x>
-          <y>30</y>
-          <width>151</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background:rgba(120, 120, 120, 255);</string>
-        </property>
-        <property name="text">
-         <string/>
         </property>
        </widget>
        <widget class="QSpinBox" name="Keyboard_Global_Polyphony_Number">
@@ -10005,7 +10018,57 @@ QToolTip {
          <number>15</number>
         </property>
        </widget>
-       <zorder>SEQ_track_1_chain</zorder>
+       <widget class="QSpinBox" name="SEQ_track_1_transp">
+        <property name="geometry">
+         <rect>
+          <x>320</x>
+          <y>30</y>
+          <width>30</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Transposition for this track (-48 to 48).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="layoutDirection">
+         <enum>Qt::LeftToRight</enum>
+        </property>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QSpinBox {
+	font-family:&quot;Arial&quot;;
+	border-radius:4.0;
+	border-color:black;
+	background-color: rgba(67, 67, 67, 255);
+	font-size: 11px;
+	color: white;
+	padding:0, 2, 0, 0;
+}</string>
+        </property>
+        <property name="wrapping">
+         <bool>false</bool>
+        </property>
+        <property name="frame">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+        <property name="buttonSymbols">
+         <enum>QAbstractSpinBox::NoButtons</enum>
+        </property>
+        <property name="minimum">
+         <number>-48</number>
+        </property>
+        <property name="maximum">
+         <number>48</number>
+        </property>
+        <property name="value">
+         <number>0</number>
+        </property>
+       </widget>
        <zorder>SEQ_track_1_gate</zorder>
        <zorder>label_43</zorder>
        <zorder>SEQ_track_1_mode</zorder>
@@ -10016,11 +10079,11 @@ QToolTip {
        <zorder>SEQ_track_1_arpOctaves</zorder>
        <zorder>SEQ_track_1_arp_pattern</zorder>
        <zorder>SEQ_track_1_dot</zorder>
-       <zorder>label_119</zorder>
        <zorder>Keyboard_Global_Program_Change_A</zorder>
-       <zorder>coverup1</zorder>
        <zorder>Keyboard_Global_Polyphony_Number</zorder>
        <zorder>SEQ_track_1_midi_ch</zorder>
+       <zorder>label_119</zorder>
+       <zorder>SEQ_track_1_transp</zorder>
       </widget>
       <widget class="QFrame" name="SEQ_track_2">
        <property name="geometry">
@@ -11322,67 +11385,6 @@ QToolTip {
          </property>
         </item>
        </widget>
-       <widget class="QLineEdit" name="SEQ_track_2_chain">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="geometry">
-         <rect>
-          <x>397</x>
-          <y>30</y>
-          <width>61</width>
-          <height>19</height>
-         </rect>
-        </property>
-        <property name="mouseTracking">
-         <bool>false</bool>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QLineEdit {
-	font-family:&quot;Arial&quot;;
-	border-radius:4.0;
-	border-color:black;
-	background-color: rgba(67, 67, 67, 255);
-	font-size: 11px;
-	color: white;
-	padding:1, 3, 1, 3;
-	padding-left: 4;
-}
-QLineEdit:disabled {
-	background-color: rgba(67, 67, 67, 100);
-	color: rgba(255,255,255,100);
-}</string>
-        </property>
-        <property name="text">
-         <string>ABCD</string>
-        </property>
-        <property name="maxLength">
-         <number>8</number>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_120">
-        <property name="geometry">
-         <rect>
-          <x>363</x>
-          <y>30</y>
-          <width>25</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QFrame {
-	qproperty-alignment: AlignCenter;
-}
-
-QToolTip {
-	background: #006599;
-	color: white;
-}</string>
-        </property>
-        <property name="text">
-         <string>Chain</string>
-        </property>
-       </widget>
        <widget class="QSpinBox" name="Keyboard_Global_Program_Change_B">
         <property name="geometry">
          <rect>
@@ -11465,22 +11467,6 @@ color: white</string>
         </property>
         <property name="wordWrap">
          <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QLabel" name="coverup1_2">
-        <property name="geometry">
-         <rect>
-          <x>330</x>
-          <y>30</y>
-          <width>151</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background:rgba(120, 120, 120, 255);</string>
-        </property>
-        <property name="text">
-         <string/>
         </property>
        </widget>
        <widget class="QComboBox" name="SEQ_track_2_arpOctaves">
@@ -11635,6 +11621,82 @@ QToolTip {
           <string>4 Octaves</string>
          </property>
         </item>
+       </widget>
+       <widget class="QLabel" name="label_120">
+        <property name="geometry">
+         <rect>
+          <x>250</x>
+          <y>29</y>
+          <width>81</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color:black;
+
+QFrame {
+	qproperty-alignment: AlignCenter;
+}
+
+QToolTip {
+	background: #006599;
+	color: white;
+}</string>
+        </property>
+        <property name="text">
+         <string>Transpose:</string>
+        </property>
+       </widget>
+       <widget class="QSpinBox" name="SEQ_track_2_transp">
+        <property name="geometry">
+         <rect>
+          <x>320</x>
+          <y>30</y>
+          <width>30</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Transposition for this track (-48 to 48).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="layoutDirection">
+         <enum>Qt::LeftToRight</enum>
+        </property>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QSpinBox {
+	font-family:&quot;Arial&quot;;
+	border-radius:4.0;
+	border-color:black;
+	background-color: rgba(67, 67, 67, 255);
+	font-size: 11px;
+	color: white;
+	padding:0, 2, 0, 0;
+}</string>
+        </property>
+        <property name="wrapping">
+         <bool>false</bool>
+        </property>
+        <property name="frame">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+        <property name="buttonSymbols">
+         <enum>QAbstractSpinBox::NoButtons</enum>
+        </property>
+        <property name="minimum">
+         <number>-48</number>
+        </property>
+        <property name="maximum">
+         <number>48</number>
+        </property>
+        <property name="value">
+         <number>0</number>
+        </property>
        </widget>
       </widget>
       <widget class="QFrame" name="SEQ_track_3">
@@ -12936,67 +12998,6 @@ QToolTip {
          </property>
         </item>
        </widget>
-       <widget class="QLineEdit" name="SEQ_track_3_chain">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="geometry">
-         <rect>
-          <x>397</x>
-          <y>30</y>
-          <width>61</width>
-          <height>19</height>
-         </rect>
-        </property>
-        <property name="mouseTracking">
-         <bool>false</bool>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QLineEdit {
-	font-family:&quot;Arial&quot;;
-	border-radius:4.0;
-	border-color:black;
-	background-color: rgba(67, 67, 67, 255);
-	font-size: 11px;
-	color: white;
-	padding:1, 3, 1, 3;
-	padding-left: 4;
-}
-QLineEdit:disabled {
-	background-color: rgba(67, 67, 67, 100);
-	color: rgba(255,255,255,100);
-}</string>
-        </property>
-        <property name="text">
-         <string>ABCD</string>
-        </property>
-        <property name="maxLength">
-         <number>8</number>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_121">
-        <property name="geometry">
-         <rect>
-          <x>363</x>
-          <y>30</y>
-          <width>25</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QFrame {
-	qproperty-alignment: AlignCenter;
-}
-
-QToolTip {
-	background: #006599;
-	color: white;
-}</string>
-        </property>
-        <property name="text">
-         <string>Chain</string>
-        </property>
-       </widget>
        <widget class="QSpinBox" name="Keyboard_Global_Program_Change_C">
         <property name="geometry">
          <rect>
@@ -13079,22 +13080,6 @@ color: white</string>
         </property>
         <property name="wordWrap">
          <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QLabel" name="coverup1_3">
-        <property name="geometry">
-         <rect>
-          <x>320</x>
-          <y>30</y>
-          <width>151</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background:rgba(120, 120, 120, 255);</string>
-        </property>
-        <property name="text">
-         <string/>
         </property>
        </widget>
        <widget class="QComboBox" name="SEQ_track_3_arpOctaves">
@@ -13249,6 +13234,82 @@ QToolTip {
           <string>4 Octaves</string>
          </property>
         </item>
+       </widget>
+       <widget class="QLabel" name="label_121">
+        <property name="geometry">
+         <rect>
+          <x>250</x>
+          <y>29</y>
+          <width>81</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color:black;
+
+QFrame {
+	qproperty-alignment: AlignCenter;
+}
+
+QToolTip {
+	background: #006599;
+	color: white;
+}</string>
+        </property>
+        <property name="text">
+         <string>Transpose:</string>
+        </property>
+       </widget>
+       <widget class="QSpinBox" name="SEQ_track_3_transp">
+        <property name="geometry">
+         <rect>
+          <x>320</x>
+          <y>30</y>
+          <width>30</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Transposition for this track (-48 to 48).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="layoutDirection">
+         <enum>Qt::LeftToRight</enum>
+        </property>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QSpinBox {
+	font-family:&quot;Arial&quot;;
+	border-radius:4.0;
+	border-color:black;
+	background-color: rgba(67, 67, 67, 255);
+	font-size: 11px;
+	color: white;
+	padding:0, 2, 0, 0;
+}</string>
+        </property>
+        <property name="wrapping">
+         <bool>false</bool>
+        </property>
+        <property name="frame">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+        <property name="buttonSymbols">
+         <enum>QAbstractSpinBox::NoButtons</enum>
+        </property>
+        <property name="minimum">
+         <number>-48</number>
+        </property>
+        <property name="maximum">
+         <number>48</number>
+        </property>
+        <property name="value">
+         <number>0</number>
+        </property>
        </widget>
       </widget>
       <widget class="QLabel" name="Tab_seq_bg">
@@ -13618,7 +13679,7 @@ color: white;</string>
          </rect>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Global transposition for all tracks (-12 to 12).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Global transposition for all tracks (-48 to 48).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
@@ -13650,10 +13711,10 @@ color: white;</string>
          <enum>QAbstractSpinBox::NoButtons</enum>
         </property>
         <property name="minimum">
-         <number>-12</number>
+         <number>-48</number>
         </property>
         <property name="maximum">
-         <number>12</number>
+         <number>48</number>
         </property>
         <property name="value">
          <number>0</number>
@@ -13804,6 +13865,61 @@ QSpinBox:disabled {
         <set>Qt::AlignCenter</set>
        </property>
       </widget>
+      <widget class="QSpinBox" name="dummy1">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>60</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="toolTip">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;(5 to 255bpm)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QSpinBox {
+	font-family:&quot;Arial&quot;;
+	border-radius:4.0;
+	border-color:black;
+	background-color: rgba(67, 67, 67, 255);
+	font-size: 11px;
+	color: white;
+	padding:0, 3, 0, 0;
+}</string>
+       </property>
+       <property name="wrapping">
+        <bool>false</bool>
+       </property>
+       <property name="frame">
+        <bool>true</bool>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+       <property name="buttonSymbols">
+        <enum>QAbstractSpinBox::NoButtons</enum>
+       </property>
+       <property name="suffix">
+        <string> bpm</string>
+       </property>
+       <property name="minimum">
+        <number>5</number>
+       </property>
+       <property name="maximum">
+        <number>255</number>
+       </property>
+       <property name="value">
+        <number>120</number>
+       </property>
+      </widget>
+      <zorder>dummy1</zorder>
       <zorder>label_58</zorder>
       <zorder>SEQ_swing</zorder>
       <zorder>Tab_seq_bg</zorder>
@@ -13862,8 +13978,8 @@ QSpinBox:disabled {
         <string notr="true">QFrame {
 	background:rgba(120, 120, 120, 255);
 	border-style:none;
-	border-bottom-left-radius:0.0;
-	border-bottom-right-radius:0.0;
+	border-bottom-left-radius:0;
+	border-bottom-right-radius:0;
 	border-top-left-radius:0;
 	border-top-right-radius:0;
 }</string>
@@ -13901,6 +14017,10 @@ QSpinBox:disabled {
 	font-size: 11px;
 	color: rgba(100, 100, 100, 255);
 	padding:0, 3, 0, 0;
+}
+QToolTip {
+    background: #006599;
+    color: white;
 }
 </string>
         </property>
@@ -14227,9 +14347,12 @@ QToolTip {
 	height: 200px;
 	background-color: transparent;
 }
-QComboBox::down-arrow:disabled {
-	image: url();
-}</string>
+
+QToolTip {
+    background: #006599;
+    color: white;
+}
+</string>
         </property>
         <property name="editable">
          <bool>false</bool>
@@ -14923,6 +15046,10 @@ QComboBox::down-arrow:disabled {
 	color: rgba(100, 100, 100, 255);
 	padding:0, 3, 0, 0;
 }
+QToolTip {
+    background: #006599;
+    color: white;
+}
 </string>
         </property>
         <property name="wrapping">
@@ -15011,7 +15138,12 @@ QComboBox::down-arrow:disabled {
  QComboBox::drop-down  {
 	height: 200px;
 	background-color: transparent;
-}</string>
+}
+QToolTip {
+    background: #006599;
+    color: white;
+}
+</string>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -15096,6 +15228,10 @@ QComboBox::down-arrow:disabled {
 	font-size: 11px;
 	color: rgba(100, 100, 100, 255);
 	padding:0, 3, 0, 0;
+}
+QToolTip {
+    background: #006599;
+    color: white;
 }
 </string>
         </property>
@@ -15344,6 +15480,10 @@ QComboBox::down-arrow:disabled {
 	font-size: 11px;
 	color: rgba(100, 100, 100, 255);
 	padding:0, 3, 0, 0;
+}
+QToolTip {
+    background: #006599;
+    color: white;
 }
 </string>
         </property>
@@ -23136,6 +23276,61 @@ color: white;</string>
         <string/>
        </property>
       </widget>
+      <widget class="QSpinBox" name="dummy1_2">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>60</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="toolTip">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;(5 to 255bpm)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QSpinBox {
+	font-family:&quot;Arial&quot;;
+	border-radius:4.0;
+	border-color:black;
+	background-color: rgba(67, 67, 67, 255);
+	font-size: 11px;
+	color: white;
+	padding:0, 3, 0, 0;
+}</string>
+       </property>
+       <property name="wrapping">
+        <bool>false</bool>
+       </property>
+       <property name="frame">
+        <bool>true</bool>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+       <property name="buttonSymbols">
+        <enum>QAbstractSpinBox::NoButtons</enum>
+       </property>
+       <property name="suffix">
+        <string> bpm</string>
+       </property>
+       <property name="minimum">
+        <number>5</number>
+       </property>
+       <property name="maximum">
+        <number>255</number>
+       </property>
+       <property name="value">
+        <number>120</number>
+       </property>
+      </widget>
+      <zorder>dummy1_2</zorder>
       <zorder>Tab_cv_bg</zorder>
       <zorder>label_129</zorder>
       <zorder>frame_8</zorder>
@@ -24077,6 +24272,88 @@ QPushButton:checked{ border-color: rgba(10, 255, 0,0);}</string>
          <string/>
         </property>
        </widget>
+       <widget class="QSpinBox" name="dummy1_3">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>10</y>
+          <width>60</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;(5 to 255bpm)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="layoutDirection">
+         <enum>Qt::LeftToRight</enum>
+        </property>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QSpinBox {
+	font-family:&quot;Arial&quot;;
+	border-radius:4.0;
+	border-color:black;
+	background-color: rgba(67, 67, 67, 255);
+	font-size: 11px;
+	color: white;
+	padding:0, 3, 0, 0;
+}</string>
+        </property>
+        <property name="wrapping">
+         <bool>false</bool>
+        </property>
+        <property name="frame">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+        <property name="buttonSymbols">
+         <enum>QAbstractSpinBox::NoButtons</enum>
+        </property>
+        <property name="suffix">
+         <string> bpm</string>
+        </property>
+        <property name="minimum">
+         <number>5</number>
+        </property>
+        <property name="maximum">
+         <number>255</number>
+        </property>
+        <property name="value">
+         <number>120</number>
+        </property>
+       </widget>
+       <zorder>dummy1_3</zorder>
+       <zorder>label_6</zorder>
+       <zorder>Key_Highlight_0</zorder>
+       <zorder>Key_Highlight_2</zorder>
+       <zorder>Key_Highlight_4</zorder>
+       <zorder>Key_Highlight_5</zorder>
+       <zorder>Key_Highlight_7</zorder>
+       <zorder>Key_Highlight_9</zorder>
+       <zorder>Key_Highlight_11</zorder>
+       <zorder>Key_Highlight_12</zorder>
+       <zorder>Key_Highlight_14</zorder>
+       <zorder>Key_Highlight_16</zorder>
+       <zorder>Key_Highlight_17</zorder>
+       <zorder>Key_Highlight_19</zorder>
+       <zorder>Key_Highlight_21</zorder>
+       <zorder>Key_Highlight_23</zorder>
+       <zorder>Key_Highlight_24</zorder>
+       <zorder>Key_Highlight_1</zorder>
+       <zorder>Key_Highlight_3</zorder>
+       <zorder>Key_Highlight_6</zorder>
+       <zorder>Key_Highlight_8</zorder>
+       <zorder>Key_Highlight_10</zorder>
+       <zorder>Key_Highlight_13</zorder>
+       <zorder>Key_Highlight_15</zorder>
+       <zorder>Key_Highlight_18</zorder>
+       <zorder>Key_Highlight_20</zorder>
+       <zorder>Key_Highlight_22</zorder>
+       <zorder>Bend_Highlight</zorder>
       </widget>
       <widget class="QFrame" name="frame_ctl_usb">
        <property name="geometry">
@@ -26711,6 +26988,61 @@ color: white;
          <string/>
         </property>
        </widget>
+       <widget class="QSpinBox" name="dummy1_5">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>40</y>
+          <width>60</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;(5 to 255bpm)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="layoutDirection">
+         <enum>Qt::LeftToRight</enum>
+        </property>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QSpinBox {
+	font-family:&quot;Arial&quot;;
+	border-radius:4.0;
+	border-color:black;
+	background-color: rgba(67, 67, 67, 255);
+	font-size: 11px;
+	color: white;
+	padding:0, 3, 0, 0;
+}</string>
+        </property>
+        <property name="wrapping">
+         <bool>false</bool>
+        </property>
+        <property name="frame">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+        <property name="buttonSymbols">
+         <enum>QAbstractSpinBox::NoButtons</enum>
+        </property>
+        <property name="suffix">
+         <string> bpm</string>
+        </property>
+        <property name="minimum">
+         <number>5</number>
+        </property>
+        <property name="maximum">
+         <number>255</number>
+        </property>
+        <property name="value">
+         <number>120</number>
+        </property>
+       </widget>
+       <zorder>dummy1_5</zorder>
        <zorder>led_bg</zorder>
        <zorder>SEQ_dim_keys</zorder>
        <zorder>led_label_115</zorder>
@@ -27338,7 +27670,7 @@ QPushButton:disabled {
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>
-  <tabstop>tabWidget</tabstop>
+  <tabstop>dummy1</tabstop>
   <tabstop>Keyboard_Velocity_Gain</tabstop>
   <tabstop>Keyboard_Velocity_Offset</tabstop>
   <tabstop>Keyboard_Velocity_Curve</tabstop>
@@ -27509,6 +27841,60 @@ QPushButton:disabled {
   <tabstop>CV_Out_Gate_Offset</tabstop>
   <tabstop>CV_Out_Gate_Curve</tabstop>
   <tabstop>CV_Gate_S_Trig</tabstop>
+  <tabstop>Globals_LED_Refresh_Style</tabstop>
+  <tabstop>Keyboard_Global_Key_Selection_Criteria</tabstop>
+  <tabstop>plainTextEdit</tabstop>
+  <tabstop>Keyboard_Global_Pitch_Bend_Range</tabstop>
+  <tabstop>Globals_Off_Thresh</tabstop>
+  <tabstop>Globals_On_Thresh</tabstop>
+  <tabstop>Globals_Tilt_Sensitivity</tabstop>
+  <tabstop>Globals_Gain</tabstop>
+  <tabstop>Keyboard_Global_Pressure_Sensitivity</tabstop>
+  <tabstop>SEQ_tempo</tabstop>
+  <tabstop>SEQ_clock_dest</tabstop>
+  <tabstop>SEQ_clock_source</tabstop>
+  <tabstop>Keyboard_Global_CV_Clock_3_Mode</tabstop>
+  <tabstop>SEQ_CV_Clock_Divide</tabstop>
+  <tabstop>SEQ_track_1_gate</tabstop>
+  <tabstop>SEQ_track_1_mode</tabstop>
+  <tabstop>SEQ_track_1_division</tabstop>
+  <tabstop>SEQ_track_1_seq_pattern</tabstop>
+  <tabstop>SEQ_track_1_length</tabstop>
+  <tabstop>SEQ_track_1_dest</tabstop>
+  <tabstop>SEQ_track_1_midi_ch</tabstop>
+  <tabstop>SEQ_track_1_arpOctaves</tabstop>
+  <tabstop>SEQ_track_1_arp_pattern</tabstop>
+  <tabstop>SEQ_track_1_dot</tabstop>
+  <tabstop>Keyboard_Global_Program_Change_A</tabstop>
+  <tabstop>Keyboard_Global_Polyphony_Number</tabstop>
+  <tabstop>SEQ_track_2_mode</tabstop>
+  <tabstop>SEQ_track_2_seq_pattern</tabstop>
+  <tabstop>SEQ_track_2_dot</tabstop>
+  <tabstop>SEQ_track_2_gate</tabstop>
+  <tabstop>SEQ_track_2_length</tabstop>
+  <tabstop>SEQ_track_2_division</tabstop>
+  <tabstop>SEQ_track_2_arp_pattern</tabstop>
+  <tabstop>SEQ_track_2_dest</tabstop>
+  <tabstop>SEQ_track_2_midi_ch</tabstop>
+  <tabstop>Keyboard_Global_Program_Change_B</tabstop>
+  <tabstop>SEQ_track_2_arpOctaves</tabstop>
+  <tabstop>SEQ_track_3_mode</tabstop>
+  <tabstop>SEQ_track_3_seq_pattern</tabstop>
+  <tabstop>SEQ_track_3_dot</tabstop>
+  <tabstop>SEQ_track_3_gate</tabstop>
+  <tabstop>SEQ_track_3_length</tabstop>
+  <tabstop>SEQ_track_3_division</tabstop>
+  <tabstop>SEQ_track_3_arp_pattern</tabstop>
+  <tabstop>SEQ_track_3_dest</tabstop>
+  <tabstop>SEQ_track_3_midi_ch</tabstop>
+  <tabstop>Keyboard_Global_Program_Change_C</tabstop>
+  <tabstop>SEQ_track_3_arpOctaves</tabstop>
+  <tabstop>SEQ_swing</tabstop>
+  <tabstop>Keyboard_Global_Program_Change_D</tabstop>
+  <tabstop>SEQ_dim_keys</tabstop>
+  <tabstop>SEQ_bright_keys</tabstop>
+  <tabstop>midi_outputs</tabstop>
+  <tabstop>tabWidget</tabstop>
  </tabstops>
  <resources>
   <include location="resources.qrc"/>

@@ -52,7 +52,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // flag that the app has just started, avoid unsaved popup on open
     firstRunUnsavedFlag = true;
 
-    qApp->installEventFilter(this);     // catch all app mousemovements
+    //qApp->installEventFilter(this);     // catch all app mousemovements
 
     // ******************************
     // KMI_Ports
@@ -388,12 +388,12 @@ MainWindow::MainWindow(QWidget *parent) :
     grayStyleString = QLatin1String(grayStyleFile->readAll());
 
     //Disable Unnecessary CV Gate UI Params
-    slotSetEndableUiElement("CV_Out_Gate_Gain", false);
-    slotSetEndableUiElement("CV_Out_Gate_Min", false);
-    slotSetEndableUiElement("CV_Out_Gate_Max", false);
-    slotSetEndableUiElement("CV_Out_Gate_Curve", false);
-    slotSetEndableUiElement("CV_Out_Gate_Offset", false);
-    slotSetEndableUiElement("CV_Out_Gate_MIDI_Input_Type", false);
+//    slotSetEndableUiElement("CV_Out_Gate_Gain", false);
+//    slotSetEndableUiElement("CV_Out_Gate_Min", false);
+//    slotSetEndableUiElement("CV_Out_Gate_Max", false);
+//    slotSetEndableUiElement("CV_Out_Gate_Curve", false);
+//    slotSetEndableUiElement("CV_Out_Gate_Offset", false);
+//    slotSetEndableUiElement("CV_Out_Gate_MIDI_Input_Type", false);
 
     //Tab Widget Handles
     tabWidget = this->findChild<QTabWidget *>("tabWidget");
@@ -3587,10 +3587,10 @@ void MainWindow::keyReleaseEvent(QKeyEvent* event)
 bool MainWindow::eventFilter(QObject *obj, QEvent *event)
 {
 
-    if (obj->objectName().contains("Global_Polyphony"))
-    {
-        qDebug() << "poly event: " << event->type();
-    }
+//    if (obj->objectName().contains("Global_Polyphony"))
+//    {
+//        qDebug() << "poly event: " << event->type();
+//    }
 
     if(event->type() == QEvent::ToolTip)
     {
@@ -3601,12 +3601,12 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
 
         if(settings->value("toolTipsEnabled").toBool())
         {
-            qDebug() << "show tooltip - object: " << reinterpret_cast<QWidget *>(obj)->objectName() << " tooltip: " << reinterpret_cast<QWidget *>(obj)->toolTip() << " Stylesheet: " << reinterpret_cast<QWidget *>(obj)->styleSheet();
+            //qDebug() << "show tooltip - object: " << reinterpret_cast<QWidget *>(obj)->objectName() << " tooltip: " << reinterpret_cast<QWidget *>(obj)->toolTip() << " Stylesheet: " << reinterpret_cast<QWidget *>(obj)->styleSheet();
             QToolTip::showText(helpEvent->globalPos(), reinterpret_cast<QWidget *>(obj)->toolTip());
         }
         else
         {
-            qDebug() << "hide tooltip - object: " << reinterpret_cast<QWidget *>(obj)->objectName() << " tooltip: " << reinterpret_cast<QWidget *>(obj)->toolTip() << " Stylesheet: " << reinterpret_cast<QWidget *>(obj)->styleSheet();
+            //qDebug() << "hide tooltip - object: " << reinterpret_cast<QWidget *>(obj)->objectName() << " tooltip: " << reinterpret_cast<QWidget *>(obj)->toolTip() << " Stylesheet: " << reinterpret_cast<QWidget *>(obj)->styleSheet();
             QToolTip::hideText();
             event->ignore();
         }
@@ -3630,6 +3630,7 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
             keysPressed->key() == Qt::Key_Tab ||
             keysPressed->key() == Qt::Key_Escape)
         {
+            //qDebug() << "eventFilter - key: " << keysPressed->key();
             slotClearFocus(); // get out of the number/entry box
         }
     }
@@ -3685,9 +3686,9 @@ void MainWindow::slotToolTipHandler()
         }
         else if(QSpinBox* numberBox = this->findChild<QSpinBox *>(i.key()))
         {
-            qDebug() << "Install tooltip numberbox: " << numberBox->objectName();
+            //qDebug() << "Install tooltip numberbox: " << numberBox->objectName();
             numberBox->installEventFilter(this);
-            numberBox->setMouseTracking(true);
+            //numberBox->setMouseTracking(true);
         }
         else if(QDoubleSpinBox* floatBox = this->findChild<QDoubleSpinBox *>(i.key()))
         {
@@ -4058,6 +4059,7 @@ void MainWindow::slotDebugSlot()
 
 void MainWindow::slotClearFocus()
 {
+    qDebug() << "slotClearFocus called";
     ui->centralWidget->setFocus();
 }
 

@@ -1192,7 +1192,7 @@ void PresetManager::slotValueChanged()
     static QString previousKey, previousValue;
     QString thisKey, thisValue;
 
-    qDebug() << "slotValueChanged called - presetLoading: " << presetLoading << " newControllerKeySelected: " << newControllerKeySelected << " Sender:" << QObject::sender()->objectName();
+    //qDebug() << "slotValueChanged called - presetLoading: " << presetLoading << " newControllerKeySelected: " << newControllerKeySelected << " Sender:" << QObject::sender()->objectName();
 
     // value has changed, deselect any UI objects
     emit signalClearFocus();

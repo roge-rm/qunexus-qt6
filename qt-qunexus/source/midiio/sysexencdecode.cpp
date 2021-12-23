@@ -10,7 +10,7 @@
 #define SIZE_OF_PRESET_TX_HEADER 19 // should be the zero indexed position of presetNum
 
 #define SIZE_OF_OLD_PRESET_JSON 457
-#define SYX_DEBUG_PRESET_PACKET
+//#define SYX_DEBUG_PRESET_PACKET
 
 SysExEncDecode::SysExEncDecode(QWidget *parent) :
     QWidget(parent)
@@ -1763,7 +1763,7 @@ SysExEncDecode::SysExEncDecode(QWidget *parent) :
     paramTypeMap.insert("SEQ_track_1_length", "char");
     paramTypeMap.insert("SEQ_track_1_dest", "bs26right");
     paramTypeMap.insert("SEQ_track_1_midi_ch", "bs26left");
-    paramTypeMap.insert("SEQ_track_1_transp", "char");
+    paramTypeMap.insert("SEQ_track_1_transp", "signed char");
     paramTypeMap.insert("SEQ_track_2_mode", "bs44right");
     paramTypeMap.insert("SEQ_track_2_arpOctaves", "bs44left");
     paramTypeMap.insert("SEQ_track_2_arp_pattern", "bs44right");
@@ -1777,7 +1777,7 @@ SysExEncDecode::SysExEncDecode(QWidget *parent) :
     paramTypeMap.insert("SEQ_track_2_length", "char");
     paramTypeMap.insert("SEQ_track_2_dest", "bs26right");
     paramTypeMap.insert("SEQ_track_2_midi_ch", "bs26left");
-    paramTypeMap.insert("SEQ_track_2_transp", "char");
+    paramTypeMap.insert("SEQ_track_2_transp", "signed char");
     paramTypeMap.insert("SEQ_track_3_mode", "bs44right");
     paramTypeMap.insert("SEQ_track_3_arpOctaves", "bs44left");
     paramTypeMap.insert("SEQ_track_3_arp_pattern", "bs44right");
@@ -1791,7 +1791,7 @@ SysExEncDecode::SysExEncDecode(QWidget *parent) :
     paramTypeMap.insert("SEQ_track_3_length", "char");
     paramTypeMap.insert("SEQ_track_3_dest", "bs26right");
     paramTypeMap.insert("SEQ_track_3_midi_ch", "bs26left");
-    paramTypeMap.insert("SEQ_track_3_transp", "char");
+    paramTypeMap.insert("SEQ_track_3_transp", "signed char");
 
 }
 
@@ -2090,7 +2090,7 @@ int SysExEncDecode::presetBytePosition(QString parameter)
         if (keyLayerJSON[i] == parameter)
         {
             KLJindex = i;
-            qDebug() << "presetBytePosition - keyLayerJSON index for " << parameter << " is: " << i;
+            //qDebug() << "presetBytePosition - keyLayerJSON index for " << parameter << " is: " << i;
         }
     }
 
@@ -2110,7 +2110,7 @@ int SysExEncDecode::presetBytePosition(QString parameter)
 
         bytePosition++; // increment the count
     }
-    qDebug() << "bytePosition: " << bytePosition;
+    //qDebug() << "bytePosition: " << bytePosition;
     return bytePosition;
 }
 
