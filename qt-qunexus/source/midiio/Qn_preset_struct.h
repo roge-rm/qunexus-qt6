@@ -435,30 +435,30 @@ struct CV_OUTPUT
 
 //*** Sequencer and Track preset Structs
 
-typedef struct 
+typedef struct
 {
-	unsigned char mode : 4;						// mode (off/arp/step)
-	unsigned char polyphony : 4;				// polyphony (0 disabled, 1-4 or possible 1-8 in the future)
-	
-	unsigned char patternPlay : 4;				// play patterns
-	unsigned char patternSeq : 4;				// pattern for step sequencer (1-8?)
-	
-	unsigned char division : 4; 				// division (1/1, 1/2, 1/4, 1/8, 1/16, 1/32)
-	unsigned char dotTrip : 4;					// 4 doted or triplets
-	
-	unsigned char gatePercent;					// whole percentage for gate without decimal (50 = .5)
+    unsigned char mode : 4;						// mode (off/arp/step)
+    unsigned char arpOctRange : 4;					// 3 octave range
 
-	unsigned char chainX;						// first 8 bits of the pattern chain
-	unsigned char chainY;						// second 8 bits of the pattern chain
-	unsigned char chainZ;						// third 8 bits of the pattern chain
-	
-	unsigned char length;    					// length of the arp/seq, 0 = empty
-	
-	unsigned char dest : 2;						// 2 bits destination (USB/Expander),
-	unsigned char channel : 6;					// 6 bits MIDI channel (16 = MPE)
-	signed char transpose;						// per track transposition
-	
-} TRACK_PRESET;
+    unsigned char patternPlay : 4;				// play patterns
+    unsigned char patternSeq : 4;				// pattern for step sequencer (1-8?)
+
+    unsigned char division : 4; 				// division (1/1, 1/2, 1/4, 1/8, 1/16, 1/32)
+    unsigned char dotTrip : 4;					// 4 doted or triplets
+
+    unsigned char gatePercent;					// whole percentage for gate without decimal (50 = .5)
+
+    unsigned char reserved1;					// unimplemented
+    unsigned char reserved2;					// unimplemented
+    unsigned char reserved3;					// unimplemented
+
+    unsigned char length;    					// length of the arp/seq, 0 = empty
+
+    unsigned char dest : 2;						// 2 bits destination (USB/Expander),
+    unsigned char channel : 6;					// 6 bits MIDI channel (16 = MPE)
+    signed char transpose;						// per track transposition
+
+} TRACK_PRESET; // 10 bytes
 
 typedef TRACK_PRESET * TRACK_PRESET_POINTER;
 

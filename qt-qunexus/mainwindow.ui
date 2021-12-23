@@ -678,7 +678,7 @@ QTabBar::tab:selected {
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <property name="elideMode">
       <enum>Qt::ElideRight</enum>
@@ -5939,7 +5939,7 @@ QComboBox::drop-down:button{
        <property name="geometry">
         <rect>
          <x>1100</x>
-         <y>263</y>
+         <y>70</y>
          <width>97</width>
          <height>79</height>
         </rect>
@@ -5959,81 +5959,6 @@ QComboBox::drop-down:button{
        <property name="frameShadow">
         <enum>QFrame::Raised</enum>
        </property>
-       <widget class="QSpinBox" name="Keyboard_Global_Polyphony_Number">
-        <property name="geometry">
-         <rect>
-          <x>70</x>
-          <y>42</y>
-          <width>21</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This sets how many channels/keys can be used at one time when Channel Rotation is enabled.  Adjust the MIDI Channel to change the starting channel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-        <property name="layoutDirection">
-         <enum>Qt::LeftToRight</enum>
-        </property>
-        <property name="autoFillBackground">
-         <bool>false</bool>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QSpinBox {
-	font-family:&quot;Arial&quot;;
-	border-radius:4.0;
-	border-color:black;
-	background-color: rgba(67, 67, 67, 255);
-	font-size: 11px;
-	color: white;
-	padding:0, 2, 0, 0;
-}
-
-QToolTip {
-background: #006599;
-color: white;
-}</string>
-        </property>
-        <property name="wrapping">
-         <bool>false</bool>
-        </property>
-        <property name="frame">
-         <bool>true</bool>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-        <property name="buttonSymbols">
-         <enum>QAbstractSpinBox::NoButtons</enum>
-        </property>
-        <property name="minimum">
-         <number>1</number>
-        </property>
-        <property name="maximum">
-         <number>16</number>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_74">
-        <property name="geometry">
-         <rect>
-          <x>6</x>
-          <y>43</y>
-          <width>51</width>
-          <height>16</height>
-         </rect>
-        </property>
-        <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This sets how many channels/keys can be used at one time when Channel Rotation is enabled.  Adjust the MIDI Channel to change the starting channel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QToolTip {
-background: #006599;
-color: white;
-}</string>
-        </property>
-        <property name="text">
-         <string>Polyphony</string>
-        </property>
-       </widget>
        <widget class="QCheckBox" name="Keyboard_Global_Channel_Rotation_Active">
         <property name="geometry">
          <rect>
@@ -7857,7 +7782,7 @@ QToolTip {
          <enum>Qt::DefaultContextMenu</enum>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;External clocks not yet implemented&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select the clock source. Default is automatic (internal unless MIDI clock is received).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
          <string notr="true">QComboBox QAbstractItemView
@@ -8953,7 +8878,7 @@ QToolTip {
         </property>
         <item>
          <property name="text">
-          <string>Empty</string>
+          <string>----</string>
          </property>
         </item>
         <item>
@@ -9419,9 +9344,9 @@ QToolTip {
          </property>
         </item>
        </widget>
-       <widget class="QComboBox" name="SEQ_track_1_poly">
+       <widget class="QComboBox" name="SEQ_track_1_arpOctaves">
         <property name="enabled">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
         <property name="geometry">
          <rect>
@@ -9456,23 +9381,44 @@ QToolTip {
          <enum>Qt::DefaultContextMenu</enum>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Polyphonic sequencing not yet implemented.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The number of octaves that will be used to repeat the pattern.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox {
+         <string notr="true">QComboBox QAbstractItemView
+{
+    min-width: 120px;
+    min-height: 30px;
+	color:white;
+}
+
+QComboBox {
         font-family: &quot;Droid Sans&quot;;
         font-size: 10px;
         background: #666;
         padding: 2px 4px;
         border-style: outset;
         border-radius: 4px;
-        border-width: 0px;
-		color: #888888
+        border-width: 1px;
+        border-color: black;
+        color: white;
 }
+
+QComboBox::drop-down {
+        border-radius:0;
+        border-left-color: darkgray;
+        border-left-style: solid;
+        border-width: 1pt;
+        border: 1px;
+        margin: 0px;
+        padding: 0px;
+        background-color: transparent;
+        color: white;
+}
+
+
 QComboBox::drop-down:button {
         width: 15px;
         height: 15px;
-		left: 30px;
 }
 
 QComboBox::down-arrow {
@@ -9485,10 +9431,35 @@ QComboBox::down-arrow {
 QComboBox::down-arrow:disabled {
         image: url(url(:/images/resources/images/Arrow.png));
         right: 30px;
-}</string>
+}
+
+QListView {
+        background: rgba(67, 67, 67, 255);
+        color: rgb(220, 220, 220);
+        min-height: 90px;
+        margin: 0 0 0 0;
+}
+
+QListView::item {
+        background: rgba(67, 67, 67, 255);
+        border: 0px;
+        color: white;
+}
+
+QListView::item:hover {
+        background: rgba(67, 67, 67, 255);
+        border: 0;
+        color: white;
+}
+
+QToolTip {
+    background: #006599;
+    color: white;
+}
+</string>
         </property>
         <property name="currentText">
-         <string>Mono</string>
+         <string>1 Octave</string>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -9507,12 +9478,22 @@ QComboBox::down-arrow:disabled {
         </property>
         <item>
          <property name="text">
-          <string>Mono</string>
+          <string>1 Octave</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>4 voices</string>
+          <string>2 Octaves</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>3 Octaves</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>4 Octaves</string>
          </property>
         </item>
        </widget>
@@ -9970,6 +9951,60 @@ QToolTip {
          <string/>
         </property>
        </widget>
+       <widget class="QSpinBox" name="Keyboard_Global_Polyphony_Number">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>564</x>
+          <y>30</y>
+          <width>21</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Adjust the number of member channels in the MPE zone, combined with the manager channel which is always set to channel 1. So for example, 13 member channels + 1 manager channel = 14 total MPE channels.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="layoutDirection">
+         <enum>Qt::LeftToRight</enum>
+        </property>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QSpinBox {
+	font-family:&quot;Arial&quot;;
+	border-radius:4.0;
+	border-color:black;
+	background-color: rgba(67, 67, 67, 255);
+	font-size: 11px;
+	color: white;
+	padding:0, 2, 0, 0;
+}</string>
+        </property>
+        <property name="wrapping">
+         <bool>false</bool>
+        </property>
+        <property name="frame">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+        <property name="buttonSymbols">
+         <enum>QAbstractSpinBox::NoButtons</enum>
+        </property>
+        <property name="specialValueText">
+         <string/>
+        </property>
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>15</number>
+        </property>
+       </widget>
        <zorder>SEQ_track_1_chain</zorder>
        <zorder>SEQ_track_1_gate</zorder>
        <zorder>label_43</zorder>
@@ -9978,13 +10013,14 @@ QToolTip {
        <zorder>SEQ_track_1_seq_pattern</zorder>
        <zorder>SEQ_track_1_length</zorder>
        <zorder>SEQ_track_1_dest</zorder>
-       <zorder>SEQ_track_1_midi_ch</zorder>
-       <zorder>SEQ_track_1_poly</zorder>
+       <zorder>SEQ_track_1_arpOctaves</zorder>
        <zorder>SEQ_track_1_arp_pattern</zorder>
        <zorder>SEQ_track_1_dot</zorder>
        <zorder>label_119</zorder>
        <zorder>Keyboard_Global_Program_Change_A</zorder>
        <zorder>coverup1</zorder>
+       <zorder>Keyboard_Global_Polyphony_Number</zorder>
+       <zorder>SEQ_track_1_midi_ch</zorder>
       </widget>
       <widget class="QFrame" name="SEQ_track_2">
        <property name="geometry">
@@ -10154,103 +10190,6 @@ QToolTip {
          </property>
         </item>
        </widget>
-       <widget class="QComboBox" name="SEQ_track_2_poly">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="geometry">
-         <rect>
-          <x>56</x>
-          <y>30</y>
-          <width>101</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="baseSize">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <family>Droid Sans</family>
-          <pointsize>-1</pointsize>
-         </font>
-        </property>
-        <property name="cursor">
-         <cursorShape>PointingHandCursor</cursorShape>
-        </property>
-        <property name="contextMenuPolicy">
-         <enum>Qt::DefaultContextMenu</enum>
-        </property>
-        <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Polyphonic sequencing not yet implemented.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 0px;
-		color: #888888
-}
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-		left: 30px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}</string>
-        </property>
-        <property name="currentText">
-         <string>Mono</string>
-        </property>
-        <property name="maxVisibleItems">
-         <number>10</number>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="frame">
-         <bool>true</bool>
-        </property>
-        <property name="modelColumn">
-         <number>0</number>
-        </property>
-        <item>
-         <property name="text">
-          <string>Mono</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>4 voices</string>
-         </property>
-        </item>
-       </widget>
        <widget class="QComboBox" name="SEQ_track_2_seq_pattern">
         <property name="enabled">
          <bool>true</bool>
@@ -10385,7 +10324,7 @@ QToolTip {
         </property>
         <item>
          <property name="text">
-          <string>Empty</string>
+          <string>----</string>
          </property>
         </item>
         <item>
@@ -11544,6 +11483,159 @@ color: white</string>
          <string/>
         </property>
        </widget>
+       <widget class="QComboBox" name="SEQ_track_2_arpOctaves">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>55</x>
+          <y>30</y>
+          <width>101</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="baseSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Droid Sans</family>
+          <pointsize>-1</pointsize>
+         </font>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="contextMenuPolicy">
+         <enum>Qt::DefaultContextMenu</enum>
+        </property>
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The number of octaves that will be used to repeat the pattern.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QComboBox QAbstractItemView
+{
+    min-width: 120px;
+    min-height: 30px;
+	color:white;
+}
+
+QComboBox {
+        font-family: &quot;Droid Sans&quot;;
+        font-size: 10px;
+        background: #666;
+        padding: 2px 4px;
+        border-style: outset;
+        border-radius: 4px;
+        border-width: 1px;
+        border-color: black;
+        color: white;
+}
+
+QComboBox::drop-down {
+        border-radius:0;
+        border-left-color: darkgray;
+        border-left-style: solid;
+        border-width: 1pt;
+        border: 1px;
+        margin: 0px;
+        padding: 0px;
+        background-color: transparent;
+        color: white;
+}
+
+
+QComboBox::drop-down:button {
+        width: 15px;
+        height: 15px;
+}
+
+QComboBox::down-arrow {
+        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
+        width: 10px;
+        height: 10px;
+        top: 2px;
+        right: 3px;
+}
+QComboBox::down-arrow:disabled {
+        image: url(url(:/images/resources/images/Arrow.png));
+        right: 30px;
+}
+
+QListView {
+        background: rgba(67, 67, 67, 255);
+        color: rgb(220, 220, 220);
+        min-height: 90px;
+        margin: 0 0 0 0;
+}
+
+QListView::item {
+        background: rgba(67, 67, 67, 255);
+        border: 0px;
+        color: white;
+}
+
+QListView::item:hover {
+        background: rgba(67, 67, 67, 255);
+        border: 0;
+        color: white;
+}
+
+QToolTip {
+    background: #006599;
+    color: white;
+}
+</string>
+        </property>
+        <property name="currentText">
+         <string>1 Octave</string>
+        </property>
+        <property name="maxVisibleItems">
+         <number>10</number>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="frame">
+         <bool>true</bool>
+        </property>
+        <property name="modelColumn">
+         <number>0</number>
+        </property>
+        <item>
+         <property name="text">
+          <string>1 Octave</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>2 Octaves</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>3 Octaves</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>4 Octaves</string>
+         </property>
+        </item>
+       </widget>
       </widget>
       <widget class="QFrame" name="SEQ_track_3">
        <property name="geometry">
@@ -11713,103 +11805,6 @@ QToolTip {
          </property>
         </item>
        </widget>
-       <widget class="QComboBox" name="SEQ_track_3_poly">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="geometry">
-         <rect>
-          <x>55</x>
-          <y>30</y>
-          <width>101</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="baseSize">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <family>Droid Sans</family>
-          <pointsize>-1</pointsize>
-         </font>
-        </property>
-        <property name="cursor">
-         <cursorShape>PointingHandCursor</cursorShape>
-        </property>
-        <property name="contextMenuPolicy">
-         <enum>Qt::DefaultContextMenu</enum>
-        </property>
-        <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Polyphonic sequencing not yet implemented.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 0px;
-		color: #888888
-}
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-		left: 30px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}</string>
-        </property>
-        <property name="currentText">
-         <string>Mono</string>
-        </property>
-        <property name="maxVisibleItems">
-         <number>10</number>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="frame">
-         <bool>true</bool>
-        </property>
-        <property name="modelColumn">
-         <number>0</number>
-        </property>
-        <item>
-         <property name="text">
-          <string>Mono</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>4 voices</string>
-         </property>
-        </item>
-       </widget>
        <widget class="QComboBox" name="SEQ_track_3_seq_pattern">
         <property name="enabled">
          <bool>true</bool>
@@ -11944,7 +11939,7 @@ QToolTip {
         </property>
         <item>
          <property name="text">
-          <string>Empty</string>
+          <string>----</string>
          </property>
         </item>
         <item>
@@ -13101,6 +13096,159 @@ color: white</string>
         <property name="text">
          <string/>
         </property>
+       </widget>
+       <widget class="QComboBox" name="SEQ_track_3_arpOctaves">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>55</x>
+          <y>30</y>
+          <width>101</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="baseSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Droid Sans</family>
+          <pointsize>-1</pointsize>
+         </font>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="contextMenuPolicy">
+         <enum>Qt::DefaultContextMenu</enum>
+        </property>
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The number of octaves that will be used to repeat the pattern.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QComboBox QAbstractItemView
+{
+    min-width: 120px;
+    min-height: 30px;
+	color:white;
+}
+
+QComboBox {
+        font-family: &quot;Droid Sans&quot;;
+        font-size: 10px;
+        background: #666;
+        padding: 2px 4px;
+        border-style: outset;
+        border-radius: 4px;
+        border-width: 1px;
+        border-color: black;
+        color: white;
+}
+
+QComboBox::drop-down {
+        border-radius:0;
+        border-left-color: darkgray;
+        border-left-style: solid;
+        border-width: 1pt;
+        border: 1px;
+        margin: 0px;
+        padding: 0px;
+        background-color: transparent;
+        color: white;
+}
+
+
+QComboBox::drop-down:button {
+        width: 15px;
+        height: 15px;
+}
+
+QComboBox::down-arrow {
+        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
+        width: 10px;
+        height: 10px;
+        top: 2px;
+        right: 3px;
+}
+QComboBox::down-arrow:disabled {
+        image: url(url(:/images/resources/images/Arrow.png));
+        right: 30px;
+}
+
+QListView {
+        background: rgba(67, 67, 67, 255);
+        color: rgb(220, 220, 220);
+        min-height: 90px;
+        margin: 0 0 0 0;
+}
+
+QListView::item {
+        background: rgba(67, 67, 67, 255);
+        border: 0px;
+        color: white;
+}
+
+QListView::item:hover {
+        background: rgba(67, 67, 67, 255);
+        border: 0;
+        color: white;
+}
+
+QToolTip {
+    background: #006599;
+    color: white;
+}
+</string>
+        </property>
+        <property name="currentText">
+         <string>1 Octave</string>
+        </property>
+        <property name="maxVisibleItems">
+         <number>10</number>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="frame">
+         <bool>true</bool>
+        </property>
+        <property name="modelColumn">
+         <number>0</number>
+        </property>
+        <item>
+         <property name="text">
+          <string>1 Octave</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>2 Octaves</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>3 Octaves</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>4 Octaves</string>
+         </property>
+        </item>
        </widget>
       </widget>
       <widget class="QLabel" name="Tab_seq_bg">
@@ -27245,7 +27393,6 @@ QPushButton:disabled {
   <tabstop>Keyboard_Global_USB_1_Channel</tabstop>
   <tabstop>Keyboard_Global_USB_2_Channel</tabstop>
   <tabstop>Keyboard_Global_Channel_Rotation_Active</tabstop>
-  <tabstop>Keyboard_Global_Polyphony_Number</tabstop>
   <tabstop>Keyboard_Global_Mode</tabstop>
   <tabstop>Keyboard_Global_Transpose</tabstop>
   <tabstop>Keyboard_Global_LED_Mode</tabstop>

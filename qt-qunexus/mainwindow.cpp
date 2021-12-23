@@ -41,9 +41,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     applicationVersion[0] = 2;
     applicationVersion[1] = 0;
-    applicationVersion[2] = 6;
+    applicationVersion[2] = 7;
 
-    betaVersion = ""; // leave blank for release
+    betaVersion = "A"; // leave blank for release
 
 
     thisFw = QByteArray(reinterpret_cast<char*>(_fw_ver_qunexus), sizeof(_fw_ver_qunexus));
@@ -1941,6 +1941,8 @@ void MainWindow::slotEnableDisableToggleControl(bool enabled){
 
 void MainWindow::slotSetEndableUiElement(QString paramName, bool state)
 {
+    qDebug() << "slotSetEndableUiElement called - paramName: " << paramName;
+
     QWidget *thisWidget;
     thisWidget = this->findChild<QWidget *>(paramName);
 
@@ -1980,7 +1982,7 @@ void MainWindow::slotSetEndableUiElement(QString paramName, bool state)
 //    }
 
     //If a sync preset button
-    else if(paramName.contains("syncPreset"))
+    if(paramName.contains("syncPreset"))
     {
         if(connected)
         {
@@ -2078,6 +2080,19 @@ void MainWindow::slotSetEndableUiElement(QString paramName, bool state)
                                    "color: rgba(100,100,100,255);"
                                    "padding:0, 2, 0, 0;"
                                    );
+        }
+
+        // hide this when disabled
+        if (paramName.contains("Keyboard_Global_Polyphony_Number"))
+        {
+            if (state)
+            {
+                thisWidget->show();
+            }
+            else
+            {
+                thisWidget->hide();
+            }
         }
     }
 }
@@ -2539,6 +2554,8 @@ void MainWindow::slotQuNexusConnected(bool state)
 
         presetManager->syncFlag = false; // update presetmanager
         QuNexus->hackStopTimer = false; // remove the hack to stop extra id replies
+
+        slotHideGreyRect(); // hide grey rectangle when qunexus disconnects
     }
 
     slotSetEndableUiElement("connected", connected);
@@ -3569,10 +3586,11 @@ void MainWindow::keyReleaseEvent(QKeyEvent* event)
 
 bool MainWindow::eventFilter(QObject *obj, QEvent *event)
 {
-//    if (obj->objectName() == "Globals_Tilt_Sensitivity")
-//    {
-//        qDebug() << "Event: " << event->type() << " object: " << obj->objectName();
-//    }
+
+    if (obj->objectName().contains("Global_Polyphony"))
+    {
+        qDebug() << "poly event: " << event->type();
+    }
 
     if(event->type() == QEvent::ToolTip)
     {
@@ -3583,12 +3601,12 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
 
         if(settings->value("toolTipsEnabled").toBool())
         {
-            //qDebug() << "show tooltip - object: " << reinterpret_cast<QWidget *>(obj)->objectName() << " tooltip: " << reinterpret_cast<QWidget *>(obj)->toolTip() << " Stylesheet: " << reinterpret_cast<QWidget *>(obj)->styleSheet();
+            qDebug() << "show tooltip - object: " << reinterpret_cast<QWidget *>(obj)->objectName() << " tooltip: " << reinterpret_cast<QWidget *>(obj)->toolTip() << " Stylesheet: " << reinterpret_cast<QWidget *>(obj)->styleSheet();
             QToolTip::showText(helpEvent->globalPos(), reinterpret_cast<QWidget *>(obj)->toolTip());
         }
         else
         {
-            //qDebug() << "hide tooltip - object: " << reinterpret_cast<QWidget *>(obj)->objectName() << " tooltip: " << reinterpret_cast<QWidget *>(obj)->toolTip() << " Stylesheet: " << reinterpret_cast<QWidget *>(obj)->styleSheet();
+            qDebug() << "hide tooltip - object: " << reinterpret_cast<QWidget *>(obj)->objectName() << " tooltip: " << reinterpret_cast<QWidget *>(obj)->toolTip() << " Stylesheet: " << reinterpret_cast<QWidget *>(obj)->styleSheet();
             QToolTip::hideText();
             event->ignore();
         }
@@ -3667,6 +3685,7 @@ void MainWindow::slotToolTipHandler()
         }
         else if(QSpinBox* numberBox = this->findChild<QSpinBox *>(i.key()))
         {
+            qDebug() << "Install tooltip numberbox: " << numberBox->objectName();
             numberBox->installEventFilter(this);
             numberBox->setMouseTracking(true);
         }
@@ -4055,12 +4074,12 @@ void MainWindow::slotFixDropDownWidth(QComboBox* thisDropDown)
 {
     int i, length = 0, index = 0;
 
-    if (thisDropDown->objectName() == "SEQ_track_1_poly" ||
-        thisDropDown->objectName() == "SEQ_track_2_poly" ||
-        thisDropDown->objectName() == "SEQ_track_3_poly" )
-    {
-        return;
-    }
+//    if (thisDropDown->objectName() == "SEQ_track_1_poly" ||
+//        thisDropDown->objectName() == "SEQ_track_2_poly" ||
+//        thisDropDown->objectName() == "SEQ_track_3_poly" )
+//    {
+//        return;
+//    }
 
     QString thisText;
 

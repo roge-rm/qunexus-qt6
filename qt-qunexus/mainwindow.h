@@ -121,7 +121,6 @@ public:
     //Buttons
     QFile* blueStyleFile;
     QString blueStyleString;
-    //Buttons
     QFile* grayStyleFile;
     QString grayStyleString;
 

@@ -165,6 +165,7 @@ public:
     QStringList Toggle_Modes;
     QStringList SEQ_clock_source;
     QStringList SEQ_track_mode;
+    QStringList SEQ_track_arpOctRange;
     QStringList SEQ_track_polyphony;
     QStringList SEQ_track_arp_pattern;
     QStringList SEQ_track_seq_division;

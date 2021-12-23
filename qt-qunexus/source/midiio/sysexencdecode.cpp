@@ -10,7 +10,7 @@
 #define SIZE_OF_PRESET_TX_HEADER 19 // should be the zero indexed position of presetNum
 
 #define SIZE_OF_OLD_PRESET_JSON 457
-//#define SYX_DEBUG_PRESET_PACKET
+#define SYX_DEBUG_PRESET_PACKET
 
 SysExEncDecode::SysExEncDecode(QWidget *parent) :
     QWidget(parent)
@@ -591,7 +591,7 @@ SysExEncDecode::SysExEncDecode(QWidget *parent) :
                "SEQ_KB_lower"<<
                "SEQ_KB_upper"<<
                "SEQ_track_1_mode"<<
-               "SEQ_track_1_poly"<<
+               "SEQ_track_1_arpOctaves"<<
                "SEQ_track_1_arp_pattern"<<
                "SEQ_track_1_seq_pattern"<<
                "SEQ_track_1_division"<<
@@ -605,7 +605,7 @@ SysExEncDecode::SysExEncDecode(QWidget *parent) :
                "SEQ_track_1_midi_ch"<<
                "SEQ_track_1_transp"<<
                "SEQ_track_2_mode"<<
-               "SEQ_track_2_poly"<<
+               "SEQ_track_2_arpOctaves"<<
                "SEQ_track_2_arp_pattern"<<
                "SEQ_track_2_seq_pattern"<<
                "SEQ_track_2_division"<<
@@ -619,7 +619,7 @@ SysExEncDecode::SysExEncDecode(QWidget *parent) :
                "SEQ_track_2_midi_ch"<<
                "SEQ_track_2_transp"<<
                "SEQ_track_3_mode"<<
-               "SEQ_track_3_poly"<<
+               "SEQ_track_3_arpOctaves"<<
                "SEQ_track_3_arp_pattern"<<
                "SEQ_track_3_seq_pattern"<<
                "SEQ_track_3_division"<<
@@ -894,13 +894,13 @@ SysExEncDecode::SysExEncDecode(QWidget *parent) :
                "Step Sequencer"<<
                "Step Sequencer"<<
                "Step Sequencer";
-    SEQ_track_polyphony
+    SEQ_track_arpOctRange
             <<
-               "Disabled"<<
-               "Mono"<<
-               "2 Voices"<<
-               "3 Voices"<<
-               "4 Voices";
+               "1 Octave"<< // fix bad value
+               "1 Octave"<<
+               "2 Octaves"<<
+               "3 Octaves"<<
+               "4 Octaves";
     SEQ_track_arp_pattern
             <<
                "None"<< // skip 0 for logic purposes
@@ -917,7 +917,7 @@ SysExEncDecode::SysExEncDecode(QWidget *parent) :
 
     SEQ_track_seq_division
             <<
-               "Empty"<<
+               "----"<<
                "Pat. #1"<<
                "Pat. #2"<<
                "Pat. #3"<<
@@ -1207,6 +1207,11 @@ SysExEncDecode::SysExEncDecode(QWidget *parent) :
     dictionary.insert("Arpeggiator", 1);
     dictionary.insert("Step Sequencer", 3);
 
+    dictionary.insert("1 Octave", 1);
+    dictionary.insert("2 Octaves", 2);
+    dictionary.insert("3 Octaves", 3);
+    dictionary.insert("4 Octaves", 4);
+
     dictionary.insert("Whole", 0);
     dictionary.insert("Half", 1);
     dictionary.insert("Quarter", 2);
@@ -1254,7 +1259,7 @@ SysExEncDecode::SysExEncDecode(QWidget *parent) :
     dictionary.insert("MPE" , 16);
 
     //** Patterns
-    dictionary.insert("Empty", 0);
+    dictionary.insert("----", 0);
     dictionary.insert("Pat. #1", 1);
     dictionary.insert("Pat. #2", 2);
     dictionary.insert("Pat. #3", 3);
@@ -1746,7 +1751,7 @@ SysExEncDecode::SysExEncDecode(QWidget *parent) :
     paramTypeMap.insert("SEQ_KB_lower", "bs44right");
     paramTypeMap.insert("SEQ_KB_upper", "bs44left");
     paramTypeMap.insert("SEQ_track_1_mode", "bs44right");
-    paramTypeMap.insert("SEQ_track_1_poly", "bs44left");
+    paramTypeMap.insert("SEQ_track_1_arpOctaves", "bs44left");
     paramTypeMap.insert("SEQ_track_1_arp_pattern", "bs44right");
     paramTypeMap.insert("SEQ_track_1_seq_pattern", "bs44left");
     paramTypeMap.insert("SEQ_track_1_division", "bs44right");
@@ -1760,7 +1765,7 @@ SysExEncDecode::SysExEncDecode(QWidget *parent) :
     paramTypeMap.insert("SEQ_track_1_midi_ch", "bs26left");
     paramTypeMap.insert("SEQ_track_1_transp", "char");
     paramTypeMap.insert("SEQ_track_2_mode", "bs44right");
-    paramTypeMap.insert("SEQ_track_2_poly", "bs44left");
+    paramTypeMap.insert("SEQ_track_2_arpOctaves", "bs44left");
     paramTypeMap.insert("SEQ_track_2_arp_pattern", "bs44right");
     paramTypeMap.insert("SEQ_track_2_seq_pattern", "bs44left");
     paramTypeMap.insert("SEQ_track_2_division", "bs44right");
@@ -1774,7 +1779,7 @@ SysExEncDecode::SysExEncDecode(QWidget *parent) :
     paramTypeMap.insert("SEQ_track_2_midi_ch", "bs26left");
     paramTypeMap.insert("SEQ_track_2_transp", "char");
     paramTypeMap.insert("SEQ_track_3_mode", "bs44right");
-    paramTypeMap.insert("SEQ_track_3_poly", "bs44left");
+    paramTypeMap.insert("SEQ_track_3_arpOctaves", "bs44left");
     paramTypeMap.insert("SEQ_track_3_arp_pattern", "bs44right");
     paramTypeMap.insert("SEQ_track_3_seq_pattern", "bs44left");
     paramTypeMap.insert("SEQ_track_3_division", "bs44right");
@@ -1936,8 +1941,8 @@ void SysExEncDecode::encodeSequencerPreset(QVariantMap preset) // encodes a pres
     tempPresetValue = dictionary.value( preset.value("SEQ_track_1_mode").toString() );
     qnSeq.track[0].mode = tempPresetValue.toUInt();
 
-    tempPresetValue = dictionary.value( preset.value("SEQ_track_1_poly").toString() );
-    qnSeq.track[0].polyphony = tempPresetValue.toUInt();
+    tempPresetValue = dictionary.value( preset.value("SEQ_track_1_arpOctaves").toString() );
+    qnSeq.track[0].arpOctRange = tempPresetValue.toUInt();
 
     tempPresetValue = dictionary.value( preset.value("SEQ_track_1_arp_pattern").toString() );
     qnSeq.track[0].patternPlay = tempPresetValue.toUInt();
@@ -1952,9 +1957,9 @@ void SysExEncDecode::encodeSequencerPreset(QVariantMap preset) // encodes a pres
     qnSeq.track[0].dotTrip = tempPresetValue.toUInt();
 
     qnSeq.track[0].gatePercent = preset.value("SEQ_track_1_gate").toUInt();
-    qnSeq.track[0].chainX = 44; // hard coded at ABCD, this form may change in 2.1
-    qnSeq.track[0].chainY = 224;
-    qnSeq.track[0].chainZ = 0;
+    qnSeq.track[0].reserved1 = 0;
+    qnSeq.track[0].reserved2 = 0;
+    qnSeq.track[0].reserved3 = 0;
     qnSeq.track[0].length = preset.value("SEQ_track_1_length").toUInt();
 
     tempPresetValue = dictionary.value( preset.value("SEQ_track_1_dest").toString() );
@@ -1970,8 +1975,8 @@ void SysExEncDecode::encodeSequencerPreset(QVariantMap preset) // encodes a pres
     tempPresetValue = dictionary.value( preset.value("SEQ_track_2_mode").toString() );
     qnSeq.track[1].mode = tempPresetValue.toUInt();
 
-    tempPresetValue = dictionary.value( preset.value("SEQ_track_2_poly").toString() );
-    qnSeq.track[1].polyphony = tempPresetValue.toUInt();
+    tempPresetValue = dictionary.value( preset.value("SEQ_track_2_arpOctaves").toString() );
+    qnSeq.track[1].arpOctRange = tempPresetValue.toUInt();
 
     tempPresetValue = dictionary.value( preset.value("SEQ_track_2_arp_pattern").toString() );
     qnSeq.track[1].patternPlay = tempPresetValue.toUInt();
@@ -1986,9 +1991,9 @@ void SysExEncDecode::encodeSequencerPreset(QVariantMap preset) // encodes a pres
     qnSeq.track[1].dotTrip = tempPresetValue.toUInt();
 
     qnSeq.track[1].gatePercent = preset.value("SEQ_track_2_gate").toUInt();
-    qnSeq.track[1].chainX = 44; // hard coded at ABCD, this form may change in 2.1
-    qnSeq.track[1].chainY = 224;
-    qnSeq.track[1].chainZ = 0;
+    qnSeq.track[1].reserved1 = 0;
+    qnSeq.track[1].reserved1 = 0;
+    qnSeq.track[1].reserved1 = 0;
     qnSeq.track[1].length = preset.value("SEQ_track_2_length").toUInt();
 
     tempPresetValue = dictionary.value( preset.value("SEQ_track_2_dest").toString() );
@@ -2004,8 +2009,8 @@ void SysExEncDecode::encodeSequencerPreset(QVariantMap preset) // encodes a pres
     tempPresetValue = dictionary.value( preset.value("SEQ_track_3_mode").toString() );
     qnSeq.track[2].mode = tempPresetValue.toUInt();
 
-    tempPresetValue = dictionary.value( preset.value("SEQ_track_3_poly").toString() );
-    qnSeq.track[2].polyphony = tempPresetValue.toUInt();
+    tempPresetValue = dictionary.value( preset.value("SEQ_track_3_arpOctaves").toString() );
+    qnSeq.track[2].arpOctRange = tempPresetValue.toUInt();
 
     tempPresetValue = dictionary.value( preset.value("SEQ_track_3_arp_pattern").toString() );
     qnSeq.track[2].patternPlay = tempPresetValue.toUInt();
@@ -2020,9 +2025,9 @@ void SysExEncDecode::encodeSequencerPreset(QVariantMap preset) // encodes a pres
     qnSeq.track[2].dotTrip = tempPresetValue.toUInt();
 
     qnSeq.track[2].gatePercent = preset.value("SEQ_track_3_gate").toUInt();
-    qnSeq.track[2].chainX = 44; // hard coded at ABCD, this form may change in 2.1
-    qnSeq.track[2].chainY = 224;
-    qnSeq.track[2].chainZ = 0;
+    qnSeq.track[2].reserved1 = 0;
+    qnSeq.track[2].reserved2 = 0;
+    qnSeq.track[2].reserved3 = 0;
     qnSeq.track[2].length = preset.value("SEQ_track_3_length").toUInt();
 
     tempPresetValue = dictionary.value( preset.value("SEQ_track_3_dest").toString() );
@@ -2058,7 +2063,7 @@ QString SysExEncDecode::presetBytePositionParameter(int bytePosition)
             byteCount--; // bitfields are two parameters per byte
         }
 
-        //qDebug() << QString("byteCount: %1, bytePosition: %2, paramIndex: %3, param: %4").arg(byteCount).arg(bytePosition).arg(paramIndex).arg(keyLayerJSON[paramIndex]);
+        qDebug() << QString("byteCount: %1, bytePosition: %2, paramIndex: %3, param: %4").arg(byteCount).arg(bytePosition).arg(paramIndex).arg(keyLayerJSON[paramIndex]);
     }
     qDebug() << QString("presetBytePositionParameter - paramIndex: %1, byteCount: %2, keyLayerJSON: %3").arg(paramIndex).arg(byteCount).arg(keyLayerJSON[paramIndex]);
 
@@ -2281,13 +2286,13 @@ void SysExEncDecode::slotSysExEncodePreset(QVariantMap preset, unsigned char pre
     for (int i = 0; i < 3; i++)
     {
         //qDebug() << "-------- Encode Track " << i << " ----------";
-        encode( COMBINE44( qnSeq.track[i].polyphony, qnSeq.track[i].mode ) );
+        encode( COMBINE44( qnSeq.track[i].arpOctRange, qnSeq.track[i].mode ) );
         encode( COMBINE44( qnSeq.track[i].patternSeq, qnSeq.track[i].patternPlay ) );
         encode( COMBINE44( qnSeq.track[i].dotTrip, qnSeq.track[i].division ) );
         encode( qnSeq.track[i].gatePercent );
-        encode( qnSeq.track[i].chainX) ;
-        encode( qnSeq.track[i].chainY );
-        encode( qnSeq.track[i].chainZ );
+        encode( qnSeq.track[i].reserved1) ;
+        encode( qnSeq.track[i].reserved2 );
+        encode( qnSeq.track[i].reserved3 );
         encode( qnSeq.track[i].length );
         //qDebug() << "Dest/Channel: " << COMBINE62( qnSeq.track[i].channel, qnSeq.track[i].dest );
         encode( COMBINE62( qnSeq.track[i].channel, qnSeq.track[i].dest ) );
@@ -3134,10 +3139,13 @@ void SysExEncDecode::slotProcessPreset(unsigned char packetType, QByteArray pres
                         JSONCounter++;
 
                         // test if ranges are valid
-                        if (slotTestQListRange(&SEQ_track_polyphony, thisLeft, JSONCounter))
+                        if (slotTestQListRange(&SEQ_track_arpOctRange, thisLeft, JSONCounter))
                         {
-                            // polyphony
-                            editBufferPresetMap->insert(keyLayerJSON[JSONCounter], SEQ_track_polyphony[thisLeft]); // write value to edit buffer
+                            // arpOctRange
+#ifdef SYX_DEBUG_PRESET_PACKET
+                            qDebug() << "*** arpOctRange: " << keyLayerJSON[JSONCounter] << "SEQ_track_arpOctRange: " << SEQ_track_arpOctRange[thisLeft];
+#endif
+                            editBufferPresetMap->insert(keyLayerJSON[JSONCounter], SEQ_track_arpOctRange[thisLeft]); // write value to edit buffer
                         }
                         JSONCounter++;
                     }

@@ -156,7 +156,7 @@ void PresetManager::slotCreateDefaultParamMap()
 
     defaultParamMap["Keyboard_Global_LED_Mode"] = 1;
     defaultParamMap["Keyboard_Global_LED_Remote_Channel"] = 0;
-    defaultParamMap["Keyboard_Global_Polyphony_Number"] = 10;
+    defaultParamMap["Keyboard_Global_Polyphony_Number"] = 13;
 
     defaultParamMap["Keyboard_Global_Program_Change_A"] = -1;
     defaultParamMap["Keyboard_Global_Program_Change_B"] = -1;
@@ -689,7 +689,7 @@ void PresetManager::slotCreateDefaultParamMap()
     // ************* track 1 ******************************************************************************
 
     defaultParamMap["SEQ_track_1_mode"] = "Step Sequencer";     // left 4 bits mode (off/arp/step) (2 = step sequencer, stopped)
-    defaultParamMap["SEQ_track_1_poly"] = "Mono";               // right 4 polyphony (0 disabled, 1-4)
+    defaultParamMap["SEQ_track_1_arpOctaves"] = "1 Octave";     // right 4 arp/seq octave range
     defaultParamMap["SEQ_track_1_arp_pattern"] = "Order";		// left 4 bits arp play patterns, 5 = order
     defaultParamMap["SEQ_track_1_seq_pattern"] = "Empty";		// right 4 bits step pattern pointer for step sequencer
     defaultParamMap["SEQ_track_1_division"] = "8th";            // left 4 bits division (1/1, 1/2, 1/4, 1/8, 1/16, 1/32),  (3 = 8th)
@@ -704,7 +704,7 @@ void PresetManager::slotCreateDefaultParamMap()
     // ************* track 2 ******************************************************************************
 
     defaultParamMap["SEQ_track_2_mode"] = "Step Sequencer";     // left 4 bits mode (off/arp/step) (2 = step sequencer, stopped)
-    defaultParamMap["SEQ_track_2_poly"] = "Mono";               // right 4 polyphony (0 disabled, 1-4)
+    defaultParamMap["SEQ_track_2_arpOctaves"] = "1 Octave";     // right 4 arp/seq octave range
     defaultParamMap["SEQ_track_2_arp_pattern"] = "Order";		// left 4 bits arp play patterns, 5 = order
     defaultParamMap["SEQ_track_2_seq_pattern"] = "Empty";		// right 4 bits step pattern pointer for step sequencer
     defaultParamMap["SEQ_track_2_division"] = "8th";            // left 4 bits division (1/1, 1/2, 1/4, 1/8, 1/16, 1/32),  (3 = 8th)
@@ -719,7 +719,7 @@ void PresetManager::slotCreateDefaultParamMap()
     // ************* track 3 ******************************************************************************
 
     defaultParamMap["SEQ_track_3_mode"] = "Step Sequencer";     // left 4 bits mode (off/arp/step) (2 = step sequencer, stopped)
-    defaultParamMap["SEQ_track_3_poly"] = "Mono";               // right 4 polyphony (0 disabled, 1-4)
+    defaultParamMap["SEQ_track_3_arpOctaves"] = "1 Octave";     // right 4 arp/seq octave range
     defaultParamMap["SEQ_track_3_arp_pattern"] = "Order";		// left 4 bits arp play patterns, 5 = order
     defaultParamMap["SEQ_track_3_seq_pattern"] = "Empty";		// right 4 bits step pattern pointer for step sequencer
     defaultParamMap["SEQ_track_3_division"] = "8th";            // left 4 bits division (1/1, 1/2, 1/4, 1/8, 1/16, 1/32),  (3 = 8th)
@@ -1192,7 +1192,7 @@ void PresetManager::slotValueChanged()
     static QString previousKey, previousValue;
     QString thisKey, thisValue;
 
-    //qDebug() << "slotValueChanged called - presetLoading: " << presetLoading << " newControllerKeySelected: " << newControllerKeySelected << " Sender:" << QObject::sender()->objectName();
+    qDebug() << "slotValueChanged called - presetLoading: " << presetLoading << " newControllerKeySelected: " << newControllerKeySelected << " Sender:" << QObject::sender()->objectName();
 
     // value has changed, deselect any UI objects
     emit signalClearFocus();
@@ -1397,6 +1397,23 @@ void PresetManager::slotValueChanged()
                     QComboBox *menu = reinterpret_cast<QComboBox *>(QObject::sender());
                     editBufferPresetMap.insert(menu->objectName(), menu->currentText());
                     //qDebug() << "Value Changed  :" << QObject::sender()->metaObject()->className() << menu->objectName() << menu->currentText();
+
+                    //----- MPE Active
+                    if(QObject::sender()->objectName().contains("SEQ_track_1_midi_ch"))
+                    {
+                        qDebug() << "Value Changed  :" << QObject::sender()->objectName() << menu->currentText();
+
+                        if(menu->currentText().contains("MPE"))
+                        {
+                            menu->setGeometry(506, 30, 54, 20);
+                            emit signalSetEnableUiParam("Keyboard_Global_Polyphony_Number", 1);
+                        }
+                        else
+                        {
+                            menu->setGeometry(506, 30, 80, 20);
+                            emit signalSetEnableUiParam("Keyboard_Global_Polyphony_Number", 0);
+                        }
+                    }
                 }
                 else if(QObject::sender()->metaObject()->className() == QString("QSpinBox"))
                 {
@@ -1552,25 +1569,6 @@ void PresetManager::slotValueChanged()
                 {
                     editBufferPresetMap.insert("Keyboard_Global_LED_Mode", 0);
                     //emit signalSetEnableUiParam("Keyboard_Global_LED_Remote_Channel", 1);
-                }
-            }
-
-            //----- Keyboard Channel Rotation Active
-            else if(QObject::sender()->objectName().contains("Keyboard_Global_Channel_Rotation_Active"))
-            {
-                QCheckBox* channelRotationOnOff = reinterpret_cast<QCheckBox *>(QObject::sender());
-
-                //qDebug() << "Value Changed  :" << QObject::sender()->objectName() << channelRotationOnOff->checkState();
-
-                if(channelRotationOnOff->checkState())
-                {
-                    editBufferPresetMap.insert("Keyboard_Global_Channel_Rotation_Active", 1);
-                    emit signalSetEnableUiParam("Keyboard_Global_Polyphony_Number", 1);
-                }
-                else
-                {
-                    editBufferPresetMap.insert("Keyboard_Global_Channel_Rotation_Active", 0);
-                    emit signalSetEnableUiParam("Keyboard_Global_Polyphony_Number", 0);
                 }
             }
 
