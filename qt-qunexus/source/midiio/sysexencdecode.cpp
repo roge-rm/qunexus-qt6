@@ -2063,9 +2063,9 @@ QString SysExEncDecode::presetBytePositionParameter(int bytePosition)
             byteCount--; // bitfields are two parameters per byte
         }
 
-        qDebug() << QString("byteCount: %1, bytePosition: %2, paramIndex: %3, param: %4").arg(byteCount).arg(bytePosition).arg(paramIndex).arg(keyLayerJSON[paramIndex]);
+        //qDebug() << QString("byteCount: %1, bytePosition: %2, paramIndex: %3, param: %4").arg(byteCount).arg(bytePosition).arg(paramIndex).arg(keyLayerJSON[paramIndex]);
     }
-    qDebug() << QString("presetBytePositionParameter - paramIndex: %1, byteCount: %2, keyLayerJSON: %3").arg(paramIndex).arg(byteCount).arg(keyLayerJSON[paramIndex]);
+    //qDebug() << QString("presetBytePositionParameter - paramIndex: %1, byteCount: %2, keyLayerJSON: %3").arg(paramIndex).arg(byteCount).arg(keyLayerJSON[paramIndex]);
 
     presetByteKeyLayerJSONIndex = paramIndex; // store this globally so we can use it after the value returns
 

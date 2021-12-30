@@ -8844,7 +8844,7 @@ QToolTip {
          <enum>Qt::DefaultContextMenu</enum>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select a stored step sequence pattern to play back (patterns 1 through 8), or load an empty pattern (default). Does not apply to arpeggiator. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select a stored step sequence pattern to play back (patterns 1 through 8). The default setting (----) does not load or modify the current pattern. This setting does not affect the arpeggiator.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
          <string notr="true">QComboBox QAbstractItemView
@@ -9888,7 +9888,7 @@ QToolTip {
        <widget class="QLabel" name="label_119">
         <property name="geometry">
          <rect>
-          <x>250</x>
+          <x>238</x>
           <y>29</y>
           <width>81</width>
           <height>20</height>
@@ -9910,7 +9910,7 @@ QToolTip {
          <string>Transpose:</string>
         </property>
         <property name="alignment">
-         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
        </widget>
        <widget class="QSpinBox" name="Keyboard_Global_Program_Change_A">
@@ -10290,7 +10290,7 @@ QToolTip {
          <enum>Qt::DefaultContextMenu</enum>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select a stored step sequence pattern to play back (patterns 1 through 8), or load an empty pattern (default). Does not apply to arpeggiator. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select a stored step sequence pattern to play back (patterns 1 through 8). The default setting (----) does not load or modify the current pattern. This setting does not affect the arpeggiator.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
          <string notr="true">QComboBox QAbstractItemView
@@ -11625,7 +11625,7 @@ QToolTip {
        <widget class="QLabel" name="label_120">
         <property name="geometry">
          <rect>
-          <x>250</x>
+          <x>238</x>
           <y>29</y>
           <width>81</width>
           <height>20</height>
@@ -11645,6 +11645,9 @@ QToolTip {
         </property>
         <property name="text">
          <string>Transpose:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
        </widget>
        <widget class="QSpinBox" name="SEQ_track_2_transp">
@@ -11904,7 +11907,7 @@ QToolTip {
          <enum>Qt::DefaultContextMenu</enum>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select a stored step sequence pattern to play back (patterns 1 through 8), or load an empty pattern (default). Does not apply to arpeggiator. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select a stored step sequence pattern to play back (patterns 1 through 8). The default setting (----) does not load or modify the current pattern. This setting does not affect the arpeggiator.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
          <string notr="true">QComboBox QAbstractItemView
@@ -13238,7 +13241,7 @@ QToolTip {
        <widget class="QLabel" name="label_121">
         <property name="geometry">
          <rect>
-          <x>250</x>
+          <x>238</x>
           <y>29</y>
           <width>81</width>
           <height>20</height>
@@ -13258,6 +13261,9 @@ QToolTip {
         </property>
         <property name="text">
          <string>Transpose:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
        </widget>
        <widget class="QSpinBox" name="SEQ_track_3_transp">
