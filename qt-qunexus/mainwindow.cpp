@@ -181,7 +181,14 @@ MainWindow::MainWindow(QWidget *parent) :
 #else
     generalStylesFile = new QFile(":stylesheets/resources/stylesheets/GeneralStylesWindows.qss");
 #endif
-    generalStylesFile->open(QFile::ReadOnly);
+    if (generalStylesFile->open(QFile::ReadOnly))
+    {
+        qDebug() << "generalStylesFile found.";
+    }
+    else
+    {
+        qDebug() << "ERROR: generalStylesFile NOT found!";
+    }
     generalStylesString = QLatin1String(generalStylesFile->readAll());
 
     // set stylesheets for specific windows
@@ -2098,6 +2105,8 @@ void MainWindow::slotSetEndableUiElement(QString paramName, bool state)
 }
 void MainWindow::slotCheckChannelOverlap()
 {
+    if (ui->SEQ_track_1_midi_ch->currentText() != "MPE") return;
+
     int mpeZoneChannelCount = ui->Keyboard_Global_Polyphony_Number->value() + 1;
     int track2channel = ui->SEQ_track_2_midi_ch->currentIndex() + 1;
     int track3channel = ui->SEQ_track_3_midi_ch->currentIndex() + 1;

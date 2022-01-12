@@ -1,8 +1,17 @@
+color:white;
+
 QLabel {
         font-family: "Open Sans Semibold";
         font-size: 7pt;
         color: white;
         background-color: rgba(0,0,0,0);
+}
+
+QTextEdit {
+    font-family: "Open Sans Semibold";
+    font-size: 7pt;
+    color: white;
+    background-color: rgba(0,0,0,0);
 }
 
 QCheckBox
