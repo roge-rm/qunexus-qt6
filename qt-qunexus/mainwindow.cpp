@@ -43,7 +43,7 @@ MainWindow::MainWindow(QWidget *parent) :
     applicationVersion[1] = 0;
     applicationVersion[2] = 7;
 
-    betaVersion = "B"; // leave blank for release
+    betaVersion = "D"; // leave blank for release
 
 
     thisFw = QByteArray(reinterpret_cast<char*>(_fw_ver_qunexus), sizeof(_fw_ver_qunexus));
@@ -716,7 +716,7 @@ void MainWindow::slotFindAndConnectUi()
     //Update UI Signal/Slot
     connect(presetManager, SIGNAL(signalUpdateParameterUi(QVariantMap)), this, SLOT(slotUpdateParametersUi(QVariantMap)));              //Parameters
     connect(presetManager, SIGNAL(signalSetEnableUiParam(QString,bool)), this, SLOT(slotSetEndableUiElement(QString,bool)));            //Enable disable ui param
-
+    connect(presetManager, SIGNAL(signalCheckChannelOverlap()), this, SLOT(slotCheckChannelOverlap()));
     //Rename Preset Button
     //QPushButton* renamePresetButton = this->findChild<QPushButton *>("renamePresetButton");
     //connect(renamePresetButton, SIGNAL(clicked()), presetManager, SLOT(slotLoadLibraryPresetIntoEditBuffer(QListWidgetItem*)));
@@ -2094,6 +2094,22 @@ void MainWindow::slotSetEndableUiElement(QString paramName, bool state)
                 thisWidget->hide();
             }
         }
+    }
+}
+void MainWindow::slotCheckChannelOverlap()
+{
+    int mpeZoneChannelCount = ui->Keyboard_Global_Polyphony_Number->value() + 1;
+    int track2channel = ui->SEQ_track_2_midi_ch->currentIndex() + 1;
+    int track3channel = ui->SEQ_track_3_midi_ch->currentIndex() + 1;
+
+    qDebug() << "slotCheckChannelOverlap called - t2: " << track2channel << " t3:" << track3channel << " mpeZone: " << mpeZoneChannelCount;
+    if (track2channel <= mpeZoneChannelCount)
+    {
+        ui->SEQ_track_2_midi_ch->setCurrentIndex(14);
+    }
+    if (track3channel <= mpeZoneChannelCount)
+    {
+        ui->SEQ_track_3_midi_ch->setCurrentIndex(15);
     }
 }
 

@@ -98,6 +98,7 @@ signals:
     void signalControlLayerSelectedComponents(QStringList selections);
 
     void signalSetEnableUiParam(QString paramName, bool state);
+    void signalCheckChannelOverlap();
     void signalLimitSourceOutputMenus();
 
     void signalAddItemToLibraryPresetList(QString);

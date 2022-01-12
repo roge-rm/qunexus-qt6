@@ -9977,7 +9977,7 @@ QToolTip {
          </rect>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Adjust the number of member channels in the MPE zone, combined with the manager channel which is always set to channel 1. So for example, 13 member channels + 1 manager channel = 14 total MPE channels.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Adjust the number of member channels in the MPE zone, combined with the manager channel which is always set to channel 1. So for example, 13 member channels + 1 manager channel = 14 total MPE channels. Range 1-13.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
@@ -10015,7 +10015,7 @@ QToolTip {
          <number>1</number>
         </property>
         <property name="maximum">
-         <number>15</number>
+         <number>13</number>
         </property>
        </widget>
        <widget class="QSpinBox" name="SEQ_track_1_transp">

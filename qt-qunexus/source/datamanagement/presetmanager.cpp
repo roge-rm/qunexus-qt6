@@ -1363,6 +1363,11 @@ void PresetManager::slotValueChanged()
                     QSpinBox *numberBox = reinterpret_cast<QSpinBox *>(QObject::sender());
                     editBufferPresetMap.insert(numberBox->objectName(), numberBox->value());
 
+                    if(QObject::sender()->objectName().contains("Keyboard_Global_Polyphony_Number") )
+                    {
+                        emit signalCheckChannelOverlap();
+                    }
+
                     //qDebug() << "Value Changed  :" << QObject::sender()->metaObject()->className() << QObject::sender()->objectName() << numberBox->value();
                 }
                 else if(QObject::sender()->metaObject()->className() == QString("QDoubleSpinBox"))
@@ -1407,12 +1412,17 @@ void PresetManager::slotValueChanged()
                         {
                             menu->setGeometry(506, 30, 54, 20);
                             emit signalSetEnableUiParam("Keyboard_Global_Polyphony_Number", 1);
+                            emit signalCheckChannelOverlap();
                         }
                         else
                         {
                             menu->setGeometry(506, 30, 80, 20);
                             emit signalSetEnableUiParam("Keyboard_Global_Polyphony_Number", 0);
                         }
+                    }
+                    else if(QObject::sender()->objectName().contains("_midi_ch"))
+                    {
+                        emit signalCheckChannelOverlap();
                     }
                 }
                 else if(QObject::sender()->metaObject()->className() == QString("QSpinBox"))

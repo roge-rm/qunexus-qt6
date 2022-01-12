@@ -236,6 +236,7 @@ public slots:
     void    slotPasteControllerElements();
 
     void    slotSetEndableUiElement(QString paramName, bool state);
+    void    slotCheckChannelOverlap();
 
     void    slotLimitSourceOutputMenus();
 
