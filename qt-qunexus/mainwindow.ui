@@ -8844,7 +8844,7 @@ QToolTip {
          <enum>Qt::DefaultContextMenu</enum>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select a stored step sequence pattern to play back (patterns 1 through 8). The default setting (----) does not load or modify the current pattern. This setting does not affect the arpeggiator.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select a stored step sequence pattern to play back (patterns 1 through 8). The default setting (----) does not load or modify the current pattern.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
          <string notr="true">QComboBox QAbstractItemView
@@ -10290,7 +10290,7 @@ QToolTip {
          <enum>Qt::DefaultContextMenu</enum>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select a stored step sequence pattern to play back (patterns 1 through 8). The default setting (----) does not load or modify the current pattern. This setting does not affect the arpeggiator.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select a stored step sequence pattern to play back (patterns 1 through 8). The default setting (----) does not load or modify the current pattern.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
          <string notr="true">QComboBox QAbstractItemView
@@ -11907,7 +11907,7 @@ QToolTip {
          <enum>Qt::DefaultContextMenu</enum>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select a stored step sequence pattern to play back (patterns 1 through 8). The default setting (----) does not load or modify the current pattern. This setting does not affect the arpeggiator.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select a stored step sequence pattern to play back (patterns 1 through 8). The default setting (----) does not load or modify the current pattern.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
          <string notr="true">QComboBox QAbstractItemView

@@ -43,7 +43,7 @@ MainWindow::MainWindow(QWidget *parent) :
     applicationVersion[1] = 0;
     applicationVersion[2] = 7;
 
-    betaVersion = "D"; // leave blank for release
+    betaVersion = ""; // leave blank for release
 
 
     thisFw = QByteArray(reinterpret_cast<char*>(_fw_ver_qunexus), sizeof(_fw_ver_qunexus));
@@ -127,6 +127,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     qDebug() << "Default file save location - post: " << settings->value(DEFAULT_DIR_KEY).toString();
 
+
+
     presetManager = new PresetManager(this);
 
     qDebug() << "init MIDI Device Manager";
@@ -200,9 +202,11 @@ MainWindow::MainWindow(QWidget *parent) :
     //connect(presetManager, SIGNAL(signalClearFocus()), this, SLOT(slotClearFocus()));
 
     // connect dropdowns and connection status to MIDI aux ports
-    connect(ui->midi_outputs, SIGNAL(currentIndexChanged(int)), this, SLOT(slotUpdateMIDIaux()));
+    connect(ui->midi_outputs, SIGNAL(activated(int)), this, SLOT(slotUpdateMIDIaux()));
     connect(QuNexus, SIGNAL(signalConnected(bool)), this, SLOT(slotUpdateMIDIaux()));
 
+    // remember last selected MIDI aux port
+    MIDI_AUX_KEY = "midi_aux_port";
 
     qDebug() << "connected aux port";
 
@@ -2556,6 +2560,9 @@ void MainWindow::slotQuNexusConnected(bool state)
 
         //presetManager->presetLoading = true; // block sending any data from editor until after initial sync
         presetManager->syncFlag = true;
+
+        // attempt to recall midi aux port when QuNexus connects
+        slotRecallMIDIaux();
     }
     else
     {
@@ -3148,6 +3155,11 @@ void MainWindow::slotSetupMenuBar()
     connect(about, SIGNAL(triggered()), this, SLOT(slotOpenAboutScreen()));
     help->addAction(about);
 
+    //Bug Report
+    QAction* bugReport = new QAction("Submit Bug Report", file);
+    connect(bugReport, SIGNAL(triggered()), this, SLOT(slotSubmitBugReport()));
+    help->addAction(bugReport);
+
     //Documentation
     QAction* doc = new QAction("Documentation", file);
     connect(doc, SIGNAL(triggered()), this, SLOT(slotOpenDocumentation()));
@@ -3213,15 +3225,21 @@ void MainWindow::slotSetupMenuBar()
 //------------------------------------------------------------------------------------------------------------------------------------------------------//
 void MainWindow::slotOpenDocumentation()
 {
-    QString manualURL = "https://files.keithmcmillen.com/products/qunexus/Manuals/QuNexus_RED_Manual_2.0.6.pdf";
+    QString manualURL = "https://files.keithmcmillen.com/products/qunexus/Manuals/QuNexus_RED_Manual_V2.pdf";
 
-//    QFile *file = new QFile(":help/resources/help.txt");
-//    file->open(QFile::ReadOnly);
-
-//    //QDesktopServices::openUrl(QUrl((QLatin1String)file->readLine(0)));
     QDesktopServices::openUrl(QUrl(manualURL));
 
 }
+
+void MainWindow::slotSubmitBugReport()
+{
+    QString manualURL = "https://keithmcmillen.zendesk.com/hc/en-us/requests/new";
+
+    QDesktopServices::openUrl(QUrl(manualURL));
+
+}
+
+
 
 void MainWindow::slotShowHideControllerTab()
 {
@@ -3864,6 +3882,11 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
         msgBox->exec();
     }
+    else
+    {
+        qDebug() << "accept close event";
+        editorCloseEvent->accept();
+    }
 }
 
 void MainWindow::cancelCloseEditor()
@@ -3874,8 +3897,10 @@ void MainWindow::cancelCloseEditor()
 
 void MainWindow::slotDiscardAndCloseEditor()
 {
+    qDebug() << "slotDiscardAndCloseEditor called";
     presetManager->JSONLoading = true; // block update
     presetManager->slotRevertSelectedPreset();
+    qDebug() << "accept close event";
     editorCloseEvent->accept();
 }
 
@@ -3904,10 +3929,15 @@ void MainWindow::slotMIDIPortChange(QString portName, uchar inOrOut, uchar messa
         // update dropdown
         if (inOrOut == PORT_OUT && portName != QUNEXUS_OUT_P1) // don't create feedback loop
         {
-            QComboBox *thisDropDown = ui->midi_outputs;
+            ui->midi_outputs->addItem(portName); // update dropdown
+            slotFixDropDownWidth(ui->midi_outputs);
 
-            thisDropDown->addItem(portName); // update dropdown
-            slotFixDropDownWidth(thisDropDown);
+            if (portName == settings->value(MIDI_AUX_KEY).toString()) // if this port matches the last selected port
+            {
+                recallMidiAuxPortName = portName; // store name
+                QTimer::singleShot(500, this, SLOT(slotRecallMIDIaux())); // wait, then set/update the port
+            }
+
         }
 
         // **** QuNexus connect *****************************************
@@ -3931,7 +3961,9 @@ void MainWindow::slotMIDIPortChange(QString portName, uchar inOrOut, uchar messa
         {
             // update dropdown
             if (ui->midi_outputs->currentText() == portName)
+            {
                 ui->midi_outputs->setCurrentIndex(0);
+            }
 
             ui->midi_outputs->removeItem(ui->midi_outputs->findText(portName));
         }
@@ -3940,8 +3972,8 @@ void MainWindow::slotMIDIPortChange(QString portName, uchar inOrOut, uchar messa
         if (portName == QUNEXUS_IN_P1)
         {
             // close ports and stop polling
-            QuNexus->slotCloseMidiIn();
-            QuNexus->slotCloseMidiOut();
+            QuNexus->slotCloseMidiIn(SIGNAL_SEND);
+            QuNexus->slotCloseMidiOut(SIGNAL_SEND);
             QuNexus->slotStopPolling("PORT_DISCONNECT");
             if (inOrOut == PORT_IN) fwUpdateWindow->slotAppendTextToConsole("\nQuNexus Disconnected\n");
         }
@@ -4052,24 +4084,47 @@ void MainWindow::slotFirmwareDetected(MidiDeviceManager *thisMDM, bool matches)
 // connect QuNexus midi input to to midi aux out
 void MainWindow::slotUpdateMIDIaux()
 {
-    //qDebug() << "slotUpdateMIDIaux called";
+    qDebug() << "slotUpdateMIDIaux called - connected: " << connected;
 
     QuNexus->disconnect(SIGNAL(signalRxMidi_raw(uchar, uchar, uchar, uchar)));
 
     if (!connected) return; // don't continue if we aren't connected
 
+    settings->setValue(MIDI_AUX_KEY, ui->midi_outputs->currentText()); // store this setting for the next time we run the editor
+
     if (ui->midi_outputs->currentText() != "None")
     {
+        qDebug() << "update aux port: " << ui->midi_outputs->currentText();
+
+
+        //recallMidiAuxPortName = ""; // reset this, which is only set when the stored aux port connects
+
         // set and open the ports
         int thisOutPort = kmiPorts->getOutPortNumber(ui->midi_outputs->currentText());
+
+        if (thisOutPort == -1)
+        {
+            qDebug() << "ERROR: Port \"" << ui->midi_outputs->currentText() << "\" does not exist, cannot open as MIDI aux port";
+            return;
+        }
+
         midiAuxOut->updatePortOut(thisOutPort);
-        midiAuxOut->slotOpenMidiOut();
         connect(QuNexus, SIGNAL(signalRxMidi_raw(uchar, uchar, uchar, uchar)), midiAuxOut, SLOT(slotSendMIDI(uchar, uchar, uchar, uchar)));
     }
     else
     {
-        midiAuxOut->slotCloseMidiOut();
+        qDebug() << "close port, don't update";
+        midiAuxOut->slotCloseMidiOut(SIGNAL_NONE);
     }
+}
+
+void MainWindow::slotRecallMIDIaux()
+{
+    qDebug() << "slotRecallMIDIaux called, connected: " << connected << " recallMidiAuxPortName: " << recallMidiAuxPortName;
+    if (!connected || recallMidiAuxPortName == "") return; // wait until connected to QuNexus and the previously saved port
+
+    ui->midi_outputs->setCurrentText(recallMidiAuxPortName);
+    slotUpdateMIDIaux();
 }
 
 // --------------------------------------------------------------------------------------

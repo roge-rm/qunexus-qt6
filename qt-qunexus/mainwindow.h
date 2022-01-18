@@ -89,6 +89,11 @@ public:
     QListWidgetItem*    nextPresetItem;
 
     QCloseEvent         *editorCloseEvent;
+
+    QString MIDI_AUX_KEY;
+    bool    recallMidiAuxPort;
+    QString recallMidiAuxPortName;
+
     //----------------------------------- Stylesheets
     // General
     QFile*              generalStylesFile;
@@ -222,6 +227,7 @@ public slots:
     void slotForceFirmwareUpdate();
     void slotFirmwareDetected(MidiDeviceManager *thisMDM, bool);
     void slotUpdateMIDIaux();
+    void slotRecallMIDIaux();
 
     // ------ end midi overhaul --------------------------------------------------------
 
@@ -257,6 +263,7 @@ public slots:
     void    slotSyncQuNexusDialog();
     void    slotOpenAboutScreen();
     void    slotOpenDocumentation();
+    void    slotSubmitBugReport();
     void    slotShowGreyRect();
     void    slotHideGreyRect();
 
