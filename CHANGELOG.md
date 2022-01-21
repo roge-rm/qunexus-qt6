@@ -1,5 +1,35 @@
 #### QuNexus RED Editor and Firmware Changelog
 
+### 2.0.8 (2021-01-20)
+- Bug Fixes:
+	-Only send midi realtime STOP if transport is playing
+	-Fix pitch CV resetting to 0 on noteoff
+	-Fixed LED display issue when routing clock and track outputs to USB1 and Expander ports
+
+### 2.0.7 (2021-01-18)
+- New Features/Changes:
+	- Added arpeggiator octaves with a range of 1-4 octaves. The Octave +/- keys in the shift menu will increase/decrease range. This feature also works with the step sequencer.
+	- Global and Track transpose range increased to +/- 48 semitones, octave +/- keys in transposition menus will inc/dec transposition by 1 octave.
+	- Removed all notes off (CC123) messages when transport stops
+	- Loading a QuNexus presets will now stop playback and clear all track patterns. 
+	- Editor can now modify MPE member channels.
+	- MPE member channels limited to 13 (14 channels total in the MPE zone when including the manager channel 1)
+	- If sequencer tracks 2 and 3 are assigned to MIDI channels that overlap with the MPE zone (track 1 manager channel + member channels) then the track 2 and/or 3 MIDI channels will be reassigned to channels 15 or 16. 
+	- "QuNexus MIDI Thru" port on settings tab now remembers the last device it was set to, and will automatically connect when it is detected.
+	- Windows 11 now tested/supported
+- Bug Fixes:
+	- Added buffer overflow checks to improve playback when generating a lot of MPE data
+	- Many improvements to Editor<->QuNexus menu and ui synchronization.
+	- Patterns now properly load and save to all slots, including pattern length.
+	- Fixed a bug where program changes would only send if track 1 had a PC enabled.
+	- Changing from arp->seq or seq->arp from hardware or editor now completely clears the pattern and any toggled notes.
+	- QuNexus now updates editor when MPE member channels are changed.
+	- Patterns now consistently show slots that have been saved during playback.
+	- Fixes around how hold behaves when step sequencing, holding keys, and shifting octaves
+	- Hold mode now turns on by default when loading a pattern into the arpeggiator.
+	- Fixed out of range errors and false crash alerts on MacOS.
+	- Firmware update process on Windows improved, refreshing the MIDI driver when entering/exiting bootloader will force the editor to re-launch.
+
 ### 2.0.6 (2021-11-23)
 - New Features/Changes:
 	- Keyboard->MIDI latency reduced by 10ms, now down to ~2.5ms

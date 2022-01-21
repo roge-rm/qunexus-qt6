@@ -41,7 +41,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     applicationVersion[0] = 2;
     applicationVersion[1] = 0;
-    applicationVersion[2] = 7;
+    applicationVersion[2] = 8;
 
     betaVersion = ""; // leave blank for release
 
@@ -82,14 +82,17 @@ MainWindow::MainWindow(QWidget *parent) :
     QuNexus = new MidiDeviceManager(this, PID_QUNEXUS, "QuNexus");
 
     // setup firmware image
-    QString thisFwFile = QString("://resources/firmware/QuNexus_Firmware_v%1.%2.%3.syx")
+    QString thisFwFile = QString(":/resources/firmware/QuNexus_Firmware_v%1.%2.%3.syx")
             .arg(uchar(thisFw.at(0)))
             .arg(uchar(thisFw.at(1)))
             .arg(uchar(thisFw.at(2)));
 
     //qDebug() << "fwFilename: " << thisFwFile;
 
-    QuNexus->slotOpenFirmwareFile(thisFwFile);
+    if (!QuNexus->slotOpenFirmwareFile(thisFwFile))
+    {
+        qDebug() << "ERROR - firmware file not found: " << thisFwFile;
+    }
 
     // connect firmware signals
     qDebug() << "connect signalFirmwareDetected";
@@ -3763,8 +3766,12 @@ void MainWindow::slotToolTipHandler()
 
 void MainWindow::slotSendActiveSense()
 {
-    //qDebug() << "activeSense called - sx_xmit_active: " << sysExEncDecode->sx_xmit_active << " connected: " << connected ;
-    if (sysExEncDecode->sx_xmit_active || !connected) return; // do not interrupt sysex, only send if connected
+    //qDebug() << "slotSendActiveSense called";
+    if (sysExEncDecode->sx_xmit_active || !connected)
+    {
+        //qDebug() << "activeSense called - sx_xmit_active: " << sysExEncDecode->sx_xmit_active << " connected: " << connected ;
+        return; // do not interrupt sysex, only send if connected
+    }
 
     // MIDI Overhaul
     QuNexus->slotSendMIDI(MIDI_RT_ACTIVE_SENSE);

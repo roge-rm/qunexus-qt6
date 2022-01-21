@@ -115,6 +115,6 @@
         <file>resources/fonts/source-sans-pro/SourceSansPro-Semibold.otf</file>
         <file>resources/fonts/source-sans-pro/SourceSansPro-SemiboldIt.otf</file>
         <file>resources/images/quNexusIcon-9.png</file>
-        <file>resources/firmware/QuNexus_Firmware_v2.0.7.syx</file>
+        <file>resources/firmware/QuNexus_Firmware_v2.0.8.syx</file>
     </qresource>
 </RCC>

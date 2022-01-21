@@ -4,12 +4,12 @@
 # - You must use the entitlements included in this directory.
 
 # app_name is the name of the dmg volume
-this_year=2021
+this_year=2022
 app_name="QuNexus Editor"
 app_name_fp=QuNexus\ Editor
 app_source=../../Build\ Directories/build-QuNexus-Desktop_Qt_5_14_2_clang_64bit-Release/QuNexus\ Editor.app
 
-version=2.0.7
+version=2.0.8
 bundle_id="com.keithmcmillen.QuNexus Editor"
 app_path=./dmg/QuNexus\ Editor.app
 package_path=./dmg/
