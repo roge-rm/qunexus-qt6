@@ -9,8 +9,8 @@ app_name="QuNexus Editor"
 app_name_fp=QuNexus\ Editor
 app_source=../../Build\ Directories/build-QuNexus-Desktop_Qt_5_14_2_clang_64bit-Release/QuNexus\ Editor.app
 
-version=2.0.8
-bundle_id="com.keithmcmillen.QuNexus Editor"
+version=2.0.9
+bundle_id="com.keithmcmillen.$app_name"
 app_path=./dmg/QuNexus\ Editor.app
 package_path=./dmg/
 path_to_dqt=~/Qt/5.14.2/clang_64/bin/macdeployqt

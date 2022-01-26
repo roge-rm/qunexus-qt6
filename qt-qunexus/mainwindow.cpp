@@ -41,9 +41,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     applicationVersion[0] = 2;
     applicationVersion[1] = 0;
-    applicationVersion[2] = 8;
+    applicationVersion[2] = 9;
 
-    betaVersion = ""; // leave blank for release
+    betaVersion = "A"; // leave blank for release
 
 
     thisFw = QByteArray(reinterpret_cast<char*>(_fw_ver_qunexus), sizeof(_fw_ver_qunexus));
