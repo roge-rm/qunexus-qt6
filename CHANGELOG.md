@@ -1,5 +1,10 @@
 #### QuNexus RED Editor and Firmware Changelog
 
+### 2.0.9 (2021-02-01)
+- Bug Fixes:
+	-Fixed a bug where playing a new chord very quickly in arpeggiator hold mode would sometimes not register all the played notes.
+	-Improved how MPE channels are assigned between the sequencer and keyboard when both are played simultaneously.
+
 ### 2.0.8 (2021-01-20)
 - Bug Fixes:
 	-Only send midi realtime STOP if transport is playing

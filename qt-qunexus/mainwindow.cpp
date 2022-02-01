@@ -3892,7 +3892,9 @@ void MainWindow::closeEvent(QCloseEvent *event)
     else
     {
         qDebug() << "accept close event";
-        editorCloseEvent->accept();
+        QApplication::quit();
+        //editorCloseEvent->accept();
+        //QApplication::quit();
     }
 }
 
