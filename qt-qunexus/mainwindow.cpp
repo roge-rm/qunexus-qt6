@@ -40,8 +40,8 @@ MainWindow::MainWindow(QWidget *parent) :
     applicationVersion.resize(3);
 
     applicationVersion[0] = 2;
-    applicationVersion[1] = 0;
-    applicationVersion[2] = 9;
+    applicationVersion[1] = 1;
+    applicationVersion[2] = 0;
 
     betaVersion = ""; // leave blank for release
 

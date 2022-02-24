@@ -67,6 +67,7 @@ FORMS    += mainwindow.ui \
 
 
 RESOURCES += \
+    inc/KMI_MIDI_Device_Manager/fwupdate/fw_stylesheets.qrc \
     resources.qrc
 
 ## QML stuff
