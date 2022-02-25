@@ -9,10 +9,10 @@ app_name="QuNexus Editor"
 app_name_fp=QuNexus\ Editor
 app_source=../../Build\ Directories/build-QuNexus-Desktop_Qt_5_14_2_clang_64bit-Release/QuNexus\ Editor.app
 
-version=2.0.10
+version=2.1.0
 bundle_id="com.keithmcmillen.$app_name"
 app_path="./dmg/QuNexus Editor.app"
-dmg_path=./dmg/
+dmg_path=./dmg
 path_to_dqt=~/Qt/5.14.2/clang_64/bin/macdeployqt
 
 qml_dir=../qt-qunexus/source/
@@ -43,7 +43,7 @@ fi
 
 
 # copy the .app and resources
-\cp -R "$app_source" "$dmg_path"
+\cp -R "$app_source" "$dmg_path/"
 
 
 echo ""
@@ -78,7 +78,7 @@ codesign -s "$developer_id" --options runtime --timestamp --force --deep --entit
 
 
 #set folder icon (only needed if there is a folder in the dmg)
-#fileicon set "$dmg_path" "$icon_file"
+#fileicon set "$dmg_path/" "$icon_file"
 
 # create dmg (brew install create-dmg)
 
@@ -100,7 +100,7 @@ create-dmg \
   --app-drop-link 375 220 \
   --hdiutil-verbose \
   "$final_dmg_name" \
-  "$dmg_path"
+  "$dmg_path/"
 
 # # change folder icon and inspect
 # open "$final_dmg_name"
