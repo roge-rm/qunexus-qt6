@@ -9,7 +9,7 @@ QListView
     border: 1px solid black;
     padding: 6 0 6 0;
     color: rgba(175,175,175,255);
-    font: 8pt "Open Sans Semibold";
+    font: 8pt "Open Sans";
  }
 
 
@@ -18,7 +18,7 @@ QListView
     background:rgba(67, 67, 67, 255);
     border: 0px solid black;
     color: rgba(175,175,175,255);
-    font: 12pt "Open Sans Semibold";
+    font: 12pt "Open Sans";
  }
 
  QListView::item:selected

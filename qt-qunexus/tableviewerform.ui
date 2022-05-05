@@ -196,6 +196,79 @@ QPushButton:pressed {
       <height>26</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">
+/*----------- QComboBox ------------*/
+
+QComboBox {
+        font-family: &quot;Droid Sans&quot;;
+        font-size: 10px;
+        background: #666;
+        padding: 2px 4px;
+        border-style: outset;
+        border-radius: 4px;
+        border-width: 1px;
+        border-color: black;
+        color: white;
+}
+
+QComboBox::drop-down {
+        border-radius:0;
+        border-left-color: darkgray;
+        border-left-style: solid;
+        border-width: 1pt;
+        border: 1px;
+        margin: 0px;
+        padding: 0px;
+        background-color: transparent;
+        color: white;
+}
+
+
+QComboBox::drop-down:button {
+        width: 15px;
+        height: 15px;
+}
+
+QComboBox::down-arrow {
+        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
+        width: 10px;
+        height: 10px;
+        top: 2px;
+        right: 3px;
+}
+QComboBox::down-arrow:disabled {
+        image: url(url(:/images/resources/images/Arrow.png));
+        right: 30px;
+}
+
+QComboBox QListView {
+        background: rgba(67, 67, 67, 255);
+        color: rgb(220, 220, 220);
+        min-height: 90px;
+    	   min-width: 100px;
+        margin: 0 0 0 0;
+}
+
+QComboBox QListView::item {
+        background: rgba(67, 67, 67, 255);
+        border: 0px;
+        color: white;
+}
+
+QComboBox QListView::item:hover {
+        background: rgba(67, 67, 67, 255);
+        border: 0;
+        color: white;
+}
+
+QToolTip {
+    background: #006599;
+    color: white;
+}
+
+</string>
+    </property>
     <item>
      <property name="text">
       <string>Linear</string>

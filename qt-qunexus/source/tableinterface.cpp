@@ -51,7 +51,7 @@ TableInterface::TableInterface(QWidget *parent) :
 
     //-------- Setup QML Ui
 
-    qDebug() << "Setup QML ui";
+    //qDebug() << "Setup QML ui";
 
     tableEngine->addImportPath("qrc:/");
 
@@ -68,27 +68,8 @@ TableInterface::TableInterface(QWidget *parent) :
 
     //tableEngine->load(QUrl(source));
 
-    qDebug() << "new quickwidget";
+    //qDebug() << "new quickwidget";
     tableQuickWidget = new QQuickWidget(tableEngine, this);
-
-    QQmlComponent component(tableEngine, source);
-
-    QObject *myObject = component.create();
-    QQuickItem *item = qobject_cast<QQuickItem*>(myObject);
-    int width = item->width();  // width = 200
-
-    qDebug() << "QQuickItem width = " << width;
-
-
-    qDebug() << "root context";
-    tableQuickWidget->rootContext()->setContextProperty("TableInterface", this); // this has to happen before we set the source
-    qDebug() << "set source";
-    tableQuickWidget->setSource(source);
-    qDebug() << "geometry";
-    tableQuickWidget->setGeometry(0, 0, 540, 540);
-    tableQuickWidget->setResizeMode(QQuickWidget::SizeViewToRootObject);
-    qDebug() << "show";
-    tableQuickWidget->show();
 
     // set OS variables for formatting
     #ifdef Q_OS_WIN
@@ -96,6 +77,27 @@ TableInterface::TableInterface(QWidget *parent) :
     #else
         tableQuickWidget->rootContext()->setContextProperty("Q_OS", QVariant("MAC"));
     #endif
+
+    QQmlComponent component(tableEngine, source);
+
+    //QObject *myObject = component.create();
+    //QQuickItem *item = qobject_cast<QQuickItem*>(myObject);
+    //int width = item->width();  // width = 200
+
+    //qDebug() << "QQuickItem width = " << width;
+
+
+    //qDebug() << "root context";
+    tableQuickWidget->rootContext()->setContextProperty("TableInterface", this); // this has to happen before we set the source
+    //qDebug() << "set source";
+    tableQuickWidget->setSource(source);
+    //qDebug() << "geometry";
+    tableQuickWidget->setGeometry(0, 0, 540, 540);
+    tableQuickWidget->setResizeMode(QQuickWidget::SizeViewToRootObject);
+    //qDebug() << "show";
+    tableQuickWidget->show();
+
+
 
     //rootObject = tableQuickWidget->rootObject();
 
@@ -107,7 +109,7 @@ TableInterface::TableInterface(QWidget *parent) :
     // style buttons
 
     //StyleSheets for "blue" (red) pushbuttons
-    qDebug() << "setup stylesheets";
+    //qDebug() << "setup stylesheets";
     blueStyleFile = new QFile(":stylesheets/resources/stylesheets/BlueButtonStyleSheet.qss");
     blueStyleFile->open(QFile::ReadOnly);
     blueStyleString = QLatin1String(blueStyleFile->readAll());
@@ -121,7 +123,7 @@ TableInterface::TableInterface(QWidget *parent) :
 
 
 
-    qDebug() << "connect buttons";
+    //qDebug() << "connect buttons";
     //Connect Buttons
     connect(tableViewerForm.Cosine, SIGNAL(clicked()), this, SLOT(slotSetCustomTemplate()));
     connect(tableViewerForm.Sine, SIGNAL(clicked()), this, SLOT(slotSetCustomTemplate()));
@@ -130,18 +132,18 @@ TableInterface::TableInterface(QWidget *parent) :
     connect(tableViewerForm.Linear, SIGNAL(clicked()), this, SLOT(slotSetCustomTemplate()));
     connect(tableViewerForm.Exponential, SIGNAL(clicked()), this, SLOT(slotSetCustomTemplate()));
 
-    qDebug() << "connect menu";
+    //qDebug() << "connect menu";
     //Connect Menu
     connect(tableViewerForm.TableMenu, SIGNAL(currentTextChanged(QString)), this, SLOT(slotMenuChanged(QString)));
 
-    qDebug() << "set menu to Linear";
+    //qDebug() << "set menu to Linear";
     //Init Viewer to User Table 1
     slotMenuChanged("Linear");
 
     //qDebug() << "set dropdown text";
     //tableViewerForm.TableMenu->setCurrentIndex(tableViewerForm.TableMenu->findText("Linear"));
 
-    qDebug() << "end tableinterface";
+    //qDebug() << "end tableinterface";
     //qDebug() << qmlView->rootObject()->property("editable");
 }
 

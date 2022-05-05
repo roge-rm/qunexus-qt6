@@ -21,9 +21,7 @@
   </property>
   <property name="font">
    <font>
-    <family>Arial</family>
     <pointsize>12</pointsize>
-    <weight>50</weight>
     <bold>false</bold>
    </font>
   </property>
@@ -125,7 +123,7 @@ border:0;
      <property name="geometry">
       <rect>
        <x>90</x>
-       <y>3</y>
+       <y>-2</y>
        <width>81</width>
        <height>21</height>
       </rect>
@@ -141,10 +139,10 @@ border:0;
 }</string>
      </property>
      <property name="text">
-      <string>Connected</string>
+      <string>Not Connected</string>
      </property>
      <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      <set>Qt::AlignBottom|Qt::AlignRight|Qt::AlignTrailing</set>
      </property>
     </widget>
     <widget class="QFrame" name="QuNexus_Connected_Frame">
@@ -199,9 +197,7 @@ border:0;
       </size>
      </property>
      <property name="font">
-      <font>
-       <family>Arial</family>
-      </font>
+      <font/>
      </property>
      <property name="cursor">
       <cursorShape>PointingHandCursor</cursorShape>
@@ -514,9 +510,7 @@ QPushButton:pressed {
      </property>
      <property name="font">
       <font>
-       <family>Arial</family>
        <pointsize>14</pointsize>
-       <weight>50</weight>
        <italic>true</italic>
        <bold>false</bold>
       </font>
@@ -617,9 +611,7 @@ QPushButton:pressed {
      </property>
      <property name="font">
       <font>
-       <family>Arial</family>
        <pointsize>10</pointsize>
-       <weight>50</weight>
        <italic>false</italic>
        <bold>false</bold>
       </font>
@@ -678,7 +670,7 @@ QTabBar::tab:selected {
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>4</number>
      </property>
      <property name="elideMode">
       <enum>Qt::ElideRight</enum>
@@ -864,9 +856,7 @@ QTabBar::tab:selected {
          </size>
         </property>
         <property name="font">
-         <font>
-          <family>Arial</family>
-         </font>
+         <font/>
         </property>
         <property name="contextMenuPolicy">
          <enum>Qt::DefaultContextMenu</enum>
@@ -940,9 +930,7 @@ QComboBox::drop-down:button{
          </size>
         </property>
         <property name="font">
-         <font>
-          <family>Arial</family>
-         </font>
+         <font/>
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -1054,7 +1042,6 @@ QComboBox QAbstractItemView
         </property>
         <property name="font">
          <font>
-          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -1169,8 +1156,8 @@ QComboBox QAbstractItemView
             </brush>
            </colorrole>
            <colorrole role="PlaceholderText">
-            <brush brushstyle="NoBrush">
-             <color alpha="128">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
               <red>255</red>
               <green>255</green>
               <blue>255</blue>
@@ -1234,8 +1221,8 @@ QComboBox QAbstractItemView
             </brush>
            </colorrole>
            <colorrole role="PlaceholderText">
-            <brush brushstyle="NoBrush">
-             <color alpha="128">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
               <red>255</red>
               <green>255</green>
               <blue>255</blue>
@@ -1299,8 +1286,8 @@ QComboBox QAbstractItemView
             </brush>
            </colorrole>
            <colorrole role="PlaceholderText">
-            <brush brushstyle="NoBrush">
-             <color alpha="128">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
               <red>255</red>
               <green>255</green>
               <blue>255</blue>
@@ -1312,7 +1299,6 @@ QComboBox QAbstractItemView
         </property>
         <property name="font">
          <font>
-          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -1604,9 +1590,7 @@ QComboBox QAbstractItemView
          </size>
         </property>
         <property name="font">
-         <font>
-          <family>Arial</family>
-         </font>
+         <font/>
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -1700,9 +1684,7 @@ QComboBox QAbstractItemView
          </size>
         </property>
         <property name="font">
-         <font>
-          <family>Arial</family>
-         </font>
+         <font/>
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -1813,9 +1795,7 @@ QComboBox QAbstractItemView
          </size>
         </property>
         <property name="font">
-         <font>
-          <family>Arial</family>
-         </font>
+         <font/>
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -1934,8 +1914,8 @@ QComboBox::drop-down:button{
             </brush>
            </colorrole>
            <colorrole role="PlaceholderText">
-            <brush brushstyle="NoBrush">
-             <color alpha="128">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
               <red>255</red>
               <green>255</green>
               <blue>255</blue>
@@ -1999,8 +1979,8 @@ QComboBox::drop-down:button{
             </brush>
            </colorrole>
            <colorrole role="PlaceholderText">
-            <brush brushstyle="NoBrush">
-             <color alpha="128">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
               <red>255</red>
               <green>255</green>
               <blue>255</blue>
@@ -2064,8 +2044,8 @@ QComboBox::drop-down:button{
             </brush>
            </colorrole>
            <colorrole role="PlaceholderText">
-            <brush brushstyle="NoBrush">
-             <color alpha="128">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
               <red>255</red>
               <green>255</green>
               <blue>255</blue>
@@ -2077,7 +2057,6 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
-          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -2325,9 +2304,7 @@ QComboBox::drop-down:button{
          </size>
         </property>
         <property name="font">
-         <font>
-          <family>Arial</family>
-         </font>
+         <font/>
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -2438,9 +2415,7 @@ QComboBox QAbstractItemView
          </size>
         </property>
         <property name="font">
-         <font>
-          <family>Arial</family>
-         </font>
+         <font/>
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -2607,8 +2582,8 @@ QComboBox::drop-down:button{
             </brush>
            </colorrole>
            <colorrole role="PlaceholderText">
-            <brush brushstyle="NoBrush">
-             <color alpha="128">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
               <red>255</red>
               <green>255</green>
               <blue>255</blue>
@@ -2672,8 +2647,8 @@ QComboBox::drop-down:button{
             </brush>
            </colorrole>
            <colorrole role="PlaceholderText">
-            <brush brushstyle="NoBrush">
-             <color alpha="128">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
               <red>255</red>
               <green>255</green>
               <blue>255</blue>
@@ -2737,8 +2712,8 @@ QComboBox::drop-down:button{
             </brush>
            </colorrole>
            <colorrole role="PlaceholderText">
-            <brush brushstyle="NoBrush">
-             <color alpha="128">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
               <red>255</red>
               <green>255</green>
               <blue>255</blue>
@@ -2750,7 +2725,6 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
-          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -2809,9 +2783,7 @@ QComboBox::drop-down:button{
          </size>
         </property>
         <property name="font">
-         <font>
-          <family>Arial</family>
-         </font>
+         <font/>
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -3072,9 +3044,7 @@ QComboBox::drop-down:button{
          </size>
         </property>
         <property name="font">
-         <font>
-          <family>Arial</family>
-         </font>
+         <font/>
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -3185,9 +3155,7 @@ QComboBox QAbstractItemView
          </size>
         </property>
         <property name="font">
-         <font>
-          <family>Arial</family>
-         </font>
+         <font/>
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -3354,8 +3322,8 @@ QComboBox::drop-down:button{
             </brush>
            </colorrole>
            <colorrole role="PlaceholderText">
-            <brush brushstyle="NoBrush">
-             <color alpha="128">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
               <red>255</red>
               <green>255</green>
               <blue>255</blue>
@@ -3419,8 +3387,8 @@ QComboBox::drop-down:button{
             </brush>
            </colorrole>
            <colorrole role="PlaceholderText">
-            <brush brushstyle="NoBrush">
-             <color alpha="128">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
               <red>255</red>
               <green>255</green>
               <blue>255</blue>
@@ -3484,8 +3452,8 @@ QComboBox::drop-down:button{
             </brush>
            </colorrole>
            <colorrole role="PlaceholderText">
-            <brush brushstyle="NoBrush">
-             <color alpha="128">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
               <red>255</red>
               <green>255</green>
               <blue>255</blue>
@@ -3497,7 +3465,6 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
-          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -3556,9 +3523,7 @@ QComboBox::drop-down:button{
          </size>
         </property>
         <property name="font">
-         <font>
-          <family>Arial</family>
-         </font>
+         <font/>
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -3830,9 +3795,7 @@ QComboBox::drop-down:button{
          </size>
         </property>
         <property name="font">
-         <font>
-          <family>Arial</family>
-         </font>
+         <font/>
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -3943,9 +3906,7 @@ QComboBox QAbstractItemView
          </size>
         </property>
         <property name="font">
-         <font>
-          <family>Arial</family>
-         </font>
+         <font/>
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -4112,8 +4073,8 @@ QComboBox::drop-down:button{
             </brush>
            </colorrole>
            <colorrole role="PlaceholderText">
-            <brush brushstyle="NoBrush">
-             <color alpha="128">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
               <red>255</red>
               <green>255</green>
               <blue>255</blue>
@@ -4177,8 +4138,8 @@ QComboBox::drop-down:button{
             </brush>
            </colorrole>
            <colorrole role="PlaceholderText">
-            <brush brushstyle="NoBrush">
-             <color alpha="128">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
               <red>255</red>
               <green>255</green>
               <blue>255</blue>
@@ -4242,8 +4203,8 @@ QComboBox::drop-down:button{
             </brush>
            </colorrole>
            <colorrole role="PlaceholderText">
-            <brush brushstyle="NoBrush">
-             <color alpha="128">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
               <red>255</red>
               <green>255</green>
               <blue>255</blue>
@@ -4255,7 +4216,6 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
-          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -4314,9 +4274,7 @@ QComboBox::drop-down:button{
          </size>
         </property>
         <property name="font">
-         <font>
-          <family>Arial</family>
-         </font>
+         <font/>
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -4594,9 +4552,7 @@ QComboBox::drop-down:button{
          </size>
         </property>
         <property name="font">
-         <font>
-          <family>Arial</family>
-         </font>
+         <font/>
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -4707,9 +4663,7 @@ QComboBox QAbstractItemView
          </size>
         </property>
         <property name="font">
-         <font>
-          <family>Arial</family>
-         </font>
+         <font/>
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -4876,8 +4830,8 @@ QComboBox::drop-down:button{
             </brush>
            </colorrole>
            <colorrole role="PlaceholderText">
-            <brush brushstyle="NoBrush">
-             <color alpha="128">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
               <red>255</red>
               <green>255</green>
               <blue>255</blue>
@@ -4941,8 +4895,8 @@ QComboBox::drop-down:button{
             </brush>
            </colorrole>
            <colorrole role="PlaceholderText">
-            <brush brushstyle="NoBrush">
-             <color alpha="128">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
               <red>255</red>
               <green>255</green>
               <blue>255</blue>
@@ -5006,8 +4960,8 @@ QComboBox::drop-down:button{
             </brush>
            </colorrole>
            <colorrole role="PlaceholderText">
-            <brush brushstyle="NoBrush">
-             <color alpha="128">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
               <red>255</red>
               <green>255</green>
               <blue>255</blue>
@@ -5019,7 +4973,6 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
-          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -5078,9 +5031,7 @@ QComboBox::drop-down:button{
          </size>
         </property>
         <property name="font">
-         <font>
-          <family>Arial</family>
-         </font>
+         <font/>
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -5308,9 +5259,7 @@ QComboBox::drop-down:button{
          </size>
         </property>
         <property name="font">
-         <font>
-          <family>Arial</family>
-         </font>
+         <font/>
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -5421,9 +5370,7 @@ QComboBox QAbstractItemView
          </size>
         </property>
         <property name="font">
-         <font>
-          <family>Arial</family>
-         </font>
+         <font/>
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -5542,8 +5489,8 @@ QComboBox::drop-down:button{
             </brush>
            </colorrole>
            <colorrole role="PlaceholderText">
-            <brush brushstyle="NoBrush">
-             <color alpha="128">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
               <red>255</red>
               <green>255</green>
               <blue>255</blue>
@@ -5607,8 +5554,8 @@ QComboBox::drop-down:button{
             </brush>
            </colorrole>
            <colorrole role="PlaceholderText">
-            <brush brushstyle="NoBrush">
-             <color alpha="128">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
               <red>255</red>
               <green>255</green>
               <blue>255</blue>
@@ -5672,8 +5619,8 @@ QComboBox::drop-down:button{
             </brush>
            </colorrole>
            <colorrole role="PlaceholderText">
-            <brush brushstyle="NoBrush">
-             <color alpha="128">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
               <red>255</red>
               <green>255</green>
               <blue>255</blue>
@@ -5685,7 +5632,6 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
-          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -5792,9 +5738,7 @@ QComboBox::drop-down:button{
          </size>
         </property>
         <property name="font">
-         <font>
-          <family>Arial</family>
-         </font>
+         <font/>
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -6211,9 +6155,7 @@ border: none;
          </size>
         </property>
         <property name="font">
-         <font>
-          <family>Arial</family>
-         </font>
+         <font/>
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -6410,8 +6352,8 @@ color: white;
         </property>
         <property name="styleSheet">
          <string notr="true">QPlainTextEdit {
-        font-family: &quot;Open Sans Semibold&quot;;
-        font-size: 11pt;
+        font-family: &quot;Open Sans&quot;;
+        font-size: 9px;
         color: white;
         background-color: rgba(0,0,0,0);
 }</string>
@@ -6978,8 +6920,8 @@ color: white;
            </brush>
           </colorrole>
           <colorrole role="PlaceholderText">
-           <brush brushstyle="NoBrush">
-            <color alpha="128">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
              <red>255</red>
              <green>255</green>
              <blue>255</blue>
@@ -7043,8 +6985,8 @@ color: white;
            </brush>
           </colorrole>
           <colorrole role="PlaceholderText">
-           <brush brushstyle="NoBrush">
-            <color alpha="128">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
              <red>255</red>
              <green>255</green>
              <blue>255</blue>
@@ -7108,8 +7050,8 @@ color: white;
            </brush>
           </colorrole>
           <colorrole role="PlaceholderText">
-           <brush brushstyle="NoBrush">
-            <color alpha="128">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
              <red>255</red>
              <green>255</green>
              <blue>255</blue>
@@ -7121,7 +7063,6 @@ color: white;
        </property>
        <property name="font">
         <font>
-         <family>Arial</family>
          <pointsize>-1</pointsize>
         </font>
        </property>
@@ -7438,9 +7379,7 @@ color: red;
         </size>
        </property>
        <property name="font">
-        <font>
-         <family>Arial</family>
-        </font>
+        <font/>
        </property>
        <property name="cursor">
         <cursorShape>PointingHandCursor</cursorShape>
@@ -7684,7 +7623,6 @@ QComboBox QAbstractItemView
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -7834,7 +7772,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -7989,7 +7926,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -8134,7 +8070,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -8270,9 +8205,7 @@ QToolTip {
        </property>
        <property name="font">
         <font>
-         <family>Arial</family>
          <pointsize>12</pointsize>
-         <weight>50</weight>
          <italic>true</italic>
          <bold>false</bold>
         </font>
@@ -8307,9 +8240,7 @@ color: rgb(225,225,225);
        </property>
        <property name="font">
         <font>
-         <family>Arial</family>
          <pointsize>12</pointsize>
-         <weight>50</weight>
          <italic>true</italic>
          <bold>false</bold>
         </font>
@@ -8485,9 +8416,7 @@ background: qlineargradient(spread: pan,
         </property>
         <property name="font">
          <font>
-          <family>Arial</family>
           <pointsize>20</pointsize>
-          <weight>10</weight>
           <italic>false</italic>
           <bold>false</bold>
          </font>
@@ -8533,7 +8462,6 @@ color: white</string>
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -8673,7 +8601,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -8833,7 +8760,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -9065,7 +8991,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -9215,7 +9140,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -9433,7 +9357,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -9586,7 +9509,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -9766,7 +9688,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -10139,7 +10060,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -10279,7 +10199,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -10457,7 +10376,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -10707,7 +10625,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -10867,7 +10784,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -11047,7 +10963,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -11197,7 +11112,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -11447,9 +11361,7 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Arial</family>
           <pointsize>20</pointsize>
-          <weight>10</weight>
           <italic>false</italic>
           <bold>false</bold>
          </font>
@@ -11495,7 +11407,6 @@ color: white</string>
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -11756,7 +11667,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -11896,7 +11806,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -12074,7 +11983,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -12324,7 +12232,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -12484,7 +12391,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -12664,7 +12570,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -12814,7 +12719,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -13063,9 +12967,7 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Arial</family>
           <pointsize>20</pointsize>
-          <weight>10</weight>
           <italic>false</italic>
           <bold>false</bold>
          </font>
@@ -13111,7 +13013,6 @@ color: white</string>
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -14123,7 +14024,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -14324,7 +14224,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -15119,7 +15018,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -15327,8 +15225,8 @@ QToolTip {
             </brush>
            </colorrole>
            <colorrole role="PlaceholderText">
-            <brush brushstyle="NoBrush">
-             <color alpha="128">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
               <red>100</red>
               <green>100</green>
               <blue>100</blue>
@@ -15392,8 +15290,8 @@ QToolTip {
             </brush>
            </colorrole>
            <colorrole role="PlaceholderText">
-            <brush brushstyle="NoBrush">
-             <color alpha="128">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
               <red>100</red>
               <green>100</green>
               <blue>100</blue>
@@ -15457,8 +15355,8 @@ QToolTip {
             </brush>
            </colorrole>
            <colorrole role="PlaceholderText">
-            <brush brushstyle="NoBrush">
-             <color alpha="128">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
               <red>100</red>
               <green>100</green>
               <blue>100</blue>
@@ -15470,7 +15368,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -15733,7 +15630,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -15883,7 +15779,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -16142,8 +16037,8 @@ QToolTip {
             </brush>
            </colorrole>
            <colorrole role="PlaceholderText">
-            <brush brushstyle="NoBrush">
-             <color alpha="128">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
               <red>255</red>
               <green>255</green>
               <blue>255</blue>
@@ -16207,8 +16102,8 @@ QToolTip {
             </brush>
            </colorrole>
            <colorrole role="PlaceholderText">
-            <brush brushstyle="NoBrush">
-             <color alpha="128">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
               <red>255</red>
               <green>255</green>
               <blue>255</blue>
@@ -16272,8 +16167,8 @@ QToolTip {
             </brush>
            </colorrole>
            <colorrole role="PlaceholderText">
-            <brush brushstyle="NoBrush">
-             <color alpha="128">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
               <red>255</red>
               <green>255</green>
               <blue>255</blue>
@@ -16285,7 +16180,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -16582,7 +16476,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -16793,8 +16686,8 @@ QToolTip {
             </brush>
            </colorrole>
            <colorrole role="PlaceholderText">
-            <brush brushstyle="NoBrush">
-             <color alpha="128">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
               <red>255</red>
               <green>255</green>
               <blue>255</blue>
@@ -16858,8 +16751,8 @@ QToolTip {
             </brush>
            </colorrole>
            <colorrole role="PlaceholderText">
-            <brush brushstyle="NoBrush">
-             <color alpha="128">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
               <red>255</red>
               <green>255</green>
               <blue>255</blue>
@@ -16923,8 +16816,8 @@ QToolTip {
             </brush>
            </colorrole>
            <colorrole role="PlaceholderText">
-            <brush brushstyle="NoBrush">
-             <color alpha="128">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
               <red>255</red>
               <green>255</green>
               <blue>255</blue>
@@ -16936,7 +16829,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -17044,7 +16936,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -17245,7 +17136,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -18232,7 +18122,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -18443,8 +18332,8 @@ QToolTip {
             </brush>
            </colorrole>
            <colorrole role="PlaceholderText">
-            <brush brushstyle="NoBrush">
-             <color alpha="128">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
               <red>255</red>
               <green>255</green>
               <blue>255</blue>
@@ -18508,8 +18397,8 @@ QToolTip {
             </brush>
            </colorrole>
            <colorrole role="PlaceholderText">
-            <brush brushstyle="NoBrush">
-             <color alpha="128">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
               <red>255</red>
               <green>255</green>
               <blue>255</blue>
@@ -18573,8 +18462,8 @@ QToolTip {
             </brush>
            </colorrole>
            <colorrole role="PlaceholderText">
-            <brush brushstyle="NoBrush">
-             <color alpha="128">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
               <red>255</red>
               <green>255</green>
               <blue>255</blue>
@@ -18586,7 +18475,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -18694,7 +18582,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -18895,7 +18782,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -19879,7 +19765,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -20090,8 +19975,8 @@ QToolTip {
             </brush>
            </colorrole>
            <colorrole role="PlaceholderText">
-            <brush brushstyle="NoBrush">
-             <color alpha="128">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
               <red>255</red>
               <green>255</green>
               <blue>255</blue>
@@ -20155,8 +20040,8 @@ QToolTip {
             </brush>
            </colorrole>
            <colorrole role="PlaceholderText">
-            <brush brushstyle="NoBrush">
-             <color alpha="128">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
               <red>255</red>
               <green>255</green>
               <blue>255</blue>
@@ -20220,8 +20105,8 @@ QToolTip {
             </brush>
            </colorrole>
            <colorrole role="PlaceholderText">
-            <brush brushstyle="NoBrush">
-             <color alpha="128">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
               <red>255</red>
               <green>255</green>
               <blue>255</blue>
@@ -20233,7 +20118,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -20341,7 +20225,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -20542,7 +20425,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -21526,7 +21408,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -21717,8 +21598,8 @@ QToolTip {
             </brush>
            </colorrole>
            <colorrole role="PlaceholderText">
-            <brush brushstyle="NoBrush">
-             <color alpha="128">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
               <red>255</red>
               <green>255</green>
               <blue>255</blue>
@@ -21782,8 +21663,8 @@ QToolTip {
             </brush>
            </colorrole>
            <colorrole role="PlaceholderText">
-            <brush brushstyle="NoBrush">
-             <color alpha="128">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
               <red>255</red>
               <green>255</green>
               <blue>255</blue>
@@ -21847,8 +21728,8 @@ QToolTip {
             </brush>
            </colorrole>
            <colorrole role="PlaceholderText">
-            <brush brushstyle="NoBrush">
-             <color alpha="128">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
               <red>255</red>
               <green>255</green>
               <blue>255</blue>
@@ -21860,7 +21741,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -21968,7 +21848,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -22217,7 +22096,6 @@ QToolTip {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -22348,9 +22226,7 @@ QToolTip {
        </property>
        <property name="font">
         <font>
-         <family>Arial</family>
          <pointsize>10</pointsize>
-         <weight>50</weight>
          <italic>true</italic>
          <bold>false</bold>
         </font>
@@ -22438,9 +22314,7 @@ background: qlineargradient(spread: pan,
        </property>
        <property name="font">
         <font>
-         <family>Arial</family>
          <pointsize>10</pointsize>
-         <weight>50</weight>
          <italic>true</italic>
          <bold>false</bold>
         </font>
@@ -24412,7 +24286,6 @@ QPushButton:checked{ border-color: rgba(10, 255, 0,0);}</string>
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -27176,7 +27049,6 @@ border:0px;</string>
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -27322,9 +27194,7 @@ QToolTip {
      </property>
      <property name="font">
       <font>
-       <family>Arial</family>
        <pointsize>12</pointsize>
-       <weight>50</weight>
        <italic>false</italic>
        <bold>false</bold>
       </font>
@@ -27616,9 +27486,7 @@ QPushButton:disabled {
     </property>
     <property name="font">
      <font>
-      <family>Arial</family>
       <pointsize>14</pointsize>
-      <weight>50</weight>
       <italic>true</italic>
       <bold>false</bold>
      </font>

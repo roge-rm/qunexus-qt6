@@ -20,8 +20,8 @@ int main(int argc, char *argv[])
     //QSGRendererInterface::GraphicsApi(QSGRendererInterface::OpenGL);
 #endif
 
-    QQmlApplicationEngine engine;
-    engine.load(QUrl(QStringLiteral("qrc:/qml/source/TableEditor.qml")));
+    //QQmlApplicationEngine engine;
+    //engine.load(QUrl(QStringLiteral("qrc:/qml/source/TableEditor.qml")));
 
     MainWindow w;
     //w.resize(800, 600);

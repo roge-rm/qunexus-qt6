@@ -2531,13 +2531,13 @@ void SysExEncDecode::slotProcessSysEx(QByteArray sysExMessageByteArray)
         switch (thisPacketType)
         {
         case SYX_SYS_GLOBALS:
-            qDebug() << "globals sysex received - fwupdateRequested: " << QuNexus_MDM->fwUpdateRequested << " globals byte count:" << sysExMessageByteArray.size();
+            qDebug() << "globals sysex received - firmwareUpdateState: " << QuNexus_MDM->firmwareUpdateState << " globals byte count:" << sysExMessageByteArray.size();
 
-            if(QuNexus_MDM->fwUpdateRequested)
+            if(QuNexus_MDM->firmwareUpdateState == FWUD_STATE_GLOBALS_REQ_SENT_WAIT)
             {
                 globals.clear();
                 globals = sysExMessageByteArray;
-                emit signalGlobalsReceivedDoFwUd();
+                QuNexus_MDM->firmwareUpdateState = FWUD_STATE_GLOBALS_RCVD;
             }
             else
             {

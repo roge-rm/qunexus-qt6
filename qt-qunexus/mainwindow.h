@@ -15,6 +15,7 @@
 #include "RtMidi.h"
 #include "KMI_DevData.h"
 #include <fwupdate.h>
+#include "kmi_updates.h"
 
 // qunexus
 //#include "qunexusmidi.h" // renamed from mididevicemanager.h for midi overhaul
@@ -28,8 +29,6 @@
 #include "cvtrimsinterface.h"
 
 #include "ui_perkeysensitivities.h"
-
-#include "kmi_updates.h"
 
 #include "midi.h"
 
@@ -67,16 +66,11 @@ public:
     // create KMI devices
     MidiDeviceManager* QuNexus;
 
-    // create a virtual port on MacOS, iOS, and Linux. Not supported on Windows.
-#ifndef Q_OS_WIN
-    MidiDeviceManager* virtualMidiPort;
-#endif
-
     // MIDI aux inputs and outputs are defined here. For products like SoftStep, you would define 8 inputs for controllers
     // and one output for hosted mode. For other editors you would likely define one output port for to mirror the
     // incoming MIDI from the controller, as a workaround for Windows not sharing ports.
     // For KMI_Central we are using these for the input/output dropdowns as a simple MIDI route demo.
-    MidiDeviceManager* midiAuxOut;
+    MidiDeviceManager* midiTHRU;
 
     // ------ qunexus ------------------------------------------------------------
     //QuNexusMidi*        qunexusMidi;
@@ -90,9 +84,8 @@ public:
 
     QCloseEvent         *editorCloseEvent;
 
-    QString MIDI_AUX_KEY;
-    bool    recallMidiAuxPort;
-    QString recallMidiAuxPortName;
+    QString MIDI_THRU_KEY;
+    QString recallMidiThruPortName;
 
     //----------------------------------- Stylesheets
     // General
@@ -128,11 +121,6 @@ public:
     QString blueStyleString;
     QFile* grayStyleFile;
     QString grayStyleString;
-
-    //Fonts
-    QFont*  fontOpenSans;
-    QFont*  fontAller;
-    QFont*  fontDroid;
 
     // Palettes
     QPalette paletteTooltip;
@@ -221,13 +209,13 @@ public slots:
 
     // ------ midi overhaul --------------------------------------------------------
     void slotMIDIPortChange(QString, uchar, uchar, int); // handles changes to MIDI i/o
-    void slotRefreshConnection();
+    //void slotRefreshConnection();
     void slotBootloaderMode(bool fwUpdateRequested);
     void slotFwUpdateSuccessCloseDialog(bool);
     void slotForceFirmwareUpdate();
     void slotFirmwareDetected(MidiDeviceManager *thisMDM, bool);
-    void slotUpdateMIDIaux();
-    void slotRecallMIDIaux();
+    void slotUpdateMIDIThru();
+    void slotRecallMIDIThru();
 
     // ------ end midi overhaul --------------------------------------------------------
 

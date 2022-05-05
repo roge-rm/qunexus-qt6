@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# This script packages the K-Mix mac application and handles the Apple signing/notarization process.
+# This script packages the Qt mac application and handles the Apple signing/notarization process.
 # - You must use the entitlements included in this directory.
 
 # app_name is the name of the dmg volume

@@ -43,7 +43,7 @@ MainWindow::MainWindow(QWidget *parent) :
     applicationVersion[1] = 1;
     applicationVersion[2] = 0;
 
-    betaVersion = ""; // leave blank for release
+    betaVersion = "A"; // leave blank for release
 
 
     thisFw = QByteArray(reinterpret_cast<char*>(_fw_ver_qunexus), sizeof(_fw_ver_qunexus));
@@ -66,9 +66,6 @@ MainWindow::MainWindow(QWidget *parent) :
     //kmiPorts->slotCreateVirtualOut("QuNexus Editor");
 #endif
 
-    // start polling at 100ms intervals
-    kmiPorts->devicePoller->start(100);
-
     // connect kmiPorts to our handler
     connect(kmiPorts, SIGNAL(signalPortUpdated(QString, uchar, uchar, int)),
             this, SLOT(slotMIDIPortChange(QString, uchar, uchar, int)));
@@ -79,7 +76,9 @@ MainWindow::MainWindow(QWidget *parent) :
     // create KMI device handlers
     // ******************************
 
-    QuNexus = new MidiDeviceManager(this, PID_QUNEXUS, "QuNexus");
+    QuNexus = new MidiDeviceManager(this, PID_QUNEXUS, "QuNexus", kmiPorts);
+
+    QuNexus->fwSaveRestoreGlobals = true; // set flag to preserve globals during fw update
 
     // setup firmware image
     QString thisFwFile = QString(":/resources/firmware/QuNexus_Firmware_v%1.%2.%3.syx")
@@ -97,8 +96,8 @@ MainWindow::MainWindow(QWidget *parent) :
     // connect firmware signals
     qDebug() << "connect signalFirmwareDetected";
 
-    // setup MIDI aux output
-    midiAuxOut = new MidiDeviceManager(this, PID_AUX, "MIDI Thru");
+    // setup MIDI thru output
+    midiTHRU = new MidiDeviceManager(this, PID_AUX, "MIDI Thru", kmiPorts);
 
     // ******************************
     // end KMI_Ports and device handlers
@@ -111,13 +110,14 @@ MainWindow::MainWindow(QWidget *parent) :
     qDebug() << "Qsettings file name" << settings->fileName();
 
     // check for updates
-    checkUpdates = new KMI_Updates(this, "QuNexus", settings, applicationVersion);
+    QString jsonVersionCheckURL = "https://files.keithmcmillen.com/products/qunexus/editor/softwareVersionCheck.json";
+    checkUpdates = new KMI_Updates(this, "QuNexus", settings, applicationVersion, jsonVersionCheckURL);
 
 
     // default file location
     const QString DEFAULT_DIR_KEY("default_dir");
 
-    qDebug() << "Default file save location - pre: " << settings->value(DEFAULT_DIR_KEY).toString();
+    //qDebug() << "Default file save location - pre: " << settings->value(DEFAULT_DIR_KEY).toString();
 
     // test if this is a directory
     QFileInfo check_file(settings->value(DEFAULT_DIR_KEY).toString());
@@ -128,7 +128,7 @@ MainWindow::MainWindow(QWidget *parent) :
         settings->setValue(DEFAULT_DIR_KEY, desktop);     // if key doesn't exist, set it to desktop
     }
 
-    qDebug() << "Default file save location - post: " << settings->value(DEFAULT_DIR_KEY).toString();
+    //qDebug() << "Default file save location - post: " << settings->value(DEFAULT_DIR_KEY).toString();
 
 
 
@@ -150,18 +150,18 @@ MainWindow::MainWindow(QWidget *parent) :
 
     presetManager->sysExEncDecode = sysExEncDecode; // setup shared pointers
 
-    // fonts
-//    fontOpenSans    = new QFont(":/resources/fonts/open-sans/OpenSans-Light.ttf");
-//    fontAller       = new QFont(":/resources/fonts/Aller/Aller_Lt.ttf");
-//    fontDroid       = new QFont(":/resources/fonts/droid-sans/DroidSans.ttf");
+    // ---- FONTS --------------------------
+    qDebug() << "------------ [FONTS SETUP] ---------------------------------------------------";
 
-    QFontDatabase::addApplicationFont(":/resources/fonts/open-sans/OpenSans-Light.ttf");
-    QFontDatabase::addApplicationFont(":/resources/fonts/Aller/Aller_Lt.ttf");
-    QFontDatabase::addApplicationFont(":/resources/fonts/droid-sans/DroidSans.ttf");
+    QString droidFont = ":/resources/fonts/droid-sans/DroidSans.ttf";
+    QString openSansSemibold = ":/resources/fonts/open-sans/OpenSans-Semibold.ttf";
+    QString openSansLight = ":/resources/fonts/open-sans/OpenSans-Light.ttf";
+    QString aller = ":/resources/fonts/Aller/Aller_Lt.ttf";
 
-//    qDebug() << "fontOpenSans family: " << fontOpenSans->family();
-//    qDebug() << "fontAller family: " << fontAller->family();
-//    qDebug() << "fontDroid family: " << fontDroid->family();
+    if (QFontDatabase::addApplicationFont(droidFont) == -1) qDebug() << "Could not load font: " << droidFont;
+    if (QFontDatabase::addApplicationFont(openSansSemibold) == -1) qDebug() << "Could not load font: " << openSansSemibold;
+    if (QFontDatabase::addApplicationFont(openSansLight) == -1) qDebug() << "Could not load font: " << openSansLight;
+    if (QFontDatabase::addApplicationFont(aller) == -1) qDebug() << "Could not load font: " << aller;
 
     // Palettes
     paletteTooltip.setColor(QPalette::Window, QColor(Qt::black));
@@ -204,25 +204,31 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     //connect(presetManager, SIGNAL(signalClearFocus()), this, SLOT(slotClearFocus()));
 
-    // connect dropdowns and connection status to MIDI aux ports
-    connect(ui->midi_outputs, SIGNAL(activated(int)), this, SLOT(slotUpdateMIDIaux()));
-    connect(QuNexus, SIGNAL(signalConnected(bool)), this, SLOT(slotUpdateMIDIaux()));
+    // MIDI Overhaul and FW Update
 
-    // remember last selected MIDI aux port
-    MIDI_AUX_KEY = "midi_aux_port";
+    // connect dropdowns and connection status to MIDI thru ports
+    connect(ui->midi_outputs, SIGNAL(activated(int)), this, SLOT(slotUpdateMIDIThru()));
+    connect(QuNexus, SIGNAL(signalConnected(bool)), this, SLOT(slotUpdateMIDIThru()));
 
-    qDebug() << "connected aux port";
+    // remember last selected MIDI thru port
+    MIDI_THRU_KEY = "midi_thru_port";
+
+    qDebug() << "connected thru port";
 
     // Firmware update Window
     fwUpdateWindow = new fwUpdate(this, "QuNexus", applicationFirmwareVersionString());
     fwUpdateWindow->setStyleSheet(generalStylesString);
 
+    // end MIDI Overhaul
+
     //Per Key Sensitivities
     pksWidget = new QWidget(this);
     pksWidget->setWindowFlags(Qt::Tool | Qt::WindowCloseButtonHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
-    pksWidget->setFixedSize(932,250);
+    pksWidget->setFixedSize(911,258);
     sensitivitiesUi->setupUi(pksWidget);
     pksWidget->setStyleSheet("QLabel {color: rgb(50,50,50); border-radius: 1px;}");
+    sensitivitiesUi->tabWidget->setCurrentIndex(0);
+    sensitivitiesUi->tabWidget->setTabEnabled(1, false);
 
     //Table Interface
     tableInterface = new TableInterface;
@@ -273,26 +279,8 @@ MainWindow::MainWindow(QWidget *parent) :
     // Parameter stylesheet - todo move to WIN
     paramLabelStyleSheetFile = new QFile(":stylesheets/resources/stylesheets/ParamLabelsWin.qss");
 
-    /* EB - this label doesn't exist anymore
-    QLabel *presetTitle = this->findChild<QLabel *>("Preset_Pane_Label");
-    presetTitle->setStyleSheet("background: rgba(0,0,0,0);"
-                               "color: qlineargradient(spread: pan,x1:0, y1:0, x2:1, y2:1,stop:1 rgba(200,200, 200, 255),stop:0 rgba(255,255, 255, 255));"
-                               "font: 75 italic 16pt \"Arial\";"
-                               "border: none;");
-
-    QLabel *libraryTitle = this->findChild<QLabel *>("Library_Pane_Label");
-    libraryTitle->setStyleSheet(presetTitle->styleSheet());
-
-    QLabel *sendTitle = this->findChild<QLabel *>("Send_Pane_Label");
-    sendTitle->setStyleSheet(presetTitle->styleSheet());
-    */
     qDebug() << "win stylesheets for preset library code";
     //StyleSheets for Preset Library
-    //QFile *tabWidgetStyleSheetFile = new QFile(":stylesheets/resources/stylesheets/TabWidgetStyleSheetWindows.qss");
-    //tabWidgetStyleSheetFile->open(QFile::ReadOnly);
-    // EB - modified below to build for win
-    //QString tabWidgetStyleSheetString = tabWidgetStyleSheetFile->readAll().data().decode("utf-8");
-    //QString tabWidgetStyleSheetString = QString::fromUtf8(tabWidgetStyleSheetFile->readAll().data());
 
     qDebug() << "win stylesheets code - frames";
     QFrame *headerFrame = this->findChild<QFrame *>("Header_Frame");
@@ -304,24 +292,6 @@ MainWindow::MainWindow(QWidget *parent) :
     QFrame *sendFrame = this->findChild<QFrame *>("Send_Frame");
     sendFrame->move(sendFrame->x(), sendFrame->y() + 25);
 
-//    QLabel *midiToCvLabel = this->findChild<QLabel *>("MIDI_To_CV_Label");
-//    midiToCvLabel->setStyleSheet(
-
-//                "background-color: rgba(0,0,0,0);"
-//                "border-top-left-radius:4.0;"
-//                "border-top-right-radius:4.0;"
-//                "border-bottom-left-radius:0;"
-//                "border-bottom-right-radius:0;"
-//                "border: none;"
-////                "color: qlineargradient(spread: pan,"
-////                "x1:0, y1:0, x2:1, y2:1,"
-////                "stop:1 rgba(0, 0, 0, 255),"
-////                "stop:0 rgba(100,100, 100, 255));"
-////                "font: 75 italic 10pt \"Arial\";"
-//                );
-
-//    QLabel *cvToMidiLabel = this->findChild<QLabel *>("CV_To_MIDI_Label");
-//    cvToMidiLabel->setStyleSheet(midiToCvLabel->styleSheet());
 
     QCheckBox *bendKeyboardEnable = this->findChild<QCheckBox *>("Controller_Bend_Pad_Keyboard_Layer_Enable_Disable");
     bendKeyboardEnable->setStyleSheet("color: rgb(255, 255, 255); font: 7pt \"Arial\";");
@@ -339,14 +309,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->Library_Pane_Label->move(632, 100);
     ui->SEQ_settings_label->move(6, 15);
     ui->SEQ_track_settings_label->move(6, 115);
-    ui->plainTextEdit->setStyleSheet("QPlainTextEdit {font-family: \"Open Sans Semibold\";font-size: 8pt;color: white;background-color: rgba(0,0,0,0);})");
-
-    //ui->tabWidget->setAutoFillBackground(true);
-//    ui->tab_kb->setAutoFillBackground(true);
-//    ui->tab_cv->setAutoFillBackground(true);
-//    ui->tab_ctl->setAutoFillBackground(true);
-//    ui->tab_seq->setAutoFillBackground(true);
-//    ui->tab_settings->setAutoFillBackground(true);
+    ui->plainTextEdit->setStyleSheet("QPlainTextEdit {font-family: \"Open Sans\";font-size: 8pt;color: white;background-color: rgba(0,0,0,0);})");
 
 #endif
 
@@ -401,24 +364,8 @@ MainWindow::MainWindow(QWidget *parent) :
     grayStyleFile->open(QFile::ReadOnly);
     grayStyleString = QLatin1String(grayStyleFile->readAll());
 
-    //Disable Unnecessary CV Gate UI Params
-//    slotSetEndableUiElement("CV_Out_Gate_Gain", false);
-//    slotSetEndableUiElement("CV_Out_Gate_Min", false);
-//    slotSetEndableUiElement("CV_Out_Gate_Max", false);
-//    slotSetEndableUiElement("CV_Out_Gate_Curve", false);
-//    slotSetEndableUiElement("CV_Out_Gate_Offset", false);
-//    slotSetEndableUiElement("CV_Out_Gate_MIDI_Input_Type", false);
-
     //Tab Widget Handles
     tabWidget = this->findChild<QTabWidget *>("tabWidget");
-//#ifdef Q_OS_MAC // EB attempt to make this cross platform
-
-//#else
-//    qDebug() << "windows tabWidget code";
-//    tabWidget->setGeometry(tabWidget->x(), tabWidget->y() - 5, tabWidget->width(), tabWidget->height() + 5);
-//    tabWidget->setStyleSheet(tabWidgetStyleSheetString);
-//    //qDebug() << "************************" << tabWidgetStyleSheetString;
-//#endif
 
     //Get Controller Tab Handle for Showing/Hiding
     controllerTab = tabWidget->widget(1);
@@ -432,9 +379,6 @@ MainWindow::MainWindow(QWidget *parent) :
     qDebug() << "Initialize Library UI";
     slotUpdateLibraryPresetsListUi(presetManager->jsonMasterMapEDITABLE, CREATE_PRESET, 0);
 
-    //Set library alignment for showing icons
-    //libraryPresetsList->setLayoutDirection(Qt::RightToLeft);
-
     //If no board presets are found yet, set to -1
     for(int i = 0; i < 4; i++)
     {
@@ -443,12 +387,6 @@ MainWindow::MainWindow(QWidget *parent) :
             settings->setValue(QString("boardPreset%1").arg(i), -1);
         }
     }
-
-//    if(settings->contains("selectedPreset") && settings->value("selectedPreset").toInt() < libraryPresetsList->count())
-//    {
-//        qDebug() << "--------------------- selected Preset" << presetManager->selectedLibraryPreset;
-//        libraryPresetsList->setCurrentRow(settings->value("selectedPreset").toInt());
-//    }
 
     //Loads edit buffer into display parameters
     slotUpdateParametersUi(presetManager->editBufferPresetMap);
@@ -485,6 +423,8 @@ MainWindow::MainWindow(QWidget *parent) :
     // EB Debug
     connect(presetManager, SIGNAL(signalUpdateLibraryPresetsUi(QVariantMap, int, int)), this, SLOT(slotUpdateLibraryPresetsListUi(QVariantMap, int, int))); //Library Window
 
+    // start polling at 100ms intervals
+    kmiPorts->devicePoller->start(100);
 }
 
 MainWindow::~MainWindow()
@@ -805,7 +745,7 @@ void MainWindow::slotFindAndConnectUi()
     connect(fwUpdateWindow, SIGNAL(signalFwUpdateSuccess()), QuNexus, SLOT(slotFirmwareUpdateReset()));                   // stop timeout timers
     connect(fwUpdateWindow, SIGNAL(signalFwUpdateSuccessCloseDialog(bool)), this, SLOT(slotFwUpdateSuccessCloseDialog(bool)));      // close fw dialog and connect
     connect(QuNexus, SIGNAL(signalRequestGlobals()), this, SLOT(slotSendGlobalsRequest()));                                 // request globals
-    connect(sysExEncDecode, SIGNAL(signalGlobalsReceivedDoFwUd()), QuNexus, SLOT(slotRequestFirmwareUpdate()));                      // if fwupdate requested globals then alert that we've saved them
+    //connect(sysExEncDecode, SIGNAL(signalGlobalsReceivedDoFwUd()), QuNexus, SLOT(slotRequestFirmwareUpdate()));                      // if fwupdate requested globals then alert that we've saved them
     connect(sysExEncDecode, SIGNAL(signalGlobalsReceived()), this, SLOT(slotEnableGlobalsWindows()));                       // enable globals window when we receive this
     connect(QuNexus, SIGNAL(signalRestoreGlobals()), this, SLOT(slotEncodeGlobals()));                                      // restore the globals after fw update
 
@@ -813,8 +753,8 @@ void MainWindow::slotFindAndConnectUi()
     connect(QuNexus, SIGNAL(signalBootloaderMode(bool)), this, SLOT(slotBootloaderMode(bool)));
 
     // reset portlist after sending bootloader commands, catch changes to port names
-    connect(QuNexus, SIGNAL(signalBeginBlTimer()), this, SLOT(slotRefreshConnection()));
-    connect(QuNexus, SIGNAL(signalBeginFwTimer()), this, SLOT(slotRefreshConnection()));
+    //connect(QuNexus, SIGNAL(signalBeginBlTimer()), this, SLOT(slotRefreshConnection()));
+    //connect(QuNexus, SIGNAL(signalBeginFwTimer()), this, SLOT(slotRefreshConnection()));
 
     // v1.0 firmware
     //connect(QuNexus, SIGNAL(signalFirmwareMismatch(QString,QString,QString)), this, SLOT(slotFirmwareOutOfDateDialog(QString,QString,QString)));
@@ -2564,16 +2504,16 @@ void MainWindow::slotQuNexusConnected(bool state)
         //presetManager->presetLoading = true; // block sending any data from editor until after initial sync
         presetManager->syncFlag = true;
 
-        // attempt to recall midi aux port when QuNexus connects
-        slotRecallMIDIaux();
+        // attempt to recall midi thru port when QuNexus connects
+        slotRecallMIDIThru();
     }
     else
     {
-        QLabel* connectedLabel = this->findChild<QLabel *>("QuNexus_Connected_Label");
-        connectedLabel->setText("Not Connected");
+//        QLabel* connectedLabel = this->findChild<QLabel *>("QuNexus_Connected_Label");
+//        connectedLabel->setText("Not Connected");
 
-        QFrame* connectedFrame = this->findChild<QFrame *>("QuNexus_Connected_Frame");
-        connectedFrame->setStyleSheet("border: 1px solid rgb(67,67,67); background: rgb(100,100,100); border-radius:6;");
+//        QFrame* connectedFrame = this->findChild<QFrame *>("QuNexus_Connected_Frame");
+//        connectedFrame->setStyleSheet("border: 1px solid rgb(67,67,67); background: rgb(100,100,100); border-radius:6;");
         //qDebug() << "<< set connected: false";
 
         // safety to ensure we don't connect this twice
@@ -2588,7 +2528,6 @@ void MainWindow::slotQuNexusConnected(bool state)
         syncQuNexusDialog->done(1); // close the sync dialog if it's open
 
         presetManager->syncFlag = false; // update presetmanager
-        QuNexus->hackStopTimer = false; // remove the hack to stop extra id replies
 
         slotHideGreyRect(); // hide grey rectangle when qunexus disconnects
     }
@@ -2710,6 +2649,7 @@ void MainWindow::slotSetGlobals(QString global, QByteArray globalByteArray)
     }
 }
 
+// load globals into a QList and then send them to QuNexus via SysEx
 void MainWindow::slotEncodeGlobals()
 {
     qDebug() << "slotencodeGlobals called";
@@ -2753,7 +2693,7 @@ void MainWindow::slotEncodeGlobals()
 
     //---------------------------------- CV Trims and Offsets
 
-    if (QuNexus->fwUpdateRequested) // reset these on a firmware update, not ideal but will avoid many zendesk tickets
+    if (QuNexus->firmwareUpdateState) // reset these on a firmware update, not ideal but will avoid many zendesk tickets
     {
         globalsList.append(100);
         globalsList.append(100);
@@ -2762,7 +2702,7 @@ void MainWindow::slotEncodeGlobals()
         globalsList.append(0);
         globalsList.append(0);
         globalsList.append(0);
-        fwUpdateWindow->slotAppendTextToConsole("Setting CV Trims to default settings...\n");
+        fwUpdateWindow->slotAppendTextToConsole("\nSetting CV Trims to default settings...\n");
     }
     else
     {
@@ -3930,6 +3870,8 @@ void MainWindow::slotSaveAndCloseEditor()
 void MainWindow::slotMIDIPortChange(QString portName, uchar inOrOut, uchar messageType, int portNum)
 {
     //qDebug() << "slotMIDIPortChange - " << kmiPorts->mType[messageType] << kmiPorts->inOut[inOrOut] << " portName:" << portName << " messageType: " << " portNum: " << portNum << "\n";
+    QLabel* connectedLabel = this->findChild<QLabel *>("QuNexus_Connected_Label");
+    QFrame* connectedFrame = this->findChild<QFrame *>("QuNexus_Connected_Frame");
 
     switch (messageType)
     {
@@ -3941,26 +3883,27 @@ void MainWindow::slotMIDIPortChange(QString portName, uchar inOrOut, uchar messa
             ui->midi_outputs->addItem(portName); // update dropdown
             slotFixDropDownWidth(ui->midi_outputs);
 
-            if (portName == settings->value(MIDI_AUX_KEY).toString()) // if this port matches the last selected port
+            if (portName == settings->value(MIDI_THRU_KEY).toString()) // if this port matches the last selected port
             {
-                recallMidiAuxPortName = portName; // store name
-                QTimer::singleShot(500, this, SLOT(slotRecallMIDIaux())); // wait, then set/update the port
+                recallMidiThruPortName = portName; // store name
+                QTimer::singleShot(500, this, SLOT(slotRecallMIDIThru())); // wait, then set/update the port
             }
 
         }
 
         // **** QuNexus connect *****************************************
-        if (portName == QUNEXUS_IN_P1 && inOrOut == PORT_IN)
+        if ((portName == QUNEXUS_IN_P1 || portName == QUNEXUS_OLD_IN_P1) && inOrOut == PORT_IN)
         {
             QuNexus->slotSetExpectedFW(thisFw);
-            //qDebug() << "qn deviceName: " << QuNexus->deviceName << " curfw is: " << QuNexus->currentFwVer;
-            QuNexus->updatePortIn(portNum);
+            QuNexus->slotUpdatePortIn(portNum);
             fwUpdateWindow->slotAppendTextToConsole("\nQuNexus Connected\n");
+            connectedLabel->setText("Detected");
+            connectedFrame->setStyleSheet("border: 1px solid rgb(67,67,67); background:rgb(255,128,0); border-radius:6;");
         }
-        else if (portName == QUNEXUS_OUT_P1 && inOrOut == PORT_OUT)
+        else if ((portName == QUNEXUS_OUT_P1 || portName == QUNEXUS_OLD_OUT_P1) && inOrOut == PORT_OUT)
         {
-            QuNexus->updatePortOut(portNum);
-            QuNexus->slotStartPolling("PORT_CONNECT"); // start polling when output port is added
+            QuNexus->slotUpdatePortOut(portNum);
+            QuNexus->pollingStatus = true;
         }
 
         break;
@@ -3978,13 +3921,18 @@ void MainWindow::slotMIDIPortChange(QString portName, uchar inOrOut, uchar messa
         }
 
         // **** QuNexus disconnect **************************************
-        if (portName == QUNEXUS_IN_P1)
+        if (inOrOut == PORT_IN && portName == QuNexus->portName_in)
         {
             // close ports and stop polling
             QuNexus->slotCloseMidiIn(SIGNAL_SEND);
+            fwUpdateWindow->slotAppendTextToConsole("\nQuNexus Disconnected\n");
+            connectedLabel->setText("Not Connected");
+            connectedFrame->setStyleSheet("border: 1px solid rgb(67,67,67); background: rgb(100,100,100); border-radius:6;");
+        }
+        else if (inOrOut == PORT_OUT && portName == QuNexus->portName_out)
+        {
             QuNexus->slotCloseMidiOut(SIGNAL_SEND);
-            QuNexus->slotStopPolling("PORT_DISCONNECT");
-            if (inOrOut == PORT_IN) fwUpdateWindow->slotAppendTextToConsole("\nQuNexus Disconnected\n");
+            QuNexus->pollingStatus = false;
         }
 
         break;
@@ -3992,13 +3940,13 @@ void MainWindow::slotMIDIPortChange(QString portName, uchar inOrOut, uchar messa
         //qDebug() << " PORT CHANGED - name: " << portName << portName << " inOrOut: " << kmiPorts->inOut[inOrOut] << " messageType: " << kmiPorts->mType[messageType] << " portNum: " << portNum << "\n";
 
         // **** QuNexus renumber ****************************************
-        if (portName == QUNEXUS_IN_P1 && inOrOut == PORT_IN)
+        if ((portName == QUNEXUS_IN_P1 || portName == QUNEXUS_OLD_IN_P1) && inOrOut == PORT_IN)
         {
-            QuNexus->updatePortIn(portNum);
+            QuNexus->slotUpdatePortIn(portNum);
         }
-        else if (portName == QUNEXUS_OUT_P1 && inOrOut == PORT_OUT)
+        else if ((portName == QUNEXUS_OUT_P1 || portName == QUNEXUS_OLD_OUT_P1) && inOrOut == PORT_OUT)
         {
-            QuNexus->updatePortOut(portNum);
+            QuNexus->slotUpdatePortOut(portNum);
         }
 
         break;
@@ -4009,18 +3957,25 @@ void MainWindow::slotMIDIPortChange(QString portName, uchar inOrOut, uchar messa
 
 // close and then reopen the QuNexus ports
 // this is needed when the bootloader and app port names do not match
-void MainWindow::slotRefreshConnection()
-{
-    qDebug() << "slotRefreshConnection called";
-//#ifdef Q_OS_MAC
-    QuNexus->slotResetConnections(QUNEXUS_IN_P1, QUNEXUS_BL_PORT);
-//#endif
-}
+//void MainWindow::slotRefreshConnection()
+//{
+//    qDebug() << "slotRefreshConnection called";
+////#ifdef Q_OS_MAC
+//    QuNexus->slotResetConnections(QUNEXUS_IN_P1, QUNEXUS_BL_PORT);
+////#endif
+//}
 
 
 void MainWindow::slotBootloaderMode(bool fwUpdateRequested)
 {
     qDebug() << "slotBootloaderMode called - fwUpdateRequested: "<< fwUpdateRequested;
+
+    QLabel* connectedLabel = this->findChild<QLabel *>("QuNexus_Connected_Label");
+    QFrame* connectedFrame = this->findChild<QFrame *>("QuNexus_Connected_Frame");
+
+    connectedLabel->setText("BOOTLOADER");
+    connectedFrame->setStyleSheet("border: 1px solid rgb(67,67,67); background:rgb(0,0,255); border-radius:6;");
+
     if (!fwUpdateRequested)
     {
         QMessageBox msgBox;
@@ -4042,9 +3997,7 @@ void MainWindow::slotFwUpdateSuccessCloseDialog(bool success)
 
     if (success)
     {
-        QuNexus->fwUpdateRequested = false;
-
-        slotUpdateMIDIaux();
+        slotUpdateMIDIThru();
         slotQuNexusConnected(true);
         slotEnableDisableMidiFunctions(true);
         slotSyncQuNexusDialog();
@@ -4078,6 +4031,12 @@ void MainWindow::slotFirmwareDetected(MidiDeviceManager *thisMDM, bool matches)
     {
         qDebug() << "Firmware MisMatch: " << thisMDM->PID << "name:" << thisMDM->deviceName;
 
+        QLabel* connectedLabel = this->findChild<QLabel *>("QuNexus_Connected_Label");
+        QFrame* connectedFrame = this->findChild<QFrame *>("QuNexus_Connected_Frame");
+
+        connectedLabel->setText("FIRMWARE\nOUT OF DATE");
+        connectedFrame->setStyleSheet("border: 1px solid rgb(67,67,67); background:rgb(255,0,0); border-radius:6;");
+
         // setup sysex connections to receive globals data
         QuNexus->disconnect(SIGNAL(signalRxSysExBA(QByteArray))); // disconnect to be safe
         connect(QuNexus, SIGNAL(signalRxSysExBA(QByteArray)), sysExEncDecode, SLOT(slotProcessSysEx(QByteArray)));
@@ -4090,50 +4049,50 @@ void MainWindow::slotFirmwareDetected(MidiDeviceManager *thisMDM, bool matches)
     }
 }
 
-// connect QuNexus midi input to to midi aux out
-void MainWindow::slotUpdateMIDIaux()
+// connect QuNexus midi input to to midi thru out
+void MainWindow::slotUpdateMIDIThru()
 {
-    qDebug() << "slotUpdateMIDIaux called - connected: " << connected;
+    qDebug() << "slotUpdateMIDIThru called - connected: " << connected;
 
     QuNexus->disconnect(SIGNAL(signalRxMidi_raw(uchar, uchar, uchar, uchar)));
 
     if (!connected) return; // don't continue if we aren't connected
 
-    settings->setValue(MIDI_AUX_KEY, ui->midi_outputs->currentText()); // store this setting for the next time we run the editor
+    settings->setValue(MIDI_THRU_KEY, ui->midi_outputs->currentText()); // store this setting for the next time we run the editor
 
     if (ui->midi_outputs->currentText() != "None")
     {
-        qDebug() << "update aux port: " << ui->midi_outputs->currentText();
+        qDebug() << "update thru port: " << ui->midi_outputs->currentText();
 
 
-        //recallMidiAuxPortName = ""; // reset this, which is only set when the stored aux port connects
+        //recallMidiThruPortName = ""; // reset this, which is only set when the stored thru port connects
 
         // set and open the ports
         int thisOutPort = kmiPorts->getOutPortNumber(ui->midi_outputs->currentText());
 
         if (thisOutPort == -1)
         {
-            qDebug() << "ERROR: Port \"" << ui->midi_outputs->currentText() << "\" does not exist, cannot open as MIDI aux port";
+            qDebug() << "ERROR: Port \"" << ui->midi_outputs->currentText() << "\" does not exist, cannot open as MIDI thru port";
             return;
         }
 
-        midiAuxOut->updatePortOut(thisOutPort);
-        connect(QuNexus, SIGNAL(signalRxMidi_raw(uchar, uchar, uchar, uchar)), midiAuxOut, SLOT(slotSendMIDI(uchar, uchar, uchar, uchar)));
+        midiTHRU->slotUpdatePortOut(thisOutPort);
+        connect(QuNexus, SIGNAL(signalRxMidi_raw(uchar, uchar, uchar, uchar)), midiTHRU, SLOT(slotSendMIDI(uchar, uchar, uchar, uchar)));
     }
     else
     {
         qDebug() << "close port, don't update";
-        midiAuxOut->slotCloseMidiOut(SIGNAL_NONE);
+        midiTHRU->slotCloseMidiOut(SIGNAL_NONE);
     }
 }
 
-void MainWindow::slotRecallMIDIaux()
+void MainWindow::slotRecallMIDIThru()
 {
-    qDebug() << "slotRecallMIDIaux called, connected: " << connected << " recallMidiAuxPortName: " << recallMidiAuxPortName;
-    if (!connected || recallMidiAuxPortName == "") return; // wait until connected to QuNexus and the previously saved port
+    qDebug() << "slotRecallMIDIThru called, connected: " << connected << " recallMidiThruPortName: " << recallMidiThruPortName;
+    if (!connected || recallMidiThruPortName == "") return; // wait until connected to QuNexus and the previously saved port
 
-    ui->midi_outputs->setCurrentText(recallMidiAuxPortName);
-    slotUpdateMIDIaux();
+    ui->midi_outputs->setCurrentText(recallMidiThruPortName);
+    slotUpdateMIDIThru();
 }
 
 // --------------------------------------------------------------------------------------
@@ -4165,13 +4124,6 @@ void MainWindow::slotFixDropDownWidth(QComboBox* thisDropDown)
 {
     int i, length = 0, index = 0;
 
-//    if (thisDropDown->objectName() == "SEQ_track_1_poly" ||
-//        thisDropDown->objectName() == "SEQ_track_2_poly" ||
-//        thisDropDown->objectName() == "SEQ_track_3_poly" )
-//    {
-//        return;
-//    }
-
     QString thisText;
 
     for (i = 0; i < thisDropDown->count(); i++)
@@ -4184,7 +4136,6 @@ void MainWindow::slotFixDropDownWidth(QComboBox* thisDropDown)
             //qDebug() << "this text: " << thisText << " index: " << index << " i: " << i << " length: " << length;
         }
     }
-
 
 #ifdef Q_OS_MAC
     QFont font("Droid Sans", 12);

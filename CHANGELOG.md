@@ -1,17 +1,21 @@
 #### QuNexus RED Editor and Firmware Changelog
 
-### 2.0.9 (2021-02-01)
+### 2.1.0 (2022-02-24)
 - Bug Fixes:
-	-Fixed a bug where playing a new chord very quickly in arpeggiator hold mode would sometimes not register all the played notes.
-	-Improved how MPE channels are assigned between the sequencer and keyboard when both are played simultaneously.
+	- Fixed bug with remote LED control
 
-### 2.0.8 (2021-01-20)
+### 2.0.9 (2022-02-01)
 - Bug Fixes:
-	-Only send midi realtime STOP if transport is playing
-	-Fix pitch CV resetting to 0 on noteoff
-	-Fixed LED display issue when routing clock and track outputs to USB1 and Expander ports
+	- Fixed a bug where playing a new chord very quickly in arpeggiator hold mode would sometimes not register all the played notes.
+	- Improved how MPE channels are assigned between the sequencer and keyboard when both are played simultaneously.
 
-### 2.0.7 (2021-01-18)
+### 2.0.8 (2022-01-20)
+- Bug Fixes:
+	- Only send midi realtime STOP if transport is playing
+	- Fix pitch CV resetting to 0 on noteoff
+	- Fixed LED display issue when routing clock and track outputs to USB1 and Expander ports
+
+### 2.0.7 (2022-01-18)
 - New Features/Changes:
 	- Added arpeggiator octaves with a range of 1-4 octaves. The Octave +/- keys in the shift menu will increase/decrease range. This feature also works with the step sequencer.
 	- Global and Track transpose range increased to +/- 48 semitones, octave +/- keys in transposition menus will inc/dec transposition by 1 octave.

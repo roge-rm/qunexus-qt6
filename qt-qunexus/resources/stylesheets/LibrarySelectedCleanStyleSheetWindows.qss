@@ -8,7 +8,7 @@ QListView {
     border: 1px solid black;
     padding: 6 0 6 0;
     color: rgba(175,175,175,255);
-    font: 6pt "Open Sans Semibold";
+    font: 6pt "Open Sans";
 }
 
 QListView::item:selected {
