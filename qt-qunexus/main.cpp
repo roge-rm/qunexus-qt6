@@ -9,7 +9,9 @@
 int main(int argc, char *argv[])
 {
     // set highdpi scale factor rounding
+#if QT_VERSION >= 0x060000
     QGuiApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
+#endif
 
     QApplication a(argc, argv);
 

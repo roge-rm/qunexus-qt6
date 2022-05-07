@@ -20,7 +20,7 @@
     border-left-style: solid; 
 	margin: 0px;
 	padding: 0px;
-	background-color: rgb(121, 121,0 ,0);
+	background-color: rgba(121, 121,0 ,0);
 }
 
 QWidget {
@@ -123,7 +123,7 @@ QComboBox QAbstractItemView {
 QComboBox::down-arrow {
 	image: url(noimage);
 	
-	background-color: rgb(121, 121,0 ,0);
+	background-color: rgba(121, 121,0 ,0);
 }
 
 QGroupBox {

@@ -178,16 +178,7 @@ QLabel {
            </color>
           </brush>
          </colorrole>
-         <colorrole role="PlaceholderText">
-          <brush brushstyle="NoBrush">
-           <color alpha="128">
-            <red>255</red>
-            <green>255</green>
-            <blue>255</blue>
-           </color>
-          </brush>
-         </colorrole>
-        </active>
+         </active>
         <inactive>
          <colorrole role="WindowText">
           <brush brushstyle="SolidPattern">
@@ -243,16 +234,7 @@ QLabel {
            </color>
           </brush>
          </colorrole>
-         <colorrole role="PlaceholderText">
-          <brush brushstyle="NoBrush">
-           <color alpha="128">
-            <red>255</red>
-            <green>255</green>
-            <blue>255</blue>
-           </color>
-          </brush>
-         </colorrole>
-        </inactive>
+         </inactive>
         <disabled>
          <colorrole role="WindowText">
           <brush brushstyle="SolidPattern">
@@ -308,16 +290,7 @@ QLabel {
            </color>
           </brush>
          </colorrole>
-         <colorrole role="PlaceholderText">
-          <brush brushstyle="NoBrush">
-           <color alpha="128">
-            <red>255</red>
-            <green>255</green>
-            <blue>255</blue>
-           </color>
-          </brush>
-         </colorrole>
-        </disabled>
+         </disabled>
        </palette>
       </property>
       <property name="font">
@@ -575,16 +548,7 @@ color: white;
            </color>
           </brush>
          </colorrole>
-         <colorrole role="PlaceholderText">
-          <brush brushstyle="NoBrush">
-           <color alpha="128">
-            <red>255</red>
-            <green>255</green>
-            <blue>255</blue>
-           </color>
-          </brush>
-         </colorrole>
-        </active>
+         </active>
         <inactive>
          <colorrole role="WindowText">
           <brush brushstyle="SolidPattern">
@@ -640,16 +604,7 @@ color: white;
            </color>
           </brush>
          </colorrole>
-         <colorrole role="PlaceholderText">
-          <brush brushstyle="NoBrush">
-           <color alpha="128">
-            <red>255</red>
-            <green>255</green>
-            <blue>255</blue>
-           </color>
-          </brush>
-         </colorrole>
-        </inactive>
+         </inactive>
         <disabled>
          <colorrole role="WindowText">
           <brush brushstyle="SolidPattern">
@@ -705,16 +660,7 @@ color: white;
            </color>
           </brush>
          </colorrole>
-         <colorrole role="PlaceholderText">
-          <brush brushstyle="NoBrush">
-           <color alpha="128">
-            <red>255</red>
-            <green>255</green>
-            <blue>255</blue>
-           </color>
-          </brush>
-         </colorrole>
-        </disabled>
+         </disabled>
        </palette>
       </property>
       <property name="font">
@@ -934,16 +880,7 @@ color: white;
            </color>
           </brush>
          </colorrole>
-         <colorrole role="PlaceholderText">
-          <brush brushstyle="NoBrush">
-           <color alpha="128">
-            <red>255</red>
-            <green>255</green>
-            <blue>255</blue>
-           </color>
-          </brush>
-         </colorrole>
-        </active>
+         </active>
         <inactive>
          <colorrole role="WindowText">
           <brush brushstyle="SolidPattern">
@@ -999,16 +936,7 @@ color: white;
            </color>
           </brush>
          </colorrole>
-         <colorrole role="PlaceholderText">
-          <brush brushstyle="NoBrush">
-           <color alpha="128">
-            <red>255</red>
-            <green>255</green>
-            <blue>255</blue>
-           </color>
-          </brush>
-         </colorrole>
-        </inactive>
+         </inactive>
         <disabled>
          <colorrole role="WindowText">
           <brush brushstyle="SolidPattern">
@@ -1064,16 +992,7 @@ color: white;
            </color>
           </brush>
          </colorrole>
-         <colorrole role="PlaceholderText">
-          <brush brushstyle="NoBrush">
-           <color alpha="128">
-            <red>255</red>
-            <green>255</green>
-            <blue>255</blue>
-           </color>
-          </brush>
-         </colorrole>
-        </disabled>
+         </disabled>
        </palette>
       </property>
       <property name="font">

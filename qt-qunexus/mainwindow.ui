@@ -32,7 +32,191 @@
    <bool>false</bool>
   </property>
   <property name="styleSheet">
-   <string notr="true"/>
+   <string notr="true">/*
+General Stylesheet for MacOS
+
+To preview in designer: Copy/Paste this into the MainWindow widget stylesheet  
+To build: Mainwindow.cpp will copy the contents of this .qss into the MainWindow widget during initialization. 
+          Make sure to copy/paste changes from designer back to this stylesheet.
+*/
+QLabel {
+
+        font: 10px &quot;Open Sans&quot;;
+        color: white;
+        background-color: rgba(0,0,0,0);
+}
+
+/* --[H1]------------------------- */
+QLabel#Library_Pane_Label, QLabel#Send_Pane_Label,
+QLabel#SEQ_settings_label, QLabel#SEQ_track_settings_label
+ {
+    background-color: rgba(0,0,0,0);
+    border: none;
+    color: qlineargradient(spread: pan, x1:0, y1:0, x2:1, y2:1,
+                            stop:1 rgba(200,200, 200, 255),
+                            stop:0 rgba(255,255,255, 255));
+    font: italic 18pt &quot;Arial&quot;;
+}
+
+/* --[H2]------------------------- */
+
+QLabel#MIDI_To_CV_Label, QLabel#CV_To_MIDI_Label{
+    background-color: rgba(0,0,0,0);
+    border-top-left-radius:4.0;
+    border-top-right-radius:4.0;
+    border-bottom-left-radius:0;
+    border-bottom-right-radius:0;
+    border: none;
+    color: rgb(225,225,225);
+    font: italic 14pt &quot;Arial&quot;;
+}
+
+
+
+
+/* --[PRESET LIBRARY] ------------- */
+
+QListView#presetLibraryList {
+        background: rgba(50, 50, 50, 255);
+        min-height: 90px;
+        margin: 0 0 0 0;
+    border: 1px solid black;
+        border-bottom-left-radius:4.0;
+        border-bottom-right-radius:4.0;
+        border-top-left-radius:4.0;
+        border-top-right-radius:4.0;
+        font-family: &quot;Arial&quot;;
+        font-size: 14px;
+}
+
+QListView#presetLibraryList::item:hover {
+    background:rgba(67, 67, 67, 255);
+    color: rgba(175,175,175,255);
+}
+
+QListView#presetLibraryList::item{
+        color: rgb(177, 177, 177);
+        border: 0px;
+}
+
+QListView#presetLibraryList::item:selected, QListView:item:focus
+ {
+ background: rgba(162, 0, 0, 200);
+ color: white;
+ }
+
+
+
+
+/*---------------------------------*/
+
+QCheckBox
+{
+    background-color: transparent;
+}
+
+QToolTip {
+    background: rgba(50,50,50,255);
+    color: white;
+}
+
+QPushButton {
+        font-family: &quot;Arial&quot;;
+        font-size: 8pt;
+        background-color: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(150, 150, 150, 255), stop:1 rgba(67, 67, 67, 255));
+        border-style: outset;
+        border-radius: 4.0;
+        border-width: 1pt;
+        border-color: black;
+        color: white;
+}
+
+QPushButton:pressed {
+        background-color: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(67, 67, 67, 255), stop:1 rgba(150, 150, 150, 255));
+}
+
+
+/*--------[SCROLL BAR]---------------------------*/
+
+
+QScrollBar:vertical {
+        background: rgb(44,44,44);
+/* margin sets up how far the handle can travel */
+        margin: 0px 0px 0px 0px;
+        border: none;
+}
+
+/* Sets up the color and height of handle */
+QScrollBar::handle:vertical {
+        background: rgb(115,115,115);
+        border: none;
+}
+
+/* This remvoes the bottom button by setting the height to 0px */
+QScrollBar::add-line:vertical {
+        height: 0px;
+        subcontrol-position: bottom;
+        subcontrol-origin: margin;
+        border: none;
+}
+
+/* This remvoes the top button by setting the height to 0px */
+QScrollBar::sub-line:vertical {
+        height: 0px;
+        subcontrol-position: top;
+        subcontrol-origin: margin;
+        border: none;
+}
+
+/* need this to get rid of crosshatching on scrollbar background */
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+        background: none;
+        border: none;
+}
+
+
+/* -- [TABS] ------------------------------------- */
+QTabWidget::pane {
+	border-bottom-left-radius:4px;
+	border-bottom-right-radius:4px;
+	border-top-right-radius:4px;
+}
+
+QTabWidget::tab-bar {
+	left: 0px;
+	border: 0px;
+}
+
+
+QTabBar::tab {
+	background: #262626;
+	border-color: rgb(167, 255, 67);
+	border-width:0px;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	width: 90px;
+	height: 20px;
+	padding: 4px;
+	color: white;
+	text-transform: uppercase;
+	font: 500 11px &quot;Open Sans&quot;;
+
+
+	margin-right: 2px;
+}
+
+QTabBar::tab:selected, QTabBar::tab:hover {
+	background-color:rgba(120, 120, 120, 255);
+	color:white;
+}
+
+QTabBar::tab:selected {
+	background: rgba(67, 67, 67, 255);
+	color:white;
+}
+
+
+</string>
   </property>
   <property name="tabShape">
    <enum>QTabWidget::Rounded</enum>
@@ -505,24 +689,24 @@ QPushButton:pressed {
        <x>11</x>
        <y>5</y>
        <width>71</width>
-       <height>31</height>
+       <height>26</height>
       </rect>
      </property>
      <property name="font">
       <font>
-       <pointsize>14</pointsize>
+       <pointsize>18</pointsize>
        <italic>true</italic>
        <bold>false</bold>
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true"/>
+      <string notr="true">border:0;</string>
      </property>
      <property name="text">
       <string>S e n d</string>
      </property>
      <property name="alignment">
-      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+      <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
      </property>
     </widget>
     <widget class="QLabel" name="label_64">
@@ -626,45 +810,7 @@ QPushButton:pressed {
       <enum>Qt::LeftToRight</enum>
      </property>
      <property name="styleSheet">
-      <string notr="true">QTabWidget::pane {
-	border-bottom-left-radius:4px;
-	border-bottom-right-radius:4px;
-	border-top-right-radius:4px;
-}
-
-QTabWidget::tab-bar {
-	left: 0px;
-	border: 0px;
-}
-
-
-QTabBar::tab {
-	background: #262626;
-	border-color: rgb(167, 255, 67);
-	border-width:0px;
-	border-top-left-radius: 4px;
-	border-top-right-radius: 4px;
-	width: 90px;
-	height: 20px;
-	padding: 4px;
-	color: white;
-	text-transform: uppercase;
-	font-size: 8pt &quot;Open Sans Extrabold&quot;;
-	margin-right: 2px;
-}
-
-QTabBar::tab:selected, QTabBar::tab:hover {
-	background-color:rgba(120, 120, 120, 255);
-	color:white;
-}
-
-QTabBar::tab:selected {
-	background: rgba(67, 67, 67, 255);
-	color:white;
-}
-
-
-</string>
+      <string notr="true"/>
      </property>
      <property name="tabShape">
       <enum>QTabWidget::Rounded</enum>
@@ -689,7 +835,148 @@ QTabBar::tab:selected {
        <string/>
       </property>
       <property name="styleSheet">
-       <string notr="true"/>
+       <string notr="true">
+/*----------- QComboBox ------------*/
+QComboBox {
+        font-family: &quot;Droid Sans&quot;;
+        font-size: 10px;
+        background: #666;
+        padding: 2px 4px;
+        border-style: outset;
+	border-radius: 4px;
+        border-width: 1px;
+        border-color: black;
+        color: white;
+    padding: 1px 3px 1px 4px;
+    combobox-popup: 0;
+}
+
+/* this gets replaced by fixDropdownWidth */
+QComboBox QAbstractItemView
+{
+    /*min-width: 80px;*/
+    /*min-height: 60px;*/
+    color:white;
+    selection-color: white;
+}
+
+/* disabled items */
+QComboBox QAbstractItemView::item:!enabled {
+    background: black;
+}
+
+/* dropdown box*/
+QComboBox QListView
+{
+	border: 1px solid rgba(0, 0, 0, 255);
+	border-radius: 0px;
+        background: rgba(67, 67, 67, 255);
+        color: rgb(220, 220, 220);
+    font: 11px &quot;Tahoma&quot;;
+    padding-left: 0px;
+    padding-right: 0px;
+    /*min-width: 175px;*/
+    /*min-height: 90px;*/
+        margin: 0 0 0 0;
+}
+
+
+/*bg color of other items */
+QComboBox QListView::item {
+	border-radius: 0px;
+        background: rgba(66, 66, 66, 255);
+    color: rgba(175,175,175,255);
+}
+
+/*bg color of selected, not hovered item */
+QComboBox QListView::item:selected {
+	border-radius: 0px;
+    background:rgba(99, 99, 99, 255);
+ 	color: white;
+}
+
+/* bg color of hovered item */
+QComboBox QListView::item:hover {
+	border-radius: 0px;
+    background: rgba(162, 0, 0, 200);
+ 	color: white;
+}
+
+
+/* required for down-arrow or it's blank*/
+QComboBox::drop-down {
+    width: 1px;
+    height: 1px;
+        border-radius:0;
+        border-left-color: darkgray;
+        border-left-style: solid;
+        margin: 0px;
+        padding: 0px;
+        background-color: transparent;
+        color: white;
+    subcontrol-origin: margin;
+    subcontrol-position: right center;
+}
+
+
+QComboBox::drop-down:button {
+        width: 15px;
+        height: 15px;
+}
+
+/* down arrow image */
+QComboBox::down-arrow {
+        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
+        width: 10px;
+        height: 10px;
+        top: 2px;
+        right: 3px;
+}
+
+QComboBox::down-arrow:disabled {
+        image: url(url(:/images/resources/images/Arrow.png));
+        right: 30px;
+}
+
+
+/*--------[SCROLL BAR]---------------------------*/
+
+
+QComboBox QAbstractItemView QScrollBar:vertical {
+	background: rgb(44,44,44);
+/* margin sets up how far the handle can travel */
+	margin: 0px 0px 0px 0px;
+	border: none;
+}
+
+/* Sets up the color and height of handle */
+QComboBox QAbstractItemView QScrollBar::handle:vertical {
+	background: rgb(115,115,115);
+	border: none;
+}
+
+/* This remvoes the bottom button by setting the height to 0px */
+QComboBox QAbstractItemView QScrollBar::add-line:vertical {
+	height: 0px;
+	subcontrol-position: bottom;
+	subcontrol-origin: margin;
+	border: none;
+}
+
+/* This remvoes the top button by setting the height to 0px */
+QComboBox QAbstractItemView QScrollBar::sub-line:vertical {
+	height: 0px;
+	subcontrol-position: top;
+	subcontrol-origin: margin;
+	border: none;
+}
+
+/* need this to get rid of crosshatching on scrollbar background */
+QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+	background: none;
+	border: none;
+}
+</string>
       </property>
       <attribute name="title">
        <string>Keyboard</string>
@@ -707,7 +994,7 @@ QTabBar::tab:selected {
         <bool>false</bool>
        </property>
        <property name="styleSheet">
-        <string notr="true">QFrame {
+        <string notr="true">QFrame#frame_16 {
 	background:rgba(120, 120, 120, 255);
 	border-style:none;
 	border-bottom-left-radius:0;
@@ -856,7 +1143,9 @@ QTabBar::tab:selected {
          </size>
         </property>
         <property name="font">
-         <font/>
+         <font>
+          <pointsize>-1</pointsize>
+         </font>
         </property>
         <property name="contextMenuPolicy">
          <enum>Qt::DefaultContextMenu</enum>
@@ -930,7 +1219,9 @@ QComboBox::drop-down:button{
          </size>
         </property>
         <property name="font">
-         <font/>
+         <font>
+          <pointsize>-1</pointsize>
+         </font>
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -942,23 +1233,7 @@ QComboBox::drop-down:button{
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Apply this curve to the incomming data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true"> QComboBox {
-	width: 80px;
-}
- QComboBox::drop-down  {
-	height: 200px;
-	background-color: transparent;
-}
-QComboBox::drop-down:button{
-	width: 15px;
-	height: 15px;
-}
-
-QComboBox QAbstractItemView
-{
-    min-width: 120px;
-    min-height: 150px;
-}</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -1155,16 +1430,7 @@ QComboBox QAbstractItemView
              </color>
             </brush>
            </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </active>
+           </active>
           <inactive>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -1220,16 +1486,7 @@ QComboBox QAbstractItemView
              </color>
             </brush>
            </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </inactive>
+           </inactive>
           <disabled>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -1285,16 +1542,7 @@ QComboBox QAbstractItemView
              </color>
             </brush>
            </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </disabled>
+           </disabled>
          </palette>
         </property>
         <property name="font">
@@ -1380,69 +1628,6 @@ QComboBox QAbstractItemView
          <number>127</number>
         </property>
        </widget>
-       <widget class="QSpinBox" name="dummy1_4">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>12</y>
-          <width>60</width>
-          <height>4</height>
-         </rect>
-        </property>
-        <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;(5 to 255bpm)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-        <property name="layoutDirection">
-         <enum>Qt::LeftToRight</enum>
-        </property>
-        <property name="autoFillBackground">
-         <bool>false</bool>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QSpinBox {
-	font-family:&quot;Arial&quot;;
-	border-radius:4.0;
-	border-color:black;
-	background-color: rgba(67, 67, 67, 255);
-	font-size: 11px;
-	color: white;
-	padding:0, 3, 0, 0;
-}</string>
-        </property>
-        <property name="wrapping">
-         <bool>false</bool>
-        </property>
-        <property name="frame">
-         <bool>true</bool>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-        <property name="buttonSymbols">
-         <enum>QAbstractSpinBox::NoButtons</enum>
-        </property>
-        <property name="suffix">
-         <string> bpm</string>
-        </property>
-        <property name="minimum">
-         <number>5</number>
-        </property>
-        <property name="maximum">
-         <number>255</number>
-        </property>
-        <property name="value">
-         <number>120</number>
-        </property>
-       </widget>
-       <zorder>dummy1_4</zorder>
-       <zorder>Keyboard_Velocity_Max</zorder>
-       <zorder>Keyboard_Velocity_Min</zorder>
-       <zorder>label_25</zorder>
-       <zorder>Keyboard_Velocity_MIDI_Output_Device</zorder>
-       <zorder>Keyboard_Velocity_Curve</zorder>
-       <zorder>Keyboard_Velocity_Source</zorder>
-       <zorder>Keyboard_Velocity_Gain</zorder>
-       <zorder>Keyboard_Velocity_Offset</zorder>
       </widget>
       <widget class="QFrame" name="frame_17">
        <property name="geometry">
@@ -1457,7 +1642,7 @@ QComboBox QAbstractItemView
         <bool>false</bool>
        </property>
        <property name="styleSheet">
-        <string notr="true">QFrame {
+        <string notr="true">QFrame#frame_17 {
 	background:rgba(120, 120, 120, 255);
 	border-style:none;
 	border-bottom-left-radius:0;
@@ -1590,7 +1775,9 @@ QComboBox QAbstractItemView
          </size>
         </property>
         <property name="font">
-         <font/>
+         <font>
+          <pointsize>-1</pointsize>
+         </font>
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -1684,7 +1871,9 @@ QComboBox QAbstractItemView
          </size>
         </property>
         <property name="font">
-         <font/>
+         <font>
+          <pointsize>-1</pointsize>
+         </font>
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -1696,23 +1885,7 @@ QComboBox QAbstractItemView
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Apply this curve to the incomming data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true"> QComboBox {
-	width: 80px;
-}
- QComboBox::drop-down  {
-	height: 200px;
-	background-color: transparent;
-}
-QComboBox::drop-down:button{
-	width: 15px;
-	height: 15px;
-}
-
-QComboBox QAbstractItemView
-{
-    min-width: 120px;
-    min-height: 150px;
-}</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -1795,7 +1968,9 @@ QComboBox QAbstractItemView
          </size>
         </property>
         <property name="font">
-         <font/>
+         <font>
+          <pointsize>-1</pointsize>
+         </font>
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -1913,16 +2088,7 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </active>
+           </active>
           <inactive>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -1978,16 +2144,7 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </inactive>
+           </inactive>
           <disabled>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -2043,16 +2200,7 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </disabled>
+           </disabled>
          </palette>
         </property>
         <property name="font">
@@ -2152,7 +2300,7 @@ QComboBox::drop-down:button{
         <bool>false</bool>
        </property>
        <property name="styleSheet">
-        <string notr="true">QFrame {
+        <string notr="true">QFrame#frame_18 {
 	background:rgba(120, 120, 120, 255);
 	border-style:none;
 	border-bottom-left-radius:0;
@@ -2304,7 +2452,9 @@ QComboBox::drop-down:button{
          </size>
         </property>
         <property name="font">
-         <font/>
+         <font>
+          <pointsize>-1</pointsize>
+         </font>
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -2316,23 +2466,7 @@ QComboBox::drop-down:button{
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Apply this curve to the incomming data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true"> QComboBox {
-	width: 80px;
-}
- QComboBox::drop-down  {
-	height: 200px;
-	background-color: transparent;
-}
-QComboBox::drop-down:button{
-	width: 15px;
-	height: 15px;
-}
-
-QComboBox QAbstractItemView
-{
-    min-width: 120px;
-    min-height: 150px;
-}</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -2415,7 +2549,9 @@ QComboBox QAbstractItemView
          </size>
         </property>
         <property name="font">
-         <font/>
+         <font>
+          <pointsize>-1</pointsize>
+         </font>
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -2581,16 +2717,7 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </active>
+           </active>
           <inactive>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -2646,16 +2773,7 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </inactive>
+           </inactive>
           <disabled>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -2711,16 +2829,7 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </disabled>
+           </disabled>
          </palette>
         </property>
         <property name="font">
@@ -2783,7 +2892,9 @@ QComboBox::drop-down:button{
          </size>
         </property>
         <property name="font">
-         <font/>
+         <font>
+          <pointsize>-1</pointsize>
+         </font>
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -2795,17 +2906,7 @@ QComboBox::drop-down:button{
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Send channel pressure messages using the selected keyboard source.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox {
-	width: 130px;
-}
- QComboBox::drop-down  {
-	height: 200px;
-	background-color: transparent;
-}
-QComboBox::drop-down:button{
-	width: 15px;
-	height: 15px;
-}</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -2847,7 +2948,7 @@ QComboBox::drop-down:button{
         <bool>false</bool>
        </property>
        <property name="styleSheet">
-        <string notr="true">QFrame {
+        <string notr="true">QFrame#frame_19 {
 	background:rgba(120, 120, 120, 255);
 	border-style:none;
 	border-bottom-left-radius:0;
@@ -3044,7 +3145,9 @@ QComboBox::drop-down:button{
          </size>
         </property>
         <property name="font">
-         <font/>
+         <font>
+          <pointsize>-1</pointsize>
+         </font>
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -3056,23 +3159,7 @@ QComboBox::drop-down:button{
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Apply this curve to the incomming data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true"> QComboBox {
-	width: 80px;
-}
- QComboBox::drop-down  {
-	height: 200px;
-	background-color: transparent;
-}
-QComboBox::drop-down:button{
-	width: 15px;
-	height: 15px;
-}
-
-QComboBox QAbstractItemView
-{
-    min-width: 120px;
-    min-height: 150px;
-}</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -3155,7 +3242,9 @@ QComboBox QAbstractItemView
          </size>
         </property>
         <property name="font">
-         <font/>
+         <font>
+          <pointsize>-1</pointsize>
+         </font>
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -3321,16 +3410,7 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </active>
+           </active>
           <inactive>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -3386,16 +3466,7 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </inactive>
+           </inactive>
           <disabled>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -3451,16 +3522,7 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </disabled>
+           </disabled>
          </palette>
         </property>
         <property name="font">
@@ -3523,7 +3585,9 @@ QComboBox::drop-down:button{
          </size>
         </property>
         <property name="font">
-         <font/>
+         <font>
+          <pointsize>-1</pointsize>
+         </font>
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -3535,18 +3599,7 @@ QComboBox::drop-down:button{
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Send a control change using the selected keyboard source.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox {
-	width: 130px;
-}
-
- QComboBox::drop-down  {
-	height: 200px;
-	background-color: transparent;
-}
-QComboBox::drop-down:button{
-	width: 15px;
-	height: 15px;
-}</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -3598,7 +3651,7 @@ QComboBox::drop-down:button{
         <bool>false</bool>
        </property>
        <property name="styleSheet">
-        <string notr="true">QFrame {
+        <string notr="true">QFrame#frame_35 {
 	background:rgba(120, 120, 120, 255);
 	border-style:none;
 	border-bottom-left-radius:0;
@@ -3795,7 +3848,9 @@ QComboBox::drop-down:button{
          </size>
         </property>
         <property name="font">
-         <font/>
+         <font>
+          <pointsize>-1</pointsize>
+         </font>
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -3807,23 +3862,7 @@ QComboBox::drop-down:button{
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Apply this curve to the incomming data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true"> QComboBox {
-	width: 80px;
-}
- QComboBox::drop-down  {
-	height: 200px;
-	background-color: transparent;
-}
-QComboBox::drop-down:button{
-	width: 15px;
-	height: 15px;
-}
-
-QComboBox QAbstractItemView
-{
-    min-width: 120px;
-    min-height: 150px;
-}</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -3906,7 +3945,9 @@ QComboBox QAbstractItemView
          </size>
         </property>
         <property name="font">
-         <font/>
+         <font>
+          <pointsize>-1</pointsize>
+         </font>
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -4072,16 +4113,7 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </active>
+           </active>
           <inactive>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -4137,16 +4169,7 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </inactive>
+           </inactive>
           <disabled>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -4202,16 +4225,7 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </disabled>
+           </disabled>
          </palette>
         </property>
         <property name="font">
@@ -4274,7 +4288,9 @@ QComboBox::drop-down:button{
          </size>
         </property>
         <property name="font">
-         <font/>
+         <font>
+          <pointsize>-1</pointsize>
+         </font>
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -4286,18 +4302,7 @@ QComboBox::drop-down:button{
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Send a control change using the selected keyboard source.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox {
-	width: 130px;
-}
-
- QComboBox::drop-down  {
-	height: 200px;
-	background-color: transparent;
-}
-QComboBox::drop-down:button{
-	width: 15px;
-	height: 15px;
-}</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -4355,7 +4360,7 @@ QComboBox::drop-down:button{
         <bool>false</bool>
        </property>
        <property name="styleSheet">
-        <string notr="true">QFrame {
+        <string notr="true">QFrame#frame_36 {
 	background:rgba(120, 120, 120, 255);
 	border-style:none;
 	border-bottom-left-radius:4.0;
@@ -4552,7 +4557,9 @@ QComboBox::drop-down:button{
          </size>
         </property>
         <property name="font">
-         <font/>
+         <font>
+          <pointsize>-1</pointsize>
+         </font>
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -4564,23 +4571,7 @@ QComboBox::drop-down:button{
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Apply this curve to the incomming data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true"> QComboBox {
-	width: 80px;
-}
- QComboBox::drop-down  {
-	height: 200px;
-	background-color: transparent;
-}
-QComboBox::drop-down:button{
-	width: 15px;
-	height: 15px;
-}
-
-QComboBox QAbstractItemView
-{
-    min-width: 120px;
-    min-height: 150px;
-}</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -4663,7 +4654,9 @@ QComboBox QAbstractItemView
          </size>
         </property>
         <property name="font">
-         <font/>
+         <font>
+          <pointsize>-1</pointsize>
+         </font>
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -4829,16 +4822,7 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </active>
+           </active>
           <inactive>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -4894,16 +4878,7 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </inactive>
+           </inactive>
           <disabled>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -4959,16 +4934,7 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </disabled>
+           </disabled>
          </palette>
         </property>
         <property name="font">
@@ -5031,7 +4997,9 @@ QComboBox::drop-down:button{
          </size>
         </property>
         <property name="font">
-         <font/>
+         <font>
+          <pointsize>-1</pointsize>
+         </font>
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -5043,19 +5011,7 @@ QComboBox::drop-down:button{
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Send a control change using the selected keyboard source.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox {
-	width: 130px;
-}
-
- QComboBox::drop-down  {
-	height: 200px;
-	background-color: transparent;
-}
-
-QComboBox::drop-down:button{
-	width: 15px;
-	height: 15px;
-}</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -5107,7 +5063,7 @@ QComboBox::drop-down:button{
         <bool>false</bool>
        </property>
        <property name="styleSheet">
-        <string notr="true">QFrame {
+        <string notr="true">QFrame#frame_24 {
 	background:rgba(120, 120, 120, 255);
 	border-style:none;
 	border-bottom-left-radius:0;
@@ -5259,7 +5215,9 @@ QComboBox::drop-down:button{
          </size>
         </property>
         <property name="font">
-         <font/>
+         <font>
+          <pointsize>-1</pointsize>
+         </font>
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -5271,23 +5229,7 @@ QComboBox::drop-down:button{
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Apply this curve to the incomming data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true"> QComboBox {
-	width: 80px;
-}
- QComboBox::drop-down  {
-	height: 200px;
-	background-color: transparent;
-}
-QComboBox::drop-down:button{
-	width: 15px;
-	height: 15px;
-}
-
-QComboBox QAbstractItemView
-{
-    min-width: 120px;
-    min-height: 150px;
-}</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -5370,7 +5312,9 @@ QComboBox QAbstractItemView
          </size>
         </property>
         <property name="font">
-         <font/>
+         <font>
+          <pointsize>-1</pointsize>
+         </font>
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -5488,16 +5432,7 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </active>
+           </active>
           <inactive>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -5553,16 +5488,7 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </inactive>
+           </inactive>
           <disabled>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -5618,16 +5544,7 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </disabled>
+           </disabled>
          </palette>
         </property>
         <property name="font">
@@ -5738,7 +5655,9 @@ QComboBox::drop-down:button{
          </size>
         </property>
         <property name="font">
-         <font/>
+         <font>
+          <pointsize>-1</pointsize>
+         </font>
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -5750,18 +5669,7 @@ QComboBox::drop-down:button{
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Send polyphonic aftertouch messages using the selected keyboard source.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox {
-	width: 130px;
-}
-
- QComboBox::drop-down  {
-	height: 200px;
-	background-color: transparent;
-}
-QComboBox::drop-down:button{
-	width: 15px;
-	height: 15px;
-}</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -5984,12 +5892,6 @@ QComboBox::drop-down:button{
         <property name="layoutDirection">
          <enum>Qt::RightToLeft</enum>
         </property>
-        <property name="styleSheet">
-         <string notr="true">QToolTip {
-background: #006599;
-color: white;
-}</string>
-        </property>
         <property name="text">
          <string/>
         </property>
@@ -6005,12 +5907,6 @@ color: white;
         </property>
         <property name="toolTip">
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When on, each additional key pressed moves to the next MIDI Channel.  Useful for getting a different pitch bend and pressure for each note.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QToolTip {
-background: #006599;
-color: white;
-}</string>
         </property>
         <property name="text">
          <string>On/Off</string>
@@ -6061,11 +5957,7 @@ border-bottom-left-radius:0;
 border-bottom-right-radius:0;
 border: none;
 }
-
-QToolTip {
-background: #006599;
-color: white;
-}</string>
+</string>
        </property>
        <property name="text">
         <string>Channel Rotation</string>
@@ -6110,7 +6002,7 @@ border: none;
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">QFrame {
+        <string notr="true">QFrame#frame_37 {
 	background:rgba(120, 120, 120, 255);
 	border-bottom-left-radius:4.0;
 	border-bottom-right-radius:4.0;
@@ -6155,7 +6047,9 @@ border: none;
          </size>
         </property>
         <property name="font">
-         <font/>
+         <font>
+          <pointsize>-1</pointsize>
+         </font>
         </property>
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -6167,17 +6061,7 @@ border: none;
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Determines which keys that are pressed will have control over the tilt, channel pressure, poly aftertouch, and other sources of Keyboard Layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true"> QComboBox {
-	width: 68px;
-}
- QComboBox::drop-down  {
-	height: 100px;
-	background-color: transparent;
-}
-QComboBox::drop-down:button{
-	width: 15px;
-	height: 15px;
-}</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -6252,7 +6136,7 @@ border: none;
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">QFrame {
+        <string notr="true">QFrame#frame_toggle {
 	background:rgba(120, 120, 120, 255);
 	border-bottom-left-radius:4.0;
 	border-bottom-right-radius:4.0;
@@ -6288,11 +6172,7 @@ border-bottom-left-radius:0;
 border-bottom-right-radius:0;
 border: none;
 }
-
-QToolTip {
-background: #006599;
-color: white;
-}</string>
+</string>
        </property>
        <property name="text">
         <string/>
@@ -6311,7 +6191,7 @@ color: white;
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">QFrame {
+        <string notr="true">QFrame#frame_3 {
 	background:rgba(120, 120, 120, 255);
 	border-bottom-left-radius:0.0;
 	border-bottom-right-radius:4.0;
@@ -6722,11 +6602,7 @@ qproperty-alignment: AlignCenter;
 	color: white;
 	padding:0, 3, 0, 0;
 }
-
-QToolTip {
-background: #006599;
-color: white;
-}</string>
+</string>
        </property>
        <property name="wrapping">
         <bool>false</bool>
@@ -6775,11 +6651,7 @@ color: white;
 	color: white;
 	padding:0, 3, 0, 0;
 }
-
-QToolTip {
-background: #006599;
-color: white;
-}</string>
+</string>
        </property>
        <property name="wrapping">
         <bool>false</bool>
@@ -6828,11 +6700,7 @@ color: white;
 	color: white;
 	padding:0, 2, 0, 0;
 }
-
-QToolTip {
-background: #006599;
-color: white;
-}</string>
+</string>
        </property>
        <property name="wrapping">
         <bool>false</bool>
@@ -6919,16 +6787,7 @@ color: white;
             </color>
            </brush>
           </colorrole>
-          <colorrole role="PlaceholderText">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>255</red>
-             <green>255</green>
-             <blue>255</blue>
-            </color>
-           </brush>
-          </colorrole>
-         </active>
+          </active>
          <inactive>
           <colorrole role="WindowText">
            <brush brushstyle="SolidPattern">
@@ -6984,16 +6843,7 @@ color: white;
             </color>
            </brush>
           </colorrole>
-          <colorrole role="PlaceholderText">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>255</red>
-             <green>255</green>
-             <blue>255</blue>
-            </color>
-           </brush>
-          </colorrole>
-         </inactive>
+          </inactive>
          <disabled>
           <colorrole role="WindowText">
            <brush brushstyle="SolidPattern">
@@ -7049,16 +6899,7 @@ color: white;
             </color>
            </brush>
           </colorrole>
-          <colorrole role="PlaceholderText">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>255</red>
-             <green>255</green>
-             <blue>255</blue>
-            </color>
-           </brush>
-          </colorrole>
-         </disabled>
+          </disabled>
         </palette>
        </property>
        <property name="font">
@@ -7079,11 +6920,7 @@ color: white;
 	color: white;
 	padding:0, 3, 0, 0;
 }
-
-QToolTip {
-background: #006599;
-color: red;
-}</string>
+</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -7210,11 +7047,6 @@ color: red;
 	font-size: 11px;
 	color: white;
 	padding:0, 3, 0, 0;
-}
-
-QToolTip {
-background: #006599;
-color: red;
 }</string>
        </property>
        <property name="wrapping">
@@ -7273,11 +7105,7 @@ color: red;
 	color: white;
 	padding:0, 3, 0, 0;
 }
-
-QToolTip {
-background: #006599;
-color: red;
-}</string>
+</string>
        </property>
        <property name="wrapping">
         <bool>false</bool>
@@ -7379,7 +7207,9 @@ color: red;
         </size>
        </property>
        <property name="font">
-        <font/>
+        <font>
+         <pointsize>-1</pointsize>
+        </font>
        </property>
        <property name="cursor">
         <cursorShape>PointingHandCursor</cursorShape>
@@ -7391,23 +7221,7 @@ color: red;
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Keyboard Toggle mode. &amp;quot;On&amp;quot; lets you toggle multiple keys on and off. &amp;quot;Legato&amp;quot; leaves the last note on until a new key is pressed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="styleSheet">
-        <string notr="true"> QComboBox {
-	width: 65px;
-}
- QComboBox::drop-down  {
-	height: 100px;
-	background-color: transparent;
-}
-QComboBox::drop-down:button{
-	width: 15px;
-	height: 15px;
-}
-
-QComboBox QAbstractItemView
-{
-    min-width: 75px;
-    min-height: 45;
-}</string>
+        <string notr="true"/>
        </property>
        <property name="maxVisibleItems">
         <number>10</number>
@@ -7510,7 +7324,148 @@ QComboBox QAbstractItemView
        <string/>
       </property>
       <property name="styleSheet">
-       <string notr="true"/>
+       <string notr="true">
+/*----------- QComboBox ------------*/
+QComboBox {
+        font-family: &quot;Droid Sans&quot;;
+        font-size: 10px;
+        background: #666;
+        padding: 2px 4px;
+        border-style: outset;
+	border-radius: 4px;
+        border-width: 1px;
+        border-color: black;
+        color: white;
+    padding: 1px 3px 1px 4px;
+    combobox-popup: 0;
+}
+
+/* this gets replaced by fixDropdownWidth */
+QComboBox QAbstractItemView
+{
+    /*min-width: 80px;*/
+    /*min-height: 60px;*/
+    color:white;
+    selection-color: white;
+}
+
+/* disabled items */
+QComboBox QAbstractItemView::item:!enabled {
+    background: black;
+}
+
+/* dropdown box*/
+QComboBox QListView
+{
+	border: 1px solid rgba(0, 0, 0, 255);
+	border-radius: 0px;
+        background: rgba(67, 67, 67, 255);
+        color: rgb(220, 220, 220);
+    font: 11px &quot;Tahoma&quot;;
+    padding-left: 0px;
+    padding-right: 0px;
+    /*min-width: 175px;*/
+    /*min-height: 90px;*/
+        margin: 0 0 0 0;
+}
+
+
+/*bg color of other items */
+QComboBox QListView::item {
+	border-radius: 0px;
+        background: rgba(66, 66, 66, 255);
+    color: rgba(175,175,175,255);
+}
+
+/*bg color of selected, not hovered item */
+QComboBox QListView::item:selected {
+	border-radius: 0px;
+    background:rgba(99, 99, 99, 255);
+ 	color: white;
+}
+
+/* bg color of hovered item */
+QComboBox QListView::item:hover {
+	border-radius: 0px;
+    background: rgba(162, 0, 0, 200);
+ 	color: white;
+}
+
+
+/* required for down-arrow or it's blank*/
+QComboBox::drop-down {
+    width: 1px;
+    height: 1px;
+        border-radius:0;
+        border-left-color: darkgray;
+        border-left-style: solid;
+        margin: 0px;
+        padding: 0px;
+        background-color: transparent;
+        color: white;
+    subcontrol-origin: margin;
+    subcontrol-position: right center;
+}
+
+
+QComboBox::drop-down:button {
+        width: 15px;
+        height: 15px;
+}
+
+/* down arrow image */
+QComboBox::down-arrow {
+        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
+        width: 10px;
+        height: 10px;
+        top: 2px;
+        right: 3px;
+}
+
+QComboBox::down-arrow:disabled {
+        image: url(url(:/images/resources/images/Arrow.png));
+        right: 30px;
+}
+
+
+/*--------[SCROLL BAR]---------------------------*/
+
+
+QComboBox QAbstractItemView QScrollBar:vertical {
+	background: rgb(44,44,44);
+/* margin sets up how far the handle can travel */
+	margin: 0px 0px 0px 0px;
+	border: none;
+}
+
+/* Sets up the color and height of handle */
+QComboBox QAbstractItemView QScrollBar::handle:vertical {
+	background: rgb(115,115,115);
+	border: none;
+}
+
+/* This remvoes the bottom button by setting the height to 0px */
+QComboBox QAbstractItemView QScrollBar::add-line:vertical {
+	height: 0px;
+	subcontrol-position: bottom;
+	subcontrol-origin: margin;
+	border: none;
+}
+
+/* This remvoes the top button by setting the height to 0px */
+QComboBox QAbstractItemView QScrollBar::sub-line:vertical {
+	height: 0px;
+	subcontrol-position: top;
+	subcontrol-origin: margin;
+	border: none;
+}
+
+/* need this to get rid of crosshatching on scrollbar background */
+QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+	background: none;
+	border: none;
+}
+</string>
       </property>
       <attribute name="title">
        <string>Sequencer</string>
@@ -7528,7 +7483,7 @@ QComboBox QAbstractItemView
         <bool>false</bool>
        </property>
        <property name="styleSheet">
-        <string notr="true">QFrame {
+        <string notr="true">QFrame#SEQ_sequencer_settings {
 	background:rgba(120, 120, 120, 255);
 	border-style:none;
 	border-bottom-left-radius:4.0;
@@ -7636,79 +7591,7 @@ QComboBox QAbstractItemView
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;MIDI clock is sent to these destinations&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox QAbstractItemView
-{
-    min-width: 130px;
-    min-height: 55;
-	color:white;
-}
-
-QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -7785,79 +7668,7 @@ QToolTip {
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select the clock source. Default is automatic (internal unless MIDI clock is received).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox QAbstractItemView
-{
-    min-width: 130px;
-    min-height: 75;
-	color:white;
-}
-
-QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -7939,79 +7750,7 @@ QToolTip {
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When using CV inputs as a clock source, CV input 1 controls track 1, and CV input 2 controls track2. Track 3 is controlled by both inputs using this method.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox QAbstractItemView
-{
-    min-width: 66px;
-    min-height:45px;
-	color:white;
-}
-
-QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -8083,79 +7822,7 @@ QToolTip {
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select how many clock pulses per quarter note to send out of the Gate or CV outputs&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox QAbstractItemView
-{
-    min-width: 66px;
-    min-height:45px;
-	color:white;
-}
-
-QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -8198,7 +7865,7 @@ QToolTip {
        <property name="geometry">
         <rect>
          <x>6</x>
-         <y>10</y>
+         <y>7</y>
          <width>531</width>
          <height>31</height>
         </rect>
@@ -8226,14 +7893,14 @@ color: rgb(225,225,225);
         <string>S E Q U E N C E R     S E T T I N G S</string>
        </property>
        <property name="alignment">
-        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
        </property>
       </widget>
       <widget class="QLabel" name="SEQ_track_settings_label">
        <property name="geometry">
         <rect>
          <x>6</x>
-         <y>110</y>
+         <y>107</y>
          <width>571</width>
          <height>31</height>
         </rect>
@@ -8261,7 +7928,7 @@ color: rgb(225,225,225);
         <string>T R A C K    S E T T I N G S</string>
        </property>
        <property name="alignment">
-        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
        </property>
       </widget>
       <widget class="QFrame" name="seq_line">
@@ -8339,7 +8006,7 @@ background: qlineargradient(spread: pan,
         <bool>false</bool>
        </property>
        <property name="styleSheet">
-        <string notr="true">QFrame {
+        <string notr="true">QFrame#SEQ_track_1 {
 	background:rgba(120, 120, 120, 255);
 	border-style:none;
 	border-bottom-left-radius:0.0;
@@ -8475,79 +8142,7 @@ color: white</string>
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Arpeggiate keys as you play them, or record and play back step sequences.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox QAbstractItemView
-{
-    min-width: 120px;
-    min-height: 30px;
-	color:white;
-}
-
-QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -8614,79 +8209,7 @@ QToolTip {
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Track playback clock division.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox QAbstractItemView
-{
-    min-width: 66px;
-    min-height:100px;
-	color:white;
-}
-
-QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -8773,79 +8296,7 @@ QToolTip {
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select a stored step sequence pattern to play back (patterns 1 through 8). The default setting (----) does not load or modify the current pattern.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox QAbstractItemView
-{
-    min-width: 70px;
-    min-height: 120;
-	color:white;
-}
-
-QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="editable">
          <bool>false</bool>
@@ -9004,79 +8455,7 @@ QToolTip {
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Send this track's MIDI data to the selected MIDI output ports (USB and/or Expander)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox QAbstractItemView
-{
-    min-width: 130px;
-    min-height: 60;
-	color:white;
-}
-
-QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -9153,79 +8532,7 @@ QToolTip {
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Set the track's MIDI channel. Only track one can be set to MPE.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox QAbstractItemView
-{
-    min-width: 80px;
-    min-height: 260;
-	color:white;
-}
-
-QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="editable">
          <bool>false</bool>
@@ -9370,79 +8677,7 @@ QToolTip {
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The number of octaves that will be used to repeat the pattern.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox QAbstractItemView
-{
-    min-width: 120px;
-    min-height: 30px;
-	color:white;
-}
-
-QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="currentText">
          <string>1 Octave</string>
@@ -9522,79 +8757,7 @@ QToolTip {
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Sets the playback order of the arpeggiator/sequencer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox QAbstractItemView
-{
-    min-width: 95px;
-    min-height: 140;
-	color:white;
-}
-
-QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -9701,79 +8864,7 @@ QToolTip {
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Set the divisions to dotted, triplet, or standard (No Dot).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox QAbstractItemView
-{
-    min-width: 66px;
-    min-height:45px;
-	color:white;
-}
-
-QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -9821,11 +8912,7 @@ QToolTip {
 QFrame {
 	qproperty-alignment: AlignCenter;
 }
-
-QToolTip {
-	background: #006599;
-	color: white;
-}</string>
+</string>
         </property>
         <property name="text">
          <string>Transpose:</string>
@@ -10019,7 +9106,7 @@ QToolTip {
         <bool>false</bool>
        </property>
        <property name="styleSheet">
-        <string notr="true">QFrame {
+        <string notr="true">QFrame#SEQ_track_2 {
 	background:rgba(120, 120, 120, 255);
 	border-style:none;
 	border-bottom-left-radius:0.0;
@@ -10073,79 +9160,7 @@ QToolTip {
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Arpeggiate keys as you play them, or record and play back step sequences.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox QAbstractItemView
-{
-    min-width: 120px;
-    min-height: 30px;
-	color:white;
-}
-
-QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -10212,79 +9227,7 @@ QToolTip {
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select a stored step sequence pattern to play back (patterns 1 through 8). The default setting (----) does not load or modify the current pattern.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox QAbstractItemView
-{
-    min-width: 70px;
-    min-height: 120;
-	color:white;
-}
-
-QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="editable">
          <bool>false</bool>
@@ -10389,79 +9332,7 @@ QToolTip {
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Set the divisions to dotted, triplet, or standard (No Dot).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox QAbstractItemView
-{
-    min-width: 66px;
-    min-height:45px;
-	color:white;
-}
-
-QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -10638,79 +9509,7 @@ QToolTip {
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Track playback clock division.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox QAbstractItemView
-{
-    min-width: 66px;
-    min-height:100px;
-	color:white;
-}
-
-QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -10797,79 +9596,7 @@ QToolTip {
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Sets the playback order of the arpeggiator/sequencer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox QAbstractItemView
-{
-    min-width: 95px;
-    min-height: 140;
-	color:white;
-}
-
-QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -10976,79 +9703,7 @@ QToolTip {
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Send this track's MIDI data to the selected MIDI output ports (USB and/or Expander)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox QAbstractItemView
-{
-    min-width: 130px;
-    min-height: 60;
-	color:white;
-}
-
-QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -11125,80 +9780,7 @@ QToolTip {
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Set the track's MIDI channel. Only track one can be set to MPE.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox QAbstractItemView
-{
-    min-width: 80px;
-    min-height: 250;
-	color:white;
-}
-
-QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-
-</string>
+         <string notr="true"/>
         </property>
         <property name="editable">
          <bool>false</bool>
@@ -11420,79 +10002,7 @@ color: white</string>
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The number of octaves that will be used to repeat the pattern.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox QAbstractItemView
-{
-    min-width: 120px;
-    min-height: 30px;
-	color:white;
-}
-
-QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="currentText">
          <string>1 Octave</string>
@@ -11548,11 +10058,7 @@ QToolTip {
 QFrame {
 	qproperty-alignment: AlignCenter;
 }
-
-QToolTip {
-	background: #006599;
-	color: white;
-}</string>
+</string>
         </property>
         <property name="text">
          <string>Transpose:</string>
@@ -11626,7 +10132,7 @@ QToolTip {
         <bool>false</bool>
        </property>
        <property name="styleSheet">
-        <string notr="true">QFrame {
+        <string notr="true">QFrame#SEQ_track_3 {
 	background:rgba(120, 120, 120, 255);
 	border-style:none;
 	border-bottom-left-radius:4.0;
@@ -11680,79 +10186,7 @@ QToolTip {
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Arpeggiate keys as you play them, or record and play back step sequences.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox QAbstractItemView
-{
-    min-width: 120px;
-    min-height: 30px;
-	color:white;
-}
-
-QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -11819,79 +10253,7 @@ QToolTip {
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select a stored step sequence pattern to play back (patterns 1 through 8). The default setting (----) does not load or modify the current pattern.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox QAbstractItemView
-{
-    min-width: 70px;
-    min-height: 120;
-	color:white;
-}
-
-QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="editable">
          <bool>false</bool>
@@ -11996,79 +10358,7 @@ QToolTip {
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Set the divisions to dotted, triplet, or standard (No Dot).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox QAbstractItemView
-{
-    min-width: 66px;
-    min-height:45px;
-	color:white;
-}
-
-QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -12245,79 +10535,7 @@ QToolTip {
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Track playback clock division.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox QAbstractItemView
-{
-    min-width: 66px;
-    min-height:100px;
-	color:white;
-}
-
-QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -12404,79 +10622,7 @@ QToolTip {
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Sets the playback order of the arpeggiator/sequencer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox QAbstractItemView
-{
-    min-width: 95px;
-    min-height: 140;
-	color:white;
-}
-
-QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -12583,79 +10729,7 @@ QToolTip {
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Send this track's MIDI data to the selected MIDI output ports (USB and/or Expander)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox QAbstractItemView
-{
-    min-width: 130px;
-    min-height: 60;
-	color:white;
-}
-
-QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -12732,79 +10806,7 @@ QToolTip {
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Set the track's MIDI channel. Only track one can be set to MPE.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox QAbstractItemView
-{
-    min-width: 80px;
-    min-height: 250;
-	color:white;
-}
-
-QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="editable">
          <bool>false</bool>
@@ -13026,79 +11028,7 @@ color: white</string>
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The number of octaves that will be used to repeat the pattern.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox QAbstractItemView
-{
-    min-width: 120px;
-    min-height: 30px;
-	color:white;
-}
-
-QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="currentText">
          <string>1 Octave</string>
@@ -13154,11 +11084,7 @@ QToolTip {
 QFrame {
 	qproperty-alignment: AlignCenter;
 }
-
-QToolTip {
-	background: #006599;
-	color: white;
-}</string>
+</string>
         </property>
         <property name="text">
          <string>Transpose:</string>
@@ -13864,7 +11790,148 @@ QSpinBox:disabled {
        <string/>
       </property>
       <property name="styleSheet">
-       <string notr="true"/>
+       <string notr="true">
+/*----------- QComboBox ------------*/
+QComboBox {
+        font-family: &quot;Droid Sans&quot;;
+        font-size: 10px;
+        background: #666;
+        padding: 2px 4px;
+        border-style: outset;
+	border-radius: 4px;
+        border-width: 1px;
+        border-color: black;
+        color: white;
+    padding: 1px 3px 1px 4px;
+    combobox-popup: 0;
+}
+
+/* this gets replaced by fixDropdownWidth */
+QComboBox QAbstractItemView
+{
+    /*min-width: 80px;*/
+    /*min-height: 60px;*/
+    color:white;
+    selection-color: white;
+}
+
+/* disabled items */
+QComboBox QAbstractItemView::item:!enabled {
+    background: black;
+}
+
+/* dropdown box*/
+QComboBox QListView
+{
+	border: 1px solid rgba(0, 0, 0, 255);
+	border-radius: 0px;
+        background: rgba(67, 67, 67, 255);
+        color: rgb(220, 220, 220);
+    font: 11px &quot;Tahoma&quot;;
+    padding-left: 0px;
+    padding-right: 0px;
+    /*min-width: 175px;*/
+    /*min-height: 90px;*/
+        margin: 0 0 0 0;
+}
+
+
+/*bg color of other items */
+QComboBox QListView::item {
+	border-radius: 0px;
+        background: rgba(66, 66, 66, 255);
+    color: rgba(175,175,175,255);
+}
+
+/*bg color of selected, not hovered item */
+QComboBox QListView::item:selected {
+	border-radius: 0px;
+    background:rgba(99, 99, 99, 255);
+ 	color: white;
+}
+
+/* bg color of hovered item */
+QComboBox QListView::item:hover {
+	border-radius: 0px;
+    background: rgba(162, 0, 0, 200);
+ 	color: white;
+}
+
+
+/* required for down-arrow or it's blank*/
+QComboBox::drop-down {
+    width: 1px;
+    height: 1px;
+        border-radius:0;
+        border-left-color: darkgray;
+        border-left-style: solid;
+        margin: 0px;
+        padding: 0px;
+        background-color: transparent;
+        color: white;
+    subcontrol-origin: margin;
+    subcontrol-position: right center;
+}
+
+
+QComboBox::drop-down:button {
+        width: 15px;
+        height: 15px;
+}
+
+/* down arrow image */
+QComboBox::down-arrow {
+        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
+        width: 10px;
+        height: 10px;
+        top: 2px;
+        right: 3px;
+}
+
+QComboBox::down-arrow:disabled {
+        image: url(url(:/images/resources/images/Arrow.png));
+        right: 30px;
+}
+
+
+/*--------[SCROLL BAR]---------------------------*/
+
+
+QComboBox QAbstractItemView QScrollBar:vertical {
+	background: rgb(44,44,44);
+/* margin sets up how far the handle can travel */
+	margin: 0px 0px 0px 0px;
+	border: none;
+}
+
+/* Sets up the color and height of handle */
+QComboBox QAbstractItemView QScrollBar::handle:vertical {
+	background: rgb(115,115,115);
+	border: none;
+}
+
+/* This remvoes the bottom button by setting the height to 0px */
+QComboBox QAbstractItemView QScrollBar::add-line:vertical {
+	height: 0px;
+	subcontrol-position: bottom;
+	subcontrol-origin: margin;
+	border: none;
+}
+
+/* This remvoes the top button by setting the height to 0px */
+QComboBox QAbstractItemView QScrollBar::sub-line:vertical {
+	height: 0px;
+	subcontrol-position: top;
+	subcontrol-origin: margin;
+	border: none;
+}
+
+/* need this to get rid of crosshatching on scrollbar background */
+QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+	background: none;
+	border: none;
+}
+</string>
       </property>
       <attribute name="title">
        <string>CV</string>
@@ -13882,7 +11949,7 @@ QSpinBox:disabled {
         <bool>false</bool>
        </property>
        <property name="styleSheet">
-        <string notr="true">QFrame {
+        <string notr="true">QFrame  #frame_8{
 	background:rgba(120, 120, 120, 255);
 	border-style:none;
 	border-bottom-left-radius:0;
@@ -13924,10 +11991,6 @@ QSpinBox:disabled {
 	font-size: 11px;
 	color: rgba(100, 100, 100, 255);
 	padding:0, 3, 0, 0;
-}
-QToolTip {
-    background: #006599;
-    color: white;
 }
 </string>
         </property>
@@ -14037,79 +12100,7 @@ QToolTip {
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The source for this Gate/CV output&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox QAbstractItemView
-{
-    min-width: 170px;
-    min-height: 190px;
-	color:white;
-}
-
-QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -14253,10 +12244,6 @@ QToolTip {
 	background-color: transparent;
 }
 
-QToolTip {
-    background: #006599;
-    color: white;
-}
 </string>
         </property>
         <property name="editable">
@@ -14951,10 +12938,6 @@ QToolTip {
 	color: rgba(100, 100, 100, 255);
 	padding:0, 3, 0, 0;
 }
-QToolTip {
-    background: #006599;
-    color: white;
-}
 </string>
         </property>
         <property name="wrapping">
@@ -15043,10 +13026,6 @@ QToolTip {
 	height: 200px;
 	background-color: transparent;
 }
-QToolTip {
-    background: #006599;
-    color: white;
-}
 </string>
         </property>
         <property name="maxVisibleItems">
@@ -15132,10 +13111,6 @@ QToolTip {
 	font-size: 11px;
 	color: rgba(100, 100, 100, 255);
 	padding:0, 3, 0, 0;
-}
-QToolTip {
-    background: #006599;
-    color: white;
 }
 </string>
         </property>
@@ -15224,16 +13199,7 @@ QToolTip {
              </color>
             </brush>
            </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>100</red>
-              <green>100</green>
-              <blue>100</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </active>
+           </active>
           <inactive>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -15289,16 +13255,7 @@ QToolTip {
              </color>
             </brush>
            </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>100</red>
-              <green>100</green>
-              <blue>100</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </inactive>
+           </inactive>
           <disabled>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -15354,16 +13311,7 @@ QToolTip {
              </color>
             </brush>
            </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>100</red>
-              <green>100</green>
-              <blue>100</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </disabled>
+           </disabled>
          </palette>
         </property>
         <property name="font">
@@ -15383,10 +13331,6 @@ QToolTip {
 	font-size: 11px;
 	color: rgba(100, 100, 100, 255);
 	padding:0, 3, 0, 0;
-}
-QToolTip {
-    background: #006599;
-    color: white;
 }
 </string>
         </property>
@@ -15429,7 +13373,7 @@ QToolTip {
         <bool>false</bool>
        </property>
        <property name="styleSheet">
-        <string notr="true">QFrame {
+        <string notr="true">QFrame #frame_14{
 	background:rgba(120, 120, 120, 255);
 	border-style:none;
 	border-bottom-left-radius:0.0;
@@ -15643,79 +13587,7 @@ QToolTip {
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Route the incomming CV signals to these MIDI output ports (USB and/or Expander).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox QAbstractItemView
-{
-    min-width: 130px;
-    min-height: 60;
-	color:white;
-}
-
-QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -15792,79 +13664,7 @@ QToolTip {
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Apply this curve to the incomming data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox QAbstractItemView
-{
-    min-width: 120px;
-    min-height: 150px;
-	color:white;
-}
-
-QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -16036,16 +13836,7 @@ QToolTip {
              </color>
             </brush>
            </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </active>
+           </active>
           <inactive>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -16101,16 +13892,7 @@ QToolTip {
              </color>
             </brush>
            </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </inactive>
+           </inactive>
           <disabled>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -16166,16 +13948,7 @@ QToolTip {
              </color>
             </brush>
            </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </disabled>
+           </disabled>
          </palette>
         </property>
         <property name="font">
@@ -16275,7 +14048,7 @@ QToolTip {
         <bool>false</bool>
        </property>
        <property name="styleSheet">
-        <string notr="true">QFrame {
+        <string notr="true">QFrame #frame_10{
 	background:rgba(120, 120, 120, 255);
 	border-style:none;
 	border-bottom-left-radius:0.0;
@@ -16489,79 +14262,7 @@ QToolTip {
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Apply this curve to the incomming data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox QAbstractItemView
-{
-    min-width: 120px;
-    min-height: 150px;
-	color:white;
-}
-
-QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -16685,16 +14386,7 @@ QToolTip {
              </color>
             </brush>
            </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </active>
+           </active>
           <inactive>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -16750,16 +14442,7 @@ QToolTip {
              </color>
             </brush>
            </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </inactive>
+           </inactive>
           <disabled>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -16815,16 +14498,7 @@ QToolTip {
              </color>
             </brush>
            </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </disabled>
+           </disabled>
          </palette>
         </property>
         <property name="font">
@@ -16949,79 +14623,7 @@ QToolTip {
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The source for this Gate/CV output&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox QAbstractItemView
-{
-    min-width: 170px;
-    min-height: 190px;
-	color:white;
-}
-
-QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -17149,79 +14751,7 @@ QToolTip {
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select the type of MIDI message for this Gate/CV output&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox QAbstractItemView
-{
-    min-width: 100px;
-    min-height: 150;
-	color:white;
-}
-
-QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="editable">
          <bool>false</bool>
@@ -17921,7 +15451,7 @@ QToolTip {
         <bool>false</bool>
        </property>
        <property name="styleSheet">
-        <string notr="true">QFrame {
+        <string notr="true">QFrame #frame_11 {
 	background:rgba(120, 120, 120, 255);
 	border-style:none;
 	border-bottom-left-radius:0.0;
@@ -18135,79 +15665,7 @@ QToolTip {
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Apply this curve to the incomming data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox QAbstractItemView
-{
-    min-width: 120px;
-    min-height: 150px;
-	color:white;
-}
-
-QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -18331,16 +15789,7 @@ QToolTip {
              </color>
             </brush>
            </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </active>
+           </active>
           <inactive>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -18396,16 +15845,7 @@ QToolTip {
              </color>
             </brush>
            </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </inactive>
+           </inactive>
           <disabled>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -18461,16 +15901,7 @@ QToolTip {
              </color>
             </brush>
            </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </disabled>
+           </disabled>
          </palette>
         </property>
         <property name="font">
@@ -18595,79 +16026,7 @@ QToolTip {
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The source for this Gate/CV output&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox QAbstractItemView
-{
-    min-width: 170px;
-    min-height: 190px;
-	color:white;
-}
-
-QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -18795,79 +16154,7 @@ QToolTip {
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select the type of MIDI message for this Gate/CV output&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox QAbstractItemView
-{
-    min-width: 100px;
-    min-height: 150;
-	color:white;
-}
-
-QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -19564,7 +16851,7 @@ QToolTip {
         <bool>false</bool>
        </property>
        <property name="styleSheet">
-        <string notr="true">QFrame {
+        <string notr="true">QFrame #frame_12 {
 	background:rgba(120, 120, 120, 255);
 	border-style:none;
 	border-bottom-left-radius:4.0;
@@ -19778,79 +17065,7 @@ QToolTip {
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Apply this curve to the incomming data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox QAbstractItemView
-{
-    min-width: 120px;
-    min-height: 150px;
-	color:white;
-}
-
-QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -19974,16 +17189,7 @@ QToolTip {
              </color>
             </brush>
            </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </active>
+           </active>
           <inactive>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -20039,16 +17245,7 @@ QToolTip {
              </color>
             </brush>
            </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </inactive>
+           </inactive>
           <disabled>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -20104,16 +17301,7 @@ QToolTip {
              </color>
             </brush>
            </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </disabled>
+           </disabled>
          </palette>
         </property>
         <property name="font">
@@ -20238,79 +17426,7 @@ QToolTip {
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The source for this Gate/CV output&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox QAbstractItemView
-{
-    min-width: 170px;
-    min-height: 190px;
-	color:white;
-}
-
-QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -20438,79 +17554,7 @@ QToolTip {
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select the type of MIDI message for this Gate/CV output&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox QAbstractItemView
-{
-    min-width: 100px;
-    min-height: 150;
-	color:white;
-}
-
-QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -21207,7 +18251,7 @@ QToolTip {
         <bool>false</bool>
        </property>
        <property name="styleSheet">
-        <string notr="true">QFrame {
+        <string notr="true">QFrame #frame_15 {
 	background:rgba(120, 120, 120, 255);
 	border-style:none;
 	border-bottom-left-radius:4.0;
@@ -21421,79 +18465,7 @@ QToolTip {
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Route the incomming CV signals to these MIDI output ports (USB and/or Expander).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox QAbstractItemView
-{
-    min-width: 130px;
-    min-height: 60;
-	color:white;
-}
-
-QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -21597,16 +18569,7 @@ QToolTip {
              </color>
             </brush>
            </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </active>
+           </active>
           <inactive>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -21662,16 +18625,7 @@ QToolTip {
              </color>
             </brush>
            </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </inactive>
+           </inactive>
           <disabled>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -21727,16 +18681,7 @@ QToolTip {
              </color>
             </brush>
            </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </disabled>
+           </disabled>
          </palette>
         </property>
         <property name="font">
@@ -21861,79 +18806,7 @@ QToolTip {
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Apply this curve to the incomming data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox QAbstractItemView
-{
-    min-width: 120px;
-    min-height: 150px;
-	color:white;
-}
-
-QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -22050,7 +18923,7 @@ QToolTip {
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">QFrame {
+        <string notr="true">QFrame  #frame_47{
 	background:rgba(120, 120, 120, 255);
 	border-bottom-left-radius:4.0;
 	border-bottom-right-radius:4.0;
@@ -22109,79 +18982,7 @@ QToolTip {
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select the type of pitch scaling to use when sending note data to the CV outputs.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox QAbstractItemView
-{
-    min-width: 100px;
-    min-height: 30px;
-	color:white;
-}
-
-QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -22219,14 +19020,14 @@ QToolTip {
        <property name="geometry">
         <rect>
          <x>8</x>
-         <y>32</y>
+         <y>22</y>
          <width>151</width>
          <height>31</height>
         </rect>
        </property>
        <property name="font">
         <font>
-         <pointsize>10</pointsize>
+         <pointsize>14</pointsize>
          <italic>true</italic>
          <bold>false</bold>
         </font>
@@ -22238,7 +19039,7 @@ QToolTip {
         <string>U S B / M I D I  t o  C V</string>
        </property>
        <property name="alignment">
-        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
        </property>
       </widget>
       <widget class="QFrame" name="frame_5">
@@ -22307,14 +19108,14 @@ background: qlineargradient(spread: pan,
        <property name="geometry">
         <rect>
          <x>8</x>
-         <y>230</y>
+         <y>222</y>
          <width>151</width>
-         <height>31</height>
+         <height>30</height>
         </rect>
        </property>
        <property name="font">
         <font>
-         <pointsize>10</pointsize>
+         <pointsize>14</pointsize>
          <italic>true</italic>
          <bold>false</bold>
         </font>
@@ -22326,7 +19127,7 @@ background: qlineargradient(spread: pan,
         <string>C V  t o  U S B / M I D I</string>
        </property>
        <property name="alignment">
-        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
        </property>
       </widget>
       <widget class="QLabel" name="label_35">
@@ -22340,12 +19141,6 @@ background: qlineargradient(spread: pan,
        </property>
        <property name="toolTip">
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Edit the CV behavior here.  Tip: CV Layer uses information from Keyboard Layer (like Key Priority) but does not use MIDI Messages from Controller Layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QToolTip {
-background: #323232;
-color: white;
-}</string>
        </property>
        <property name="text">
         <string/>
@@ -22381,12 +19176,6 @@ color: white;
        </property>
        <property name="toolTip">
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Edit the CV behavior here.  Tip: CV Layer uses information from Keyboard Layer (like Key Priority) but does not use MIDI Messages from Controller Layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QToolTip {
-background: #006599;
-color: white;
-}</string>
        </property>
        <property name="text">
         <string/>
@@ -22439,12 +19228,6 @@ color: white;
        <property name="toolTip">
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Edit the CV behavior here.  Tip: CV Layer uses information from Keyboard Layer (like Key Priority) but does not use MIDI Messages from Controller Layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
-       <property name="styleSheet">
-        <string notr="true">QToolTip {
-background: #006599;
-color: white;
-}</string>
-       </property>
        <property name="text">
         <string/>
        </property>
@@ -22463,12 +19246,6 @@ color: white;
        </property>
        <property name="toolTip">
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Edit the CV behavior here.  Tip: CV Layer uses information from Keyboard Layer (like Key Priority) but does not use MIDI Messages from Controller Layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QToolTip {
-background: #006599;
-color: white;
-}</string>
        </property>
        <property name="text">
         <string/>
@@ -23266,7 +20043,148 @@ color: white;</string>
        <string/>
       </property>
       <property name="styleSheet">
-       <string notr="true"/>
+       <string notr="true">
+/*----------- QComboBox ------------*/
+QComboBox {
+        font-family: &quot;Droid Sans&quot;;
+        font-size: 10px;
+        background: #666;
+        padding: 2px 4px;
+        border-style: outset;
+	border-radius: 4px;
+        border-width: 1px;
+        border-color: black;
+        color: white;
+    padding: 1px 3px 1px 4px;
+    combobox-popup: 0;
+}
+
+/* this gets replaced by fixDropdownWidth */
+QComboBox QAbstractItemView
+{
+    /*min-width: 80px;*/
+    /*min-height: 60px;*/
+    color:white;
+    selection-color: white;
+}
+
+/* disabled items */
+QComboBox QAbstractItemView::item:!enabled {
+    background: black;
+}
+
+/* dropdown box*/
+QComboBox QListView
+{
+	border: 1px solid rgba(0, 0, 0, 255);
+	border-radius: 0px;
+        background: rgba(67, 67, 67, 255);
+        color: rgb(220, 220, 220);
+    font: 11px &quot;Tahoma&quot;;
+    padding-left: 0px;
+    padding-right: 0px;
+    /*min-width: 175px;*/
+    /*min-height: 90px;*/
+        margin: 0 0 0 0;
+}
+
+
+/*bg color of other items */
+QComboBox QListView::item {
+	border-radius: 0px;
+        background: rgba(66, 66, 66, 255);
+    color: rgba(175,175,175,255);
+}
+
+/*bg color of selected, not hovered item */
+QComboBox QListView::item:selected {
+	border-radius: 0px;
+    background:rgba(99, 99, 99, 255);
+ 	color: white;
+}
+
+/* bg color of hovered item */
+QComboBox QListView::item:hover {
+	border-radius: 0px;
+    background: rgba(162, 0, 0, 200);
+ 	color: white;
+}
+
+
+/* required for down-arrow or it's blank*/
+QComboBox::drop-down {
+    width: 1px;
+    height: 1px;
+        border-radius:0;
+        border-left-color: darkgray;
+        border-left-style: solid;
+        margin: 0px;
+        padding: 0px;
+        background-color: transparent;
+        color: white;
+    subcontrol-origin: margin;
+    subcontrol-position: right center;
+}
+
+
+QComboBox::drop-down:button {
+        width: 15px;
+        height: 15px;
+}
+
+/* down arrow image */
+QComboBox::down-arrow {
+        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
+        width: 10px;
+        height: 10px;
+        top: 2px;
+        right: 3px;
+}
+
+QComboBox::down-arrow:disabled {
+        image: url(url(:/images/resources/images/Arrow.png));
+        right: 30px;
+}
+
+
+/*--------[SCROLL BAR]---------------------------*/
+
+
+QComboBox QAbstractItemView QScrollBar:vertical {
+	background: rgb(44,44,44);
+/* margin sets up how far the handle can travel */
+	margin: 0px 0px 0px 0px;
+	border: none;
+}
+
+/* Sets up the color and height of handle */
+QComboBox QAbstractItemView QScrollBar::handle:vertical {
+	background: rgb(115,115,115);
+	border: none;
+}
+
+/* This remvoes the bottom button by setting the height to 0px */
+QComboBox QAbstractItemView QScrollBar::add-line:vertical {
+	height: 0px;
+	subcontrol-position: bottom;
+	subcontrol-origin: margin;
+	border: none;
+}
+
+/* This remvoes the top button by setting the height to 0px */
+QComboBox QAbstractItemView QScrollBar::sub-line:vertical {
+	height: 0px;
+	subcontrol-position: top;
+	subcontrol-origin: margin;
+	border: none;
+}
+
+/* need this to get rid of crosshatching on scrollbar background */
+QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+	background: none;
+	border: none;
+}
+</string>
       </property>
       <attribute name="title">
        <string>Controller</string>
@@ -24245,7 +21163,7 @@ QPushButton:checked{ border-color: rgba(10, 255, 0,0);}</string>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">QFrame {
+        <string notr="true">QFrame#frame_ctl_usb {
 	background:rgba(120, 120, 120, 255);
 	border-style:none;
 	border-bottom-left-radius:4.0;
@@ -24299,79 +21217,7 @@ QPushButton:checked{ border-color: rgba(10, 255, 0,0);}</string>
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Send the control layer MIDI messages to these output ports (USB and/or Expander).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox QAbstractItemView
-{
-    min-width: 130px;
-    min-height: 60;
-	color:white;
-}
-
-QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -24476,16 +21322,7 @@ QToolTip {
             </color>
            </brush>
           </colorrole>
-          <colorrole role="PlaceholderText">
-           <brush brushstyle="NoBrush">
-            <color alpha="128">
-             <red>255</red>
-             <green>255</green>
-             <blue>255</blue>
-            </color>
-           </brush>
-          </colorrole>
-         </active>
+          </active>
          <inactive>
           <colorrole role="WindowText">
            <brush brushstyle="SolidPattern">
@@ -24541,16 +21378,7 @@ QToolTip {
             </color>
            </brush>
           </colorrole>
-          <colorrole role="PlaceholderText">
-           <brush brushstyle="NoBrush">
-            <color alpha="128">
-             <red>255</red>
-             <green>255</green>
-             <blue>255</blue>
-            </color>
-           </brush>
-          </colorrole>
-         </inactive>
+          </inactive>
          <disabled>
           <colorrole role="WindowText">
            <brush brushstyle="SolidPattern">
@@ -24606,16 +21434,7 @@ QToolTip {
             </color>
            </brush>
           </colorrole>
-          <colorrole role="PlaceholderText">
-           <brush brushstyle="NoBrush">
-            <color alpha="128">
-             <red>255</red>
-             <green>255</green>
-             <blue>255</blue>
-            </color>
-           </brush>
-          </colorrole>
-         </disabled>
+          </disabled>
         </palette>
        </property>
        <property name="styleSheet">
@@ -25478,11 +22297,7 @@ background:transparent;
 color: rgb(255, 255, 255);
 font: 10pt &quot;Arial&quot;;
 }
-
-QToolTip {
-background: #006599;
-color: white;
-}</string>
+</string>
           </property>
           <property name="text">
            <string>Participate in Keyboard Layer</string>
@@ -25510,11 +22325,7 @@ background:transparent;
 color: rgb(255, 255, 255);
 font: 10pt &quot;Arial&quot;;
 }
-
-QToolTip {
-background: #006599;
-color: white;
-}</string>
+</string>
           </property>
           <property name="text">
            <string>Participate in Controller Layer</string>
@@ -26435,7 +23246,148 @@ color: white;</string>
        <string/>
       </property>
       <property name="styleSheet">
-       <string notr="true"/>
+       <string notr="true">
+/*----------- QComboBox ------------*/
+QComboBox {
+        font-family: &quot;Droid Sans&quot;;
+        font-size: 10px;
+        background: #666;
+        padding: 2px 4px;
+        border-style: outset;
+	border-radius: 4px;
+        border-width: 1px;
+        border-color: black;
+        color: white;
+    padding: 1px 3px 1px 4px;
+    combobox-popup: 0;
+}
+
+/* this gets replaced by fixDropdownWidth */
+QComboBox QAbstractItemView
+{
+    /*min-width: 80px;*/
+    /*min-height: 60px;*/
+    color:white;
+    selection-color: white;
+}
+
+/* disabled items */
+QComboBox QAbstractItemView::item:!enabled {
+    background: black;
+}
+
+/* dropdown box*/
+QComboBox QListView
+{
+	border: 1px solid rgba(0, 0, 0, 255);
+	border-radius: 0px;
+        background: rgba(67, 67, 67, 255);
+        color: rgb(220, 220, 220);
+    font: 11px &quot;Tahoma&quot;;
+    padding-left: 0px;
+    padding-right: 0px;
+    /*min-width: 175px;*/
+    /*min-height: 90px;*/
+        margin: 0 0 0 0;
+}
+
+
+/*bg color of other items */
+QComboBox QListView::item {
+	border-radius: 0px;
+        background: rgba(66, 66, 66, 255);
+    color: rgba(175,175,175,255);
+}
+
+/*bg color of selected, not hovered item */
+QComboBox QListView::item:selected {
+	border-radius: 0px;
+    background:rgba(99, 99, 99, 255);
+ 	color: white;
+}
+
+/* bg color of hovered item */
+QComboBox QListView::item:hover {
+	border-radius: 0px;
+    background: rgba(162, 0, 0, 200);
+ 	color: white;
+}
+
+
+/* required for down-arrow or it's blank*/
+QComboBox::drop-down {
+    width: 1px;
+    height: 1px;
+        border-radius:0;
+        border-left-color: darkgray;
+        border-left-style: solid;
+        margin: 0px;
+        padding: 0px;
+        background-color: transparent;
+        color: white;
+    subcontrol-origin: margin;
+    subcontrol-position: right center;
+}
+
+
+QComboBox::drop-down:button {
+        width: 15px;
+        height: 15px;
+}
+
+/* down arrow image */
+QComboBox::down-arrow {
+        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
+        width: 10px;
+        height: 10px;
+        top: 2px;
+        right: 3px;
+}
+
+QComboBox::down-arrow:disabled {
+        image: url(url(:/images/resources/images/Arrow.png));
+        right: 30px;
+}
+
+
+/*--------[SCROLL BAR]---------------------------*/
+
+
+QComboBox QAbstractItemView QScrollBar:vertical {
+	background: rgb(44,44,44);
+/* margin sets up how far the handle can travel */
+	margin: 0px 0px 0px 0px;
+	border: none;
+}
+
+/* Sets up the color and height of handle */
+QComboBox QAbstractItemView QScrollBar::handle:vertical {
+	background: rgb(115,115,115);
+	border: none;
+}
+
+/* This remvoes the bottom button by setting the height to 0px */
+QComboBox QAbstractItemView QScrollBar::add-line:vertical {
+	height: 0px;
+	subcontrol-position: bottom;
+	subcontrol-origin: margin;
+	border: none;
+}
+
+/* This remvoes the top button by setting the height to 0px */
+QComboBox QAbstractItemView QScrollBar::sub-line:vertical {
+	height: 0px;
+	subcontrol-position: top;
+	subcontrol-origin: margin;
+	border: none;
+}
+
+/* need this to get rid of crosshatching on scrollbar background */
+QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+	background: none;
+	border: none;
+}
+</string>
       </property>
       <attribute name="title">
        <string>Settings</string>
@@ -26671,11 +23623,7 @@ border-bottom-left-radius:0;
 border-bottom-right-radius:0;
 border: none;
 }
-
-QToolTip {
-background: #006599;
-color: white;
-}</string>
+</string>
         </property>
         <property name="text">
          <string/>
@@ -26817,11 +23765,7 @@ color: white;
 	color: white;
 	padding:0, 2, 0, 0;
 }
-
-QToolTip {
-background: #006599;
-color: white;
-}</string>
+</string>
         </property>
         <property name="wrapping">
          <bool>false</bool>
@@ -26990,11 +23934,7 @@ border-bottom-left-radius:0;
 border-bottom-right-radius:0;
 border: none;
 }
-
-QToolTip {
-background: #006599;
-color: white;
-}</string>
+</string>
         </property>
         <property name="text">
          <string/>
@@ -27062,72 +24002,7 @@ border:0px;</string>
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Send incomming QuNexus MIDI data to the selected port. Useful for controlling devices without a DAW. &lt;/p&gt;&lt;p&gt;Note for Windows users - Windows cannot share MIDI drivers between multiple applications. Use this MIDI Thru to audition changes while editing QuNexus settings.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
-         <string notr="true">QComboBox {
-        font-family: &quot;Droid Sans&quot;;
-        font-size: 10px;
-        background: #666;
-        padding: 2px 4px;
-        border-style: outset;
-        border-radius: 4px;
-        border-width: 1px;
-        border-color: black;
-        color: white;
-}
-
-QComboBox::drop-down {
-        border-radius:0;
-        border-left-color: darkgray;
-        border-left-style: solid;
-        border-width: 1pt;
-        border: 1px;
-        margin: 0px;
-        padding: 0px;
-        background-color: transparent;
-        color: white;
-}
-
-
-QComboBox::drop-down:button {
-        width: 15px;
-        height: 15px;
-}
-
-QComboBox::down-arrow {
-        image: url(:/images/resources/images/white-drop-down-arrow-gray.png);
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        right: 3px;
-}
-QComboBox::down-arrow:disabled {
-        image: url(url(:/images/resources/images/Arrow.png));
-        right: 30px;
-}
-
-QListView {
-        background: rgba(67, 67, 67, 255);
-        color: rgb(220, 220, 220);
-        min-height: 90px;
-        margin: 0 0 0 0;
-}
-
-QListView::item {
-        background: rgba(67, 67, 67, 255);
-        border: 0px;
-        color: white;
-}
-
-QListView::item:hover {
-        background: rgba(67, 67, 67, 255);
-        border: 0;
-        color: white;
-}
-
-QToolTip {
-    background: #006599;
-    color: white;
-}
-</string>
+         <string notr="true"/>
         </property>
         <property name="maxVisibleItems">
          <number>10</number>
@@ -27234,7 +24109,7 @@ font: 12pt &quot;Arial&quot;;
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">QFrame {
+     <string notr="true">QFrame#Library_Frame{
 background: rgb(67, 67, 67);
 	border-bottom-left-radius:4.0;
 	border-bottom-right-radius:4.0;
@@ -27259,7 +24134,7 @@ background: rgb(67, 67, 67);
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">QFrame {
+      <string notr="true">QFrame#frame_45 {
      background: rgb(79, 79, 79);
 	border-bottom-left-radius:4.0;
 	border-bottom-right-radius:4.0;
@@ -27270,13 +24145,7 @@ background: rgb(67, 67, 67);
 
 }
 
-QLabel {
-	font-family: &quot;Arial&quot;;
-	font-size: 10px;
-	font-style:bold;
-	color: white;
-	border: none;
-}</string>
+</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -27390,6 +24259,71 @@ QPushButton:pressed {
       <property name="sortingEnabled">
        <bool>false</bool>
       </property>
+      <item>
+       <property name="text">
+        <string>Basic 2.0</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Aftertouch and Mod</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>New Item</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>New Item</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>New Item</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>New Item</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>New Item</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>New Item</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>New Item</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>New Item</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>New Item</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Preset2</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Preset3</string>
+       </property>
+      </item>
      </widget>
      <widget class="QPushButton" name="revertButton">
       <property name="geometry">
@@ -27467,13 +24401,18 @@ QPushButton:disabled {
        <string>Save</string>
       </property>
      </widget>
+     <zorder>deletePreset</zorder>
+     <zorder>newPreset</zorder>
+     <zorder>revertButton</zorder>
+     <zorder>saveButton</zorder>
+     <zorder>presetLibraryList</zorder>
     </widget>
    </widget>
    <widget class="QLabel" name="Library_Pane_Label">
     <property name="geometry">
      <rect>
       <x>632</x>
-      <y>80</y>
+      <y>70</y>
       <width>201</width>
       <height>31</height>
      </rect>
@@ -27486,7 +24425,7 @@ QPushButton:disabled {
     </property>
     <property name="font">
      <font>
-      <pointsize>14</pointsize>
+      <pointsize>18</pointsize>
       <italic>true</italic>
       <bold>false</bold>
      </font>
@@ -27499,6 +24438,9 @@ QPushButton:disabled {
     </property>
     <property name="alignment">
      <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+    </property>
+    <property name="headerType" stdset="0">
+     <number>1</number>
     </property>
    </widget>
    <widget class="QLabel" name="mainwindowbg">

@@ -7,18 +7,18 @@
 this_year=2022
 app_name="QuNexus Editor"
 app_name_fp=QuNexus\ Editor
-app_source=../../Build\ Directories/build-QuNexus-Desktop_Qt_5_14_2_clang_64bit-Release/QuNexus\ Editor.app
+app_source=../build-QuNexus-Desktop_Qt_5_11_3-Release/QuNexus\ Editor.app
 
-version=2.1.0
+version=2.1.0A
 bundle_id="com.keithmcmillen.$app_name"
 app_path="./dmg/QuNexus Editor.app"
 dmg_path=./dmg
-path_to_dqt=~/Qt/5.14.2/clang_64/bin/macdeployqt
+path_to_dqt=~/Qt/5.11.3/clang_64/bin/macdeployqt
 
 qml_dir=../qt-qunexus/source/
 developer_id="Developer ID Application: Kesumo, LLC (${APPLE_TEAM_ID})"
 
-final_dmg_name=./QuNexus\ Editor\ Mac\ v$version.dmg
+final_dmg_name=./QuNexus\ Editor\ Mac\ v$version\ \(Intel\ Legacy\).dmg
 
 
 # set current directory to where the script was called from

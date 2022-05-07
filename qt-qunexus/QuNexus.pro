@@ -14,8 +14,30 @@ QT       += core gui \
 TARGET = "QuNexus Editor"
 TEMPLATE = app
 
-macx{
-    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.13
+# Uncomment to create a Windows console version of the app
+#win32{
+#    CONFIG += console
+#}
+
+# still holding onto support for High Sierra here, separate build
+
+message("Building with Qt $${QT_VERSION}")
+
+# build with Qt 5.11.3 to support El Capitan, Sierra, and High Sierra
+lessThan(QT_MAJOR_VERSION, 6){
+    message("Building legacy MacOS Intel Binary")
+    macx{
+        QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.11
+    }
+}
+
+# build with Qt 6.2.1 to support Mojave and later
+versionAtLeast(QT_VERSION, 6.2.1){
+    message("Building Apple M1/Intel Universal Binary")
+    macx{
+        QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.14
+        QMAKE_APPLE_DEVICE_ARCHS = x86_64 arm64
+    }
 }
 
 INCLUDEPATH +=  source \

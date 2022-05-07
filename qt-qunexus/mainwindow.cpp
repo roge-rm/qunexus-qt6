@@ -156,20 +156,24 @@ MainWindow::MainWindow(QWidget *parent) :
     QString droidFont = ":/resources/fonts/droid-sans/DroidSans.ttf";
     QString openSansSemibold = ":/resources/fonts/open-sans/OpenSans-Semibold.ttf";
     QString openSansLight = ":/resources/fonts/open-sans/OpenSans-Light.ttf";
+    QString openSans3 = ":/resources/fonts/open-sans/OpenSans-Regular.ttf";
+//    QString openSans4 = ":/resources/fonts/open-sans/OpenSans-Regular.ttf";
+//    QString openSans5 = ":/resources/fonts/open-sans/OpenSans-Regular.ttf";
+
     QString aller = ":/resources/fonts/Aller/Aller_Lt.ttf";
 
     if (QFontDatabase::addApplicationFont(droidFont) == -1) qDebug() << "Could not load font: " << droidFont;
     if (QFontDatabase::addApplicationFont(openSansSemibold) == -1) qDebug() << "Could not load font: " << openSansSemibold;
     if (QFontDatabase::addApplicationFont(openSansLight) == -1) qDebug() << "Could not load font: " << openSansLight;
+    if (QFontDatabase::addApplicationFont(openSans3) == -1) qDebug() << "Could not load font: " << openSans3;
+//    if (QFontDatabase::addApplicationFont(openSans4) == -1) qDebug() << "Could not load font: " << openSans4;
+//    if (QFontDatabase::addApplicationFont(openSans5) == -1) qDebug() << "Could not load font: " << openSans5;
     if (QFontDatabase::addApplicationFont(aller) == -1) qDebug() << "Could not load font: " << aller;
 
     // Palettes
-    paletteTooltip.setColor(QPalette::Window, QColor(Qt::black));
-    paletteTooltip.setColor(QPalette::WindowText, QColor(Qt::red));
-
     QPalette palette = QToolTip::palette();
-    palette.setColor(QPalette::ToolTipBase,QColor("#F6F6F6")); // light grey
-    palette.setColor(QPalette::ToolTipText,QColor("#706F6F"));//dark grey for text
+    palette.setColor(QPalette::ToolTipBase,QColor("#323232")); // dark grey
+    palette.setColor(QPalette::ToolTipText,QColor("#FFFFFF"));//white
     QToolTip::setPalette(palette);
 
 
@@ -196,13 +200,12 @@ MainWindow::MainWindow(QWidget *parent) :
     }
     generalStylesString = QLatin1String(generalStylesFile->readAll());
 
-    // set stylesheets for specific windows
+    // Apply general styles to MainWindow. These can/should be previewed in designer
     QMainWindow::setStyleSheet(generalStylesString);
 
 
     // setup UI
     ui->setupUi(this);
-    //connect(presetManager, SIGNAL(signalClearFocus()), this, SLOT(slotClearFocus()));
 
     // MIDI Overhaul and FW Update
 
@@ -238,32 +241,9 @@ MainWindow::MainWindow(QWidget *parent) :
     syncQuNexusDialog = new SyncQuNexusDialog(this);
     connect(syncQuNexusDialog, SIGNAL(signalCloseWindow()), this, SLOT(slotHideGreyRect()));
 
-    ///Globals Iterator
-    //globalsRequestIterator = new QTimer(this);
-    //connect(globalsRequestIterator, SIGNAL(timeout()), this, SLOT(slotIterateGlobalsRequest()));
+#ifdef Q_OS_MAC
 
-#ifdef Q_OS_MAC // EB - attempt to make this cross platform
-    //StyleSheets for Preset Library
-    libraryStyleSheetFile = new QFile(":stylesheets/resources/stylesheets/LibraryStyleSheetMac.qss");
-
-    selectedStyleSheetFile = new QFile(":stylesheets/resources/stylesheets/LibrarySelectedModifiedStyleSheet.qss");
-    unselectedStyleSheetFile = new QFile(":stylesheets/resources/stylesheets/LibrarySelectedCleanStyleSheet.qss");
-
-    // Header stylesheets
-    labelH1StyleSheetFile = new QFile(":stylesheets/resources/stylesheets/LabelH1Mac.qss");
-    labelH2StyleSheetFile = new QFile(":stylesheets/resources/stylesheets/LabelH2Mac.qss");
-
-    // Parameter stylesheet - todo move to WIN
-    paramLabelStyleSheetFile = new QFile(":stylesheets/resources/stylesheets/ParamLabelsMac.qss");
-
-
-    // mac specific moves to ui elements
-    ui->Library_Pane_Label->move(632, 70);
-    ui->SEQ_settings_label->move(6, 15);
-    ui->SEQ_track_settings_label->move(6, 115);
-    ui->Send_Pane_Label->move(11, 6);
-
-#else
+#else// EB TODO - move these all to the general styles file
     qDebug() << "win stylesheets code";
     //Windows special styling
 
@@ -314,45 +294,6 @@ MainWindow::MainWindow(QWidget *parent) :
 #endif
 
     qDebug() << "non-os specific stylesheets";
-
-    // combobox stlyes
-    comboStyleFile = new QFile(":stylesheets/resources/stylesheets/QComboBoxStyleSheet.qss");
-    comboStyleFile->open(QFile::ReadOnly);
-    comboStyleString = QLatin1String(comboStyleFile->readAll());
-
-    // parameter labels
-    paramLabelStyleSheetFile->open(QFile::ReadOnly);
-    paramLabelStyleString = QLatin1String(paramLabelStyleSheetFile->readAll());
-
-    ui->centralWidget->setStyleSheet(paramLabelStyleString);
-
-    // header 1
-    labelH1StyleSheetFile->open(QFile::ReadOnly);
-    labelH1StyleString = QLatin1String(labelH1StyleSheetFile->readAll());
-
-    ui->Library_Pane_Label->setStyleSheet(labelH1StyleString);
-    ui->Send_Pane_Label->setStyleSheet(labelH1StyleString);
-    ui->SEQ_settings_label->setStyleSheet(labelH1StyleString);
-    ui->SEQ_track_settings_label->setStyleSheet(labelH1StyleString);
-
-    // header 2
-    labelH2StyleSheetFile->open(QFile::ReadOnly);
-    labelH2StyleString = QLatin1String(labelH2StyleSheetFile->readAll());
-
-    ui->MIDI_To_CV_Label->setStyleSheet(labelH2StyleString);
-    ui->CV_To_MIDI_Label->setStyleSheet(labelH2StyleString);
-
-    // Library stylesheets
-    libraryStyleSheetFile->open(QFile::ReadOnly);
-    libraryStyleSheetString = QLatin1String(libraryStyleSheetFile->readAll());
-
-    ui->presetLibraryList->setStyleSheet(libraryStyleSheetString);
-
-    selectedStyleSheetFile->open(QFile::ReadOnly);
-    selectedStyleSheetString = QLatin1String(selectedStyleSheetFile->readAll());
-
-    unselectedStyleSheetFile->open(QFile::ReadOnly);
-    unselectedStyleSheetString = QLatin1String(unselectedStyleSheetFile->readAll());
 
     //StyleSheets for "blue" (red) pushbuttons
     blueStyleFile = new QFile(":stylesheets/resources/stylesheets/BlueButtonStyleSheet.qss");
@@ -465,15 +406,11 @@ void MainWindow::slotFindAndConnectUi()
             {
                 //qDebug() << "QSpinBox" << numberBox->objectName();
                 connect(numberBox, SIGNAL(editingFinished()), presetManager, SLOT(slotValueChanged()));
-                //numberBox->setStyleSheet("QToolTip {background: #006599;color: white;}");
-
-                //numberBox.focusInEvent = lambda _: QTimer.singleShot(0, b.selectAll)
             }
             else if(QDoubleSpinBox* floatBox = this->findChild<QDoubleSpinBox *>(i.key()))
             {
                 //qDebug() << "QDoubleSpinBox" << floatBox->objectName();
                 connect(floatBox, SIGNAL(editingFinished()), presetManager, SLOT(slotValueChanged()));
-                //floatBox->setStyleSheet("QToolTip {background: #006599;color: white;}");
             }
             else if(QCheckBox* checkBox = this->findChild<QCheckBox *>(i.key()))
             {
@@ -1017,330 +954,126 @@ void MainWindow::slotUpdateParametersUi(QVariantMap map)
 
 void MainWindow::slotLimitSourceOutputMenus()
 {
+    qDebug() << "slotLimitSourceOutputMenus called";
+    QList<QString> sourceStrings;
+    sourceStrings.append("Keyboard_Pitch_Bend_Source");
+    sourceStrings.append("Keyboard_Channel_Pressure_Source");
+    sourceStrings.append("Keyboard_Poly_Aftertouch_Source");
+    sourceStrings.append("Keyboard_CC_00_Source");
+    sourceStrings.append("Keyboard_CC_01_Source");
+    sourceStrings.append("Keyboard_CC_02_Source");
 
-    QList<QString> destStrings;
-    destStrings.append("Pitch_Bend");
-    destStrings.append("Channel_Pressure");
-    destStrings.append("Poly_Aftertouch");
-    destStrings.append("CC_00");
-    destStrings.append("CC_01");
-    destStrings.append("CC_02");
-
-    QString currentOutputString;
-    QString currentSourceString;
-
-    QComboBox *currentOutputMenu;
     QComboBox *currentSourceMenu;
 
-    QString activeTiltAndUSBDestination;
-    QString activePressureAndUSBDestination;
-    QString activeExpressionAndUSBDestination;
+    QString activeTiltDestination;
+    QString activePressureDestination;
+    QString activeExpressionDestination;
 
-    bool    tiltAndUSBFlag;
-    bool    pressureAndUSBFlag;
-    bool    exprPedalAndUSBFlag;
+    bool    tiltFlag = false;;
+    bool    pressureFlag = false;;
+    bool    exprPedalFlag = false;;
 
     QVariant disableVariant(0);
     QVariant enableVariant(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
     QModelIndex currentModelIndex;
-    QPalette textColor;
-    textColor.setColor(QPalette::Text, Qt::blue);
-
-    tiltAndUSBFlag = false;
-    pressureAndUSBFlag = false;
-    exprPedalAndUSBFlag = false;
 
     //---------------------------------------------------------- Check Flags ----------------------------------------------------------//
-    //This checks for a particular men arrangement-- all this is a little brute-force...
-    for(int i =0; i < destStrings.count(); i++)
+    // Find source menus with assignments
+    for(int i =0; i < sourceStrings.count(); i++)
     {
-        currentOutputString = destStrings.at(i);
-        currentOutputString.prepend("Keyboard_");
-        currentOutputString.append("_MIDI_Output_Device");
-        currentOutputMenu = this->findChild<QComboBox *>(currentOutputString);
+        currentSourceMenu = this->findChild<QComboBox *>(sourceStrings.at(i));
 
-        currentSourceString = destStrings.at(i);
-        currentSourceString.prepend("Keyboard_");
-        currentSourceString.append("_Source");
-        currentSourceMenu = this->findChild<QComboBox *>(currentSourceString);
-
-        //
-        if(currentOutputMenu->currentText() == "USB 1" || currentOutputMenu->currentText() == "USB 1 + Expander")
+        //Tilt Source
+        if(currentSourceMenu->currentText() == "Tilt")
         {
-            //Tilt Source
-            if(currentSourceMenu->currentText() == "Tilt")
-            {
-                //qDebug() << "Tilt  Flag";
-                tiltAndUSBFlag = true;
-                activeTiltAndUSBDestination = destStrings.at(i);
-            }
-
-            //Pressure Source
-            else if(currentSourceMenu->currentText() == "Pressure")
-            {
-                //qDebug() << "Pressure Flag";
-                pressureAndUSBFlag = true;
-                activePressureAndUSBDestination = destStrings.at(i);
-            }
-
-            //Expression Pedal Source
-            else if(currentSourceMenu->currentText() == "Expression Pedal")
-            {
-                //qDebug() << "Expression Pedal Flag";
-                exprPedalAndUSBFlag = true;
-                activeExpressionAndUSBDestination = destStrings.at(i);
-            }
+            //qDebug() << "Tilt  Flag";
+            tiltFlag = true;
+            activeTiltDestination = sourceStrings.at(i);
         }
+
+        //Pressure Source
+        else if(currentSourceMenu->currentText() == "Pressure")
+        {
+            //qDebug() << "Pressure Flag";
+            pressureFlag = true;
+            activePressureDestination = sourceStrings.at(i);
+        }
+
+        //Expression Pedal Source
+        else if(currentSourceMenu->currentText() == "Expression Pedal")
+        {
+            //qDebug() << "Expression Pedal Flag";
+            exprPedalFlag = true;
+            activeExpressionDestination = sourceStrings.at(i);
+        }
+
     }
 
-    //qDebug() << "tilt" << tiltAndUSBFlag << activeTiltAndUSBDestination;
-    //qDebug() << "pressure" << pressureAndUSBFlag << activePressureAndUSBDestination;
-    //qDebug() << "expr pedal" << exprPedalAndUSBFlag << activeExpressionAndUSBDestination;
+    qDebug() << "tilt" << tiltFlag << activeTiltDestination;
+    qDebug() << "pressure" << pressureFlag << activePressureDestination;
+    qDebug() << "expr pedal" << exprPedalFlag << activeExpressionDestination;
 
     //---------------------------------------------------------- Limit Menus ----------------------------------------------------------//
-    for(int i = 0; i < destStrings.count(); i++)
+    for(int i = 0; i < sourceStrings.count(); i++)
     {
-        currentOutputString = destStrings.at(i);
-        currentOutputString.prepend("Keyboard_");
-        currentOutputString.append("_MIDI_Output_Device");
-        currentOutputMenu = this->findChild<QComboBox *>(currentOutputString);
+        currentSourceMenu = this->findChild<QComboBox *>(sourceStrings.at(i));
 
-        currentSourceString = destStrings.at(i);
-        currentSourceString.prepend("Keyboard_");
-        currentSourceString.append("_Source");
-        currentSourceMenu = this->findChild<QComboBox *>(currentSourceString);
-
+        qDebug() << "sourceStrings.at(i): " << sourceStrings.at(i);
         //------------------------------------------------------------------------------------------------//
         //--------------------------------------------- Tilt ---------------------------------------------//
         //------------------------------------------------------------------------------------------------//
-        //If Tilt and a USB Ouput occurred
-        if(tiltAndUSBFlag)
+        //If Tilt active and this isn't the source
+        if(tiltFlag && sourceStrings.at(i) != activeTiltDestination)
         {
-            //If Tilt and "USB" or "USB + Expander" Output occurring, but not on this line
-            if(destStrings.at(i) != activeTiltAndUSBDestination && activeTiltAndUSBDestination != "")
-            {
-                //If Tilt source selected
-                if(currentSourceMenu->currentText() == "Tilt")
-                {
-                    //Disable USB output for this Dest
-                    currentModelIndex = currentOutputMenu->model()->index(currentOutputMenu->findText("USB 1"), 0);
-                    currentOutputMenu->model()->setData(currentModelIndex, disableVariant, Qt::UserRole -1);
-                    currentOutputMenu->setItemData(currentOutputMenu->findText("USB 1"), QColor(30,30,30,255), Qt::BackgroundRole);
-
-
-                    //Disable USB + Expander output for this Dest
-                    currentModelIndex = currentOutputMenu->model()->index(currentOutputMenu->findText("USB 1 + Expander"), 0);
-                    currentOutputMenu->model()->setData(currentModelIndex, disableVariant, Qt::UserRole -1);
-                    currentOutputMenu->setItemData(currentOutputMenu->findText("USB 1 + Expander"), QColor(30,30,30,255), Qt::BackgroundRole);
-                }
-
-                //Otherwise, enable both outputs
-                else
-                {
-                    //Enable USB output for this Dest
-                    currentModelIndex = currentOutputMenu->model()->index(currentOutputMenu->findText("USB 1"), 0);
-                    currentOutputMenu->model()->setData(currentModelIndex, enableVariant, Qt::UserRole -1);
-                    currentOutputMenu->setItemData(currentOutputMenu->findText("USB 1"), QColor(120,120,120,255), Qt::BackgroundRole);
-
-                    //Enable USB + Expander output for this Dest
-                    currentModelIndex = currentOutputMenu->model()->index(currentOutputMenu->findText("USB 1 + Expander"), 0);
-                    currentOutputMenu->model()->setData(currentModelIndex, enableVariant, Qt::UserRole -1);
-                    currentOutputMenu->setItemData(currentOutputMenu->findText("USB 1 + Expander"), QColor(120,120,120,255), Qt::BackgroundRole);
-                }
-
-                //If "USB" or "USB + Expander" output selected
-                if(currentOutputMenu->currentText().contains("USB 1"))
-                {
-                    //Disable Tilt for this Dest
-                    currentModelIndex = currentSourceMenu->model()->index(currentSourceMenu->findText("Tilt"), 0);
-                    currentSourceMenu->model()->setData(currentModelIndex, disableVariant, Qt::UserRole -1);
-                    currentSourceMenu->setItemData(currentSourceMenu->findText("Tilt"), QColor(30,30,30,255), Qt::BackgroundRole);
-                    //currentSourceMenu->setItemData(currentSourceMenu->findText("Tilt"), QColor(30,30,30,255), Qt::TextColorRole);
-
-                }
-
-                //Otherwise, enable both tilt source
-                else
-                {
-                    //Enable Tilt for this Dest
-                    currentModelIndex = currentSourceMenu->model()->index(currentSourceMenu->findText("Tilt"), 0);
-                    currentSourceMenu->model()->setData(currentModelIndex, enableVariant, Qt::UserRole -1);
-                    currentSourceMenu->setItemData(currentSourceMenu->findText("Tilt"), QColor(120,120,120,255), Qt::BackgroundRole);
-                }
-            }
+            qDebug() << "disable Tilt";
+            currentModelIndex = currentSourceMenu->model()->index(currentSourceMenu->findText("Tilt"), 0);
+            currentSourceMenu->model()->setData(currentModelIndex, disableVariant, Qt::UserRole -1);
+        }
+        else
+        {
+            qDebug() << "enable Tilt";
+            //Enable Tilt for this Dest
+            currentModelIndex = currentSourceMenu->model()->index(currentSourceMenu->findText("Tilt"), 0);
+            currentSourceMenu->model()->setData(currentModelIndex, enableVariant, Qt::UserRole -1);
         }
 
         //------------------------------------------------------------------------------------------------//
         //------------------------------------------- Pressure -------------------------------------------//
         //------------------------------------------------------------------------------------------------//
-        //If Pressure and a USB Ouput occurred
-        if(pressureAndUSBFlag)
+        //If Pressure is active and this isn't the source
+        if(pressureFlag && sourceStrings.at(i) != activePressureDestination)
         {
-            //If Pressure and "USB" or "USB + Expander" Output occurring, but not on this line
-            if(destStrings.at(i) != activePressureAndUSBDestination && activePressureAndUSBDestination != "")
-            {
-                //If Pressure source selected
-                if(currentSourceMenu->currentText() == "Pressure")
-                {
-                    //Disable USB output for this Dest
-                    currentModelIndex = currentOutputMenu->model()->index(currentOutputMenu->findText("USB 1"), 0);
-                    currentOutputMenu->model()->setData(currentModelIndex, disableVariant, Qt::UserRole -1);
-                    currentOutputMenu->setItemData(currentOutputMenu->findText("USB 1"), QColor(30,30,30,255), Qt::BackgroundRole);
-
-
-                    //Disable USB + Expander output for this Dest
-                    currentModelIndex = currentOutputMenu->model()->index(currentOutputMenu->findText("USB 1 + Expander"), 0);
-                    currentOutputMenu->model()->setData(currentModelIndex, disableVariant, Qt::UserRole -1);
-                    currentOutputMenu->setItemData(currentOutputMenu->findText("USB 1 + Expander"), QColor(30,30,30,255), Qt::BackgroundRole);
-                }
-
-                //Otherwise, enable both outputs
-                else
-                {
-                    //Enable USB output for this Dest
-                    currentModelIndex = currentOutputMenu->model()->index(currentOutputMenu->findText("USB 1"), 0);
-                    currentOutputMenu->model()->setData(currentModelIndex, enableVariant, Qt::UserRole -1);
-                    currentOutputMenu->setItemData(currentOutputMenu->findText("USB 1"), QColor(120,120,120,255), Qt::BackgroundRole);
-
-
-                    //Enable USB + Expander output for this Dest
-                    currentModelIndex = currentOutputMenu->model()->index(currentOutputMenu->findText("USB 1 + Expander"), 0);
-                    currentOutputMenu->model()->setData(currentModelIndex, enableVariant, Qt::UserRole -1);
-                    currentOutputMenu->setItemData(currentOutputMenu->findText("USB 1 + Expander"), QColor(120,120,120,255), Qt::BackgroundRole);
-                }
-
-                //If "USB" or "USB + Expander" output selected
-                if(currentOutputMenu->currentText().contains("USB 1"))
-                {
-                    //Disable Tilt for this Dest
-                    currentModelIndex = currentSourceMenu->model()->index(currentSourceMenu->findText("Pressure"), 0);
-                    currentSourceMenu->model()->setData(currentModelIndex, disableVariant, Qt::UserRole -1);
-                    currentSourceMenu->setItemData(currentSourceMenu->findText("Pressure"), QColor(30,30,30,255), Qt::BackgroundRole);
-                }
-
-                //Otherwise, enable both tilt source
-                else
-                {
-                    //Enable Tilt for this Dest
-                    currentModelIndex = currentSourceMenu->model()->index(currentSourceMenu->findText("Pressure"), 0);
-                    currentSourceMenu->model()->setData(currentModelIndex, enableVariant, Qt::UserRole -1);
-                    currentSourceMenu->setItemData(currentSourceMenu->findText("Pressure"), QColor(120,120,120,255), Qt::BackgroundRole);
-                }
-            }
+            qDebug() << "disable Pressure";
+            currentModelIndex = currentSourceMenu->model()->index(currentSourceMenu->findText("Pressure"), 0);
+            currentSourceMenu->model()->setData(currentModelIndex, disableVariant, Qt::UserRole -1);
         }
+        else
+        {
+            qDebug() << "enable Pressure";
+            //Enable Pressure for this Dest
+            currentModelIndex = currentSourceMenu->model()->index(currentSourceMenu->findText("Pressure"), 0);
+            currentSourceMenu->model()->setData(currentModelIndex, enableVariant, Qt::UserRole -1);
+        }
+
 
         //------------------------------------------------------------------------------------------------//
         //----------------------------------------- Expr. Pedal ------------------------------------------//
         //------------------------------------------------------------------------------------------------//
         //If Tilt and a USB Ouput occurred
-        if(exprPedalAndUSBFlag)
+        if(exprPedalFlag && sourceStrings.at(i) != activeExpressionDestination)
         {
-            //If Tilt and "USB" or "USB + Expander" Output occurring, but not on this line
-            if(destStrings.at(i) != activeExpressionAndUSBDestination && activeExpressionAndUSBDestination != "")
-            {
-                //If Tilt source selected
-                if(currentSourceMenu->currentText() == "Expression Pedal")
-                {
-                    //Disable USB output for this Dest
-                    currentModelIndex = currentOutputMenu->model()->index(currentOutputMenu->findText("USB 1"), 0);
-                    currentOutputMenu->model()->setData(currentModelIndex, disableVariant, Qt::UserRole -1);
-                    currentOutputMenu->setItemData(currentOutputMenu->findText("USB 1"), QColor(30,30,30,255), Qt::BackgroundRole);
-
-
-                    //Disable USB + Expander output for this Dest
-                    currentModelIndex = currentOutputMenu->model()->index(currentOutputMenu->findText("USB 1 + Expander"), 0);
-                    currentOutputMenu->model()->setData(currentModelIndex, disableVariant, Qt::UserRole -1);
-                    currentOutputMenu->setItemData(currentOutputMenu->findText("USB 1 + Expander"), QColor(150,150,150,255), Qt::BackgroundRole);
-
-                }
-
-                //Otherwise, enable both outputs
-                else
-                {
-                    //Enable USB output for this Dest
-                    currentModelIndex = currentOutputMenu->model()->index(currentOutputMenu->findText("USB 1"), 0);
-                    currentOutputMenu->model()->setData(currentModelIndex, enableVariant, Qt::UserRole -1);
-                    currentOutputMenu->setItemData(currentOutputMenu->findText("USB 1"), QColor(127,127,127,255), Qt::BackgroundRole);
-
-                    //Enable USB + Expander output for this Dest
-                    currentModelIndex = currentOutputMenu->model()->index(currentOutputMenu->findText("USB 1 + Expander"), 0);
-                    currentOutputMenu->model()->setData(currentModelIndex, enableVariant, Qt::UserRole -1);
-                    currentOutputMenu->setItemData(currentOutputMenu->findText("USB 1 + Expander"), QColor(120,120,120,255), Qt::BackgroundRole);
-                }
-
-                //If "USB" or "USB + Expander" output selected
-                if(currentOutputMenu->currentText().contains("USB 1"))
-                {
-                    //Disable Expr. Pedal for this Dest
-                    currentModelIndex = currentSourceMenu->model()->index(currentSourceMenu->findText("Expression Pedal"), 0);
-                    currentSourceMenu->model()->setData(currentModelIndex, disableVariant, Qt::UserRole -1);
-                    currentSourceMenu->setItemData(currentSourceMenu->findText("Expression Pedal"), QColor(30,30,30,255), Qt::BackgroundRole);
-                }
-
-                //Otherwise, enable both tilt source
-                else
-                {
-                    //Enable Expr. Pedal for this Dest
-                    currentModelIndex = currentSourceMenu->model()->index(currentSourceMenu->findText("Expression Pedal"), 0);
-                    currentSourceMenu->model()->setData(currentModelIndex, enableVariant, Qt::UserRole -1);
-                    currentSourceMenu->setItemData(currentSourceMenu->findText("Expression Pedal"), QColor(120,120,120,255), Qt::BackgroundRole);
-                }
-            }
+            qDebug() << "disable Expression Pedal";
+            currentModelIndex = currentSourceMenu->model()->index(currentSourceMenu->findText("Expression Pedal"), 0);
+            currentSourceMenu->model()->setData(currentModelIndex, disableVariant, Qt::UserRole -1);
         }
-
-        //If Source and a USB Output did not occur
-        if(!tiltAndUSBFlag && !pressureAndUSBFlag && !exprPedalAndUSBFlag)
+        else
         {
-            //Enable USB + Expander output for this Dest
-            currentModelIndex = currentOutputMenu->model()->index(currentOutputMenu->findText("USB 1 + Expander"), 0);
-            currentOutputMenu->model()->setData(currentModelIndex, enableVariant, Qt::UserRole -1);
-            currentOutputMenu->setItemData(currentOutputMenu->findText("USB 1 + Expander"), QColor(120,120,120,255), Qt::BackgroundRole);
-
-            //Enable USB output for this Dest
-            currentModelIndex = currentOutputMenu->model()->index(currentOutputMenu->findText("USB 1"), 0);
-            currentOutputMenu->model()->setData(currentModelIndex, enableVariant, Qt::UserRole -1);
-            currentOutputMenu->setItemData(currentOutputMenu->findText("USB 1"), QColor(120,120,120,255), Qt::BackgroundRole);
-
-            //Enable Tilt for this Dest
-            currentModelIndex = currentSourceMenu->model()->index(currentSourceMenu->findText("Tilt"), 0);
-            currentSourceMenu->model()->setData(currentModelIndex, enableVariant, Qt::UserRole -1);
-            currentSourceMenu->setItemData(currentSourceMenu->findText("Tilt"), QColor(120,120,120,255), Qt::BackgroundRole);
-
-            //Enable Pressure for this Dest
-            currentModelIndex = currentSourceMenu->model()->index(currentSourceMenu->findText("Pressure"), 0);
-            currentSourceMenu->model()->setData(currentModelIndex, enableVariant, Qt::UserRole -1);
-            currentSourceMenu->setItemData(currentSourceMenu->findText("Pressure"), QColor(120,120,120,255), Qt::BackgroundRole);
-
+            qDebug() << "enable Expression Pedal";
             //Enable Expr for this Dest
             currentModelIndex = currentSourceMenu->model()->index(currentSourceMenu->findText("Expression Pedal"), 0);
             currentSourceMenu->model()->setData(currentModelIndex, enableVariant, Qt::UserRole -1);
-            currentSourceMenu->setItemData(currentSourceMenu->findText("Expression Pedal"), QColor(120,120,120,255), Qt::BackgroundRole);
         }
 
-        //Re-enable specific sources in absence of
-        if(!tiltAndUSBFlag)
-        {
-            //Enable Tilt for this Dest
-            currentModelIndex = currentSourceMenu->model()->index(currentSourceMenu->findText("Tilt"), 0);
-            currentSourceMenu->model()->setData(currentModelIndex, enableVariant, Qt::UserRole -1);
-            currentSourceMenu->setItemData(currentSourceMenu->findText("Tilt"), QColor(120,120,120,255), Qt::BackgroundRole);
-        }
-
-        if(!pressureAndUSBFlag)
-        {
-            //Enable Pressure for this Dest
-            currentModelIndex = currentSourceMenu->model()->index(currentSourceMenu->findText("Pressure"), 0);
-            currentSourceMenu->model()->setData(currentModelIndex, enableVariant, Qt::UserRole -1);
-            currentSourceMenu->setItemData(currentSourceMenu->findText("Pressure"), QColor(120,120,120,255), Qt::BackgroundRole);
-        }
-
-        if(!exprPedalAndUSBFlag)
-        {
-            //Enable Expr for this Dest
-            currentModelIndex = currentSourceMenu->model()->index(currentSourceMenu->findText("Expression Pedal"), 0);
-            currentSourceMenu->model()->setData(currentModelIndex, enableVariant, Qt::UserRole -1);
-            currentSourceMenu->setItemData(currentSourceMenu->findText("Expression Pedal"), QColor(120,120,120,255), Qt::BackgroundRole);
-        }
     }
 }
 
@@ -1521,30 +1254,8 @@ void MainWindow::slotUpdateLibraryPresetsListUi(QVariantMap presetMaps, int acti
             }
 
             selectedPresetTitleText = libraryPresetsList->item(presetManager->selectedLibraryPreset)->text();
-//            selectedPresetTitleTextSize  = selectedPresetTitleText.size();
             qDebug() << "<<< select preset" << selectedPresetTitleText;
-//            //selectedPresetTitle->setText(selectedPresetTitleText);
 
-//            //Compensate for reverse alignment in library pane
-//            // this allows for changing presets while one is still dirty.
-//            // TODO: reset preset when changeing from dirty
-//            if(selectedPresetTitleText.contains("*"))
-//            {
-//                selectedPresetTitleText.remove("*");
-//                selectedPresetTitleText.append("*");
-//                // sets the mousedown style
-//                selectedPresetTitle->setStyleSheet("color: rgba(241,101,65,255); font: 12pt Arial;");
-//                libraryPresetsList->setStyleSheet(selectedStyleSheetString);
-//                qDebug() << "1150: dirty preset";
-//            }
-//            else
-//            {
-//                selectedPresetTitle->setStyleSheet("color: rgba(0,0,200,255); font: 12pt Arial;");
-//                libraryPresetsList->setStyleSheet(unselectedStyleSheetString);
-//                qDebug() << "1156: select preset double click" << selectedPresetTitleText;
-//            }
-
-//            selectedPresetTitle->setText(selectedPresetTitleText);
             // turn red
             QListWidgetItem *thisItem = libraryPresetsList->item(presetManager->selectedLibraryPreset);
 
@@ -1560,25 +1271,7 @@ void MainWindow::slotUpdateLibraryPresetsListUi(QVariantMap presetMaps, int acti
             // highlight selected item
             libraryPresetsList->setCurrentItem(thisItem);
 
-            //-------------------------------------------------------------------- Manage Send Buttons and Send Warning
-            // commented out to always show the 4 send buttons
-            /*
-            if(presetManager->slotCheckPresetEdits().contains(presetManager->selectedLibraryPreset))
-            {
-                for(int i=0; i<4; i++)
-                {
-                    slotSetEndableUiElement(QString("syncPreset%1").arg(i), false);
-                }
-            }
-            else
-            {
-                for(int i=0; i<4; i++)
-                {
-                    slotSetEndableUiElement(QString("syncPreset%1").arg(i), true);
-                }
-            }
-            */
-
+            //-------------------------------------------------------------------- Manage Send Buttons and Send Warnin
 //            qDebug() << "<<< preset loaded: SET_SELECTED";
             // send to edit buffer
             qDebug() << "** send to preset buffer **";
@@ -1840,7 +1533,7 @@ void MainWindow::slotEnableDisableToggleParameters(bool toggled){
     QSpinBox *toggleParam2;
     QSpinBox *toggleParam3;
 
-    QPalette pal;
+    //QPalette pal;
     toggleParam1 = this->findChild<QSpinBox *>("Controller_Key_Toggle_Control_Number");
     toggleParam2 = this->findChild<QSpinBox *>("Controller_Key_Toggle_Return_Value");
     toggleParam3 = this->findChild<QSpinBox *>("Controller_Key_Toggle_Value");
@@ -1906,34 +1599,7 @@ void MainWindow::slotSetEndableUiElement(QString paramName, bool state)
         thisWidget->setEnabled(state);
     }
 
-    //If a Menu containing one of the types below
-//    if(paramName.contains("MIDI_Input_Type") || paramName.contains("Curve"))
-//    {
-//        if(state)
-//        {
-//            thisWidget->setStyleSheet( "font-family: 'arial';"
-//                                   "border-radius:4.0;"
-//                                   "border-color:black;"
-//                                   "background-color: rgba(67, 67, 67, 255);"
-//                                   "font-size: 10px;"
-//                                   "color: white;"
-//                                   "padding-left: 4;"
-//                                   "padding-top: 2"
-//                                   );
-//        }
-//        else
-//        {
-//            thisWidget->setStyleSheet( "font-family: 'arial';"
-//                                   "border-radius:4.0;"
-//                                   "border-color:black;"
-//                                   "background-color: rgba(30, 30, 30, 255);"
-//                                   "font-size: 10px;"
-//                                   "color: rgba(100,100,100,255);"
-//                                   "padding-left: 4;"
-//                                   "padding-top: 2;"
-//                                   );
-//        }
-//    }
+
 
     //If a sync preset button
     if(paramName.contains("syncPreset"))
@@ -1957,27 +1623,15 @@ void MainWindow::slotSetEndableUiElement(QString paramName, bool state)
                 QLabel *label = this->findChild<QLabel *>("QuNexus_Not_Connected");
                 label->hide();
 
-//                bool correlated;
 
                 for(int i = 0; i < 4; i++)
                 {
                     if(settings->value(QString("boardPreset%1").arg(i)) == presetManager->selectedLibraryPreset)
                     {
-//                        correlated = true;
-                        //saveAndSend->setText("Save && Send");
                         break;
                     }
-                    else
-                    {
-                        //saveAndSend->setText("Save (Not Sent)");
-                    }
                 }
-                //saveAndSend->show();
             }
-        }
-        else
-        {
-            //saveAndSend->hide();
         }
     }
     else if(paramName.contains("connected"))
@@ -2003,8 +1657,6 @@ void MainWindow::slotSetEndableUiElement(QString paramName, bool state)
             {
                 QPushButton *syncButton = this->findChild<QPushButton *>(QString("syncPreset%1").arg(i));
                 syncButton->hide();
-                //saveAndSend->hide();
-
             }
         }
     }
@@ -2156,46 +1808,6 @@ void MainWindow::slotSaveButton()
     presetManager->slotSaveThenLoadPreset(nextPresetItem);
 }
 
-//void MainWindow::slotManualUpdateFirmwareRequestDialog()
-//{
-//    QDialog *msgBox = new QDialog(this);
-//    msgBox->setMinimumSize(200, 100);
-//    msgBox->setFixedSize(200, 100);
-
-//    QPoint centerparent(
-//                this->x() + ((this->frameGeometry().width() - msgBox->frameGeometry().width()) /2),
-//                this->y() + ((this->frameGeometry().height() - msgBox->frameGeometry().height()) /2));
-
-//    msgBox->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint);
-//    msgBox->move(centerparent);
-
-
-//    msgBox->setStyleSheet("QWidget{background: rgba(120,120,120, 255);}");
-//    QLabel* text = new QLabel("Update firmware?", msgBox, Qt::WindowFlags());
-//    text->setStyleSheet("font: 12pt;");
-//    text->move(55, 25);
-
-//#ifdef Q_OS_MAC
-//    text->setStyleSheet("font: 12pt;");
-//#else
-//    text->setStyleSheet("font: 10pt;");
-//#endif
-
-//    QPushButton* cancelButton = new QPushButton(msgBox);
-//    cancelButton->setStyleSheet(grayStyleString);
-//    cancelButton->setText("Cancel");
-//    cancelButton->setGeometry(QRect(25, 60, 70, 28));
-//    connect(cancelButton, SIGNAL(clicked()), msgBox, SLOT(close()));
-
-//    QPushButton* updateButton = new QPushButton(msgBox);
-//    updateButton->setStyleSheet(blueStyleString);
-//    updateButton->setText("Update");
-//    updateButton->setGeometry(QRect(105, 60, 70, 28));
-//    connect(updateButton, SIGNAL(clicked()), msgBox, SLOT(close()));
-//    connect(updateButton, SIGNAL(clicked()), QuNexus, SLOT(slotRequestFirmwareUpdate()));
-
-//    msgBox->exec();
-//}
 
 void MainWindow::slotOpenAboutScreen()
 {
@@ -2352,45 +1964,6 @@ QString MainWindow::applicationFirmwareVersionString()
 }
 // END MIDI OVERHAUL --------------------------------------
 
-//void MainWindow::slotFirmwareUpdateCompleteDialog()
-//{
-//    QDialog *msgBox = new QDialog(this);
-//    msgBox->setMinimumSize(200, 100);
-//    msgBox->setFixedSize(200, 100);
-
-//    QPoint centerparent(
-//                this->x() + ((this->frameGeometry().width() - msgBox->frameGeometry().width()) /2),
-//                this->y() + ((this->frameGeometry().height() - msgBox->frameGeometry().height()) /2));
-
-//    msgBox->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint);
-//    msgBox->move(centerparent);
-
-//    msgBox->setStyleSheet("QWidget{background: rgba(120,120,120, 255);}");
-
-//    QLabel* text = new QLabel("Your Firmware is up to date.", msgBox, Qt::WindowFlags());
-//    text->setStyleSheet("font: 12pt;");
-//    text->move(25, 20);
-
-//    QLabel* text2 = new QLabel("Please resend any custom presets.", msgBox, Qt::WindowFlags());
-//    text2->setStyleSheet("font: 10pt;");
-//    text2->move(25, 35);
-
-//#ifdef Q_OS_MAC
-//    text->setStyleSheet("font: 12pt;");
-//    text2->setStyleSheet("font: 10pt;");
-//#else
-//    text->setStyleSheet("font: 10pt;");
-//    text2->setStyleSheet("font: 8pt;");
-//#endif
-
-//    QPushButton* updateButton = new QPushButton(msgBox);
-//    updateButton->setStyleSheet(blueStyleString);
-//    updateButton->setText("Ok");
-//    updateButton->setGeometry(QRect(65, 60, 70, 28));
-//    connect(updateButton, SIGNAL(clicked()), msgBox, SLOT(close()));
-
-//    msgBox->exec();
-//}
 
 void MainWindow::slotSendPresetsToBoardDialog(QString presetName)
 {
@@ -2497,7 +2070,7 @@ void MainWindow::slotQuNexusConnected(bool state)
         connectedLabel->setText("Connected");
 
         QFrame* connectedFrame = this->findChild<QFrame *>("QuNexus_Connected_Frame");
-        connectedFrame->setStyleSheet("border: 1px solid rgb(67,67,67); background:rgb(10,255,0); border-radius:6;");
+        connectedFrame->setStyleSheet("QFrame{border: 1px solid rgb(67,67,67); background:rgb(10,255,0); border-radius:6;}");
         //qDebug() << "<< set connected: true";
         connected = true;
 
@@ -2509,11 +2082,6 @@ void MainWindow::slotQuNexusConnected(bool state)
     }
     else
     {
-//        QLabel* connectedLabel = this->findChild<QLabel *>("QuNexus_Connected_Label");
-//        connectedLabel->setText("Not Connected");
-
-//        QFrame* connectedFrame = this->findChild<QFrame *>("QuNexus_Connected_Frame");
-//        connectedFrame->setStyleSheet("border: 1px solid rgb(67,67,67); background: rgb(100,100,100); border-radius:6;");
         //qDebug() << "<< set connected: false";
 
         // safety to ensure we don't connect this twice
@@ -3581,7 +3149,7 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
     if(event->type() == QEvent::ToolTip)
     {
         // set stylesheet for tooltip
-        //reinterpret_cast<QWidget *>(obj)->setStyleSheet("QToolTip {background: #006599;color: white;}");
+        reinterpret_cast<QWidget *>(obj)->setStyleSheet("QToolTip {background: rgb(50,50,50);color: white;}");
         //reinterpret_cast<QWidget *>(obj)->toolTip().setPalette(paletteTooltip);
         QHelpEvent *helpEvent = static_cast<QHelpEvent *>(event);
 
@@ -3927,7 +3495,7 @@ void MainWindow::slotMIDIPortChange(QString portName, uchar inOrOut, uchar messa
             QuNexus->slotCloseMidiIn(SIGNAL_SEND);
             fwUpdateWindow->slotAppendTextToConsole("\nQuNexus Disconnected\n");
             connectedLabel->setText("Not Connected");
-            connectedFrame->setStyleSheet("border: 1px solid rgb(67,67,67); background: rgb(100,100,100); border-radius:6;");
+            connectedFrame->setStyleSheet("QFrame{border: 1px solid rgb(67,67,67); background: rgb(100,100,100); border-radius:6;}");
         }
         else if (inOrOut == PORT_OUT && portName == QuNexus->portName_out)
         {
@@ -3974,7 +3542,7 @@ void MainWindow::slotBootloaderMode(bool fwUpdateRequested)
     QFrame* connectedFrame = this->findChild<QFrame *>("QuNexus_Connected_Frame");
 
     connectedLabel->setText("BOOTLOADER");
-    connectedFrame->setStyleSheet("border: 1px solid rgb(67,67,67); background:rgb(0,0,255); border-radius:6;");
+    connectedFrame->setStyleSheet("QFrame{border: 1px solid rgb(67,67,67); background:rgb(0,0,255); border-radius:6;}");
 
     if (!fwUpdateRequested)
     {
@@ -4035,7 +3603,7 @@ void MainWindow::slotFirmwareDetected(MidiDeviceManager *thisMDM, bool matches)
         QFrame* connectedFrame = this->findChild<QFrame *>("QuNexus_Connected_Frame");
 
         connectedLabel->setText("FIRMWARE\nOUT OF DATE");
-        connectedFrame->setStyleSheet("border: 1px solid rgb(67,67,67); background:rgb(255,0,0); border-radius:6;");
+        connectedFrame->setStyleSheet("QFrame{border: 1px solid rgb(67,67,67); background:rgb(255,0,0); border-radius:6;}");
 
         // setup sysex connections to receive globals data
         QuNexus->disconnect(SIGNAL(signalRxSysExBA(QByteArray))); // disconnect to be safe
@@ -4120,35 +3688,64 @@ void MainWindow::slotRevertPreset()
     presetManager->slotSyncEditBufferToDevice();
 }
 
+//void MainWindow::slotFixDropDownWidth(QComboBox* thisDropDown)
+//{
+//    int i, length = 0, index = 0;
+
+//    QString thisText;
+
+//    for (i = 0; i < thisDropDown->count(); i++)
+//    {
+//        if (length < thisDropDown->itemText(i).length())
+//        {
+//            thisText = thisDropDown->itemText(i);
+//            length = thisDropDown->itemText(i).length();
+//            index = i;
+//            //qDebug() << "this text: " << thisText << " index: " << index << " i: " << i << " length: " << length;
+//        }
+//    }
+
+//#ifdef Q_OS_MAC
+//    QFont font("Droid Sans", 12);
+//    QFontMetrics fm(font);
+//    int pixelsWide = fm.boundingRect(thisDropDown->itemText(index)).width() * 1.5;
+//#else
+//    QFont font("Droid Sans", 10);
+//    QFontMetrics fm(font);
+//    int pixelsWide = fm.boundingRect(thisDropDown->itemText(index)).width();
+//#endif
+//    int pixelsHeight = 14 * thisDropDown->count();
+//    if (pixelsHeight > 500) pixelsHeight = 500;
+
+//    QString color = "rgb(139,30,0);";
+//    QString thisComboStyleString = comboStyleString.arg(pixelsWide).arg(pixelsHeight);
+//    thisDropDown->setStyleSheet(thisComboStyleString);
+//}
+
 void MainWindow::slotFixDropDownWidth(QComboBox* thisDropDown)
 {
-    int i, length = 0, index = 0;
+    //return;
+    //int IconWidth = thisDropDown->iconSize().width();
+    int IconWidth = 15;
+    int scroll = thisDropDown->count() <= thisDropDown->maxVisibleItems() ? 0 :
+        QApplication::style()->pixelMetric(QStyle::PixelMetric::PM_ScrollBarExtent);
 
-    QString thisText;
+    int max = 0;
 
-    for (i = 0; i < thisDropDown->count(); i++)
+    for (int i = 0; i < thisDropDown->count(); i++)
     {
-        if (length < thisDropDown->itemText(i).length())
-        {
-            thisText = thisDropDown->itemText(i);
-            length = thisDropDown->itemText(i).length();
-            index = i;
-            //qDebug() << "this text: " << thisText << " index: " << index << " i: " << i << " length: " << length;
-        }
+        int width = thisDropDown->view()->fontMetrics().horizontalAdvance(thisDropDown->itemText(i));
+        if (max < width) max = width;
     }
+    int thisWidth = scroll + max + IconWidth;
+    if (thisDropDown->objectName() == "leddisplaymode")
+    {
+        thisWidth = 75; // hard code fix
+    }
+    thisDropDown->view()->setMinimumWidth(thisWidth);
 
-#ifdef Q_OS_MAC
-    QFont font("Droid Sans", 12);
-    QFontMetrics fm(font);
-    int pixelsWide = fm.boundingRect(thisDropDown->itemText(index)).width() * 1.5;
-#else
-    QFont font("Droid Sans", 10);
-    QFontMetrics fm(font);
-    int pixelsWide = fm.boundingRect(thisDropDown->itemText(index)).width();
-#endif
-    int pixelsHeight = 14 * thisDropDown->count();
-    if (pixelsHeight > 500) pixelsHeight = 500;
+    QString thisComboStyleString = comboStyleString.arg(thisWidth - 10).arg(100);
+    //thisDropDown->setStyleSheet(thisComboStyleString);
 
-    QString thisComboStyleString = comboStyleString.arg(pixelsWide).arg(pixelsHeight);
-    thisDropDown->setStyleSheet(thisComboStyleString);
+    qDebug() << "slotFixDropDownWidth called - box: " << thisDropDown->objectName() << " width: " << thisWidth << " scroll: " << scroll << " max: " << max << " IconWidth: " << IconWidth;
 }
