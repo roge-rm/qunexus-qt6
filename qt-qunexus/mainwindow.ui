@@ -33,17 +33,25 @@
   </property>
   <property name="styleSheet">
    <string notr="true">/*
-General Stylesheet for MacOS
+General Stylesheet for Windows
 
-To preview in designer: Copy/Paste this into the MainWindow widget stylesheet  
-To build: Mainwindow.cpp will copy the contents of this .qss into the MainWindow widget during initialization. 
+To preview in designer: Copy/Paste this into the MainWindow widget stylesheet
+To build: Mainwindow.cpp will copy the contents of this .qss into the MainWindow widget during initialization.
           Make sure to copy/paste changes from designer back to this stylesheet.
 */
-QLabel {
 
-        font: 10px &quot;Open Sans&quot;;
+QLabel {
+        font-family: &quot;Open Sans&quot;;
+        font-size: 12px;
         color: white;
         background-color: rgba(0,0,0,0);
+}
+
+QLabel#QuNexus_Not_Connected
+{
+	font: 500 16px &quot;Arial&quot;;
+	color: white;
+	border: none;
 }
 
 /* --[H1]------------------------- */
@@ -55,7 +63,7 @@ QLabel#SEQ_settings_label, QLabel#SEQ_track_settings_label
     color: qlineargradient(spread: pan, x1:0, y1:0, x2:1, y2:1,
                             stop:1 rgba(200,200, 200, 255),
                             stop:0 rgba(255,255,255, 255));
-    font: italic 18pt &quot;Arial&quot;;
+    font: italic 20px &quot;Arial&quot;;
 }
 
 /* --[H2]------------------------- */
@@ -68,7 +76,7 @@ QLabel#MIDI_To_CV_Label, QLabel#CV_To_MIDI_Label{
     border-bottom-right-radius:0;
     border: none;
     color: rgb(225,225,225);
-    font: italic 14pt &quot;Arial&quot;;
+    font: italic 14px &quot;Arial&quot;;
 }
 
 
@@ -105,10 +113,8 @@ QListView#presetLibraryList::item:selected, QListView:item:focus
  color: white;
  }
 
-
-
-
 /*---------------------------------*/
+
 
 QCheckBox
 {
@@ -116,6 +122,13 @@ QCheckBox
 }
 
 QToolTip {
+	border: 1px solid black;
+    background: rgba(50,50,50,255);
+    color: white;
+}
+
+QFrame QToolTip {
+	border: none;
     background: rgba(50,50,50,255);
     color: white;
 }
@@ -134,6 +147,7 @@ QPushButton {
 QPushButton:pressed {
         background-color: qlineargradient(spread:repeat, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(67, 67, 67, 255), stop:1 rgba(150, 150, 150, 255));
 }
+
 
 
 /*--------[SCROLL BAR]---------------------------*/
@@ -176,46 +190,45 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
 
 
 /* -- [TABS] ------------------------------------- */
+
 QTabWidget::pane {
-	border-bottom-left-radius:4px;
-	border-bottom-right-radius:4px;
-	border-top-right-radius:4px;
+        border-bottom-left-radius:4px;
+        border-bottom-right-radius:4px;
+        border-top-right-radius:4px;
 }
 
 QTabWidget::tab-bar {
-	left: 0px;
-	border: 0px;
+        left: 0px;
+        border: 0px;
 }
 
 
 QTabBar::tab {
-	background: #262626;
-	border-color: rgb(167, 255, 67);
-	border-width:0px;
-	border-top-left-radius: 4px;
-	border-top-right-radius: 4px;
-	width: 90px;
-	height: 20px;
-	padding: 4px;
-	color: white;
-	text-transform: uppercase;
-	font: 500 11px &quot;Open Sans&quot;;
+        background: #262626;
+        border-color: rgb(167, 255, 67);
+        border-width:0px;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+        width: 90px;
+        height: 20px;
+        padding: 4px;
+        color: white;
+        text-transform: uppercase;
+        font: 500 11px &quot;Open Sans&quot;;
 
 
-	margin-right: 2px;
+        margin-right: 2px;
 }
 
 QTabBar::tab:selected, QTabBar::tab:hover {
-	background-color:rgba(120, 120, 120, 255);
-	color:white;
+        background-color:rgba(120, 120, 120, 255);
+        color:white;
 }
 
 QTabBar::tab:selected {
-	background: rgba(67, 67, 67, 255);
-	color:white;
+        background: rgba(67, 67, 67, 255);
+        color:white;
 }
-
-
 </string>
   </property>
   <property name="tabShape">
@@ -238,9 +251,8 @@ QTabBar::tab:selected {
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">QFrame {
+     <string notr="true">QFrame#Header_Frame {
 	border: none;
-	background: #323232;
 }
 </string>
     </property>
@@ -250,11 +262,11 @@ QTabBar::tab:selected {
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QLabel" name="label_69">
+    <widget class="QLabel" name="QuNexus_Logo">
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>7</y>
+       <y>3</y>
        <width>191</width>
        <height>52</height>
       </rect>
@@ -303,46 +315,17 @@ border:0;
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="QuNexus_Connected_Label">
-     <property name="geometry">
-      <rect>
-       <x>90</x>
-       <y>-2</y>
-       <width>81</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This indicator is green when a QuNexus is connected and it's settings are in sync with the editor. Changes to either the editor preset or the QuNexus hardware will be synchronized between two devices.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QLabel {
-	color: rgb(255,255,255);
-	background: rgba(0,0,0,0);
-	font: 8pt;
-}</string>
-     </property>
-     <property name="text">
-      <string>Not Connected</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignBottom|Qt::AlignRight|Qt::AlignTrailing</set>
-     </property>
-    </widget>
     <widget class="QFrame" name="QuNexus_Connected_Frame">
      <property name="geometry">
       <rect>
        <x>174</x>
-       <y>8</y>
+       <y>49</y>
        <width>12</width>
        <height>12</height>
       </rect>
      </property>
-     <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This indicator is green when a QuNexus is connected and it's settings are in sync with the editor. Changes to either the editor preset or the QuNexus hardware will be synchronized between two devices.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
      <property name="styleSheet">
-      <string notr="true">QFrame 
+      <string notr="true">QFrame#QuNexus_Connected_Frame
 {
 	border: 1px solid rgb(67,67,67);
 	background: rgb(100,100,100);
@@ -426,11 +409,32 @@ border:0;
       </property>
      </item>
     </widget>
-    <zorder>label_69</zorder>
-    <zorder>QuNexus_Connected_Label</zorder>
-    <zorder>KMI_logo</zorder>
-    <zorder>QuNexus_Connected_Frame</zorder>
-    <zorder>Globals_LED_Refresh_Style</zorder>
+    <widget class="QPushButton" name="QuNexus_Connected_Label">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>44</y>
+       <width>161</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="toolTip">
+      <string>Indicates the connection status between the editor and QuNexus. 
+Click the label to open the Connection Troubleshooting window.</string>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+        font-family: &quot;Open Sans&quot;;
+        font-size: 12px;
+        color: white;
+        background-color: rgba(0,0,0,0);
+		text-align:right;
+}</string>
+     </property>
+     <property name="text">
+      <string>Not Connected</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QFrame" name="Send_Frame">
     <property name="geometry">
@@ -445,14 +449,15 @@ border:0;
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click here to save the currently selected preset to one of the four preset slots on the QuNexus.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="styleSheet">
-     <string notr="true">QFrame {
+     <string notr="true">QFrame#Send_Frame {
 background: rgb(67, 67, 67);
 	border-bottom-left-radius:4.0;
 	border-bottom-right-radius:4.0;
 	border-top-left-radius:4.0;
 	border-top-right-radius:4.0;
 	border: 1px solid rgba(50,50,50,255);
-}</string>
+}
+</string>
     </property>
     <property name="frameShape">
      <enum>QFrame::StyledPanel</enum>
@@ -477,14 +482,6 @@ background: rgb(67, 67, 67);
 	border-top-left-radius:4.0;
 	border-top-right-radius:4.0;
 	border:none;
-}
-
-QLabel {
-	font-family: &quot;Arial&quot;;
-	font-size: 10px;
-	font-style:bold;
-	color: white;
-	border: none;
 }</string>
      </property>
      <property name="frameShape">
@@ -634,8 +631,7 @@ QPushButton:pressed {
        <string/>
       </property>
       <property name="styleSheet">
-       <string notr="true">color: rgb(255,255,255);
-font: 12pt;</string>
+       <string notr="true"/>
       </property>
       <property name="text">
        <string>QuNexus Not Connected</string>
@@ -694,7 +690,8 @@ QPushButton:pressed {
      </property>
      <property name="font">
       <font>
-       <pointsize>18</pointsize>
+       <family>Arial</family>
+       <pointsize>-1</pointsize>
        <italic>true</italic>
        <bold>false</bold>
       </font>
@@ -816,7 +813,7 @@ QPushButton:pressed {
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>4</number>
+      <number>0</number>
      </property>
      <property name="elideMode">
       <enum>Qt::ElideRight</enum>
@@ -1144,6 +1141,7 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -1220,6 +1218,7 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -1230,7 +1229,7 @@ QComboBox::drop-down:button{
          <enum>Qt::DefaultContextMenu</enum>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Apply this curve to the incomming data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Apply this curve to the incoming data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
          <string notr="true"/>
@@ -1317,6 +1316,7 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
+          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -1430,7 +1430,16 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           </active>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </active>
           <inactive>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -1486,7 +1495,16 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           </inactive>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </inactive>
           <disabled>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -1542,16 +1560,26 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           </disabled>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </disabled>
          </palette>
         </property>
         <property name="font">
          <font>
+          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Multiply the incomming value by this gain&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Multiply the incoming value by this gain&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
          <string notr="true">QDoubleSpinBox {
@@ -1590,7 +1618,7 @@ QComboBox::drop-down:button{
          </rect>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shift the incomming value by this (-127 to 127).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shift the incoming value by this (-127 to 127).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
@@ -1776,6 +1804,7 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -1872,6 +1901,7 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -1882,7 +1912,7 @@ QComboBox::drop-down:button{
          <enum>Qt::DefaultContextMenu</enum>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Apply this curve to the incomming data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Apply this curve to the incoming data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
          <string notr="true"/>
@@ -1969,6 +1999,7 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -2088,7 +2119,16 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           </active>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </active>
           <inactive>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -2144,7 +2184,16 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           </inactive>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </inactive>
           <disabled>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -2200,16 +2249,26 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           </disabled>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </disabled>
          </palette>
         </property>
         <property name="font">
          <font>
+          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Multiply the incomming value by this gain&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Multiply the incoming value by this gain&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
          <string notr="true">QDoubleSpinBox {
@@ -2248,7 +2307,7 @@ QComboBox::drop-down:button{
          </rect>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shift the incomming value by this (-127 to 127).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shift the incoming pitch bend MSB value by this (-127 to 127).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
@@ -2453,6 +2512,7 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -2463,7 +2523,7 @@ QComboBox::drop-down:button{
          <enum>Qt::DefaultContextMenu</enum>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Apply this curve to the incomming data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Apply this curve to the incoming data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
          <string notr="true"/>
@@ -2550,6 +2610,7 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -2613,7 +2674,7 @@ QComboBox::drop-down:button{
          </rect>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shift the incomming value by this (-127 to 127).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shift the incoming value by this (-127 to 127).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
@@ -2717,7 +2778,16 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           </active>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </active>
           <inactive>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -2773,7 +2843,16 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           </inactive>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </inactive>
           <disabled>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -2829,16 +2908,26 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           </disabled>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </disabled>
          </palette>
         </property>
         <property name="font">
          <font>
+          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Multiply the incomming value by this gain&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Multiply the incoming value by this gain&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
          <string notr="true">QDoubleSpinBox {
@@ -2893,6 +2982,7 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -3146,6 +3236,7 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -3156,7 +3247,7 @@ QComboBox::drop-down:button{
          <enum>Qt::DefaultContextMenu</enum>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Apply this curve to the incomming data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Apply this curve to the incoming data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
          <string notr="true"/>
@@ -3243,6 +3334,7 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -3306,7 +3398,7 @@ QComboBox::drop-down:button{
          </rect>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shift the incomming value by this (-127 to 127).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shift the incoming value by this (-127 to 127).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
@@ -3410,7 +3502,16 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           </active>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </active>
           <inactive>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -3466,7 +3567,16 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           </inactive>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </inactive>
           <disabled>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -3522,16 +3632,26 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           </disabled>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </disabled>
          </palette>
         </property>
         <property name="font">
          <font>
+          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Multiply the incomming value by this gain&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Multiply the incoming value by this gain&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
          <string notr="true">QDoubleSpinBox {
@@ -3586,6 +3706,7 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -3849,6 +3970,7 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -3859,7 +3981,7 @@ QComboBox::drop-down:button{
          <enum>Qt::DefaultContextMenu</enum>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Apply this curve to the incomming data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Apply this curve to the incoming data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
          <string notr="true"/>
@@ -3946,6 +4068,7 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -4009,7 +4132,7 @@ QComboBox::drop-down:button{
          </rect>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shift the incomming value by this (-127 to 127).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shift the incoming value by this (-127 to 127).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
@@ -4113,7 +4236,16 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           </active>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </active>
           <inactive>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -4169,7 +4301,16 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           </inactive>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </inactive>
           <disabled>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -4225,16 +4366,26 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           </disabled>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </disabled>
          </palette>
         </property>
         <property name="font">
          <font>
+          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Multiply the incomming value by this gain&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Multiply the incoming value by this gain&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
          <string notr="true">QDoubleSpinBox {
@@ -4289,6 +4440,7 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -4558,6 +4710,7 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -4568,7 +4721,7 @@ QComboBox::drop-down:button{
          <enum>Qt::DefaultContextMenu</enum>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Apply this curve to the incomming data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Apply this curve to the incoming data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
          <string notr="true"/>
@@ -4655,6 +4808,7 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -4718,7 +4872,7 @@ QComboBox::drop-down:button{
          </rect>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shift the incomming value by this (-127 to 127).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shift the incoming value by this (-127 to 127).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
@@ -4822,7 +4976,16 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           </active>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </active>
           <inactive>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -4878,7 +5041,16 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           </inactive>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </inactive>
           <disabled>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -4934,16 +5106,26 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           </disabled>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </disabled>
          </palette>
         </property>
         <property name="font">
          <font>
+          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Multiply the incomming value by this gain&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Multiply the incoming value by this gain&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
          <string notr="true">QDoubleSpinBox {
@@ -4998,6 +5180,7 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -5176,7 +5359,7 @@ QComboBox::drop-down:button{
          <rect>
           <x>4</x>
           <y>6</y>
-          <width>81</width>
+          <width>84</width>
           <height>16</height>
          </rect>
         </property>
@@ -5216,6 +5399,7 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -5226,7 +5410,7 @@ QComboBox::drop-down:button{
          <enum>Qt::DefaultContextMenu</enum>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Apply this curve to the incomming data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Apply this curve to the incoming data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
          <string notr="true"/>
@@ -5313,6 +5497,7 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -5432,7 +5617,16 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           </active>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </active>
           <inactive>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -5488,7 +5682,16 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           </inactive>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </inactive>
           <disabled>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -5544,16 +5747,26 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           </disabled>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </disabled>
          </palette>
         </property>
         <property name="font">
          <font>
+          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Multiply the incomming value by this gain&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Multiply the incoming value by this gain&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
          <string notr="true">QDoubleSpinBox {
@@ -5592,7 +5805,7 @@ QComboBox::drop-down:button{
          </rect>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shift the incomming value by this (-127 to 127).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shift the incoming value by this (-127 to 127).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
@@ -5656,6 +5869,7 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -6048,6 +6262,7 @@ border: none;
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -6409,9 +6624,9 @@ qproperty-alignment: AlignCenter;
       <widget class="QLabel" name="label_38">
        <property name="geometry">
         <rect>
-         <x>280</x>
+         <x>278</x>
          <y>6</y>
-         <width>31</width>
+         <width>35</width>
          <height>16</height>
         </rect>
        </property>
@@ -6787,7 +7002,16 @@ qproperty-alignment: AlignCenter;
             </color>
            </brush>
           </colorrole>
-          </active>
+          <colorrole role="PlaceholderText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </active>
          <inactive>
           <colorrole role="WindowText">
            <brush brushstyle="SolidPattern">
@@ -6843,7 +7067,16 @@ qproperty-alignment: AlignCenter;
             </color>
            </brush>
           </colorrole>
-          </inactive>
+          <colorrole role="PlaceholderText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </inactive>
          <disabled>
           <colorrole role="WindowText">
            <brush brushstyle="SolidPattern">
@@ -6899,11 +7132,21 @@ qproperty-alignment: AlignCenter;
             </color>
            </brush>
           </colorrole>
-          </disabled>
+          <colorrole role="PlaceholderText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </disabled>
         </palette>
        </property>
        <property name="font">
         <font>
+         <family>Arial</family>
          <pointsize>-1</pointsize>
         </font>
        </property>
@@ -7208,6 +7451,7 @@ qproperty-alignment: AlignCenter;
        </property>
        <property name="font">
         <font>
+         <family>Droid Sans</family>
          <pointsize>-1</pointsize>
         </font>
        </property>
@@ -7578,6 +7822,7 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -7655,6 +7900,7 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -7737,6 +7983,7 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -7809,6 +8056,7 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -7872,6 +8120,7 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
        </property>
        <property name="font">
         <font>
+         <family>Arial</family>
          <pointsize>12</pointsize>
          <italic>true</italic>
          <bold>false</bold>
@@ -7907,6 +8156,7 @@ color: rgb(225,225,225);
        </property>
        <property name="font">
         <font>
+         <family>Arial</family>
          <pointsize>12</pointsize>
          <italic>true</italic>
          <bold>false</bold>
@@ -8083,6 +8333,7 @@ background: qlineargradient(spread: pan,
         </property>
         <property name="font">
          <font>
+          <family>Arial</family>
           <pointsize>20</pointsize>
           <italic>false</italic>
           <bold>false</bold>
@@ -8129,6 +8380,7 @@ color: white</string>
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -8196,6 +8448,7 @@ color: white</string>
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -8283,6 +8536,7 @@ color: white</string>
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -8442,6 +8696,7 @@ color: white</string>
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -8519,6 +8774,7 @@ color: white</string>
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -8664,6 +8920,7 @@ color: white</string>
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -8744,6 +9001,7 @@ color: white</string>
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -8851,6 +9109,7 @@ color: white</string>
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -9147,6 +9406,7 @@ QFrame {
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -9214,6 +9474,7 @@ QFrame {
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -9319,6 +9580,7 @@ QFrame {
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -9496,6 +9758,7 @@ QFrame {
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -9583,6 +9846,7 @@ QFrame {
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -9690,6 +9954,7 @@ QFrame {
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -9767,6 +10032,7 @@ QFrame {
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -9943,6 +10209,7 @@ QFrame {
         </property>
         <property name="font">
          <font>
+          <family>Arial</family>
           <pointsize>20</pointsize>
           <italic>false</italic>
           <bold>false</bold>
@@ -9989,6 +10256,7 @@ color: white</string>
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -10173,6 +10441,7 @@ QFrame {
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -10240,6 +10509,7 @@ QFrame {
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -10345,6 +10615,7 @@ QFrame {
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -10522,6 +10793,7 @@ QFrame {
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -10609,6 +10881,7 @@ QFrame {
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -10716,6 +10989,7 @@ QFrame {
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -10793,6 +11067,7 @@ QFrame {
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -10969,6 +11244,7 @@ QFrame {
         </property>
         <property name="font">
          <font>
+          <family>Arial</family>
           <pointsize>20</pointsize>
           <italic>false</italic>
           <bold>false</bold>
@@ -11015,6 +11291,7 @@ color: white</string>
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -11250,9 +11527,9 @@ color: white;</string>
       <widget class="QLabel" name="label_108">
        <property name="geometry">
         <rect>
-         <x>431</x>
+         <x>429</x>
          <y>150</y>
-         <width>34</width>
+         <width>38</width>
          <height>16</height>
         </rect>
        </property>
@@ -11269,9 +11546,9 @@ color: white;</string>
       <widget class="QLabel" name="label_117">
        <property name="geometry">
         <rect>
-         <x>473</x>
+         <x>471</x>
          <y>150</y>
-         <width>31</width>
+         <width>35</width>
          <height>16</height>
         </rect>
        </property>
@@ -11307,9 +11584,9 @@ color: white;</string>
       <widget class="QLabel" name="label_111">
        <property name="geometry">
         <rect>
-         <x>246</x>
+         <x>244</x>
          <y>150</y>
-         <width>41</width>
+         <width>45</width>
          <height>16</height>
         </rect>
        </property>
@@ -11317,7 +11594,7 @@ color: white;</string>
         <string notr="true"/>
        </property>
        <property name="text">
-        <string>Gate Off</string>
+        <string>Gate</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -11326,9 +11603,9 @@ color: white;</string>
       <widget class="QLabel" name="label_116">
        <property name="geometry">
         <rect>
-         <x>295</x>
+         <x>292</x>
          <y>150</y>
-         <width>61</width>
+         <width>65</width>
          <height>16</height>
         </rect>
        </property>
@@ -12023,7 +12300,7 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
          </rect>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The channel for incomming MIDI events&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The channel for incoming MIDI events&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
@@ -12087,6 +12364,7 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -12215,6 +12493,7 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
         </property>
         <property name="font">
          <font>
+          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -13001,6 +13280,7 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
         </property>
         <property name="font">
          <font>
+          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -13199,7 +13479,16 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
              </color>
             </brush>
            </colorrole>
-           </active>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>100</red>
+              <green>100</green>
+              <blue>100</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </active>
           <inactive>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -13255,7 +13544,16 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
              </color>
             </brush>
            </colorrole>
-           </inactive>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>100</red>
+              <green>100</green>
+              <blue>100</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </inactive>
           <disabled>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -13311,11 +13609,21 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
              </color>
             </brush>
            </colorrole>
-           </disabled>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>100</red>
+              <green>100</green>
+              <blue>100</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </disabled>
          </palette>
         </property>
         <property name="font">
          <font>
+          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -13574,6 +13882,7 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -13584,7 +13893,7 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
          <enum>Qt::DefaultContextMenu</enum>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Route the incomming CV signals to these MIDI output ports (USB and/or Expander).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Route the incoming CV signals to these MIDI output ports (USB and/or Expander).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
          <string notr="true"/>
@@ -13651,6 +13960,7 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -13661,7 +13971,7 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
          <enum>Qt::DefaultContextMenu</enum>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Apply this curve to the incomming data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Apply this curve to the incoming data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
          <string notr="true"/>
@@ -13732,7 +14042,7 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
          </rect>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shift the incomming value by this (-127 to 127).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shift the incoming value by this (-127 to 127).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
@@ -13836,7 +14146,16 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
              </color>
             </brush>
            </colorrole>
-           </active>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </active>
           <inactive>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -13892,7 +14211,16 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
              </color>
             </brush>
            </colorrole>
-           </inactive>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </inactive>
           <disabled>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -13948,16 +14276,26 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
              </color>
             </brush>
            </colorrole>
-           </disabled>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </disabled>
          </palette>
         </property>
         <property name="font">
          <font>
+          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Multiply the incomming value by this gain&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Multiply the incoming value by this gain&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
          <string notr="true">QDoubleSpinBox {
@@ -14121,7 +14459,7 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
          </rect>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The channel for incomming MIDI events&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The channel for incoming MIDI events&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
@@ -14249,6 +14587,7 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -14259,7 +14598,7 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
          <enum>Qt::DefaultContextMenu</enum>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Apply this curve to the incomming data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Apply this curve to the incoming data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
          <string notr="true"/>
@@ -14386,7 +14725,16 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
              </color>
             </brush>
            </colorrole>
-           </active>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </active>
           <inactive>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -14442,7 +14790,16 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
              </color>
             </brush>
            </colorrole>
-           </inactive>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </inactive>
           <disabled>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -14498,16 +14855,26 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
              </color>
             </brush>
            </colorrole>
-           </disabled>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </disabled>
          </palette>
         </property>
         <property name="font">
          <font>
+          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Multiply the incomming value by this gain&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Multiply the incoming value by this gain&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
          <string notr="true">QDoubleSpinBox {
@@ -14546,7 +14913,7 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
          </rect>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shift the incomming value by this (-127 to 127).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shift the incoming value by this (-127 to 127).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
@@ -14610,6 +14977,7 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -14738,6 +15106,7 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -15524,7 +15893,7 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
          </rect>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The channel for incomming MIDI events&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The channel for incoming MIDI events&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
@@ -15652,6 +16021,7 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -15662,7 +16032,7 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
          <enum>Qt::DefaultContextMenu</enum>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Apply this curve to the incomming data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Apply this curve to the incoming data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
          <string notr="true"/>
@@ -15789,7 +16159,16 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
              </color>
             </brush>
            </colorrole>
-           </active>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </active>
           <inactive>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -15845,7 +16224,16 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
              </color>
             </brush>
            </colorrole>
-           </inactive>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </inactive>
           <disabled>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -15901,16 +16289,26 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
              </color>
             </brush>
            </colorrole>
-           </disabled>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </disabled>
          </palette>
         </property>
         <property name="font">
          <font>
+          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Multiply the incomming value by this gain&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Multiply the incoming value by this gain&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
          <string notr="true">QDoubleSpinBox {
@@ -15949,7 +16347,7 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
          </rect>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shift the incomming value by this (-127 to 127).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shift the incoming value by this (-127 to 127).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
@@ -16013,6 +16411,7 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -16141,6 +16540,7 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -16924,7 +17324,7 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
          </rect>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The channel for incomming MIDI events&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The channel for incoming MIDI events&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
@@ -17052,6 +17452,7 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -17062,7 +17463,7 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
          <enum>Qt::DefaultContextMenu</enum>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Apply this curve to the incomming data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Apply this curve to the incoming data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
          <string notr="true"/>
@@ -17189,7 +17590,16 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
              </color>
             </brush>
            </colorrole>
-           </active>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </active>
           <inactive>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -17245,7 +17655,16 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
              </color>
             </brush>
            </colorrole>
-           </inactive>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </inactive>
           <disabled>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -17301,16 +17720,26 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
              </color>
             </brush>
            </colorrole>
-           </disabled>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </disabled>
          </palette>
         </property>
         <property name="font">
          <font>
+          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Multiply the incomming value by this gain&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Multiply the incoming value by this gain&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
          <string notr="true">QDoubleSpinBox {
@@ -17349,7 +17778,7 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
          </rect>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shift the incomming value by this (-127 to 127).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shift the incoming value by this (-127 to 127).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
@@ -17413,6 +17842,7 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -17541,6 +17971,7 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -18452,6 +18883,7 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -18462,7 +18894,7 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
          <enum>Qt::DefaultContextMenu</enum>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Route the incomming CV signals to these MIDI output ports (USB and/or Expander).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Route the incoming CV signals to these MIDI output ports (USB and/or Expander).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
          <string notr="true"/>
@@ -18569,7 +19001,16 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
              </color>
             </brush>
            </colorrole>
-           </active>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </active>
           <inactive>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -18625,7 +19066,16 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
              </color>
             </brush>
            </colorrole>
-           </inactive>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </inactive>
           <disabled>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -18681,16 +19131,26 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
              </color>
             </brush>
            </colorrole>
-           </disabled>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </disabled>
          </palette>
         </property>
         <property name="font">
          <font>
+          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Multiply the incomming value by this gain&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Multiply the incoming value by this gain&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
          <string notr="true">QDoubleSpinBox {
@@ -18729,7 +19189,7 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
          </rect>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shift the incomming value by this (-127 to 127).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shift the incoming value by this (-127 to 127).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
@@ -18793,6 +19253,7 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -18803,7 +19264,7 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
          <enum>Qt::DefaultContextMenu</enum>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Apply this curve to the incomming data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Apply this curve to the incoming data.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
          <string notr="true"/>
@@ -18969,6 +19430,7 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -19027,7 +19489,8 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
        </property>
        <property name="font">
         <font>
-         <pointsize>14</pointsize>
+         <family>Arial</family>
+         <pointsize>-1</pointsize>
          <italic>true</italic>
          <bold>false</bold>
         </font>
@@ -19115,7 +19578,8 @@ background: qlineargradient(spread: pan,
        </property>
        <property name="font">
         <font>
-         <pointsize>14</pointsize>
+         <family>Arial</family>
+         <pointsize>-1</pointsize>
          <italic>true</italic>
          <bold>false</bold>
         </font>
@@ -19569,9 +20033,9 @@ border: none;
       <widget class="QLabel" name="label_18">
        <property name="geometry">
         <rect>
-         <x>109</x>
+         <x>100</x>
          <y>263</y>
-         <width>41</width>
+         <width>49</width>
          <height>16</height>
         </rect>
        </property>
@@ -19580,6 +20044,9 @@ border: none;
        </property>
        <property name="text">
         <string>Channel</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
        </property>
       </widget>
       <widget class="QLabel" name="label_21">
@@ -19800,9 +20267,9 @@ color: white;</string>
       <widget class="QLabel" name="label_11">
        <property name="geometry">
         <rect>
-         <x>105</x>
+         <x>103</x>
          <y>64</y>
-         <width>41</width>
+         <width>45</width>
          <height>16</height>
         </rect>
        </property>
@@ -21204,6 +21671,7 @@ QPushButton:checked{ border-color: rgba(10, 255, 0,0);}</string>
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -21322,7 +21790,7 @@ QPushButton:checked{ border-color: rgba(10, 255, 0,0);}</string>
             </color>
            </brush>
           </colorrole>
-          </active>
+         </active>
          <inactive>
           <colorrole role="WindowText">
            <brush brushstyle="SolidPattern">
@@ -21378,7 +21846,7 @@ QPushButton:checked{ border-color: rgba(10, 255, 0,0);}</string>
             </color>
            </brush>
           </colorrole>
-          </inactive>
+         </inactive>
          <disabled>
           <colorrole role="WindowText">
            <brush brushstyle="SolidPattern">
@@ -21434,7 +21902,7 @@ QPushButton:checked{ border-color: rgba(10, 255, 0,0);}</string>
             </color>
            </brush>
           </colorrole>
-          </disabled>
+         </disabled>
         </palette>
        </property>
        <property name="styleSheet">
@@ -21447,7 +21915,7 @@ QPushButton:checked{ border-color: rgba(10, 255, 0,0);}</string>
 }</string>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="keyEditPanes">
         <widget class="QFrame" name="noteToggleFrame">
@@ -21478,7 +21946,7 @@ QPushButton:checked{ border-color: rgba(10, 255, 0,0);}</string>
          <widget class="QCheckBox" name="Controller_Key_Toggle_On_Off">
           <property name="geometry">
            <rect>
-            <x>86</x>
+            <x>94</x>
             <y>47</y>
             <width>20</width>
             <height>20</height>
@@ -21500,7 +21968,7 @@ QPushButton:checked{ border-color: rgba(10, 255, 0,0);}</string>
          <widget class="QLabel" name="label_82">
           <property name="geometry">
            <rect>
-            <x>120</x>
+            <x>122</x>
             <y>3</y>
             <width>84</width>
             <height>20</height>
@@ -21524,7 +21992,7 @@ border-radius: 0px;
          <widget class="QSpinBox" name="Controller_Key_Note_Velocity">
           <property name="geometry">
            <rect>
-            <x>78</x>
+            <x>86</x>
             <y>25</y>
             <width>35</width>
             <height>20</height>
@@ -21578,7 +22046,7 @@ border-radius: 0px;
          <widget class="QSpinBox" name="Controller_Key_Note_Number">
           <property name="geometry">
            <rect>
-            <x>78</x>
+            <x>86</x>
             <y>3</y>
             <width>35</width>
             <height>20</height>
@@ -21632,9 +22100,9 @@ border-radius: 0px;
          <widget class="QLabel" name="label_50">
           <property name="geometry">
            <rect>
-            <x>5</x>
+            <x>0</x>
             <y>3</y>
-            <width>68</width>
+            <width>81</width>
             <height>20</height>
            </rect>
           </property>
@@ -21656,7 +22124,7 @@ border-radius: 0px;
          <widget class="QSpinBox" name="Controller_Key_Toggle_Control_Number">
           <property name="geometry">
            <rect>
-            <x>208</x>
+            <x>210</x>
             <y>3</y>
             <width>35</width>
             <height>20</height>
@@ -21710,7 +22178,7 @@ border-radius: 0px;
          <widget class="QSpinBox" name="Controller_Key_Toggle_Value">
           <property name="geometry">
            <rect>
-            <x>208</x>
+            <x>210</x>
             <y>25</y>
             <width>35</width>
             <height>20</height>
@@ -21764,7 +22232,7 @@ border-radius: 0px;
          <widget class="QLabel" name="label_83">
           <property name="geometry">
            <rect>
-            <x>120</x>
+            <x>122</x>
             <y>47</y>
             <width>84</width>
             <height>20</height>
@@ -21779,7 +22247,7 @@ border-radius: 0px;
 }</string>
           </property>
           <property name="text">
-           <string>Toggle CC Return</string>
+           <string>Toggle Return</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -21788,9 +22256,9 @@ border-radius: 0px;
          <widget class="QLabel" name="label_68">
           <property name="geometry">
            <rect>
-            <x>3</x>
+            <x>-2</x>
             <y>25</y>
-            <width>68</width>
+            <width>81</width>
             <height>20</height>
            </rect>
           </property>
@@ -21812,7 +22280,7 @@ border-radius: 0px;
          <widget class="QSpinBox" name="Controller_Key_Toggle_Return_Value">
           <property name="geometry">
            <rect>
-            <x>208</x>
+            <x>210</x>
             <y>47</y>
             <width>35</width>
             <height>20</height>
@@ -21866,7 +22334,7 @@ border-radius: 0px;
          <widget class="QLabel" name="label_55">
           <property name="geometry">
            <rect>
-            <x>6</x>
+            <x>14</x>
             <y>47</y>
             <width>68</width>
             <height>20</height>
@@ -21881,7 +22349,7 @@ border-radius: 0px;
 }</string>
           </property>
           <property name="text">
-           <string>Toggle On/Off</string>
+           <string>Toggle</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -21890,7 +22358,7 @@ border-radius: 0px;
          <widget class="QLabel" name="label_81">
           <property name="geometry">
            <rect>
-            <x>120</x>
+            <x>122</x>
             <y>25</y>
             <width>84</width>
             <height>20</height>
@@ -21905,7 +22373,7 @@ border-radius: 0px;
 }</string>
           </property>
           <property name="text">
-           <string>Toggle CC Value</string>
+           <string>Toggle Value</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -22278,9 +22746,9 @@ border-radius: 0px;
          <widget class="QCheckBox" name="Controller_Key_Keyboard_Layer_Enable_Disable">
           <property name="geometry">
            <rect>
-            <x>10</x>
-            <y>10</y>
-            <width>156</width>
+            <x>22</x>
+            <y>32</y>
+            <width>140</width>
             <height>20</height>
            </rect>
           </property>
@@ -22291,24 +22759,21 @@ border-radius: 0px;
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If disabled, this removes specific keys from playing Notes, Bends, etc. from Keyboard Layer. Useful for isolating keys to control FX, loops, etc…&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="styleSheet">
-           <string notr="true">QCheckBox
-{
-background:transparent;
-color: rgb(255, 255, 255);
-font: 10pt &quot;Arial&quot;;
-}
-</string>
+           <string notr="true">        font-family: &quot;Open Sans&quot;;
+        font-size: 12px;
+        color: white;
+        background-color: rgba(0,0,0,0);</string>
           </property>
           <property name="text">
-           <string>Participate in Keyboard Layer</string>
+           <string>Keyboard Layer</string>
           </property>
          </widget>
          <widget class="QCheckBox" name="Controller_Key_Controller_Layer_Enable_Disable">
           <property name="geometry">
            <rect>
-            <x>10</x>
-            <y>30</y>
-            <width>156</width>
+            <x>22</x>
+            <y>50</y>
+            <width>130</width>
             <height>20</height>
            </rect>
           </property>
@@ -22319,23 +22784,20 @@ font: 10pt &quot;Arial&quot;;
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If disabled, sensor settings in Controller Layer will not output the Note or CC#s for this key.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="styleSheet">
-           <string notr="true">QCheckBox
-{
-background:transparent;
-color: rgb(255, 255, 255);
-font: 10pt &quot;Arial&quot;;
-}
-</string>
+           <string notr="true">        font-family: &quot;Open Sans&quot;;
+        font-size: 12px;
+        color: white;
+        background-color: rgba(0,0,0,0);</string>
           </property>
           <property name="text">
-           <string>Participate in Controller Layer</string>
+           <string>Controller Layer</string>
           </property>
          </widget>
          <widget class="QLabel" name="label_48">
           <property name="geometry">
            <rect>
-            <x>60</x>
-            <y>60</y>
+            <x>40</x>
+            <y>91</y>
             <width>51</width>
             <height>16</height>
            </rect>
@@ -22358,8 +22820,8 @@ border-radius: 0px;
          <widget class="QSpinBox" name="Controller_Key_Channel">
           <property name="geometry">
            <rect>
-            <x>67</x>
-            <y>79</y>
+            <x>93</x>
+            <y>91</y>
             <width>35</width>
             <height>20</height>
            </rect>
@@ -22398,6 +22860,30 @@ border-radius: 0px;
           </property>
           <property name="maximum">
            <number>16</number>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_115">
+          <property name="geometry">
+           <rect>
+            <x>18</x>
+            <y>10</y>
+            <width>93</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLabel
+{
+background: rgb(120,120,120);
+color: white;
+border-radius: 0px;
+}</string>
+          </property>
+          <property name="text">
+           <string>Participate In:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
           </property>
          </widget>
         </widget>
@@ -22610,106 +23096,10 @@ border-radius: 0px;
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
          </property>
-         <widget class="QLabel" name="label_103">
-          <property name="geometry">
-           <rect>
-            <x>1</x>
-            <y>32</y>
-            <width>93</width>
-            <height>20</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QLabel
-{
-background: rgb(120,120,120);
-color: white;
-border-radius: 0px;
-}</string>
-          </property>
-          <property name="text">
-           <string>Return Value</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_104">
-          <property name="geometry">
-           <rect>
-            <x>1</x>
-            <y>10</y>
-            <width>93</width>
-            <height>20</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QLabel
-{
-background: rgb(120,120,120);
-color: white;
-border-radius: 0px;
-}</string>
-          </property>
-          <property name="text">
-           <string>Pressure CC</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_105">
-          <property name="geometry">
-           <rect>
-            <x>1</x>
-            <y>70</y>
-            <width>93</width>
-            <height>20</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QLabel
-{
-background: rgb(120,120,120);
-color: white;
-border-radius: 0px;
-}</string>
-          </property>
-          <property name="text">
-           <string>Tilt CC</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_106">
-          <property name="geometry">
-           <rect>
-            <x>1</x>
-            <y>90</y>
-            <width>93</width>
-            <height>20</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QLabel
-{
-background: rgb(120,120,120);
-color: white;
-border-radius: 0px;
-}</string>
-          </property>
-          <property name="text">
-           <string>Return Value</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-          </property>
-         </widget>
          <widget class="QSpinBox" name="Controller_Bend_Pad_Pressure_Control_Number">
           <property name="geometry">
            <rect>
-            <x>98</x>
+            <x>100</x>
             <y>10</y>
             <width>35</width>
             <height>20</height>
@@ -22763,7 +23153,7 @@ border-radius: 0px;
          <widget class="QSpinBox" name="Controller_Bend_Pad_Pressure_Return_Value">
           <property name="geometry">
            <rect>
-            <x>98</x>
+            <x>100</x>
             <y>32</y>
             <width>35</width>
             <height>20</height>
@@ -22817,7 +23207,7 @@ border-radius: 0px;
          <widget class="QSpinBox" name="Controller_Bend_Pad_Tilt_Control_Number">
           <property name="geometry">
            <rect>
-            <x>98</x>
+            <x>100</x>
             <y>69</y>
             <width>35</width>
             <height>20</height>
@@ -22871,7 +23261,7 @@ border-radius: 0px;
          <widget class="QSpinBox" name="Controller_Bend_Pad_Tilt_Return_Value">
           <property name="geometry">
            <rect>
-            <x>98</x>
+            <x>100</x>
             <y>91</y>
             <width>35</width>
             <height>20</height>
@@ -22922,6 +23312,102 @@ border-radius: 0px;
            <number>-1</number>
           </property>
          </widget>
+         <widget class="QLabel" name="label_69">
+          <property name="geometry">
+           <rect>
+            <x>3</x>
+            <y>70</y>
+            <width>93</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLabel
+{
+background: rgb(120,120,120);
+color: white;
+border-radius: 0px;
+}</string>
+          </property>
+          <property name="text">
+           <string>Tilt CC</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_87">
+          <property name="geometry">
+           <rect>
+            <x>3</x>
+            <y>32</y>
+            <width>93</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLabel
+{
+background: rgb(120,120,120);
+color: white;
+border-radius: 0px;
+}</string>
+          </property>
+          <property name="text">
+           <string>Return Val</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_88">
+          <property name="geometry">
+           <rect>
+            <x>3</x>
+            <y>90</y>
+            <width>93</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLabel
+{
+background: rgb(120,120,120);
+color: white;
+border-radius: 0px;
+}</string>
+          </property>
+          <property name="text">
+           <string>Return Val</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_74">
+          <property name="geometry">
+           <rect>
+            <x>3</x>
+            <y>10</y>
+            <width>93</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLabel
+{
+background: rgb(120,120,120);
+color: white;
+border-radius: 0px;
+}</string>
+          </property>
+          <property name="text">
+           <string>Pressure CC</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
         </widget>
         <widget class="QFrame" name="frame_26">
          <property name="geometry">
@@ -22951,9 +23437,9 @@ border-radius: 0px;
          <widget class="QCheckBox" name="Controller_Bend_Pad_Keyboard_Layer_Enable_Disable">
           <property name="geometry">
            <rect>
-            <x>10</x>
-            <y>10</y>
-            <width>156</width>
+            <x>22</x>
+            <y>32</y>
+            <width>140</width>
             <height>20</height>
            </rect>
           </property>
@@ -22961,20 +23447,21 @@ border-radius: 0px;
            <cursorShape>PointingHandCursor</cursorShape>
           </property>
           <property name="styleSheet">
-           <string notr="true">color: rgb(255, 255, 255);
-font: 10pt &quot;Arial&quot;;
-background:rgba(0,0,0,0);</string>
+           <string notr="true">        font-family: &quot;Open Sans&quot;;
+        font-size: 12px;
+        color: white;
+        background-color: rgba(0,0,0,0);</string>
           </property>
           <property name="text">
-           <string>Participate in Keyboard Layer</string>
+           <string>Keyboard Layer</string>
           </property>
          </widget>
          <widget class="QCheckBox" name="Controller_Bend_Pad_Controller_Layer_Enable_Disable">
           <property name="geometry">
            <rect>
-            <x>10</x>
-            <y>30</y>
-            <width>156</width>
+            <x>22</x>
+            <y>50</y>
+            <width>140</width>
             <height>20</height>
            </rect>
           </property>
@@ -22982,19 +23469,20 @@ background:rgba(0,0,0,0);</string>
            <cursorShape>PointingHandCursor</cursorShape>
           </property>
           <property name="styleSheet">
-           <string notr="true">color: rgb(255, 255, 255);
-font: 10pt &quot;Arial&quot;;
-background:transparent;</string>
+           <string notr="true">        font-family: &quot;Open Sans&quot;;
+        font-size: 12px;
+        color: white;
+        background-color: rgba(0,0,0,0);</string>
           </property>
           <property name="text">
-           <string>Participate in Controller Layer</string>
+           <string>Controller Layer</string>
           </property>
          </widget>
          <widget class="QSpinBox" name="Controller_Bend_Pad_Channel">
           <property name="geometry">
            <rect>
-            <x>67</x>
-            <y>79</y>
+            <x>93</x>
+            <y>91</y>
             <width>35</width>
             <height>20</height>
            </rect>
@@ -23038,8 +23526,8 @@ background:transparent;</string>
          <widget class="QLabel" name="label_61">
           <property name="geometry">
            <rect>
-            <x>60</x>
-            <y>60</y>
+            <x>40</x>
+            <y>91</y>
             <width>51</width>
             <height>16</height>
            </rect>
@@ -23057,6 +23545,30 @@ border-radius: 0px;
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_107">
+          <property name="geometry">
+           <rect>
+            <x>18</x>
+            <y>10</y>
+            <width>93</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLabel
+{
+background: rgb(120,120,120);
+color: white;
+border-radius: 0px;
+}</string>
+          </property>
+          <property name="text">
+           <string>Participate In:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
           </property>
          </widget>
         </widget>
@@ -23989,6 +24501,7 @@ border:0px;</string>
         </property>
         <property name="font">
          <font>
+          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -23999,7 +24512,7 @@ border:0px;</string>
          <enum>Qt::DefaultContextMenu</enum>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Send incomming QuNexus MIDI data to the selected port. Useful for controlling devices without a DAW. &lt;/p&gt;&lt;p&gt;Note for Windows users - Windows cannot share MIDI drivers between multiple applications. Use this MIDI Thru to audition changes while editing QuNexus settings.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Send incoming QuNexus MIDI data to the selected port. Useful for controlling devices without a DAW. &lt;/p&gt;&lt;p&gt;Note for Windows users - Windows cannot share MIDI drivers between multiple applications. Use this MIDI Thru to audition changes while editing QuNexus settings.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
          <string notr="true"/>
@@ -24069,6 +24582,7 @@ border:0px;</string>
      </property>
      <property name="font">
       <font>
+       <family>Arial</family>
        <pointsize>12</pointsize>
        <italic>false</italic>
        <bold>false</bold>
@@ -24425,7 +24939,8 @@ QPushButton:disabled {
     </property>
     <property name="font">
      <font>
-      <pointsize>18</pointsize>
+      <family>Arial</family>
+      <pointsize>-1</pointsize>
       <italic>true</italic>
       <bold>false</bold>
      </font>

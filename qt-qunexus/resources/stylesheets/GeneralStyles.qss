@@ -12,6 +12,21 @@ QLabel {
         background-color: rgba(0,0,0,0);
 }
 
+QLabel#QuNexus_Connected_Label {
+        color: rgb(255,255,255);
+        background: rgba(0,0,0,0);
+        font: 8px;
+}
+
+QLabel#QuNexus_Not_Connected
+{
+        font-family: "Arial";
+        font-size: 10px;
+        font-style:bold;
+        color: white;
+        border: none;
+}
+
 /* --[H1]------------------------- */
 QLabel#Library_Pane_Label, QLabel#Send_Pane_Label,
 QLabel#SEQ_settings_label, QLabel#SEQ_track_settings_label

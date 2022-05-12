@@ -25,16 +25,16 @@ message("Building with Qt $${QT_VERSION}")
 
 # build with Qt 5.11.3 to support El Capitan, Sierra, and High Sierra
 lessThan(QT_MAJOR_VERSION, 6){
-    message("Building legacy MacOS Intel Binary")
     macx{
+        message("Building legacy MacOS Intel Binary")
         QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.11
     }
 }
 
 # build with Qt 6.2.1 to support Mojave and later
 versionAtLeast(QT_VERSION, 6.2.1){
-    message("Building Apple M1/Intel Universal Binary")
     macx{
+        message("Building Apple M1/Intel Universal Binary")
         QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.14
         QMAKE_APPLE_DEVICE_ARCHS = x86_64 arm64
     }
@@ -49,6 +49,7 @@ INCLUDEPATH +=  source \
 SOURCES +=  main.cpp\
     inc/KMI_MIDI_Device_Manager/fwupdate/fwupdate.cpp \
     inc/KMI_MIDI_Device_Manager/KMI_mdm.cpp \
+    inc/KMI_MIDI_Device_Manager/troubleshoot/troubleshoot.cpp \
     inc/KMI_Ports/kmi_ports.cpp \
     inc/KMI_Updates/kmi_updates.cpp \
     inc/rtmidi/RtMidi.cpp \
@@ -68,6 +69,7 @@ HEADERS  += mainwindow.h \
     inc/KMI_MIDI_Device_Manager/KMI_SysexMessages.h \
     inc/KMI_MIDI_Device_Manager/KMI_mdm.h \
     inc/KMI_MIDI_Device_Manager/midi.h \
+    inc/KMI_MIDI_Device_Manager/troubleshoot/troubleshoot.h \
     inc/KMI_Ports/kmi_ports.h \
     inc/KMI_Updates/kmi_updates.h \
     inc/rtmidi/RtMidi.h \
@@ -83,6 +85,7 @@ HEADERS  += mainwindow.h \
 
 FORMS    += mainwindow.ui \
             inc/KMI_MIDI_Device_Manager/fwupdate/fwupdate.ui \
+            inc/KMI_MIDI_Device_Manager/troubleshoot/troubleshoot.ui \
             perkeysensitivities.ui \
             tableviewerform.ui \
             cvtrimsviewerform.ui
@@ -90,7 +93,8 @@ FORMS    += mainwindow.ui \
 
 RESOURCES += \
     inc/KMI_MIDI_Device_Manager/fwupdate/fw_stylesheets.qrc \
-    resources.qrc
+    resources.qrc \
+    resources/fonts/fonts.qrc
 
 ## QML stuff
 
@@ -105,6 +109,7 @@ INCLUDEPATH += \
     inc/KMI_Ports \
     inc/KMI_MIDI_Device_Manager \
     inc/KMI_MIDI_Device_Manager/fwupdate \
+    inc/KMI_MIDI_Device_Manager/troubleshoot \
     inc/KMI_Updates
 
 #DEFINES += \

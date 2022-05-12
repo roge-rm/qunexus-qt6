@@ -5,6 +5,7 @@
 #include "mainwindow.h"
 #include <QFontDatabase>
 #include <QQmlApplicationEngine>
+#include <QSettings>
 
 int main(int argc, char *argv[])
 {
@@ -12,6 +13,37 @@ int main(int argc, char *argv[])
 #if QT_VERSION >= 0x060000
     QGuiApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
 #endif
+
+//#ifdef Q_OS_WIN
+//    // up-scale the app for windows
+////    QApplication* temp = new QApplication(argc, argv);
+////    QScreen *screen = QGuiApplication::primaryScreen();
+////    QRect  screenGeometry = screen->availableGeometry();
+////    double width = screenGeometry.width();
+////    // assumes that the default desktop resolution is 720p (scale of 1)
+////    int minWidth = 1280;
+////    delete temp;
+
+//    double scale;
+//    //double scale = width / minWidth;
+
+//    QSettings settings;
+
+//    qDebug() << "Appstart - scaleDisplayUp: " << settings.value("scaleDisplayUp").toBool();
+
+//    if (settings.value("scaleDisplayUp").toBool())
+//    {
+//        scale = 1.18;
+//    }
+//    else
+//    {
+//        scale = 1;
+//    }
+
+//    std::string scaleAsString = std::to_string(scale);
+//    QByteArray scaleAsQByteArray(scaleAsString.c_str(), (int)scaleAsString.length());
+//    qputenv("QT_SCALE_FACTOR", scaleAsQByteArray);
+//#endif
 
     QApplication a(argc, argv);
 

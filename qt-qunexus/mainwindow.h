@@ -15,6 +15,7 @@
 #include "RtMidi.h"
 #include "KMI_DevData.h"
 #include <fwupdate.h>
+#include <troubleshoot.h>
 #include "kmi_updates.h"
 
 // qunexus
@@ -92,6 +93,10 @@ public:
     QFile*              generalStylesFile;
     QString             generalStylesString;
 
+    // General
+    QFile*              dialogStylesFile;
+    QString             dialogStylesString;
+
     // Parameter Labels
     QFile*              paramLabelStyleSheetFile;
     QString             paramLabelStyleString;
@@ -153,6 +158,7 @@ public:
 
     bool connected;
     bool firstRunUnsavedFlag;
+    bool forceFirmwareUpdate;
 
     // menu items
 
@@ -175,6 +181,7 @@ public:
     QWidget* pksWidget;
 
     fwUpdate* fwUpdateWindow;
+    troubleshoot* troubleshootWindow;
 
     QAction* cvTrims;
     QAction* viewAndEditTables;
@@ -186,6 +193,7 @@ public:
     QTimer *globalsRequestIterator;
 
     QAction* toolTipsEnable;
+    QAction* scaleDisplayUp;
     QAction* unsavedWarningsEnabled;
 
     void closeEvent(QCloseEvent *event); // handle save before quit
@@ -206,6 +214,8 @@ protected:
 
 
 public slots:
+
+    void slotCreateDialog(QString dialogText);
 
     // ------ midi overhaul --------------------------------------------------------
     void slotMIDIPortChange(QString, uchar, uchar, int); // handles changes to MIDI i/o
@@ -252,6 +262,7 @@ public slots:
     void    slotOpenAboutScreen();
     void    slotOpenDocumentation();
     void    slotSubmitBugReport();
+    void    slotOpenTroubleshooting();
     void    slotShowGreyRect();
     void    slotHideGreyRect();
 
@@ -273,6 +284,8 @@ public slots:
     void    slotToolTipHandler();
 
     void    slotEnableDisableToolTips();
+//    void    slotScaleDisplayUp();
+//    void    slotScaleRestart();
     void    slotEnableDisableUnsavedWarnings();
     void    slotEnableDisableToggleParameters(bool toggled);
     void    slotEnableDisableToggleControl(bool);

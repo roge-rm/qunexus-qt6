@@ -31,7 +31,8 @@ SyncQuNexusDialog::SyncQuNexusDialog(QWidget *parent) :
 
     slotCenterDialog();
 
-    //this->setWindowModality(Qt::WindowModal);
+    this->setWindowFlags(Qt::Tool | Qt::WindowStaysOnTopHint );
+    this->setWindowModality(Qt::WindowModal);
 
     QLabel* label = new QLabel(QString("QuNexus Connected. Choose Sync Method:"), this, Qt::WindowFlags());
     label->setGeometry(QRect(0,15,SYNC_WINDOW_WIDTH,SYNC_WINDOW_HEIGHT/4));
@@ -86,6 +87,7 @@ void SyncQuNexusDialog::slotCenterDialog()
     mainY + 55 );
 
     thisWindowPtr->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint);
+    thisWindowPtr->setWindowModality(Qt::NonModal);
     //qDebug() << "Sync QuNexus Dialog centerparent: " << centerparent << " mx: " << mainX << " my: " << mainY << " tx: " << thisX << " ty: " << thisY;
     thisWindowPtr->move(centerparent);
 }

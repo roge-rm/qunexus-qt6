@@ -43,7 +43,7 @@ MainWindow::MainWindow(QWidget *parent) :
     applicationVersion[1] = 1;
     applicationVersion[2] = 0;
 
-    betaVersion = "A"; // leave blank for release
+    betaVersion = "B"; // leave blank for release
 
 
     thisFw = QByteArray(reinterpret_cast<char*>(_fw_ver_qunexus), sizeof(_fw_ver_qunexus));
@@ -104,6 +104,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // ******************************
 
     connected = false;
+    forceFirmwareUpdate = false;
 
     settings = new QSettings();
 
@@ -153,52 +154,64 @@ MainWindow::MainWindow(QWidget *parent) :
     // ---- FONTS --------------------------
     qDebug() << "------------ [FONTS SETUP] ---------------------------------------------------";
 
-    QString droidFont = ":/resources/fonts/droid-sans/DroidSans.ttf";
-    QString openSansSemibold = ":/resources/fonts/open-sans/OpenSans-Semibold.ttf";
-    QString openSansLight = ":/resources/fonts/open-sans/OpenSans-Light.ttf";
-    QString openSans3 = ":/resources/fonts/open-sans/OpenSans-Regular.ttf";
-//    QString openSans4 = ":/resources/fonts/open-sans/OpenSans-Regular.ttf";
-//    QString openSans5 = ":/resources/fonts/open-sans/OpenSans-Regular.ttf";
 
-    QString aller = ":/resources/fonts/Aller/Aller_Lt.ttf";
+    QString openSansSemibold = ":/fonts/open-sans/OpenSans-Semibold.ttf";
+    QString openSansLight = ":/fonts/open-sans/OpenSans-Light.ttf";
+    QString openSans3 = ":/fonts/open-sans/OpenSans-Regular.ttf";
+    QString aller = ":/fonts/Aller/Aller_Lt.ttf";
+    QString droidFont = ":/fonts/droid-sans/DroidSans.ttf";
+    QString droidMonoFont = ":/fonts/droid-sans/DroidSansMono.ttf";
+    QString futuraFont = ":/fonts/futura/futura-normal.ttf";
+    QString futuraBFont = ":/fonts/futura/Futura-Bold.ttf";
+    QString corbelFont = ":/fonts/corbel/corbel.ttf";
+    QString corbelBFont = ":/fonts/corbel/corbelb.ttf";
+    QString sourceFont = ":/fonts/source-sans-pro/SourceSansPro-Regular.otf";
+    QString sourceCodePro1Font = ":/fonts/Source_Code_Pro/SourceCodePro-VariableFont_wght.ttf";
+    QString sourceCodePro2Font = ":/fonts/Source_Code_Pro/SourceCodePro-Italic-VariableFont_wght.ttf";
 
-    if (QFontDatabase::addApplicationFont(droidFont) == -1) qDebug() << "Could not load font: " << droidFont;
+
+
     if (QFontDatabase::addApplicationFont(openSansSemibold) == -1) qDebug() << "Could not load font: " << openSansSemibold;
     if (QFontDatabase::addApplicationFont(openSansLight) == -1) qDebug() << "Could not load font: " << openSansLight;
     if (QFontDatabase::addApplicationFont(openSans3) == -1) qDebug() << "Could not load font: " << openSans3;
-//    if (QFontDatabase::addApplicationFont(openSans4) == -1) qDebug() << "Could not load font: " << openSans4;
-//    if (QFontDatabase::addApplicationFont(openSans5) == -1) qDebug() << "Could not load font: " << openSans5;
     if (QFontDatabase::addApplicationFont(aller) == -1) qDebug() << "Could not load font: " << aller;
+    if (QFontDatabase::addApplicationFont(droidFont) == -1) qDebug() << "Could not load font: " << droidFont;
+    if (QFontDatabase::addApplicationFont(droidMonoFont) == -1) qDebug() << "Could not load font: " << droidFont;
+    if (QFontDatabase::addApplicationFont(futuraFont) == -1) qDebug() << "Could not load font: " << futuraFont;
+    if (QFontDatabase::addApplicationFont(futuraBFont) == -1) qDebug() << "Could not load font: " << futuraBFont;
+    if (QFontDatabase::addApplicationFont(corbelFont) == -1) qDebug() << "Could not load font: " << corbelFont;
+    if (QFontDatabase::addApplicationFont(corbelBFont) == -1) qDebug() << "Could not load font: " << corbelBFont;
+    if (QFontDatabase::addApplicationFont(sourceFont) == -1) qDebug() << "Could not load font: " << sourceFont;
+    if (QFontDatabase::addApplicationFont(sourceCodePro1Font) == -1) qDebug() << "Could not load font: " << sourceCodePro1Font;
+    if (QFontDatabase::addApplicationFont(sourceCodePro2Font) == -1) qDebug() << "Could not load font: " << sourceCodePro2Font;
 
-    // Palettes
-    QPalette palette = QToolTip::palette();
-    palette.setColor(QPalette::ToolTipBase,QColor("#323232")); // dark grey
-    palette.setColor(QPalette::ToolTipText,QColor("#FFFFFF"));//white
-    QToolTip::setPalette(palette);
-
-
-    // list all fonts
-//    QFontDatabase db;
-//    for(int i=0; i<db.families().size(); i++)
-//    {
-//      qDebug() << db.families().at(i);
-//    }
+    // ---- end FONTS -------------------------
 
     // general stylesheets
 #ifdef Q_OS_MAC
     generalStylesFile = new QFile(":stylesheets/resources/stylesheets/GeneralStyles.qss");
+    dialogStylesFile = new QFile(":/stylesheets/appDialog_QuNexus.qss");
 #else
     generalStylesFile = new QFile(":stylesheets/resources/stylesheets/GeneralStylesWindows.qss");
+    dialogStylesFile = new QFile(":/stylesheets/appDialog_QuNexus_WIN.qss");
 #endif
-    if (generalStylesFile->open(QFile::ReadOnly))
+    if (!generalStylesFile->open(QFile::ReadOnly))
     {
-        qDebug() << "generalStylesFile found.";
+        qDebug() << "ERROR: could not open stylesheet: " << generalStylesFile->fileName();
     }
     else
     {
-        qDebug() << "ERROR: generalStylesFile NOT found!";
+        generalStylesString = QLatin1String(generalStylesFile->readAll());
     }
-    generalStylesString = QLatin1String(generalStylesFile->readAll());
+
+    if (!dialogStylesFile->open(QFile::ReadOnly))
+    {
+        qDebug() << "ERROR: could not open stylesheet: " << dialogStylesFile->fileName();
+    }
+    else
+    {
+        dialogStylesString = QLatin1String(dialogStylesFile->readAll());
+    }
 
     // Apply general styles to MainWindow. These can/should be previewed in designer
     QMainWindow::setStyleSheet(generalStylesString);
@@ -222,6 +235,16 @@ MainWindow::MainWindow(QWidget *parent) :
     fwUpdateWindow = new fwUpdate(this, "QuNexus", applicationFirmwareVersionString());
     fwUpdateWindow->setStyleSheet(generalStylesString);
 
+    // Troubleshooting Window
+    troubleshootWindow = new troubleshoot(this, "QuNexus", applicationFirmwareVersionString());
+    //troubleshootWindow->setStyleSheet(generalStylesString);
+    troubleshootWindow->hide();
+
+    connect(kmiPorts, SIGNAL(signalInputCount(int)), troubleshootWindow, SLOT(slotInputCount(int)));
+    connect(kmiPorts, SIGNAL(signalOutputCount(int)), troubleshootWindow, SLOT(slotOutputCount(int)));
+    connect(kmiPorts, SIGNAL(signalInputPort(QString, int)), troubleshootWindow, SLOT(slotInputPort(QString, int)));
+    connect(kmiPorts, SIGNAL(signalOutputPort(QString, int)), troubleshootWindow, SLOT(slotOutputPort(QString, int)));
+
     // end MIDI Overhaul
 
     //Per Key Sensitivities
@@ -239,57 +262,26 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //dialogs
     syncQuNexusDialog = new SyncQuNexusDialog(this);
+    syncQuNexusDialog->setModal(false);
     connect(syncQuNexusDialog, SIGNAL(signalCloseWindow()), this, SLOT(slotHideGreyRect()));
 
-#ifdef Q_OS_MAC
+#ifdef Q_OS_WIN
 
-#else// EB TODO - move these all to the general styles file
-    qDebug() << "win stylesheets code";
-    //Windows special styling
+#define MENU_BAR_HEIGHT 24
+#define MENU_BAR_OFFSET MENU_BAR_HEIGHT - 6
 
-    //StyleSheets for Preset Library
-    libraryStyleSheetFile = new QFile(":stylesheets/resources/stylesheets/LibraryStyleSheetWindows.qss");
-    selectedStyleSheetFile = new QFile(":stylesheets/resources/stylesheets/LibrarySelectedModifiedStyleSheetWindows.qss");
-    unselectedStyleSheetFile = new QFile(":stylesheets/resources/stylesheets/LibrarySelectedCleanStyleSheetWindows.qss");
+    qDebug() << "Windows only - move widgets down to make room for menu bar";
 
-    // Header stylesheets
-    labelH1StyleSheetFile = new QFile(":stylesheets/resources/stylesheets/LabelH1Win.qss");
-    labelH2StyleSheetFile = new QFile(":stylesheets/resources/stylesheets/LabelH2Win.qss");
-
-    // Parameter stylesheet - todo move to WIN
-    paramLabelStyleSheetFile = new QFile(":stylesheets/resources/stylesheets/ParamLabelsWin.qss");
-
-    qDebug() << "win stylesheets for preset library code";
-    //StyleSheets for Preset Library
-
-    qDebug() << "win stylesheets code - frames";
+    QLabel *libraryPaneLabel = this->findChild<QLabel *>("Library_Pane_Label");
+    libraryPaneLabel->move(libraryPaneLabel->x(), libraryPaneLabel->y() + MENU_BAR_OFFSET);
     QFrame *headerFrame = this->findChild<QFrame *>("Header_Frame");
-    headerFrame->move(headerFrame->x(), headerFrame->y() + 25);
+    headerFrame->move(headerFrame->x(), headerFrame->y() + MENU_BAR_OFFSET);
     QFrame *presetFrame = this->findChild<QFrame *>("Preset_Frame");
-    presetFrame->move(presetFrame->x(), presetFrame->y() + 25);
+    presetFrame->move(presetFrame->x(), presetFrame->y() + MENU_BAR_OFFSET);
     QFrame *libraryFrame = this->findChild<QFrame *>("Library_Frame");
-    libraryFrame->move(libraryFrame->x(), libraryFrame->y() + 25);
+    libraryFrame->move(libraryFrame->x(), libraryFrame->y() + MENU_BAR_OFFSET);
     QFrame *sendFrame = this->findChild<QFrame *>("Send_Frame");
-    sendFrame->move(sendFrame->x(), sendFrame->y() + 25);
-
-
-    QCheckBox *bendKeyboardEnable = this->findChild<QCheckBox *>("Controller_Bend_Pad_Keyboard_Layer_Enable_Disable");
-    bendKeyboardEnable->setStyleSheet("color: rgb(255, 255, 255); font: 7pt \"Arial\";");
-
-    QCheckBox *bendControllerEnable = this->findChild<QCheckBox *>("Controller_Bend_Pad_Controller_Layer_Enable_Disable");
-    bendControllerEnable->setStyleSheet("color: rgb(255, 255, 255); font: 7pt \"Arial\";");
-
-    QCheckBox *keyKeyboardEnable = this->findChild<QCheckBox *>("Controller_Key_Keyboard_Layer_Enable_Disable");
-    keyKeyboardEnable->setStyleSheet("color: rgb(255, 255, 255); font: 7pt \"Arial\";");
-
-    QCheckBox *keyControllerEnable = this->findChild<QCheckBox *>("Controller_Key_Controller_Layer_Enable_Disable");
-    keyControllerEnable->setStyleSheet("color: rgb(255, 255, 255); font: 7pt \"Arial\";");
-
-    // windows specific moves to ui elements
-    ui->Library_Pane_Label->move(632, 100);
-    ui->SEQ_settings_label->move(6, 15);
-    ui->SEQ_track_settings_label->move(6, 115);
-    ui->plainTextEdit->setStyleSheet("QPlainTextEdit {font-family: \"Open Sans\";font-size: 8pt;color: white;background-color: rgba(0,0,0,0);})");
+    sendFrame->move(sendFrame->x(), sendFrame->y() + MENU_BAR_OFFSET);
 
 #endif
 
@@ -364,13 +356,80 @@ MainWindow::MainWindow(QWidget *parent) :
     // EB Debug
     connect(presetManager, SIGNAL(signalUpdateLibraryPresetsUi(QVariantMap, int, int)), this, SLOT(slotUpdateLibraryPresetsListUi(QVariantMap, int, int))); //Library Window
 
-    // start polling at 100ms intervals
-    kmiPorts->devicePoller->start(100);
+    // poll times for each OS
+    int thisPollTime = 100; // MacOS can poll slower
+#ifdef Q_OS_WIN
+    // Windows needs to poll fast, we have to catch the disconnects during fw
+    // updates because QuNexus ports are reported the same wether they are
+    // old ("port 1") or new ("QuNexus Control Surface").
+    thisPollTime = 1;
+#endif
+
+    kmiPorts->devicePoller->start(thisPollTime);
+
+    // fix windows that are not on the screen
+    int posX = this->mapToGlobal(QPointF(0,0)).x();
+    int posY = this->mapToGlobal(QPointF(0,0)).y();
+
+    qDebug() << "thisPosition - x: " << posX << " y: " << posY;
+//    if (posY < 0)
+//    {
+//        posY = 0;
+//    }
+
+    this->move(posX+1, posY+1);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+#define DIALOG_WIDTH 400
+#define DIALOG_HEIGHT 125
+#define DIALOG_TEXT_PADDING 10
+#define DIALOG_W_CENTER (DIALOG_WIDTH / 2)
+#define DIALOG_BUTT_W 70
+#define DIALOG_BUTT_H 28
+#define DIALOG_BUTT_X DIALOG_W_CENTER - (DIALOG_BUTT_W / 2)
+#define DIALOG_BUTT_Y DIALOG_HEIGHT - DIALOG_BUTT_H - (DIALOG_TEXT_PADDING * 2)
+#define DIALOG_TEXT_W (DIALOG_WIDTH - (DIALOG_TEXT_PADDING * 2))
+#define DIALOG_TEXT_H (DIALOG_HEIGHT - DIALOG_BUTT_H - (DIALOG_TEXT_PADDING * 2))
+
+void MainWindow::slotCreateDialog(QString dialogText)
+{
+    QDialog *msgBox = new QDialog(this);
+    msgBox->setModal(true);
+    msgBox->setWindowFlags(Qt::FramelessWindowHint);
+    msgBox->setStyleSheet(dialogStylesString);
+
+
+    msgBox->setMinimumSize(DIALOG_WIDTH, DIALOG_HEIGHT);
+    msgBox->setFixedSize(DIALOG_WIDTH, DIALOG_HEIGHT);
+
+    int x = this->width();
+    int y = this->height();
+
+    int dialogX = ((x / 2) - (DIALOG_WIDTH / 2));
+    int dialogY = ((y / 2) - (DIALOG_HEIGHT / 2));
+
+    qDebug() << "parent x: " << x << " y: " << y << " dialogX: " << dialogX << "dialogY: " << dialogY;
+
+    msgBox->move(dialogX, dialogY);
+
+    QLabel* text = new QLabel(dialogText, msgBox, Qt::WindowFlags());
+    text->setAlignment(Qt::AlignCenter);
+    text->setMinimumSize(DIALOG_TEXT_W, DIALOG_TEXT_H);
+    text->setFixedSize(DIALOG_TEXT_W, DIALOG_TEXT_H);
+    text->move(DIALOG_TEXT_PADDING, DIALOG_TEXT_PADDING);
+
+    QPushButton* okButton = new QPushButton(msgBox);
+    okButton->setStyleSheet(grayStyleString);
+    okButton->setText("Ok");
+    okButton->setGeometry(QRect(DIALOG_BUTT_X, DIALOG_BUTT_Y, DIALOG_BUTT_W,DIALOG_BUTT_H));
+    connect(okButton, SIGNAL(clicked()), msgBox, SLOT(close()));
+
+    msgBox->exec();
 }
 
 void MainWindow::slotFindAndConnectUi()
@@ -675,29 +734,23 @@ void MainWindow::slotFindAndConnectUi()
     connect(QuNexus, SIGNAL(signalFirmwareDetected(MidiDeviceManager*, bool)), this, SLOT(slotFirmwareDetected(MidiDeviceManager*, bool)));
 
     // connect firmware update window and midi device manager controls and messaging
-    connect(fwUpdateWindow, SIGNAL(signalRequestFwUpdate()), QuNexus, SLOT(slotRequestFirmwareUpdate()));                   // request fw
-    connect(QuNexus, SIGNAL(signalFwConsoleMessage(QString)), fwUpdateWindow, SLOT(slotAppendTextToConsole(QString)));      // messaging
-    connect(QuNexus, SIGNAL(signalFwProgress(int)), fwUpdateWindow, SLOT(slotUpdateProgressBar(int)));                      // console
-    connect(QuNexus, SIGNAL(signalFirmwareUpdateComplete(bool)), fwUpdateWindow, SLOT(slotFwUpdateComplete(bool)));         // Update Complete
-    connect(fwUpdateWindow, SIGNAL(signalFwUpdateSuccess()), QuNexus, SLOT(slotFirmwareUpdateReset()));                   // stop timeout timers
-    connect(fwUpdateWindow, SIGNAL(signalFwUpdateSuccessCloseDialog(bool)), this, SLOT(slotFwUpdateSuccessCloseDialog(bool)));      // close fw dialog and connect
-    connect(QuNexus, SIGNAL(signalRequestGlobals()), this, SLOT(slotSendGlobalsRequest()));                                 // request globals
-    //connect(sysExEncDecode, SIGNAL(signalGlobalsReceivedDoFwUd()), QuNexus, SLOT(slotRequestFirmwareUpdate()));                      // if fwupdate requested globals then alert that we've saved them
-    connect(sysExEncDecode, SIGNAL(signalGlobalsReceived()), this, SLOT(slotEnableGlobalsWindows()));                       // enable globals window when we receive this
-    connect(QuNexus, SIGNAL(signalRestoreGlobals()), this, SLOT(slotEncodeGlobals()));                                      // restore the globals after fw update
+    connect(fwUpdateWindow, SIGNAL(signalRequestFwUpdate()), QuNexus, SLOT(slotRequestFirmwareUpdate()));                       // request fw
+    connect(QuNexus, SIGNAL(signalFwConsoleMessage(QString)), fwUpdateWindow, SLOT(slotAppendTextToConsole(QString)));          // messaging
+    connect(QuNexus, SIGNAL(signalFwProgress(int)), fwUpdateWindow, SLOT(slotUpdateProgressBar(int)));                          // console
+    connect(QuNexus, SIGNAL(signalFirmwareUpdateComplete(bool)), fwUpdateWindow, SLOT(slotFwUpdateComplete(bool)));             // Update Complete
+    connect(fwUpdateWindow, SIGNAL(signalFwUpdateSuccess()), QuNexus, SLOT(slotFirmwareUpdateReset()));                         // stop timeout timers
+    connect(fwUpdateWindow, SIGNAL(signalFwUpdateSuccessCloseDialog(bool)), this, SLOT(slotFwUpdateSuccessCloseDialog(bool)));  // close fw dialog and connect
+    connect(QuNexus, SIGNAL(signalRequestGlobals()), this, SLOT(slotSendGlobalsRequest()));                                     // request globals
+    connect(sysExEncDecode, SIGNAL(signalGlobalsReceived()), this, SLOT(slotEnableGlobalsWindows()));                           // enable globals window when we receive this
+    connect(QuNexus, SIGNAL(signalRestoreGlobals()), this, SLOT(slotEncodeGlobals()));                                          // restore the globals after fw update
+
+    // connect fwUpdate console messages to connection troubleshooter
+    connect(QuNexus, SIGNAL(signalFwConsoleMessage(QString)), troubleshootWindow, SLOT(slotAppendToStatusLog(QString)));
+    connect(fwUpdateWindow, SIGNAL(signalRequestFwUpdate()), troubleshootWindow, SLOT(slotRequestFwUpdate()));
+    connect(QuNexus, SIGNAL(signalFirmwareUpdateComplete(bool)), troubleshootWindow, SLOT(slotFirmwareUpdated(bool)));
 
     // handle device unexpectedly in bootloader mode
     connect(QuNexus, SIGNAL(signalBootloaderMode(bool)), this, SLOT(slotBootloaderMode(bool)));
-
-    // reset portlist after sending bootloader commands, catch changes to port names
-    //connect(QuNexus, SIGNAL(signalBeginBlTimer()), this, SLOT(slotRefreshConnection()));
-    //connect(QuNexus, SIGNAL(signalBeginFwTimer()), this, SLOT(slotRefreshConnection()));
-
-    // v1.0 firmware
-    //connect(QuNexus, SIGNAL(signalFirmwareMismatch(QString,QString,QString)), this, SLOT(slotFirmwareOutOfDateDialog(QString,QString,QString)));
-    //connect(qunexusMidi, SIGNAL(signalFirmwareOutOfDate(QString,QString,QString,QString)), this, SLOT(slotFirmwareOutOfDateDialog(QString,QString,QString,QString)));
-    //connect(qunexusMidi, SIGNAL(signalProgressDialog(QString,int)), this, SLOT(slotProgressBar(QString,int)));
-    //connect(qunexusMidi, SIGNAL(signalFirmwareUpdateComplete()), this, SLOT(slotFirmwareUpdateCompleteDialog()));
 
     //----------------- Send Presets To Board Dialog
     connect(presetManager, SIGNAL(signalSendPresetsToBoardDialog(QString)), this, SLOT(slotSendPresetsToBoardDialog(QString)));
@@ -706,13 +759,9 @@ void MainWindow::slotFindAndConnectUi()
     connect(tabWidget, SIGNAL(currentChanged(int)), this, SLOT(slotTabChanged(int)));
 
     //---------------------------------- Connected Light
-
     // MIDI overhaul
     connect(QuNexus, SIGNAL(signalConnected(bool)), this, SLOT(slotQuNexusConnected(bool)));
     connect(QuNexus, SIGNAL(signalConnected(bool)), this, SLOT(slotEnableDisableMidiFunctions(bool)));
-
-    //connect(qunexusMidi, SIGNAL(signalQuNexusConnected(bool)), this, SLOT(slotQuNexusConnected(bool)));
-    //connect(qunexusMidi, SIGNAL(signalQuNexusConnected(bool)), this, SLOT(slotEnableDisableMidiFunctions(bool)));
 
     //---------------------------------- Globals
     connect(sysExEncDecode, SIGNAL(signalSendGlobals(QString,QByteArray)), this, SLOT(slotSetGlobals(QString,QByteArray)));
@@ -954,7 +1003,7 @@ void MainWindow::slotUpdateParametersUi(QVariantMap map)
 
 void MainWindow::slotLimitSourceOutputMenus()
 {
-    qDebug() << "slotLimitSourceOutputMenus called";
+    //qDebug() << "slotLimitSourceOutputMenus called";
     QList<QString> sourceStrings;
     sourceStrings.append("Keyboard_Pitch_Bend_Source");
     sourceStrings.append("Keyboard_Channel_Pressure_Source");
@@ -1009,29 +1058,29 @@ void MainWindow::slotLimitSourceOutputMenus()
 
     }
 
-    qDebug() << "tilt" << tiltFlag << activeTiltDestination;
-    qDebug() << "pressure" << pressureFlag << activePressureDestination;
-    qDebug() << "expr pedal" << exprPedalFlag << activeExpressionDestination;
+//    qDebug() << "tilt" << tiltFlag << activeTiltDestination;
+//    qDebug() << "pressure" << pressureFlag << activePressureDestination;
+//    qDebug() << "expr pedal" << exprPedalFlag << activeExpressionDestination;
 
     //---------------------------------------------------------- Limit Menus ----------------------------------------------------------//
     for(int i = 0; i < sourceStrings.count(); i++)
     {
         currentSourceMenu = this->findChild<QComboBox *>(sourceStrings.at(i));
 
-        qDebug() << "sourceStrings.at(i): " << sourceStrings.at(i);
+        //qDebug() << "sourceStrings.at(i): " << sourceStrings.at(i);
         //------------------------------------------------------------------------------------------------//
         //--------------------------------------------- Tilt ---------------------------------------------//
         //------------------------------------------------------------------------------------------------//
         //If Tilt active and this isn't the source
         if(tiltFlag && sourceStrings.at(i) != activeTiltDestination)
         {
-            qDebug() << "disable Tilt";
+            //qDebug() << "disable Tilt";
             currentModelIndex = currentSourceMenu->model()->index(currentSourceMenu->findText("Tilt"), 0);
             currentSourceMenu->model()->setData(currentModelIndex, disableVariant, Qt::UserRole -1);
         }
         else
         {
-            qDebug() << "enable Tilt";
+            //qDebug() << "enable Tilt";
             //Enable Tilt for this Dest
             currentModelIndex = currentSourceMenu->model()->index(currentSourceMenu->findText("Tilt"), 0);
             currentSourceMenu->model()->setData(currentModelIndex, enableVariant, Qt::UserRole -1);
@@ -1043,13 +1092,13 @@ void MainWindow::slotLimitSourceOutputMenus()
         //If Pressure is active and this isn't the source
         if(pressureFlag && sourceStrings.at(i) != activePressureDestination)
         {
-            qDebug() << "disable Pressure";
+            //qDebug() << "disable Pressure";
             currentModelIndex = currentSourceMenu->model()->index(currentSourceMenu->findText("Pressure"), 0);
             currentSourceMenu->model()->setData(currentModelIndex, disableVariant, Qt::UserRole -1);
         }
         else
         {
-            qDebug() << "enable Pressure";
+            //qDebug() << "enable Pressure";
             //Enable Pressure for this Dest
             currentModelIndex = currentSourceMenu->model()->index(currentSourceMenu->findText("Pressure"), 0);
             currentSourceMenu->model()->setData(currentModelIndex, enableVariant, Qt::UserRole -1);
@@ -1062,13 +1111,13 @@ void MainWindow::slotLimitSourceOutputMenus()
         //If Tilt and a USB Ouput occurred
         if(exprPedalFlag && sourceStrings.at(i) != activeExpressionDestination)
         {
-            qDebug() << "disable Expression Pedal";
+            //qDebug() << "disable Expression Pedal";
             currentModelIndex = currentSourceMenu->model()->index(currentSourceMenu->findText("Expression Pedal"), 0);
             currentSourceMenu->model()->setData(currentModelIndex, disableVariant, Qt::UserRole -1);
         }
         else
         {
-            qDebug() << "enable Expression Pedal";
+            //qDebug() << "enable Expression Pedal";
             //Enable Expr for this Dest
             currentModelIndex = currentSourceMenu->model()->index(currentSourceMenu->findText("Expression Pedal"), 0);
             currentSourceMenu->model()->setData(currentModelIndex, enableVariant, Qt::UserRole -1);
@@ -1932,6 +1981,7 @@ void MainWindow::slotShowGreyRect()
     ui->greyRect->activateWindow();
     ui->greyRect->raise();
 }
+
 void MainWindow::slotHideGreyRect()
 {
    ui->greyRect->hide();
@@ -1987,7 +2037,7 @@ void MainWindow::slotSyncQuNexusDialog()
 
     QuNexus->slotStopPolling("slotSyncQuNexusDialog"); // stop loop
     syncQuNexusDialog->slotCenterDialog();
-    syncQuNexusDialog->open();
+    syncQuNexusDialog->show();
 }
 
 void MainWindow::slotDeletePresetQuery()
@@ -2066,11 +2116,11 @@ void MainWindow::slotQuNexusConnected(bool state)
     qDebug() << "slotQuNexusConnected called - state: " << state;
     if(state)
     {
-        QLabel* connectedLabel = this->findChild<QLabel *>("QuNexus_Connected_Label");
+        QPushButton* connectedLabel = this->findChild<QPushButton *>("QuNexus_Connected_Label");
         connectedLabel->setText("Connected");
 
         QFrame* connectedFrame = this->findChild<QFrame *>("QuNexus_Connected_Frame");
-        connectedFrame->setStyleSheet("QFrame{border: 1px solid rgb(67,67,67); background:rgb(10,255,0); border-radius:6;}");
+        connectedFrame->setStyleSheet("QFrame#QuNexus_Connected_Frame{border: 1px solid rgb(67,67,67); background:rgb(10,255,0); border-radius:6;}");
         //qDebug() << "<< set connected: true";
         connected = true;
 
@@ -2079,6 +2129,7 @@ void MainWindow::slotQuNexusConnected(bool state)
 
         // attempt to recall midi thru port when QuNexus connects
         slotRecallMIDIThru();
+        troubleshootWindow->slotConnected(true);
     }
     else
     {
@@ -2092,12 +2143,10 @@ void MainWindow::slotQuNexusConnected(bool state)
         connected = false;
 
         slotDisableGlobalsWindows(); // just in case
-
         syncQuNexusDialog->done(1); // close the sync dialog if it's open
-
         presetManager->syncFlag = false; // update presetmanager
-
         slotHideGreyRect(); // hide grey rectangle when qunexus disconnects
+        troubleshootWindow->slotConnected(false);
     }
 
     slotSetEndableUiElement("connected", connected);
@@ -2341,15 +2390,15 @@ void MainWindow::slotSetupMenuBar()
     menubar = new QMenuBar(this);
 
 #ifndef Q_OS_MAC
-    menubar->setGeometry(0,0,this->width(), 25);
-//    QFile menuStyleFile = QFile(":stylesheets/resources/stylesheets/MenuBarWinStyleSheet.qss");
-//    QString menuStyleString;
-//    qDebug() << "Menubar stylestring: " << menuStyleString;
+    menubar->setGeometry(0,0,this->width(), MENU_BAR_HEIGHT);
+    QFile menuStyleFile = QFile(":stylesheets/resources/stylesheets/MenuBarWinStyleSheet.qss");
+    QString menuStyleString;
+    qDebug() << "Menubar stylestring: " << menuStyleString;
 
-//    menuStyleFile.open(QFile::ReadOnly);
-//    menuStyleString = QLatin1String(menuStyleFile.readAll());
+    menuStyleFile.open(QFile::ReadOnly);
+    menuStyleString = QLatin1String(menuStyleFile.readAll());
 
-    //menubar->setStyleSheet(menuStyleString);
+    menubar->setStyleSheet(menuStyleString);
     //menubar->setStyleSheet("color:white;");
 
     //qDebug() << "menubar stylesheet: " << menubar->styleSheet();
@@ -2666,13 +2715,19 @@ void MainWindow::slotSetupMenuBar()
     connect(about, SIGNAL(triggered()), this, SLOT(slotOpenAboutScreen()));
     help->addAction(about);
 
+    //Troubleshooting
+    QAction* troubleShooting = new QAction("Troubleshoot Connection", help);
+    connect(troubleShooting, SIGNAL(triggered()), this, SLOT(slotOpenTroubleshooting()));
+    connect(ui->QuNexus_Connected_Label, SIGNAL(pressed()), this, SLOT(slotOpenTroubleshooting()));
+    help->addAction(troubleShooting);
+
     //Bug Report
-    QAction* bugReport = new QAction("Submit Bug Report", file);
+    QAction* bugReport = new QAction("Submit Bug Report", help);
     connect(bugReport, SIGNAL(triggered()), this, SLOT(slotSubmitBugReport()));
     help->addAction(bugReport);
 
     //Documentation
-    QAction* doc = new QAction("Documentation", file);
+    QAction* doc = new QAction("Documentation", help);
     connect(doc, SIGNAL(triggered()), this, SLOT(slotOpenDocumentation()));
     help->addAction(doc);
 
@@ -2683,22 +2738,46 @@ void MainWindow::slotSetupMenuBar()
     {
         if(settings->value("toolTipsEnabled").toBool())
         {
-            toolTipsEnable = new QAction("Hide Tool Tips", file);
+            toolTipsEnable = new QAction("Hide Tool Tips", help);
         }
         else
         {
-            toolTipsEnable = new QAction("Show Tool Tips", file);
+            toolTipsEnable = new QAction("Show Tool Tips", help);
         }
     }
     else
     {
         settings->setValue("toolTipsEnabled", true);
-        toolTipsEnable = new QAction("Hide Tool Tips", file);
+        toolTipsEnable = new QAction("Hide Tool Tips", help);
     }
 
     connect(toolTipsEnable, SIGNAL(triggered()), this, SLOT(slotEnableDisableToolTips()));
 
     help->addAction(toolTipsEnable);
+
+//#ifdef Q_OS_WIN
+//    // Scale Display
+//    if(settings->contains("scaleDisplayUp"))
+//    {
+//        if(settings->value("scaleDisplayUp").toBool())
+//        {
+//            scaleDisplayUp = new QAction("Set Display Scale to Default", help);
+//        }
+//        else
+//        {
+//            scaleDisplayUp = new QAction("Set Display Scale to Large", help);
+//        }
+//    }
+//    else
+//    {
+//        settings->setValue("scaleDisplayUp", false);
+//        scaleDisplayUp = new QAction("Set Display Scale to Large", help);
+//    }
+
+//    connect(scaleDisplayUp, SIGNAL(triggered()), this, SLOT(slotScaleDisplayUp()));
+
+//    help->addAction(scaleDisplayUp);
+//#endif
 
     //Warn when loading and discarding unsaved changes
     if(settings->contains("unsavedWarningsEnabled"))
@@ -2750,7 +2829,11 @@ void MainWindow::slotSubmitBugReport()
 
 }
 
-
+void MainWindow::slotOpenTroubleshooting()
+{
+    troubleshootWindow->show();
+    troubleshootWindow->slotScrollTroubleUp();
+}
 
 void MainWindow::slotShowHideControllerTab()
 {
@@ -3060,7 +3143,7 @@ void MainWindow::slotEnableDisableMidiFunctions(bool connected)
 
     if(connected)
     {
-        updateFirmware->setEnabled(true);
+        //updateFirmware->setEnabled(true);
         ledRefreshMode->setEnabled(true);
         perKeySensitivityAction->setEnabled(true);
         cvTrims->setEnabled(true);
@@ -3075,7 +3158,7 @@ void MainWindow::slotEnableDisableMidiFunctions(bool connected)
     {
         pksWidget->close();
 
-        updateFirmware->setEnabled(false);
+        //updateFirmware->setEnabled(false);
         ledRefreshMode->setEnabled(false);
         perKeySensitivityAction->setEnabled(false);
         cvTrims->setEnabled(false);
@@ -3101,6 +3184,64 @@ void MainWindow::slotEnableDisableToolTips()
         settings->setValue("toolTipsEnabled", true);
     }
 }
+
+//void MainWindow::slotScaleDisplayUp()
+//{
+//    qDebug() << "slotScaleDisplayUp called";
+
+//    QDialog *msgBox = new QDialog(this);
+//    msgBox->setMinimumSize(300, 200);
+//    msgBox->setFixedSize(300, 200);
+
+//    QPoint centerparent(
+//                this->x() + ((this->frameGeometry().width() - msgBox->frameGeometry().width()) /2),
+//                this->y() + ((this->frameGeometry().height() - msgBox->frameGeometry().height()) /2));
+
+//    msgBox->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint);
+//    msgBox->move(centerparent);
+
+//    msgBox->setStyleSheet("QWidget{background: rgba(120,120,120, 255);}");
+
+//    QString currentPresetText = libraryPresetsList->item(presetManager->selectedLibraryPreset)->text();
+//    QString dialogText = QString("Warning: Increasing the user interface scale may cause visual artifacts.\n"
+//                                 "\n"
+//                                 "Changing this setting requires the application to restart.");
+//    QLabel* text = new QLabel(dialogText, msgBox, Qt::WindowFlags());
+//    text->setAlignment(Qt::AlignCenter);
+//    text->setMinimumSize(300, 50);
+//    text->setFixedSize(300, 50);
+//    text->move(0, 10);
+
+//#ifdef Q_OS_MAC // EB attempt to make this cross platform
+//    text->setStyleSheet("font: 12pt;");
+//#else
+//    text->setStyleSheet("font: 10pt;");
+//#endif
+
+//    QPushButton* cancelButton = new QPushButton(msgBox);
+//    cancelButton->setStyleSheet(grayStyleString);
+//    cancelButton->setText("Cancel");
+//    cancelButton->setGeometry(QRect(100-35, 160, 70, 28));
+//    connect(cancelButton, SIGNAL(clicked()), msgBox, SLOT(close()));
+//    connect(cancelButton, SIGNAL(clicked()), this, SLOT(cancelCloseEditor()));
+
+//    QPushButton* restartButton = new QPushButton(msgBox);
+//    restartButton->setStyleSheet(blueStyleString);
+//    restartButton->setText("Restart");
+//    restartButton->setGeometry(QRect(200-35, 160, 70, 28));
+//    connect(restartButton, SIGNAL(clicked()), msgBox, SLOT(close()));
+//    connect(restartButton, SIGNAL(clicked()), this, SLOT(slotScaleRestart()));
+
+//    msgBox->exec();
+//}
+
+
+//void MainWindow::slotScaleRestart()
+//{
+//    settings->setValue("scaleDisplayUp", true); // flip setting
+//    qApp->quit();
+//    QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
+//}
 
 void MainWindow::slotEnableDisableUnsavedWarnings()
 {
@@ -3148,26 +3289,16 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
 
     if(event->type() == QEvent::ToolTip)
     {
-        // set stylesheet for tooltip
-        reinterpret_cast<QWidget *>(obj)->setStyleSheet("QToolTip {background: rgb(50,50,50);color: white;}");
-        //reinterpret_cast<QWidget *>(obj)->toolTip().setPalette(paletteTooltip);
-        QHelpEvent *helpEvent = static_cast<QHelpEvent *>(event);
-
         if(settings->value("toolTipsEnabled").toBool())
         {
             //qDebug() << "show tooltip - object: " << reinterpret_cast<QWidget *>(obj)->objectName() << " tooltip: " << reinterpret_cast<QWidget *>(obj)->toolTip() << " Stylesheet: " << reinterpret_cast<QWidget *>(obj)->styleSheet();
-            QToolTip::showText(helpEvent->globalPos(), reinterpret_cast<QWidget *>(obj)->toolTip());
+            return QObject::eventFilter(obj, event);
         }
         else
         {
             //qDebug() << "hide tooltip - object: " << reinterpret_cast<QWidget *>(obj)->objectName() << " tooltip: " << reinterpret_cast<QWidget *>(obj)->toolTip() << " Stylesheet: " << reinterpret_cast<QWidget *>(obj)->styleSheet();
-            QToolTip::hideText();
-            event->ignore();
+            return true;
         }
-
-        return true;
-
-        //qDebug() << "tool tip";
     }
 
     if(event->type() == QEvent::KeyPress){
@@ -3268,20 +3399,19 @@ void MainWindow::slotToolTipHandler()
     ui->tt_settingsTab->installEventFilter(this);
     ui->tt_seqTab->installEventFilter(this);
     ui->Send_Frame->installEventFilter(this);
-
+    ui->QuNexus_Connected_Label->installEventFilter(this);
 }
 
 
 void MainWindow::slotSendActiveSense()
 {
     //qDebug() << "slotSendActiveSense called";
-    if (sysExEncDecode->sx_xmit_active || !connected)
+    if (sysExEncDecode->sx_xmit_active || !QuNexus->port_out_open)
     {
         //qDebug() << "activeSense called - sx_xmit_active: " << sysExEncDecode->sx_xmit_active << " connected: " << connected ;
         return; // do not interrupt sysex, only send if connected
     }
 
-    // MIDI Overhaul
     QuNexus->slotSendMIDI(MIDI_RT_ACTIVE_SENSE);
 }
 
@@ -3438,7 +3568,7 @@ void MainWindow::slotSaveAndCloseEditor()
 void MainWindow::slotMIDIPortChange(QString portName, uchar inOrOut, uchar messageType, int portNum)
 {
     //qDebug() << "slotMIDIPortChange - " << kmiPorts->mType[messageType] << kmiPorts->inOut[inOrOut] << " portName:" << portName << " messageType: " << " portNum: " << portNum << "\n";
-    QLabel* connectedLabel = this->findChild<QLabel *>("QuNexus_Connected_Label");
+    QPushButton* connectedLabel = this->findChild<QPushButton *>("QuNexus_Connected_Label");
     QFrame* connectedFrame = this->findChild<QFrame *>("QuNexus_Connected_Frame");
 
     switch (messageType)
@@ -3463,15 +3593,32 @@ void MainWindow::slotMIDIPortChange(QString portName, uchar inOrOut, uchar messa
         if ((portName == QUNEXUS_IN_P1 || portName == QUNEXUS_OLD_IN_P1) && inOrOut == PORT_IN)
         {
             QuNexus->slotSetExpectedFW(thisFw);
-            QuNexus->slotUpdatePortIn(portNum);
-            fwUpdateWindow->slotAppendTextToConsole("\nQuNexus Connected\n");
+
+            troubleshootWindow->slotDetected();
             connectedLabel->setText("Detected");
-            connectedFrame->setStyleSheet("border: 1px solid rgb(67,67,67); background:rgb(255,128,0); border-radius:6;");
+            connectedFrame->setStyleSheet("QFrame#QuNexus_Connected_Frame{border: 1px solid rgb(67,67,67); background:rgb(255,125,0); border-radius:6;}");
+            slotClearFocus();
+
+            if (!QuNexus->slotUpdatePortIn(portNum))
+            {
+                slotCreateDialog(QString("ERROR: MIDI input port \"%1\"\nis currently being used by another program or process!").arg(portName));
+            }
+            else
+            {
+                fwUpdateWindow->slotAppendTextToConsole("\nQuNexus Connected\n");
+            }
+
         }
         else if ((portName == QUNEXUS_OUT_P1 || portName == QUNEXUS_OLD_OUT_P1) && inOrOut == PORT_OUT)
         {
-            QuNexus->slotUpdatePortOut(portNum);
-            QuNexus->pollingStatus = true;
+            if (!QuNexus->slotUpdatePortOut(portNum))
+            {
+                slotCreateDialog(QString("ERROR: MIDI output port \"%1\"\nis currently being used by another program or process!").arg(portName));
+            }
+            else
+            {
+                QuNexus->pollingStatus = true;
+            }
         }
 
         break;
@@ -3495,12 +3642,18 @@ void MainWindow::slotMIDIPortChange(QString portName, uchar inOrOut, uchar messa
             QuNexus->slotCloseMidiIn(SIGNAL_SEND);
             fwUpdateWindow->slotAppendTextToConsole("\nQuNexus Disconnected\n");
             connectedLabel->setText("Not Connected");
-            connectedFrame->setStyleSheet("QFrame{border: 1px solid rgb(67,67,67); background: rgb(100,100,100); border-radius:6;}");
-        }
+            connectedFrame->setStyleSheet("QFrame#QuNexus_Connected_Frame{border: 1px solid rgb(67,67,67); background: rgb(100,100,100); border-radius:6;}");
+            }
         else if (inOrOut == PORT_OUT && portName == QuNexus->portName_out)
         {
             QuNexus->slotCloseMidiOut(SIGNAL_SEND);
             QuNexus->pollingStatus = false;
+        }
+        else if (inOrOut == PORT_OUT && (portName == QUNEXUS_OUT_P1 || portName == QUNEXUS_OLD_OUT_P1) )
+        {
+            troubleshootWindow->slotConnected(false);
+            connectedLabel->setText("Not Connected");
+            connectedFrame->setStyleSheet("QFrame#QuNexus_Connected_Frame{border: 1px solid rgb(67,67,67); background: rgb(100,100,100); border-radius:6;}");
         }
 
         break;
@@ -3538,11 +3691,14 @@ void MainWindow::slotBootloaderMode(bool fwUpdateRequested)
 {
     qDebug() << "slotBootloaderMode called - fwUpdateRequested: "<< fwUpdateRequested;
 
-    QLabel* connectedLabel = this->findChild<QLabel *>("QuNexus_Connected_Label");
+    QPushButton* connectedLabel = this->findChild<QPushButton *>("QuNexus_Connected_Label");
     QFrame* connectedFrame = this->findChild<QFrame *>("QuNexus_Connected_Frame");
 
     connectedLabel->setText("BOOTLOADER");
-    connectedFrame->setStyleSheet("QFrame{border: 1px solid rgb(67,67,67); background:rgb(0,0,255); border-radius:6;}");
+    connectedFrame->setStyleSheet("QFrame#QuNexus_Connected_Frame{border: 1px solid rgb(67,67,67); background:rgb(0,0,255); border-radius:6;}");
+
+    troubleshootWindow->slotSetDevVersion(deviceFirmwareVersionString(), deviceBootloaderVersionString());
+    troubleshootWindow->slotBootloaderMode();
 
     if (!fwUpdateRequested)
     {
@@ -3581,12 +3737,23 @@ void MainWindow::slotFwUpdateSuccessCloseDialog(bool success)
 
 void MainWindow::slotForceFirmwareUpdate()
 {
+    if (!QuNexus->port_out_open) return;
+
     slotFirmwareDetected(QuNexus, false); // act as if we received a firmware mismatch
+    forceFirmwareUpdate = true;
 }
 
 void MainWindow::slotFirmwareDetected(MidiDeviceManager *thisMDM, bool matches)
 {
     qDebug() << "slotFirmwareDetected called";
+
+    troubleshootWindow->slotSetDevVersion(deviceFirmwareVersionString(), deviceBootloaderVersionString());
+    if (forceFirmwareUpdate)
+    {
+        troubleshootWindow->slotRequestFwUpdate();
+        forceFirmwareUpdate = false;
+    }
+
     if (matches)
     {
         qDebug() << "FirmwareMatch: " << thisMDM->PID << "name:" << thisMDM->deviceName;
@@ -3599,11 +3766,11 @@ void MainWindow::slotFirmwareDetected(MidiDeviceManager *thisMDM, bool matches)
     {
         qDebug() << "Firmware MisMatch: " << thisMDM->PID << "name:" << thisMDM->deviceName;
 
-        QLabel* connectedLabel = this->findChild<QLabel *>("QuNexus_Connected_Label");
+        QPushButton* connectedLabel = this->findChild<QPushButton *>("QuNexus_Connected_Label");
         QFrame* connectedFrame = this->findChild<QFrame *>("QuNexus_Connected_Frame");
 
-        connectedLabel->setText("FIRMWARE\nOUT OF DATE");
-        connectedFrame->setStyleSheet("QFrame{border: 1px solid rgb(67,67,67); background:rgb(255,0,0); border-radius:6;}");
+        connectedLabel->setText("FIRMWARE OUT OF DATE");
+        connectedFrame->setStyleSheet("QFrame#QuNexus_Connected_Frame{border: 1px solid rgb(67,67,67); background:rgb(255,0,0); border-radius:6;}");
 
         // setup sysex connections to receive globals data
         QuNexus->disconnect(SIGNAL(signalRxSysExBA(QByteArray))); // disconnect to be safe
@@ -3620,37 +3787,41 @@ void MainWindow::slotFirmwareDetected(MidiDeviceManager *thisMDM, bool matches)
 // connect QuNexus midi input to to midi thru out
 void MainWindow::slotUpdateMIDIThru()
 {
-    qDebug() << "slotUpdateMIDIThru called - connected: " << connected;
-
+    qDebug() << "slotUpdateMIDIThru called - connected: " << QuNexus->port_in_open;
+    QString dropDownPortName = ui->midi_outputs->currentText();
     QuNexus->disconnect(SIGNAL(signalRxMidi_raw(uchar, uchar, uchar, uchar)));
 
-    if (!connected) return; // don't continue if we aren't connected
+    if (!QuNexus->port_in_open) return; // don't continue if we aren't connected
 
-    settings->setValue(MIDI_THRU_KEY, ui->midi_outputs->currentText()); // store this setting for the next time we run the editor
+    settings->setValue(MIDI_THRU_KEY, dropDownPortName); // store this setting for the next time we run the editor
 
-    if (ui->midi_outputs->currentText() != "None")
+    if (dropDownPortName != "None")
     {
-        qDebug() << "update thru port: " << ui->midi_outputs->currentText();
-
-
-        //recallMidiThruPortName = ""; // reset this, which is only set when the stored thru port connects
+        qDebug() << "update thru port: " << dropDownPortName;
 
         // set and open the ports
-        int thisOutPort = kmiPorts->getOutPortNumber(ui->midi_outputs->currentText());
+        int thisOutPort = kmiPorts->getOutPortNumber(dropDownPortName);
 
-        if (thisOutPort == -1)
+        if (!midiTHRU->slotUpdatePortOut(thisOutPort)) // also opens the port
         {
-            qDebug() << "ERROR: Port \"" << ui->midi_outputs->currentText() << "\" does not exist, cannot open as MIDI thru port";
-            return;
+            slotCreateDialog(QString("ERROR: MIDI output port \"%1\"\nis currently being used by another program or process!").arg(ui->midi_outputs->currentText()));
+            ui->midi_outputs->blockSignals(true);
+            ui->midi_outputs->setCurrentText("None");
+            ui->midi_outputs->blockSignals(false);
+            midiTHRU->slotCloseMidiIn();
+            midiTHRU->slotCloseMidiOut();
         }
-
-        midiTHRU->slotUpdatePortOut(thisOutPort);
-        connect(QuNexus, SIGNAL(signalRxMidi_raw(uchar, uchar, uchar, uchar)), midiTHRU, SLOT(slotSendMIDI(uchar, uchar, uchar, uchar)));
+        else
+        {
+            recallMidiThruPortName = dropDownPortName;
+            connect(QuNexus, SIGNAL(signalRxMidi_raw(uchar, uchar, uchar, uchar)), midiTHRU, SLOT(slotSendMIDI(uchar, uchar, uchar, uchar)));
+        }
     }
     else
     {
         qDebug() << "close port, don't update";
         midiTHRU->slotCloseMidiOut(SIGNAL_NONE);
+        recallMidiThruPortName = dropDownPortName;
     }
 }
 
@@ -3744,8 +3915,8 @@ void MainWindow::slotFixDropDownWidth(QComboBox* thisDropDown)
     }
     thisDropDown->view()->setMinimumWidth(thisWidth);
 
-    QString thisComboStyleString = comboStyleString.arg(thisWidth - 10).arg(100);
+    //QString thisComboStyleString = comboStyleString.arg(thisWidth - 10).arg(100);
     //thisDropDown->setStyleSheet(thisComboStyleString);
 
-    qDebug() << "slotFixDropDownWidth called - box: " << thisDropDown->objectName() << " width: " << thisWidth << " scroll: " << scroll << " max: " << max << " IconWidth: " << IconWidth;
+    //qDebug() << "slotFixDropDownWidth called - box: " << thisDropDown->objectName() << " width: " << thisWidth << " scroll: " << scroll << " max: " << max << " IconWidth: " << IconWidth;
 }
