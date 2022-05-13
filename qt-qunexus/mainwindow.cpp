@@ -69,6 +69,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // connect kmiPorts to our handler
     connect(kmiPorts, SIGNAL(signalPortUpdated(QString, uchar, uchar, int)),
             this, SLOT(slotMIDIPortChange(QString, uchar, uchar, int)));
+    connect(kmiPorts, SIGNAL(signalClearPortMaps()), this, SLOT(slotClearMIDIThruDropdown()));
 
     //qDebug() << "end connect";
 
@@ -368,8 +369,8 @@ MainWindow::MainWindow(QWidget *parent) :
     kmiPorts->devicePoller->start(thisPollTime);
 
     // fix windows that are not on the screen
-    int posX = this->mapToGlobal(QPointF(0,0)).x();
-    int posY = this->mapToGlobal(QPointF(0,0)).y();
+    int posX = this->mapToGlobal(QPoint(0,0)).x();
+    int posY = this->mapToGlobal(QPoint(0,0)).y();
 
     qDebug() << "thisPosition - x: " << posX << " y: " << posY;
 //    if (posY < 0)
@@ -3832,6 +3833,12 @@ void MainWindow::slotRecallMIDIThru()
 
     ui->midi_outputs->setCurrentText(recallMidiThruPortName);
     slotUpdateMIDIThru();
+}
+
+void MainWindow::slotClearMIDIThruDropdown()
+{
+    ui->midi_outputs->clear();
+    ui->midi_outputs->addItem("None");
 }
 
 // --------------------------------------------------------------------------------------

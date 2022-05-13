@@ -6,19 +6,29 @@
 # app_name is the name of the dmg volume
 this_year=2022
 app_name="QuNexus Editor"
+bundle_name="QuNexusEditorLegacy"
 app_name_fp=QuNexus\ Editor
 app_source=../build-QuNexus-Desktop_Qt_5_11_3-Release/QuNexus\ Editor.app
-
-version=2.1.0A
-bundle_id="com.keithmcmillen.$app_name"
-app_path="./dmg/QuNexus Editor.app"
-dmg_path=./dmg
-path_to_dqt=~/Qt/5.11.3/clang_64/bin/macdeployqt
-
 qml_dir=../qt-qunexus/source/
+
+version=2.1.0B
+bundle_id="com.keithmcmillen.$bundle_name"
+
+dmg_path="./dmg"
+subfolder_path="$dmg_path/$app_name"
+app_path="$subfolder_path/$app_name.app"
+
+content_source="../Content"
+content_dest="$subfolder_path"
+
+changelog_source="../CHANGELOG.md"
+changelog_dest="$subfolder_path/CHANGELOG.md"
+
+icon_file="./$app_name.icns"
+path_to_dqt=~/Qt/5.11.3/clang_64/bin/macdeployqt
 developer_id="Developer ID Application: Kesumo, LLC (${APPLE_TEAM_ID})"
 
-final_dmg_name=./QuNexus\ Editor\ Mac\ v$version\ \(Intel\ Legacy\).dmg
+final_dmg_name="./$app_name Mac v$version (Intel Legacy).dmg"
 
 
 # set current directory to where the script was called from
@@ -35,15 +45,43 @@ read -n 1 -s -r -p ""
 
 if [ -d "$app_path" ] 
 then
-	rm -rf "$app_path"
-	echo ""
-	echo "Cleaning out old app..."
-	echo ""
+  rm -rf "$app_path"
+  echo ""
+  echo "Cleaning out old app..."
+  echo ""
 fi
 
 
-# copy the .app and resources
-\cp -R "$app_source" "$dmg_path/"
+if [ -f "$changelog_dest" ] 
+then
+  rm -rf "$changelog_dest"
+  echo ""
+  echo "Cleaning out old changelog..."
+  echo ""
+fi
+
+if [ -d "$changelog_dest" ] 
+then
+  rm -rf "$changelog_dest"
+  echo ""
+  echo "Cleaning out old content..."
+  echo ""
+fi
+
+# echo 
+# echo "Press any key to continue"
+# echo
+# read -n 1 -s -r -p ""
+
+# copy the .app content and resources
+\cp -R "$app_source" "$subfolder_path/"
+\cp -R "$changelog_source" "$subfolder_path/"
+cp -R -p "$content_source" "$content_dest"
+
+# echo "Press any key to continue"
+# echo
+# read -n 1 -s -r -p ""
+
 
 
 echo ""
@@ -52,11 +90,15 @@ echo ""
 
 # update info.plist
 plutil -insert "App Category" -string "Music" "$app_path/Contents/Info.plist"
-plutil -replace "Get Info string" -string "$version, Copyright 2021 Keith McMillen Instruments" "$app_path/Contents/Info.plist"
+plutil -replace "Get Info string" -string "$version, Copyright $this_year Keith McMillen Instruments" "$app_path/Contents/Info.plist"
 plutil -replace "CFBundleLongVersionString" -string "$app_name $version, Copyright $this_year Keith McMillen Instruments" "$app_path/Contents/Info.plist"
 plutil -replace "Bundle versions string, short" -string "$version" "$app_path/Contents/Info.plist"
 plutil -replace "Bundle version" -string "$version" "$app_path/Contents/Info.plist"
 
+# echo 
+# echo "Press any key to continue"
+# echo
+# read -n 1 -s -r -p ""
 
 echo ""
 echo "### - Running macdeployqt"
@@ -64,9 +106,11 @@ echo ""
 
 #run macdeployqt
 $path_to_dqt "$app_path" -verbose=2 -codesign="$developer_id" -qmldir="$qml_dir" -executable="$app_path/Contents/MacOS/$app_name"
-codesign -s "$developer_id" --options runtime --timestamp --force --deep --entitlements ./entitlements.mac.plist -f "$app_path/Contents/Frameworks/QtPrintSupport.framework/Versions/5/Resources/QtPrintSupport.prl"
-codesign -s "$developer_id" --options runtime --timestamp --force --deep --entitlements ./entitlements.mac.plist -f "$app_path/Contents/Frameworks/QtQuickWidgets.framework/Versions/5/Resources/QtQuickWidgets.prl"
 
+# echo 
+# echo "Press any key to continue"
+# echo
+# read -n 1 -s -r -p ""
 
 echo ""
 echo "### - Signing application"
@@ -76,12 +120,20 @@ echo ""
 # QT frameworks plists copied. See: http://barenka.blogspot.com/2014/04/signing-qt5-520-applications-in-mac-osx.html
 codesign -s "$developer_id" --options runtime --timestamp --force --deep --entitlements ./entitlements.mac.plist -f "$app_path"
 
+# echo 
+# echo "Press any key to continue"
+# echo
+# read -n 1 -s -r -p ""
 
 #set folder icon (only needed if there is a folder in the dmg)
-#fileicon set "$dmg_path/" "$icon_file"
+fileicon set "$subfolder_path/" "$icon_file"
+
+# echo 
+# echo "Press any key to continue"
+# echo
+# read -n 1 -s -r -p ""
 
 # create dmg (brew install create-dmg)
-
 echo ""
 echo "### - Creating dmg..."
 echo ""

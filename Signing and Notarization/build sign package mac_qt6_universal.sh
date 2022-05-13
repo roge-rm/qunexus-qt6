@@ -6,29 +6,29 @@
 # app_name is the name of the dmg volume
 this_year=2022
 app_name="QuNexus Editor"
+bundle_name="QuNexusEditor"
 app_name_fp=QuNexus\ Editor
 app_source=../build-QuNexus-Qt_6_2_1_for_macOS-Release/QuNexus\ Editor.app
+qml_dir=../qt-qunexus/source/
 
-version=2.1.0A
-bundle_id="com.keithmcmillen.$app_name"
-app_path="./dmg/QuNexus Editor.app"
-dmg_path=./dmg
+version=2.1.0B
+bundle_id="com.keithmcmillen.$bundle_name"
 
-subfolder_path="./dmg/$app_name"
-app1_path="$subfolder_path/$app1.app"
+dmg_path="./dmg"
+subfolder_path="$dmg_path/$app_name"
+app_path="$subfolder_path/$app_name.app"
 
 content_source="../Content"
-content_dest="$subfolder_path/Content"
+content_dest="$subfolder_path"
 
 changelog_source="../CHANGELOG.md"
 changelog_dest="$subfolder_path/CHANGELOG.md"
 
+icon_file="./$app_name.icns"
 path_to_dqt=~/Qt/6.2.1/macos/bin/macdeployqt
-qml_dir=../qt-qunexus/source/
 developer_id="Developer ID Application: Kesumo, LLC (${APPLE_TEAM_ID})"
 
-final_dmg_name=./QuNexus\ Editor\ Mac\ v$version.dmg
-
+final_dmg_name="./$app_name Mac v$version.dmg"
 
 
 # set current directory to where the script was called from
@@ -73,9 +73,9 @@ fi
 \cp -R "$changelog_source" "$subfolder_path/"
 cp -R -p "$content_source" "$content_dest"
 
-echo "Press any key to continue"
-echo
-read -n 1 -s -r -p ""
+# echo "Press any key to continue"
+# echo
+# read -n 1 -s -r -p ""
 
 
 
@@ -97,9 +97,6 @@ echo ""
 
 #run macdeployqt
 $path_to_dqt "$app_path" -verbose=2 -codesign="$developer_id" -qmldir="$qml_dir" -executable="$app_path/Contents/MacOS/$app_name"
-codesign -s "$developer_id" --options runtime --timestamp --force --deep --entitlements ./entitlements.mac.plist -f "$app_path/Contents/Frameworks/QtPrintSupport.framework/Versions/5/Resources/QtPrintSupport.prl"
-codesign -s "$developer_id" --options runtime --timestamp --force --deep --entitlements ./entitlements.mac.plist -f "$app_path/Contents/Frameworks/QtQuickWidgets.framework/Versions/5/Resources/QtQuickWidgets.prl"
-
 
 echo ""
 echo "### - Signing application"
@@ -111,7 +108,7 @@ codesign -s "$developer_id" --options runtime --timestamp --force --deep --entit
 
 
 #set folder icon (only needed if there is a folder in the dmg)
-#fileicon set "$dmg_path/" "$icon_file"
+fileicon set "$subfolder_path/" "$icon_file"
 
 # create dmg (brew install create-dmg)
 
@@ -124,7 +121,7 @@ test -f "$final_dmg_name" && rm "$final_dmg_name"
 
 create-dmg \
   --volname "$app_name" \
-  --volicon "$app_name.icns" \
+  --volicon "$icon_file" \
   --background "$dmg_path/background.tiff" \
   --window-pos 200 120 \
   --window-size 530 380 \

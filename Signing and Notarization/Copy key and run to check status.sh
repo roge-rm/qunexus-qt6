@@ -12,4 +12,15 @@ read -n 1 -s -r -p ""
 
 clipboard="$(pbpaste)"
 
-xcrun altool --notarization-info $clipboard -u ${APPLE_ID_EMAIL} -p ${APPLE_APP_PASSWORD}
+for (( ; ; ))
+do
+	xcrun altool --notarization-info $clipboard -u ${APPLE_ID_EMAIL} -p ${APPLE_APP_PASSWORD}
+
+	echo ""
+	echo "Press any key to run again"
+	echo
+	read -n 1 -s -r -p ""
+done
+
+
+

@@ -226,6 +226,7 @@ public slots:
     void slotFirmwareDetected(MidiDeviceManager *thisMDM, bool);
     void slotUpdateMIDIThru();
     void slotRecallMIDIThru();
+    void slotClearMIDIThruDropdown();
 
     // ------ end midi overhaul --------------------------------------------------------
 
