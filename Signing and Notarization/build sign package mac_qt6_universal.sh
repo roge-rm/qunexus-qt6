@@ -4,6 +4,7 @@
 # - You must use the entitlements included in this directory.
 
 # app_name is the name of the dmg volume
+version=2.1.0B
 this_year=2022
 app_name="QuNexus Editor"
 bundle_name="QuNexusEditor"
@@ -11,7 +12,6 @@ app_name_fp=QuNexus\ Editor
 app_source=../build-QuNexus-Qt_6_2_1_for_macOS-Release/QuNexus\ Editor.app
 qml_dir=../qt-qunexus/source/
 
-version=2.1.0B
 bundle_id="com.keithmcmillen.$bundle_name"
 
 dmg_path="./dmg"

@@ -93,7 +93,7 @@ public:
     QFile*              generalStylesFile;
     QString             generalStylesString;
 
-    // General
+    // Dialog Styles
     QFile*              dialogStylesFile;
     QString             dialogStylesString;
 
@@ -145,10 +145,11 @@ public:
     // Declare midi related actions so they can be disabled when QuNexus is disconnected from another scope
     QAction* updateFirmware;
 
-    QProgressDialog     *firmwareProgressDialog;
-
     QSpinBox*           onThresh;
     QSpinBox*           offThresh;
+
+    QSpinBox *seqDimKeysSetting;
+    QSpinBox *seqBrightKeysSetting;
 
     int                 stateLastTab;
     int                 stateControllerTabVisible;

@@ -2583,6 +2583,7 @@ void SysExEncDecode::slotDecodeGlobals(QByteArray globalsByteArray)
     QByteArray table2;
     QByteArray cvTrims;
     QByteArray cvOffsets;
+    QByteArray ledSetting;
 
     //An 8 byte packet of sysex chars
     unsigned char  buffer[8];
@@ -2641,6 +2642,10 @@ void SysExEncDecode::slotDecodeGlobals(QByteArray globalsByteArray)
                 //qDebug() << "DECODE" << QString("0x%1").arg(buffer[j],0,16);
 
             }
+            else if(globalIndex == 339 || globalIndex == 340)
+            {
+                ledSetting.append(buffer[j]);
+            }
         }
     }
 
@@ -2650,7 +2655,7 @@ void SysExEncDecode::slotDecodeGlobals(QByteArray globalsByteArray)
     emit signalSendGlobals("Table 2", table2);
     emit signalSendGlobals("CV Trims", cvTrims);
     emit signalSendGlobals("CV Offsets", cvOffsets);
-
+    emit signalSendGlobals("LED Settings", ledSetting);
 }
 
 bool SysExEncDecode::isOldGlobals(QByteArray ba)

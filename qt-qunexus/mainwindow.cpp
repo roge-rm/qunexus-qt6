@@ -769,8 +769,8 @@ void MainWindow::slotFindAndConnectUi()
     QPushButton* resetPerKeySensitivities = pksWidget->findChild<QPushButton *>(QString("ResetPerKeySensitivities"));
     connect(resetPerKeySensitivities, SIGNAL(clicked()), this, SLOT(slotResetPerKeySensitivities()));
 
-    QSpinBox *seqDimKeysSetting = this->findChild<QSpinBox *>("SEQ_dim_keys");
-    QSpinBox *seqBrightKeysSetting = this->findChild<QSpinBox *>("SEQ_bright_keys");
+    seqDimKeysSetting = this->findChild<QSpinBox *>("SEQ_dim_keys");
+    seqBrightKeysSetting = this->findChild<QSpinBox *>("SEQ_bright_keys");
 
     connect( seqDimKeysSetting, SIGNAL(editingFinished()), this, SLOT(slotEncodeGlobals()) ); // send globals when changed
     connect( seqBrightKeysSetting, SIGNAL(editingFinished()), this, SLOT(slotEncodeGlobals()) ); // send globals when changed
@@ -2183,7 +2183,7 @@ void MainWindow::slotTabChanged(int index)
 //Sets the Globals in the UI
 void MainWindow::slotSetGlobals(QString global, QByteArray globalByteArray)
 {
-
+    qDebug() << "slotSetGlobals called";
 //#ifdef Q_OS_MAC // EB - not sure why this is here, no reference to __int16 anywhere in the project
 //#else
 //    typedef __int16 int16_t;
@@ -2265,6 +2265,12 @@ void MainWindow::slotSetGlobals(QString global, QByteArray globalByteArray)
 
         cvTrimsInterface->slotShowOffsets();
     }
+    else if(global == "LED Settings")
+    {
+        seqDimKeysSetting->setValue(globalByteArray.at(0));
+        seqBrightKeysSetting->setValue(globalByteArray.at(1));
+    }
+
 }
 
 // load globals into a QList and then send them to QuNexus via SysEx
@@ -2336,9 +2342,6 @@ void MainWindow::slotEncodeGlobals()
     //---------------------------------- Sequencer LED brightness
 
     qDebug() << "size of globals0" << globalsList.size();
-
-    QSpinBox *seqDimKeysSetting = this->findChild<QSpinBox *>("SEQ_dim_keys");
-    QSpinBox *seqBrightKeysSetting = this->findChild<QSpinBox *>("SEQ_bright_keys");
 
     globalsList.append((char)seqDimKeysSetting->value());
     globalsList.append((char)seqBrightKeysSetting->value());
@@ -3441,6 +3444,7 @@ void MainWindow::slotSyncQnToEditor()
     connect(QuNexus, SIGNAL(signalRxSysExBA(QByteArray)), sysExEncDecode, SLOT(slotProcessSysEx(QByteArray)));
 
     slotRequestPreset(99); // request the current RAM preset
+    QTimer::singleShot(500, this, SLOT(slotSendGlobalsRequest()));
 }
 
 void MainWindow::slotSyncEditorToQn()
@@ -3457,6 +3461,7 @@ void MainWindow::slotSyncEditorToQn()
     connect(QuNexus, SIGNAL(signalRxSysExBA(QByteArray)), sysExEncDecode, SLOT(slotProcessSysEx(QByteArray)));
 
     presetManager->slotSyncEditBufferToDevice();
+    QTimer::singleShot(500, this, SLOT(slotEncodeGlobals()));
 }
 
 void MainWindow::slotPresetProcessed(unsigned char presetNum)
