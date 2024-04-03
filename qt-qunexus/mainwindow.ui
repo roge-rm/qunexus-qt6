@@ -690,7 +690,6 @@ QPushButton:pressed {
      </property>
      <property name="font">
       <font>
-       <family>Arial</family>
        <pointsize>-1</pointsize>
        <italic>true</italic>
        <bold>false</bold>
@@ -1141,7 +1140,6 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -1218,7 +1216,6 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -1316,7 +1313,6 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
-          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -1430,6 +1426,15 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
           </active>
           <inactive>
            <colorrole role="WindowText">
@@ -1486,7 +1491,16 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           </inactive>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </inactive>
           <disabled>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -1542,12 +1556,20 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           </disabled>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </disabled>
          </palette>
         </property>
         <property name="font">
          <font>
-          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -1777,7 +1799,6 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -1874,7 +1895,6 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -1972,7 +1992,6 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -2092,7 +2111,16 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           </active>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </active>
           <inactive>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -2148,7 +2176,16 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           </inactive>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </inactive>
           <disabled>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -2204,12 +2241,20 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           </disabled>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </disabled>
          </palette>
         </property>
         <property name="font">
          <font>
-          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -2458,7 +2503,6 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -2556,7 +2600,6 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -2724,7 +2767,16 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           </active>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </active>
           <inactive>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -2780,7 +2832,16 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           </inactive>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </inactive>
           <disabled>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -2836,12 +2897,20 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           </disabled>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </disabled>
          </palette>
         </property>
         <property name="font">
          <font>
-          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -2901,7 +2970,6 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -3155,7 +3223,6 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -3253,7 +3320,6 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -3421,7 +3487,16 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           </active>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </active>
           <inactive>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -3477,7 +3552,16 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           </inactive>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </inactive>
           <disabled>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -3533,12 +3617,20 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           </disabled>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </disabled>
          </palette>
         </property>
         <property name="font">
          <font>
-          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -3598,7 +3690,6 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -3862,7 +3953,6 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -3960,7 +4050,6 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -4128,7 +4217,16 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           </active>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </active>
           <inactive>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -4184,7 +4282,16 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           </inactive>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </inactive>
           <disabled>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -4240,12 +4347,20 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           </disabled>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </disabled>
          </palette>
         </property>
         <property name="font">
          <font>
-          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -4305,7 +4420,6 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -4575,7 +4689,6 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -4673,7 +4786,6 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -4841,7 +4953,16 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           </active>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </active>
           <inactive>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -4897,7 +5018,16 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           </inactive>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </inactive>
           <disabled>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -4953,12 +5083,20 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           </disabled>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </disabled>
          </palette>
         </property>
         <property name="font">
          <font>
-          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -5018,7 +5156,6 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -5237,7 +5374,6 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -5335,7 +5471,6 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -5455,7 +5590,16 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           </active>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </active>
           <inactive>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -5511,7 +5655,16 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           </inactive>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </inactive>
           <disabled>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -5567,12 +5720,20 @@ QComboBox::drop-down:button{
              </color>
             </brush>
            </colorrole>
-           </disabled>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </disabled>
          </palette>
         </property>
         <property name="font">
          <font>
-          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -5680,7 +5841,6 @@ QComboBox::drop-down:button{
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -6073,7 +6233,6 @@ border: none;
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -6646,7 +6805,10 @@ qproperty-alignment: AlignCenter;
         <number>1</number>
        </property>
        <property name="maximum">
-        <number>127</number>
+        <number>90</number>
+       </property>
+       <property name="value">
+        <number>15</number>
        </property>
       </widget>
       <widget class="QSpinBox" name="Globals_On_Thresh">
@@ -6695,6 +6857,9 @@ qproperty-alignment: AlignCenter;
         <number>2</number>
        </property>
        <property name="maximum">
+        <number>100</number>
+       </property>
+       <property name="value">
         <number>20</number>
        </property>
       </widget>
@@ -6813,7 +6978,16 @@ qproperty-alignment: AlignCenter;
             </color>
            </brush>
           </colorrole>
-          </active>
+          <colorrole role="PlaceholderText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </active>
          <inactive>
           <colorrole role="WindowText">
            <brush brushstyle="SolidPattern">
@@ -6869,7 +7043,16 @@ qproperty-alignment: AlignCenter;
             </color>
            </brush>
           </colorrole>
-          </inactive>
+          <colorrole role="PlaceholderText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </inactive>
          <disabled>
           <colorrole role="WindowText">
            <brush brushstyle="SolidPattern">
@@ -6925,12 +7108,20 @@ qproperty-alignment: AlignCenter;
             </color>
            </brush>
           </colorrole>
-          </disabled>
+          <colorrole role="PlaceholderText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </disabled>
         </palette>
        </property>
        <property name="font">
         <font>
-         <family>Arial</family>
          <pointsize>-1</pointsize>
         </font>
        </property>
@@ -7235,7 +7426,6 @@ qproperty-alignment: AlignCenter;
        </property>
        <property name="font">
         <font>
-         <family>Droid Sans</family>
          <pointsize>-1</pointsize>
         </font>
        </property>
@@ -7606,7 +7796,6 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -7684,7 +7873,6 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -7767,7 +7955,6 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -7840,7 +8027,6 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -7904,7 +8090,6 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
        </property>
        <property name="font">
         <font>
-         <family>Arial</family>
          <pointsize>12</pointsize>
          <italic>true</italic>
          <bold>false</bold>
@@ -7940,7 +8125,6 @@ color: rgb(225,225,225);
        </property>
        <property name="font">
         <font>
-         <family>Arial</family>
          <pointsize>12</pointsize>
          <italic>true</italic>
          <bold>false</bold>
@@ -8117,7 +8301,6 @@ background: qlineargradient(spread: pan,
         </property>
         <property name="font">
          <font>
-          <family>Arial</family>
           <pointsize>20</pointsize>
           <italic>false</italic>
           <bold>false</bold>
@@ -8164,7 +8347,6 @@ color: white</string>
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -8232,7 +8414,6 @@ color: white</string>
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -8320,7 +8501,6 @@ color: white</string>
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -8480,7 +8660,6 @@ color: white</string>
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -8558,7 +8737,6 @@ color: white</string>
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -8704,7 +8882,6 @@ color: white</string>
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -8785,7 +8962,6 @@ color: white</string>
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -8893,7 +9069,6 @@ color: white</string>
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -9190,7 +9365,6 @@ QFrame {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -9258,7 +9432,6 @@ QFrame {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -9364,7 +9537,6 @@ QFrame {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -9542,7 +9714,6 @@ QFrame {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -9630,7 +9801,6 @@ QFrame {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -9738,7 +9908,6 @@ QFrame {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -9816,7 +9985,6 @@ QFrame {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -9993,7 +10161,6 @@ QFrame {
         </property>
         <property name="font">
          <font>
-          <family>Arial</family>
           <pointsize>20</pointsize>
           <italic>false</italic>
           <bold>false</bold>
@@ -10040,7 +10207,6 @@ color: white</string>
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -10225,7 +10391,6 @@ QFrame {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -10293,7 +10458,6 @@ QFrame {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -10399,7 +10563,6 @@ QFrame {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -10577,7 +10740,6 @@ QFrame {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -10665,7 +10827,6 @@ QFrame {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -10773,7 +10934,6 @@ QFrame {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -10851,7 +11011,6 @@ QFrame {
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -11028,7 +11187,6 @@ QFrame {
         </property>
         <property name="font">
          <font>
-          <family>Arial</family>
           <pointsize>20</pointsize>
           <italic>false</italic>
           <bold>false</bold>
@@ -11075,7 +11233,6 @@ color: white</string>
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -12148,7 +12305,6 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -12277,7 +12433,6 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
         </property>
         <property name="font">
          <font>
-          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -13064,7 +13219,6 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
         </property>
         <property name="font">
          <font>
-          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -13263,7 +13417,16 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
              </color>
             </brush>
            </colorrole>
-           </active>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>100</red>
+              <green>100</green>
+              <blue>100</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </active>
           <inactive>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -13319,7 +13482,16 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
              </color>
             </brush>
            </colorrole>
-           </inactive>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>100</red>
+              <green>100</green>
+              <blue>100</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </inactive>
           <disabled>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -13375,12 +13547,20 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
              </color>
             </brush>
            </colorrole>
-           </disabled>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>100</red>
+              <green>100</green>
+              <blue>100</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </disabled>
          </palette>
         </property>
         <property name="font">
          <font>
-          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -13639,7 +13819,6 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -13717,7 +13896,6 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -13903,7 +14081,16 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
              </color>
             </brush>
            </colorrole>
-           </active>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </active>
           <inactive>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -13959,7 +14146,16 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
              </color>
             </brush>
            </colorrole>
-           </inactive>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </inactive>
           <disabled>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -14015,12 +14211,20 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
              </color>
             </brush>
            </colorrole>
-           </disabled>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </disabled>
          </palette>
         </property>
         <property name="font">
          <font>
-          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -14317,7 +14521,6 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -14455,7 +14658,16 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
              </color>
             </brush>
            </colorrole>
-           </active>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </active>
           <inactive>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -14511,7 +14723,16 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
              </color>
             </brush>
            </colorrole>
-           </inactive>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </inactive>
           <disabled>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -14567,12 +14788,20 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
              </color>
             </brush>
            </colorrole>
-           </disabled>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </disabled>
          </palette>
         </property>
         <property name="font">
          <font>
-          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -14680,7 +14909,6 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -14809,7 +15037,6 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -15724,7 +15951,6 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -15862,7 +16088,16 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
              </color>
             </brush>
            </colorrole>
-           </active>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </active>
           <inactive>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -15918,7 +16153,16 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
              </color>
             </brush>
            </colorrole>
-           </inactive>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </inactive>
           <disabled>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -15974,12 +16218,20 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
              </color>
             </brush>
            </colorrole>
-           </disabled>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </disabled>
          </palette>
         </property>
         <property name="font">
          <font>
-          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -16087,7 +16339,6 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -16216,7 +16467,6 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -17128,7 +17378,6 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -17266,7 +17515,16 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
              </color>
             </brush>
            </colorrole>
-           </active>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </active>
           <inactive>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -17322,7 +17580,16 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
              </color>
             </brush>
            </colorrole>
-           </inactive>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </inactive>
           <disabled>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -17378,12 +17645,20 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
              </color>
             </brush>
            </colorrole>
-           </disabled>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </disabled>
          </palette>
         </property>
         <property name="font">
          <font>
-          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -17491,7 +17766,6 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -17620,7 +17894,6 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -18532,7 +18805,6 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -18650,7 +18922,16 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
              </color>
             </brush>
            </colorrole>
-           </active>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </active>
           <inactive>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -18706,7 +18987,16 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
              </color>
             </brush>
            </colorrole>
-           </inactive>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </inactive>
           <disabled>
            <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
@@ -18762,12 +19052,20 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
              </color>
             </brush>
            </colorrole>
-           </disabled>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>255</red>
+              <green>255</green>
+              <blue>255</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </disabled>
          </palette>
         </property>
         <property name="font">
          <font>
-          <family>Arial</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -18875,7 +19173,6 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -19052,7 +19349,6 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -19111,7 +19407,6 @@ QComboBox QAbstractItemView QScrollBar::add-page:vertical, QScrollBar::sub-page:
        </property>
        <property name="font">
         <font>
-         <family>Arial</family>
          <pointsize>-1</pointsize>
          <italic>true</italic>
          <bold>false</bold>
@@ -19200,7 +19495,6 @@ background: qlineargradient(spread: pan,
        </property>
        <property name="font">
         <font>
-         <family>Arial</family>
          <pointsize>-1</pointsize>
          <italic>true</italic>
          <bold>false</bold>
@@ -21293,7 +21587,6 @@ QPushButton:checked{ border-color: rgba(10, 255, 0,0);}</string>
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -24123,7 +24416,6 @@ border:0px;</string>
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
           <pointsize>-1</pointsize>
          </font>
         </property>
@@ -24204,7 +24496,6 @@ border:0px;</string>
      </property>
      <property name="font">
       <font>
-       <family>Arial</family>
        <pointsize>12</pointsize>
        <italic>false</italic>
        <bold>false</bold>
@@ -24561,7 +24852,6 @@ QPushButton:disabled {
     </property>
     <property name="font">
      <font>
-      <family>Arial</family>
       <pointsize>-1</pointsize>
       <italic>true</italic>
       <bold>false</bold>

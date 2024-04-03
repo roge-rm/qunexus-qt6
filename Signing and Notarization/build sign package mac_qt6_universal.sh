@@ -4,12 +4,12 @@
 # - You must use the entitlements included in this directory.
 
 # app_name is the name of the dmg volume
-version=2.1.0B
-this_year=2022
+version=2.1.1A
+this_year=2024
 app_name="QuNexus Editor"
 bundle_name="QuNexusEditor"
 app_name_fp=QuNexus\ Editor
-app_source=../build-QuNexus-Qt_6_2_1_for_macOS-Release/QuNexus\ Editor.app
+app_source=../build-QuNexus-Qt_6_3_2_for_macOS-Release/QuNexus\ Editor.app
 qml_dir=../qt-qunexus/source/
 
 bundle_id="com.keithmcmillen.$bundle_name"
@@ -25,7 +25,7 @@ changelog_source="../CHANGELOG.md"
 changelog_dest="$subfolder_path/CHANGELOG.md"
 
 icon_file="./$app_name.icns"
-path_to_dqt=~/Qt/6.2.1/macos/bin/macdeployqt
+path_to_dqt=~/Qt/6.3.2/macos/bin/macdeployqt
 developer_id="Developer ID Application: Kesumo, LLC (${APPLE_TEAM_ID})"
 
 final_dmg_name="./$app_name Mac v$version.dmg"
@@ -157,6 +157,8 @@ echo "### - Notorizing..."
 echo
 # submit to notarize
 #xcrun altool --notarize-app -f "./QuNeo MPE Beta v$version.dmg" -t osx -u ${APPLE_ID_EMAIL} -p dqgu-cmmc-aumy-kqwe -primary-bundle-id "com.kmimusic.QuNeoMPE"
-xcrun altool --notarize-app -f "$final_dmg_name" -t osx -u ${APPLE_ID_EMAIL} -p ${APPLE_APP_PASSWORD} -primary-bundle-id $bundle_id
+#xcrun altool --notarize-app -f "$final_dmg_name" -t osx -u ${APPLE_ID_EMAIL} -p ${APPLE_APP_PASSWORD} -primary-bundle-id $bundle_id
+
+xcrun notarytool submit "$final_dmg_name" --keychain-profile "${APPLE_KEYCHAIN_PROFILE}" --wait
 
 

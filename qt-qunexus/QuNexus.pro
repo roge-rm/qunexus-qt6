@@ -47,6 +47,7 @@ INCLUDEPATH +=  source \
 
 
 SOURCES +=  main.cpp\
+    inc/KMI_MIDI_Device_Manager/KMI_SysexMessages.c \
     inc/KMI_MIDI_Device_Manager/fwupdate/fwupdate.cpp \
     inc/KMI_MIDI_Device_Manager/KMI_mdm.cpp \
     inc/KMI_MIDI_Device_Manager/troubleshoot/troubleshoot.cpp \
@@ -92,7 +93,7 @@ FORMS    += mainwindow.ui \
 
 
 RESOURCES += \
-    inc/KMI_MIDI_Device_Manager/fwupdate/fw_stylesheets.qrc \
+    inc/KMI_MIDI_Device_Manager/KMI_mdm.qrc \
     resources.qrc \
     resources/fonts/fonts.qrc
 
@@ -214,30 +215,30 @@ DISTFILES += \
 
 #--------------- contents/resources --------
 
-macx{
+#macx{
 
-    qunexusPresets.files = $$PWD/presets
-    qunexusPresets.path = Contents/Resources
-    QMAKE_BUNDLE_DATA += qunexusPresets
-}
+#    qunexusPresets.files = $$PWD/presets
+#    qunexusPresets.path = Contents/Resources
+#    QMAKE_BUNDLE_DATA += qunexusPresets
+#}
 
-win32{
+#win32{
 
-    presets.commands = $(COPY_DIR) $$shell_path(\"$$PWD/presets\") $$shell_path(\"$$OUT_PWD/release/presets\")
-    export(presets.commands)
+#    presets.commands = $(COPY_DIR) $$shell_path(\"$$PWD/presets\") $$shell_path(\"$$OUT_PWD/release/presets\")
+#    export(presets.commands)
 
-    first.depends += $(first) presets
-    export(first.depends)
+#    first.depends += $(first) presets
+#    export(first.depends)
 
-    QMAKE_EXTRA_TARGETS += first presets
-}
+#    QMAKE_EXTRA_TARGETS += first presets
+#}
 
-linux{
-    presets.commands = $(COPY_DIR) $$shell_path(\"$$PWD/presets\") $$shell_path(\"$$OUT_PWD/presets\")
-    export(presets.commands)
+#linux{
+#    presets.commands = $(COPY_DIR) $$shell_path(\"$$PWD/presets\") $$shell_path(\"$$OUT_PWD/presets\")
+#    export(presets.commands)
 
-    first.depends += $(first) presets
-    export(first.depends)
+#    first.depends += $(first) presets
+#    export(first.depends)
 
-    QMAKE_EXTRA_TARGETS += first presets
-}
+#    QMAKE_EXTRA_TARGETS += first presets
+#}

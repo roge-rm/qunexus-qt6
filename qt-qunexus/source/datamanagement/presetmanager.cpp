@@ -23,6 +23,7 @@
 
 #include "presetmanager.h"
 #include <sysexencdecode.h>
+#include <QFileInfo>
 
 ///////////////////////////////////////////////////////////////
 ///////////// Initialization & Control Fucntions //////////////
@@ -855,22 +856,6 @@ void PresetManager::slotCreateDefaultParamMap()
 void PresetManager::slotLoadJSON()
 {
     qDebug() << "slotLoadJSON called";
-    QString jsonPath = QCoreApplication::applicationDirPath(); //get bundle path
-
-#if defined(Q_OS_MAC) && !defined(QT_DEBUG)
-    jsonPath.remove(jsonPath.length() - 5, jsonPath.length()); //Remove "MacOS" from path string
-    jsonPath.append("Resources/presets/QuNexus.json");
-//#elif defined(Q_OS_MAC) && defined(QT_DEBUG)
-//    jsonPath = QString("../../../presets/QuNexus.json");
-#elif !defined(Q_OS_MAC) // windows
-    // this is copied into the release directory by QuNexus.pro, take care when editing this line as it
-    // can break things when deploying to windows (ie it will work before but not after deployment,
-    // potentially driving me crazy when I can't figure out why the app won't run on windows machines
-    // other than my own)
-    jsonPath.append("/presets/QuNexus.json");
-#endif
-
-    qDebug() << "jsonPath: " << jsonPath;
 
     // -------- begin test for appdata directory to preserve presets after editor updates -----------
 
@@ -892,11 +877,17 @@ void PresetManager::slotLoadJSON()
         QDir().mkpath(presetsDirDestPath);
     }
 
-    QString presetFileSrcPath = jsonPath;
     QString presetFileDestPath = presetsDirDestPath + "/QuNexus.json";
+    //QString presetFileSrcPath = QString("qrc:/presets/QuNexus.json");
+    QString presetFileSrcPath = QString(":/presets/QuNexus.json");
 
     qDebug() << "presetFileSrcPath: " << presetFileSrcPath;
     qDebug() << "presetFileDestPath: " << presetFileDestPath;
+
+    if (!QFile(presetFileSrcPath).exists())
+    {
+        qDebug() << "ERROR: Cannot find preset source file: " << presetFileSrcPath;
+    }
 
     // If the preset file doesn't exist at the destination, copy it there
     if (!QFile::exists(presetFileDestPath))
@@ -907,39 +898,69 @@ void PresetManager::slotLoadJSON()
         }
         else
         {
-            qDebug() << "Copied preset json to appDataDir";
+            qDebug() << "Copied QuNexus preset json to appDataDir";
         }
     }
     else
     {
-        qDebug() << "System Application Directory Found";
+        qDebug() << "QuNexus preset json Found";
     }
 
-    jsonPath = presetFileDestPath; // reassign this
+    // Use QFileInfo to check the file's permissions
+    QFileInfo fileInfo(presetFileDestPath);
+    if (fileInfo.isReadable() && !fileInfo.isWritable())
+    {
+        // The file is read-only
+        qDebug() << "Warning, preset file is read only: " << presetFileDestPath;
+        // Use QFile to set the file's permissions to read/write
+        QFile file(presetFileDestPath);
+        if (!file.setPermissions(QFileDevice::ReadUser | QFileDevice::WriteUser |
+                                 QFileDevice::ReadGroup | QFileDevice::WriteGroup |
+                                 QFileDevice::ReadOther | QFileDevice::WriteOther))
+        {
+            // Failed to set the permissions
+            qFatal("ERROR: Could not set the QuNexus.json preset file to read/write, please reinstall the application.");
+        } else {
+            // Successfully set the permissions
+            qDebug() << "File permissions changed to read/write.";
+        }
+    } else {
+        // The file is not read-only or it is already read/write
+        qDebug() << "QuNexus json preset file has correct permissions";
+    }
 
     // -------- end test for app data dir ----------
 
 
+
+
     //Load json into QFile
-    jsonFile = new QFile(jsonPath);
+    jsonFile = new QFile(presetFileDestPath);
     // open file
-//    QFile jsonFile(jsonPath);
-    jsonFile->open(QIODevice::ReadOnly | QIODevice::Text);
+    if (!jsonFile->open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        qFatal("ERROR: could not open QuNexus.json, halting!");
+    }
+    else
+    {
+        qDebug("Open QuNexus.json for read only");
+    }
     // error object
     QJsonParseError JsonParseError;
     // convert file to QJsonDocument. this can be read/written to
     QJsonDocument JsonDocument = QJsonDocument::fromJson(jsonFile->readAll(), &JsonParseError);
+
     // close jsonFile
     jsonFile->close();
     // convert QJsonDocument to QJsonObject. this can be queried and modified in a human-readable way
     QJsonObject RootObject = JsonDocument.object();
 
-    qDebug() << "curdir: " << QDir::currentPath() << "\njsonPath: " << jsonPath << "\nappDir: " << QCoreApplication::applicationDirPath();
+    //qDebug() << "curdir: " << QDir::currentPath() << "\njsonPath: " << jsonPath << "\nappDir: " << QCoreApplication::applicationDirPath();
 
 
     if(jsonFile->open(QIODevice::ReadWrite | QIODevice::Text))
     {
-        //qDebug("QuNexus JSON Found");
+        qDebug("Open QuNexus.json for read/write");
 
         //jsonByteArray = jsonFile->readAll();//load json file into a byte array to be processd by the parser
         jsonByteArray = JsonDocument.toJson();
@@ -1012,7 +1033,7 @@ void PresetManager::slotLoadJSON()
     }
     else
     {
-        qDebug() << "QuNexus Preset File Not Found!";
+        qFatal("Unable to open QuNexus.json Preset File! Please re-install the application.");
     }
 }
 

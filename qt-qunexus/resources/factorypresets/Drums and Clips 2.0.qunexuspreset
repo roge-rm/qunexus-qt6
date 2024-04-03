@@ -408,7 +408,7 @@
     "Globals_Gain": 100,
     "Globals_LED_Refresh_Style": "Normal",
     "Globals_Off_Thresh": 1,
-    "Globals_On_Thresh": 10,
+    "Globals_On_Thresh": 20,
     "Globals_Tilt_Sensitivity": 0,
     "Keyboard": 1,
     "Keyboard_CC_00_Control_Number": 1,

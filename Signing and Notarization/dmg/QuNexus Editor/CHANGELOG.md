@@ -1,5 +1,11 @@
 #### QuNexus RED Editor and Firmware Changelog
 
+### 2.1.1 beta A (2024-04-03)
+- Bug Fixes:
+	- Per Key Sensitivites now correctly adjust individual key on/off thresholds as well as gain
+	- Global on/off threshold limits and default values increased to fix issues with sticking keys
+	- Increased LED blanking for inactive keys. This shouod greatly reduce (but not 100% eliminate) issues with active key LEDs bleeding into inactive keys in dark rooms. Reduce LED brightness in the settings menu to improve this issue.
+
 ### 2.1.0 (2022-02-24)
 - Bug Fixes:
 	- Fixed bug with remote LED control

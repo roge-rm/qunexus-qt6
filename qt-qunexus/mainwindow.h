@@ -137,6 +137,11 @@ public:
     QWidget*            controllerTab;
     QVariantMap         controllerElementCopiedMap;
     QVariantMap         copiedLayerMap;
+
+    // file menu
+    QAction*            openAppDataDir;
+
+
     // Declare paste actions so they can be referred to in multiple scopes
     QAction*            pasteControllerSensor;
     QAction*            pasteControllerLayer;
@@ -236,6 +241,7 @@ public slots:
     void    slotUpdateLibraryPresetsListUi(QVariantMap presetMaps, int action, int data);
     void    slotUpdateControllerLayerHighlightUi(QStringList activeKeys);
 
+    void    slotOpenPresetDirectory();
     void    slotSetupMenuBar();
     void    slotShowHideControllerTab();
     void    slotCopyControllerElements();

@@ -41,9 +41,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     applicationVersion[0] = 2;
     applicationVersion[1] = 1;
-    applicationVersion[2] = 0;
+    applicationVersion[2] = 1;
 
-    betaVersion = "B"; // leave blank for release
+    betaVersion = "A"; // leave blank for release
 
 
     thisFw = QByteArray(reinterpret_cast<char*>(_fw_ver_qunexus), sizeof(_fw_ver_qunexus));
@@ -2389,6 +2389,12 @@ void MainWindow::slotResetPerKeySensitivities()
 //------------------------------------------------------------ Menu Bar Setup & Connections ------------------------------------------------------------//
 //------------------------------------------------------------------------------------------------------------------------------------------------------//
 
+void MainWindow::slotOpenPresetDirectory()
+{
+    QString presetDir = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+    QDesktopServices::openUrl(QUrl::fromLocalFile(presetDir));
+}
+
 void MainWindow::slotSetupMenuBar()
 {
     menubar = new QMenuBar(this);
@@ -2490,6 +2496,12 @@ void MainWindow::slotSetupMenuBar()
     connect(importPreset, SIGNAL(triggered()), presetManager, SLOT(slotImportPreset()));
     //importPreset->setEnabled(false);
     file->addAction(importPreset);
+
+    openAppDataDir = new QAction("Open Editor Preset Directory", file);
+    openAppDataDir->setObjectName("openAppDataDir");
+    file->addAction(openAppDataDir);
+
+    connect(openAppDataDir, SIGNAL(triggered()), this, SLOT(slotOpenPresetDirectory()));
 
     menubar->addMenu(file);
 
@@ -3649,7 +3661,7 @@ void MainWindow::slotMIDIPortChange(QString portName, uchar inOrOut, uchar messa
             fwUpdateWindow->slotAppendTextToConsole("\nQuNexus Disconnected\n");
             connectedLabel->setText("Not Connected");
             connectedFrame->setStyleSheet("QFrame#QuNexus_Connected_Frame{border: 1px solid rgb(67,67,67); background: rgb(100,100,100); border-radius:6;}");
-            }
+        }
         else if (inOrOut == PORT_OUT && portName == QuNexus->portName_out)
         {
             QuNexus->slotCloseMidiOut(SIGNAL_SEND);
