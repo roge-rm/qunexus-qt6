@@ -1293,9 +1293,9 @@ QComboBox::drop-down:button{
         </property>
         <property name="geometry">
          <rect>
-          <x>92</x>
+          <x>98</x>
           <y>4</y>
-          <width>137</width>
+          <width>130</width>
           <height>20</height>
          </rect>
         </property>
@@ -1779,9 +1779,9 @@ QComboBox::drop-down:button{
         </property>
         <property name="geometry">
          <rect>
-          <x>92</x>
+          <x>98</x>
           <y>4</y>
-          <width>137</width>
+          <width>130</width>
           <height>20</height>
          </rect>
         </property>
@@ -2950,9 +2950,9 @@ QComboBox::drop-down:button{
         </property>
         <property name="geometry">
          <rect>
-          <x>92</x>
+          <x>98</x>
           <y>4</y>
-          <width>137</width>
+          <width>130</width>
           <height>20</height>
          </rect>
         </property>
@@ -3670,9 +3670,9 @@ QComboBox::drop-down:button{
         </property>
         <property name="geometry">
          <rect>
-          <x>92</x>
+          <x>98</x>
           <y>4</y>
-          <width>137</width>
+          <width>130</width>
           <height>20</height>
          </rect>
         </property>
@@ -4400,9 +4400,9 @@ QComboBox::drop-down:button{
         </property>
         <property name="geometry">
          <rect>
-          <x>92</x>
+          <x>98</x>
           <y>4</y>
-          <width>137</width>
+          <width>130</width>
           <height>20</height>
          </rect>
         </property>
@@ -5136,9 +5136,9 @@ QComboBox::drop-down:button{
         </property>
         <property name="geometry">
          <rect>
-          <x>92</x>
+          <x>98</x>
           <y>4</y>
-          <width>137</width>
+          <width>130</width>
           <height>20</height>
          </rect>
         </property>
@@ -5334,7 +5334,7 @@ QComboBox::drop-down:button{
          <rect>
           <x>4</x>
           <y>6</y>
-          <width>84</width>
+          <width>91</width>
           <height>16</height>
          </rect>
         </property>
@@ -5821,9 +5821,9 @@ QComboBox::drop-down:button{
         </property>
         <property name="geometry">
          <rect>
-          <x>92</x>
+          <x>98</x>
           <y>4</y>
-          <width>137</width>
+          <width>130</width>
           <height>20</height>
          </rect>
         </property>
@@ -7305,7 +7305,7 @@ qproperty-alignment: AlignCenter;
         </rect>
        </property>
        <property name="toolTip">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Sets the sensitivity multiplier for the bend pad (0.25 to 2.00, default 1.00).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A multiplier for the bend pad (0.25 to 2.00, default 1.00).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="layoutDirection">
         <enum>Qt::LeftToRight</enum>
@@ -7341,7 +7341,7 @@ qproperty-alignment: AlignCenter;
         <string/>
        </property>
        <property name="minimum">
-        <double>0.500000000000000</double>
+        <double>0.250000000000000</double>
        </property>
        <property name="maximum">
         <double>2.000000000000000</double>

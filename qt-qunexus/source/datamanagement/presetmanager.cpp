@@ -1212,8 +1212,9 @@ void PresetManager::slotValueChanged()
 {
     static QString previousKey, previousValue;
     QString thisKey, thisValue;
+    QString finalParamName = "";
 
-    //qDebug() << "slotValueChanged called - presetLoading: " << presetLoading << " newControllerKeySelected: " << newControllerKeySelected << " Sender:" << QObject::sender()->objectName();
+    qDebug() << "slotValueChanged called - presetLoading: " << presetLoading << " newControllerKeySelected: " << newControllerKeySelected << " Sender:" << QObject::sender()->objectName();
 
     // value has changed, deselect any UI objects
     emit signalClearFocus();
@@ -1260,18 +1261,18 @@ void PresetManager::slotValueChanged()
                 if(!QObject::sender()->objectName().contains("Global"))
                 {
 
-                    QString paramKey = QObject::sender()->objectName();
+                    finalParamName = QObject::sender()->objectName();
 
                     //qDebug() << "Controller Object Name" << QObject::sender()->objectName();
 
-                    if(paramKey.contains("Bend"))
+                    if(finalParamName.contains("Bend"))
                     {
-                        paramKey.remove(0, 19); // "_Note_Nnumber" or "_Pressure_Control_Number" etc.
+                        finalParamName.remove(0, 19); // "_Note_Nnumber" or "_Pressure_Control_Number" etc.
 //                        qDebug() << "paramKey" << paramKey;
                     }
                     else
                     {
-                        paramKey.remove(0, 14); // "_Note_Nnumber" or "_Pressure_Control_Number" etc.
+                        finalParamName.remove(0, 14); // "_Note_Nnumber" or "_Pressure_Control_Number" etc.
 //                        qDebug() << "paramKey" << paramKey;
                     }
 
@@ -1281,7 +1282,7 @@ void PresetManager::slotValueChanged()
                         //-------- Controller Bend
                         if(controllerLayerSelectedComponents.at(i).contains("Bend"))
                         {
-                            QString bendParamKey = paramKey;
+                            QString bendParamKey = finalParamName;
                             bendParamKey.prepend("Controller_Bend_Pad_00");
 
                             if(!bendParamKey.endsWith("Channel"))
@@ -1310,12 +1311,13 @@ void PresetManager::slotValueChanged()
                                 editBufferPresetMap.insert(bendParamKey, numberBox->value() - 1);
                                 //qDebug() << "channel" << bendParamKey << "," << numberBox->value() - 1;
                             }
+                            finalParamName = bendParamKey;
                         }
 
                         //-------- Controller Key
                         else
                         {
-                            QString keyParamKey = paramKey;
+                            QString keyParamKey = finalParamName;
 
                             //Get Note #
                             QString paramKeyNum = controllerLayerSelectedComponents.at(i);
@@ -1350,6 +1352,8 @@ void PresetManager::slotValueChanged()
                                 QSpinBox *numberBox = reinterpret_cast<QSpinBox *>(QObject::sender());
                                 editBufferPresetMap.insert(keyParamKey, numberBox->value() - 1);
                             }
+
+                            finalParamName = keyParamKey;
                         }
                     }
                 }
@@ -1606,51 +1610,11 @@ void PresetManager::slotValueChanged()
             //---- CV MIDI Input Type Menus
             else if(QObject::sender()->objectName().startsWith("CV_Out_CV") && QObject::sender()->objectName().endsWith("MIDI_Input_Type"))
             {
-
                 QComboBox* cvOutMidiInputType = reinterpret_cast<QComboBox *>(QObject::sender());
 
                 //qDebug() << "Value Changed  :" << QObject::sender()->metaObject()->className() << cvOutMidiInputType->objectName() << cvOutMidiInputType->currentText();
-
-//                //If a CC # just treat normally
-//                if(cvOutMidiInputType->currentText().startsWith("CC"))
-//                {
-                    editBufferPresetMap.insert(QObject::sender()->objectName(), cvOutMidiInputType->currentText());
-//                }
-
-//                //Otherwise append with CV Out to differentiate from other layer sources in dictionary
-//                else
-//                {
-//                    editBufferPresetMap.insert(QObject::sender()->objectName(), cvOutMidiInputType->currentText().append(" CV Out"));
-//                }
+                editBufferPresetMap.insert(QObject::sender()->objectName(), cvOutMidiInputType->currentText());
             }
-
-            // EB removed, this is all handled in firmware now and these values are deprecated
-
-            //---- Channels (to be linked to "Keyboard_Global_Channel_Rotation_Offset")
-//            else if(QObject::sender()->objectName().startsWith("Keyboard_Global_USB") && QObject::sender()->objectName().endsWith("Channel"))
-//            {
-
-//                //--------------- Handle Rotation Offset
-
-//                QSpinBox *channelSpinBox = reinterpret_cast<QSpinBox *>(QObject::sender());
-
-//                //-------------- Handle UI OBOE Offset and Save
-//                editBufferPresetMap.insert(QObject::sender()->objectName(), channelSpinBox->value() - 1);
-
-//                //Analyze both values, if 2 is greater, set offset to usb 2 channel number
-//                if(editBufferPresetMap.value("Keyboard_Global_USB_2_Channel").toInt() > editBufferPresetMap.value("Keyboard_Global_USB_1_Channel").toInt())
-//                {
-//                    //qDebug() << "Insert USB 2 into Offset:" << editBufferPresetMap.value("Keyboard_Global_USB_2_Channel").toInt();
-//                    editBufferPresetMap.insert("Keyboard_Global_Channel_Rotation_Offset", editBufferPresetMap.value("Keyboard_Global_USB_2_Channel").toInt());
-//                }
-
-//                //If the same or 1 is greater, set offset to usb 1 channel number
-//                else
-//                {
-//                    //qDebug() << "Insert USB 1 into Offset:" << editBufferPresetMap.value("Keyboard_Global_USB_1_Channel").toInt();
-//                    editBufferPresetMap.insert("Keyboard_Global_Channel_Rotation_Offset", editBufferPresetMap.value("Keyboard_Global_USB_1_Channel").toInt());
-//                }
-//            }
 
             //---- Keyboard LED Layer OBOE
             else if(QObject::sender()->objectName().contains("Keyboard_Global_LED_Remote_Channel"))
@@ -1747,7 +1711,12 @@ void PresetManager::slotValueChanged()
 
         // both of these will check if a preset or JSON is loading
         //slotSyncEditBufferToDevice();
-        sysExEncDecode->slotSendParameter(QObject::sender()->objectName());
+
+        if (finalParamName == "")
+        {
+            finalParamName = QObject::sender()->objectName();
+        }
+        sysExEncDecode->slotSendParameter(finalParamName);
     }
 
     // dirty the preset in the library
