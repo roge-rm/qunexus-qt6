@@ -80,7 +80,6 @@
     <qresource prefix="/">
         <file>resources/images/qunexus_white_trans_logo.png</file>
         <file>resources/images/quNexusIcon-9.png</file>
-        <file>resources/firmware/QuNexus_Firmware_v2.1.0.syx</file>
         <file>presets/AppData Dir Alias</file>
         <file>presets/QuNexus.json</file>
         <file>presets/QuNexus.json.zip</file>

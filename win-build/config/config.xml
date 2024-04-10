@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Installer>
+    	<Name>QuNexus Editor Installer</Name>
+    	<Version>1.0</Version>
+    	<Title>QuNexus Editor Installer</Title>
+    	<Publisher>Keith McMillen Instruments</Publisher>
+    	<StartMenuDir>Keith McMillen Instruments</StartMenuDir>
+		<TargetDir>@HomeDir@/KMI/QuNexus Editor</TargetDir>
+		<WizardStyle>Mac</WizardStyle>
+		<StyleSheet>style.qss</StyleSheet>
+		<!-- <ControlScript>pre-install2.qs</ControlScript> -->
+</Installer>

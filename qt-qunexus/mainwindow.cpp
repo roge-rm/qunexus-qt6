@@ -37,13 +37,24 @@ MainWindow::MainWindow(QWidget *parent) :
     qDebug() << "System Locale: " << QLocale::system().name();
 
     // application version
-    applicationVersion.resize(3);
+    QString versionString = QString(APP_VERSION);
 
-    applicationVersion[0] = 2;
-    applicationVersion[1] = 1;
-    applicationVersion[2] = 1;
+    // Split the version string by dots and assign values directly
+    QStringList parts = versionString.split('.');
 
-    betaVersion = "B"; // leave blank for release
+    for (int i = 0; i < 3 && i < parts.size(); ++i)
+    {
+        applicationVersion.append(static_cast<char>(parts[i].toInt()));
+    }
+
+    if (parts.size() > 3)
+    {
+        betaVersion = parts[3]; // assume this is a letter
+    }
+    else
+    {
+        betaVersion = "";
+    }
 
 
     thisFw = QByteArray(reinterpret_cast<char*>(_fw_ver_qunexus), sizeof(_fw_ver_qunexus));
@@ -3281,7 +3292,7 @@ void MainWindow::slotEnableDisableUnsavedWarnings()
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void MainWindow::keyPressEvent(QKeyEvent* event)
 {
-    if(event->modifiers() == Qt::ShiftModifier && event->KeyPress)
+    if(event->modifiers() == Qt::ShiftModifier)
     {
         presetManager->shiftDown = true;
     }
@@ -3289,7 +3300,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
 
 void MainWindow::keyReleaseEvent(QKeyEvent* event)
 {
-    if(!event->modifiers().operator &(Qt::ShiftModifier) && event->KeyRelease)
+    if(!event->modifiers().operator &(Qt::ShiftModifier))
     {
         presetManager->shiftDown = false;
     }

@@ -13,11 +13,17 @@ QT       += core gui \
 
 TARGET = "QuNexus Editor"
 TEMPLATE = app
+VERSION = 2.1.1.B
+DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
-# Uncomment to create a Windows console version of the app
-#win32{
-#    CONFIG += console
-#}
+#uncomment this to build a console version of the app. Do this once before deploying the app.
+#BUILD_CONSOLE = 1
+
+# Uncomment this line if you want to deploy the app (codesign, xxxDeployqt, copy content, and create installer/dmg etc
+DEPLOY = 1
+
+# Uncomment this line if your project includes QML, this will add the qmldir option to the qt deployment utility command
+INCLUDE_QML = 1
 
 # still holding onto support for High Sierra here, separate build
 
@@ -38,6 +44,10 @@ versionAtLeast(QT_VERSION, 6.2.1){
         QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.14
         QMAKE_APPLE_DEVICE_ARCHS = x86_64 arm64
     }
+}
+
+!isEmpty(BUILD_CONSOLE) {
+    CONFIG += console
 }
 
 INCLUDEPATH +=  source \
@@ -212,33 +222,131 @@ DISTFILES += \
     resources/stylesheets/GeneralStyles.qss \
     resources/stylesheets/GeneralStylesWindows.qss
 
-
 #--------------- contents/resources --------
 
-#macx{
+# copy SSL DLLs for checking kmi.com for updates
+win32 {
+    LIBCRYPTO_SRC = $$PWD/inc/KMI_Updates/ssl/libcrypto-1_1-x64.dll
+    LIBSSL_SRC = $$PWD/inc/KMI_Updates/ssl/libssl-1_1-x64.dll
 
-#    qunexusPresets.files = $$PWD/presets
-#    qunexusPresets.path = Contents/Resources
-#    QMAKE_BUNDLE_DATA += qunexusPresets
-#}
+    LIBCRYPTO_DST = $$replace(LIBCRYPTO_SRC, '/', '\\')
+    LIBSSL_DST = $$replace(LIBSSL_SRC, '/', '\\')
 
-#win32{
+    CONFIG(debug, debug|release) {
+        QMAKE_POST_LINK += copy /y \"$$LIBCRYPTO_DST\" \"$$OUT_PWD\\debug\\\" && \
+                           copy /y \"$$LIBSSL_DST\" \"$$OUT_PWD\\debug\\\" && \
+                           echo "Copied OpenSSL DLLs to debug directory."
+    } else {
+        QMAKE_POST_LINK += copy /y \"$$LIBCRYPTO_DST\" \"$$OUT_PWD\\release\\\" && \
+                           copy /y \"$$LIBSSL_DST\" \"$$OUT_PWD\\release\\\" && \
+                           echo "Copied OpenSSL DLLs to release directory."
+    }
+}
 
-#    presets.commands = $(COPY_DIR) $$shell_path(\"$$PWD/presets\") $$shell_path(\"$$OUT_PWD/release/presets\")
-#    export(presets.commands)
 
-#    first.depends += $(first) presets
-#    export(first.depends)
+# ********************************************************************************************************
+# NOTE for the deployment process to work you MUST add an additional "make" build step, arguments: deploy
+# ********************************************************************************************************
 
-#    QMAKE_EXTRA_TARGETS += first presets
-#}
+isEmpty(DEPLOY) {
+    # Define a dummy deploy target that does nothing
+    QMAKE_EXTRA_TARGETS += deploy
+    deploy.commands = @echo "Deploy is disabled"
+} else {
 
-#linux{
-#    presets.commands = $(COPY_DIR) $$shell_path(\"$$PWD/presets\") $$shell_path(\"$$OUT_PWD/presets\")
-#    export(presets.commands)
 
-#    first.depends += $(first) presets
-#    export(first.depends)
+    win32 {
+        package_dir = $$shell_path($$absolute_path("..\\win-build\\packages\\com.keithmcmillen.qunexuseditor\\data\\$${TARGET}", $$PWD))
+        content_dir = $$shell_path($$absolute_path("..\\win-build\\packages\\com.keithmcmillen.qunexuseditor\\data\\Content", $$PWD))
+        repo_root_dir = $$shell_path($$absolute_path("..", $$PWD))
 
-#    QMAKE_EXTRA_TARGETS += first presets
-#}
+        changelog_src = "$${repo_root_dir}\\CHANGELOG.md"
+        content_src = "$${repo_root_dir}\\Content"
+
+        LIBCRYPTO_SRC = $$PWD/inc/KMI_Updates/ssl/libcrypto-1_1-x64.dll
+        LIBSSL_SRC = $$PWD/inc/KMI_Updates/ssl/libssl-1_1-x64.dll
+
+        LIBCRYPTO_DST = $$replace(LIBCRYPTO_SRC, '/', '\\')
+        LIBSSL_DST = $$replace(LIBSSL_SRC, '/', '\\')
+
+        path_to_signtool = C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.22000.0\\x64\\signtool.exe
+        path_to_qtwindeploy = $$[QT_INSTALL_BINS]\\windeployqt.exe
+
+        path_to_bincreate = C:\\Qt6\\QtIFW-4.6.0\\bin\\binarycreator.exe
+        path_to_installerbase = C:\\Qt6\\QtIFW-4.6.0\\bin\\installerbase.exe
+        path_to_install = $$shell_path($$absolute_path("..\\win-build", $$PWD))
+
+        # Corrected variable assignments without escaped quotes
+        app_name = $${TARGET}
+        installer_name = \"$$app_name v$$VERSION Windows Installer\"
+        installer_file = \"$$app_name v$$VERSION Windows Installer.exe\"
+
+
+        message("path_to_bincreate is: " $$quote($$path_to_bincreate))
+        message("installer_file is: " $$quote($$installer_file))
+
+        build_subdir = release  # Default to release
+        CONFIG(debug, debug|release): build_subdir = debug
+
+        temp_out_pwd = $$replace(OUT_PWD, "/", "\\")
+        binary_src = "$${temp_out_pwd}\\$${build_subdir}\\$${TARGET}.exe"
+        binary_dest = "$${package_dir}\\$${TARGET}.exe"
+        app_name = $${TARGET}
+
+        debug_src = "$${temp_out_pwd}\\$${build_subdir}\\$${TARGET} (debug console).exe"
+        debug_dest = "$${package_dir}\\$${TARGET} (debug console).exe"
+
+
+
+        deploy_opts = "--compiler-runtime"
+        !isEmpty(INCLUDE_QML) {
+            deploy_opts += " --qmldir \"$$PWD\""
+        }
+
+
+        # Define custom deployment commands after all variables have been defined
+        DEPLOY_COMMANDS = \
+            echo Deploying for Windows && \
+            echo Copying executable to package_dir && \
+            copy /y \"$$binary_src\" \"$$binary_dest\" && \
+            copy /y \"$$debug_src\" \"$$debug_dest\" && \
+            \
+            echo Signing App Executable && \
+            \"$$path_to_signtool\" sign /v /debug /a /tr http://timestamp.digicert.com /td SHA256 /fd certHash \"$$binary_dest\" && \
+            \"$$path_to_signtool\" sign /v /debug /a /tr http://timestamp.digicert.com /td SHA256 /fd certHash \"$$debug_dest\" && \
+            \
+            echo Running qtwindeploy: \"$$package_dir\" && \
+            \"$$path_to_qtwindeploy\" $$deploy_opts --dir \"$$package_dir\" \"$$binary_dest\" && \
+            \
+            echo Copying SSL dlls to package_dir && \
+            copy /y \"$$LIBCRYPTO_DST\" \"$$package_dir\" && \
+            copy /y \"$$LIBSSL_DST\" \"$$package_dir\" && \
+            \
+            echo Clearing content && \
+            (if exist \"$$content_dir\" rmdir /s /q \"$$content_dir\" || echo Directory not found, skipping deletion) && \
+            mkdir \"$$content_dir\" && \
+            \
+            echo Copying content && \
+            Robocopy \"$$content_src\" \"$$content_dir\" /MIR && \
+            echo Robocopy Exit Code: %ERRORLEVEL% & \
+            \
+            echo Copying changelog && \
+            copy /y \"$$changelog_src\" \"$$content_dir\" && \
+            \
+            echo Creating Installer && \
+            cd \"$$path_to_install\" && \
+            \"$$path_to_bincreate\" --verbose --offline-only -c config/config.xml -p packages $$installer_name && \
+            \
+            echo Signing Installer && \
+            \"$$path_to_signtool\" sign /v /debug /a /tr http://timestamp.globalsign.com/tsa/advanced /td SHA256 /fd certHash $$installer_file
+
+        # Define a phony target for deployment
+            QMAKE_EXTRA_TARGETS += deploy
+            deploy.commands = $$DEPLOY_COMMANDS
+            deploy.depends = first  # ensures this runs after the first build
+
+    }
+}
+
+
+

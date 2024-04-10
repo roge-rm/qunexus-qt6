@@ -1,10 +1,13 @@
 #### QuNexus RED Editor and Firmware Changelog
 
-### 2.1.1 beta A (2024-04-03)
+### 2.1.1 beta B (2024-04-010)
 - Bug Fixes:
 	- Per Key Sensitivites now correctly adjust individual key on/off thresholds as well as gain
 	- Global on/off threshold limits and default values increased to fix issues with sticking keys
 	- Increased LED blanking for inactive keys. This shouod greatly reduce (but not 100% eliminate) issues with active key LEDs bleeding into inactive keys in dark rooms. Reduce LED brightness in the settings menu to improve this issue.
+	- Bend pad now uses a peak detection algorithm which improves performance on most devices. 
+	- Bend pad sensitivity is now a multipler. If bend pad isn't hitting the extreme values, increase the multiplier until left and right hit max.
+	- Note: Extreme pressure on one side of the bend pad can physically push the other side down, which can bring the bend back to center. A light to moderate amount of pressure on the pad with a sufficient bend pad sensitivity setting should produce consistent and correct results. 
 
 ### 2.1.0 (2022-02-24)
 - Bug Fixes:
