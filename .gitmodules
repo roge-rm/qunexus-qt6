@@ -10,6 +10,3 @@
 [submodule "qt-qunexus/inc/KMI_Updates"]
 	path = qt-qunexus/inc/KMI_Updates
 	url=ssh://git@bitbucket.org/keith-mcmillen-instruments/kmi_updates.git
-[submodule "Content/DAW Support"]
-	path = Content/DAW Support
-url=ssh://git@bitbucket.org/keith-mcmillen-instruments/daw-support.git
