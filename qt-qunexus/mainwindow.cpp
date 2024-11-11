@@ -9,7 +9,7 @@
     Originally Written by Conner Lacy - www.connerlacy.com | conner@connerlacy.com
 
     2.0 updates by Eric Bateman
-    Copyright (c) 2021 Keith McMillen Instruments
+    (c) Copyright 2024 KMI Music, Inc., all rights reserved.
 
 
     -------------------------------------------------------------------
@@ -2352,14 +2352,14 @@ void MainWindow::slotEncodeGlobals()
 
     //---------------------------------- Sequencer LED brightness
 
-    qDebug() << "size of globals0" << globalsList.size();
+    //qDebug() << "size of globals0" << globalsList.size();
 
     globalsList.append((char)seqDimKeysSetting->value());
     globalsList.append((char)seqBrightKeysSetting->value());
 
-    qDebug() << "size of globals1" << globalsList.size();
-    qDebug() << "dimKeyVal: " << seqDimKeysSetting->value();
-    qDebug() << "brightKeyVal: " << seqBrightKeysSetting->value();
+    //qDebug() << "size of globals1" << globalsList.size();
+    //qDebug() << "dimKeyVal: " << seqDimKeysSetting->value();
+    //qDebug() << "brightKeyVal: " << seqBrightKeysSetting->value();
 
     //----------------------------------
     sysExEncDecode->slotSysExEncodeGlobal("Encode Globals", globalsList);
@@ -2367,6 +2367,7 @@ void MainWindow::slotEncodeGlobals()
 
 void MainWindow::slotResetPerKeySensitivities()
 {
+    qDebug() << "slotResetPerKeySensitivities called";
     QList<int> sensitivityList;
 
     QSlider* slider;
@@ -2467,21 +2468,6 @@ void MainWindow::slotSetupMenuBar()
 //    QAction* revertFactoryAction[NUM_FACT_PRESETS];
     QAction* importFactoryAction[NUM_FACT_PRESETS];
 
-
-    // 2.0 - removing "Revert" menu. This is an awkward convention, if someone wants to return
-    // to a factory preset then they should import it to a new preset.
-    //--------------------------------------------------------------- Revert To Factory Presets ---------------------------------------------------------------//
-//    QMenu* revertToFactory = new QMenu("Revert Preset to Factory");
-//    file->addMenu(revertToFactory);
-
-//    for (int i = 0; i < NUM_FACT_PRESETS; i++)
-//    {
-//        revertFactoryAction[i] = new QAction(factoryPresetName[i], file);
-//        revertFactoryAction[i]->setObjectName(factoryPresetName[i]);
-//        connect(revertFactoryAction[i], SIGNAL(triggered()), presetManager, SLOT(slotRevertToFactory()));
-//        revertToFactory->addAction(revertFactoryAction[i]);
-//    }
-
     //--------------------------------------------------------------- Import Factory Presets ---------------------------------------------------------------//
     QMenu* importFactory = new QMenu("Import Factory Preset");
     file->addMenu(importFactory);
@@ -2493,6 +2479,11 @@ void MainWindow::slotSetupMenuBar()
         connect(importFactoryAction[i], SIGNAL(triggered()), presetManager, SLOT(slotImportFactory()));
         importFactory->addAction(importFactoryAction[i]);
     }
+
+    //--------------------------------------------------------------- Revert To Factory Presets ---------------------------------------------------------------//
+    QAction* revertToFactory = new QAction("Reset Factory Presets to Defaults", file);
+    connect(revertToFactory, SIGNAL(triggered()), presetManager, SLOT(slotResetFactoryPresets()));
+    file->addAction(revertToFactory);
 
     file->addSeparator();
 
@@ -2654,6 +2645,12 @@ void MainWindow::slotSetupMenuBar()
     loadHardwarePreset->addAction(loadPresetSlotD);
 
     connect(loadHardwarePreset, SIGNAL(triggered(QAction*)), this, SLOT(slotLoadPresetSlot(QAction*)));
+
+    //Add Hardware Factory Reset
+    hardwareFactoryReset = new QAction("Factory Reset", hardware);
+    connect(hardwareFactoryReset, SIGNAL(triggered()), this, SLOT(slotHardwareFactoryReset()));
+    hardware->addAction(hardwareFactoryReset);
+
 
     hardware->addSeparator();
     //----------------------------------------------------------------- LED modes
@@ -3149,6 +3146,19 @@ void MainWindow::slotLoadPresetSlot(QAction *menuItem)
     slotRequestPreset(thisPreset);
 }
 
+void MainWindow::slotHardwareFactoryReset()
+{
+    ui->Globals_On_Thresh->setValue(20);
+    ui->Globals_Off_Thresh->setValue(15);
+    ui->Globals_On_Thresh->editingFinished();
+    ui->Globals_Off_Thresh->editingFinished();
+    //presetManager->slotUpdateKeyOnOffThresholds();
+
+    slotResetPerKeySensitivities();
+    cvTrimsInterface->slotResetVars();
+    presetManager->slotSendFactoryPresetsToQuNexus();
+}
+
 void MainWindow::slotSetLedRefreshMode()
 {
     presetManager->editBufferPresetMap.insert("Globals_LED_Refresh_Style", QObject::sender()->objectName());
@@ -3211,64 +3221,6 @@ void MainWindow::slotEnableDisableToolTips()
         settings->setValue("toolTipsEnabled", true);
     }
 }
-
-//void MainWindow::slotScaleDisplayUp()
-//{
-//    qDebug() << "slotScaleDisplayUp called";
-
-//    QDialog *msgBox = new QDialog(this);
-//    msgBox->setMinimumSize(300, 200);
-//    msgBox->setFixedSize(300, 200);
-
-//    QPoint centerparent(
-//                this->x() + ((this->frameGeometry().width() - msgBox->frameGeometry().width()) /2),
-//                this->y() + ((this->frameGeometry().height() - msgBox->frameGeometry().height()) /2));
-
-//    msgBox->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint);
-//    msgBox->move(centerparent);
-
-//    msgBox->setStyleSheet("QWidget{background: rgba(120,120,120, 255);}");
-
-//    QString currentPresetText = libraryPresetsList->item(presetManager->selectedLibraryPreset)->text();
-//    QString dialogText = QString("Warning: Increasing the user interface scale may cause visual artifacts.\n"
-//                                 "\n"
-//                                 "Changing this setting requires the application to restart.");
-//    QLabel* text = new QLabel(dialogText, msgBox, Qt::WindowFlags());
-//    text->setAlignment(Qt::AlignCenter);
-//    text->setMinimumSize(300, 50);
-//    text->setFixedSize(300, 50);
-//    text->move(0, 10);
-
-//#ifdef Q_OS_MAC // EB attempt to make this cross platform
-//    text->setStyleSheet("font: 12pt;");
-//#else
-//    text->setStyleSheet("font: 10pt;");
-//#endif
-
-//    QPushButton* cancelButton = new QPushButton(msgBox);
-//    cancelButton->setStyleSheet(grayStyleString);
-//    cancelButton->setText("Cancel");
-//    cancelButton->setGeometry(QRect(100-35, 160, 70, 28));
-//    connect(cancelButton, SIGNAL(clicked()), msgBox, SLOT(close()));
-//    connect(cancelButton, SIGNAL(clicked()), this, SLOT(cancelCloseEditor()));
-
-//    QPushButton* restartButton = new QPushButton(msgBox);
-//    restartButton->setStyleSheet(blueStyleString);
-//    restartButton->setText("Restart");
-//    restartButton->setGeometry(QRect(200-35, 160, 70, 28));
-//    connect(restartButton, SIGNAL(clicked()), msgBox, SLOT(close()));
-//    connect(restartButton, SIGNAL(clicked()), this, SLOT(slotScaleRestart()));
-
-//    msgBox->exec();
-//}
-
-
-//void MainWindow::slotScaleRestart()
-//{
-//    settings->setValue("scaleDisplayUp", true); // flip setting
-//    qApp->quit();
-//    QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
-//}
 
 void MainWindow::slotEnableDisableUnsavedWarnings()
 {

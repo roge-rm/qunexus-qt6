@@ -287,16 +287,16 @@ border:0;
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="KMI_logo">
+    <widget class="QLabel" name="MK_logo">
      <property name="enabled">
       <bool>true</bool>
      </property>
      <property name="geometry">
       <rect>
-       <x>640</x>
-       <y>1</y>
-       <width>178</width>
-       <height>58</height>
+       <x>579</x>
+       <y>3</y>
+       <width>266</width>
+       <height>66</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -306,7 +306,7 @@ border:0;
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="resources.qrc">:/images/resources/images/kmi_white_trans_logo.png</pixmap>
+      <pixmap resource="resources.qrc">:/images/resources/images/muse_kinetics_logo_white.svg</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -6821,7 +6821,7 @@ qproperty-alignment: AlignCenter;
         </rect>
        </property>
        <property name="toolTip">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lower values make the keys turn on easier (2 to 20, default 10).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lower values make the keys turn on easier (2 to 100, default 20).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="layoutDirection">
         <enum>Qt::LeftToRight</enum>

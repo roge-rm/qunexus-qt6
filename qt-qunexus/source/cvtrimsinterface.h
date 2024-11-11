@@ -29,6 +29,7 @@ signals:
     void signalSendToBoard();
     
 public slots:
+    void slotResetVars();
     void slotSetVars();
     void slotShowTrims();
     void slotShowOffsets();

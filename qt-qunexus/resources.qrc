@@ -37,6 +37,7 @@
         <file>resources/stylesheets/GeneralStylesWindows.qss</file>
         <file>resources/images/cat_plum.png</file>
         <file>resources/images/cat_sugar.png</file>
+        <file>resources/images/muse_kinetics_logo_white.svg</file>
     </qresource>
     <qresource prefix="/stylesheets">
         <file>resources/stylesheets/BlueButtonStyleSheet.qss</file>
@@ -83,6 +84,6 @@
         <file>presets/AppData Dir Alias</file>
         <file>presets/QuNexus.json</file>
         <file>presets/QuNexus.json.zip</file>
-        <file>resources/firmware/QuNexus_Firmware_v2.1.1.syx</file>
+        <file>resources/firmware/QuNexus_Firmware_v2.2.0.syx</file>
     </qresource>
 </RCC>

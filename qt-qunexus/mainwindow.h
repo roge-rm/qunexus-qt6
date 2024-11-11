@@ -175,6 +175,8 @@ public:
     QAction* loadPresetSlotC;
     QAction* loadPresetSlotD;
 
+    QAction * hardwareFactoryReset;
+
 
     QMenu* ledRefreshMode;
     QActionGroup* ledRefreshModeGroup;
@@ -281,6 +283,7 @@ public slots:
     void    slotTabChanged(int index);
 
     void    slotLoadPresetSlot(QAction*);
+    void    slotHardwareFactoryReset();
     void    slotSetLedRefreshMode();
     void    slotEnableDisableMidiFunctions(bool connected);
 

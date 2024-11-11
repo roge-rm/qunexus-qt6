@@ -59,12 +59,9 @@ public:
 
     QMap<QString, QVariant>::const_iterator mapIterator;
 
-    //EB Remove for qt6 build
-    //QJson::Parser       parser;
-    //QJson::Serializer   serializer;
-    bool ok;
+    bool    ok;
 
-    int     currentPreset;
+    //int     currentPreset;
 
     int     valueChangedTimeoutTime;
 
@@ -116,6 +113,7 @@ public slots:
 
     //--------- Initializaion and Control
     void slotCreateDefaultParamMap();
+    void slotUpdateKeyOnOffThresholds();
     void slotValueChanged();
     void slotTimeoutSyncPreset();
     void slotSelectControllerLayerKey();
@@ -129,6 +127,7 @@ public slots:
     void slotLoadLibraryPresetIntoEditBuffer(QListWidgetItem *selectedItem);
     void slotSyncEditBufferToDevicePreset();
     void slotSyncEditBufferToDevice();
+    void slotDeleteAllPresets();
     void slotDeletePreset();
     QList<int> slotCheckPresetEdits();
 
@@ -150,9 +149,13 @@ public slots:
 
     //void slotSaveAndSend();
 
+
     void slotRevertToFactory();
+    void slotSendFactoryPresetsToQuNexus();
 
     void slotImportFactory();
+    void slotDeleteMatchingFactoryPresets();
+    void slotResetFactoryPresets();
 
     void slotUpdateHighlightedPreset(QListWidgetItem*);
     

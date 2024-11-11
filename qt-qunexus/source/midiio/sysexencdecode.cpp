@@ -2158,14 +2158,20 @@ void SysExEncDecode::encodeInt(int i)
 
 void SysExEncDecode::slotSysExEncodePreset(QVariantMap preset, unsigned char presetNumChar)
 {
+    static unsigned char lastPresetNumCharSent;
+
     qDebug() << "slotSysExEncodePreset called - presetNumChar: " << presetNumChar;
-    if (presetSendTimer.hasExpired(20)) // if at least xx ms has passed
+    if (presetNumChar == lastPresetNumCharSent)
     {
-        presetSendTimer.restart();
-    }
-    else
-    {
-        return; // avoids double sends
+        if (presetSendTimer.hasExpired(20)) // if at least xx ms has passed
+        {
+            presetSendTimer.restart();
+        }
+        else
+        {
+            qDebug() << "Throttling multiple sends of the same preset within 20ms";
+            return; // avoids double sends
+        }
     }
 
     qDebug() << "***[ BEGIN slotSysExEncodePreset ] ********************************************************************";

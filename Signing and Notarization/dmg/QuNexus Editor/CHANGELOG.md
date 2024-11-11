@@ -1,10 +1,27 @@
 #### QuNexus RED Editor and Firmware Changelog
 
-### 2.1.1 beta A (2024-04-03)
+### 2.2.0 (2024-11-10)
+- New Features/Changes:
+	- Added new Arpeggiator Velocity Modulation.
+		- This mode only works when MPE is not enabled
+		- If Velocity ("Velo B") and pressure ("Pres C") are enabled, then each key's PRESSURE will update the velocity of the note being arpeggiated.
+	- Editor:
+		- Key On and Off threshold values was previously treated as a per-preset setting. Now when changing this setting in the editor, ALL of the presets in the library are updated with the new value, effectively making it a global setting. However the data is still stored in each preset on the device, so for the new settings to take effect, you will need to re-load the presets on your device.
+		- Added "Factory Reset" to the hardware menu - this resets cv trims, per key sensitivities, globals, and reloads the four factory presets. This also resets Key On and Key Off thresholds to 20/15 defaults (and all presets in library)
+		- Added a "Reset Factory Presets to Defaults" function to the file menu, which will check the library for factory presets and return them to the original defaults
+		- Added a "RESET" button to the CV Trims window. 
+- Bug Fixes:
+	- Toggling through arp modes (play, hold, modulation edit) now correctly returns to play mode
+	- Bad CV Trim or LED brightness values are now caught and corrected when the QuNexus powers on
+
+### 2.1.1 beta B (2024-04-010)
 - Bug Fixes:
 	- Per Key Sensitivites now correctly adjust individual key on/off thresholds as well as gain
 	- Global on/off threshold limits and default values increased to fix issues with sticking keys
 	- Increased LED blanking for inactive keys. This shouod greatly reduce (but not 100% eliminate) issues with active key LEDs bleeding into inactive keys in dark rooms. Reduce LED brightness in the settings menu to improve this issue.
+	- Bend pad now uses a peak detection algorithm which improves performance on most devices. 
+	- Bend pad sensitivity is now a multipler. If bend pad isn't hitting the extreme values, increase the multiplier until left and right hit max.
+	- Note: Extreme pressure on one side of the bend pad can physically push the other side down, which can bring the bend back to center. A light to moderate amount of pressure on the pad with a sufficient bend pad sensitivity setting should produce consistent and correct results. 
 
 ### 2.1.0 (2022-02-24)
 - Bug Fixes:

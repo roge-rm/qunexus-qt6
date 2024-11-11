@@ -9,7 +9,7 @@ CvTrimsInterface::CvTrimsInterface(QWidget *parent) :
     QWidget(parent)
 {
     this->setWindowFlags(Qt::Tool | Qt::WindowCloseButtonHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
-    this->setFixedSize(160, 350);
+    this->setFixedSize(160, 385);
     this->setWindowTitle("CV Trims");
     //-------- Setup Ui
     QWidget *uiWidget = new QWidget(this);
@@ -24,11 +24,34 @@ CvTrimsInterface::CvTrimsInterface(QWidget *parent) :
     connect(cvViewerForm.hzVoltTrim, SIGNAL(valueChanged(double)), this, SLOT(slotSetVars()));
     connect(cvViewerForm.oneTwoVoTrim, SIGNAL(valueChanged(double)), this, SLOT(slotSetVars()));
 
+    connect(cvViewerForm.resetGlobalCVSettings, SIGNAL(clicked()), this, SLOT(slotResetVars()));
+
     timeout = new QTimer(this);
     connect(timeout, SIGNAL(timeout()), this, SLOT(slotTimeout()));
 
 }
 
+
+void CvTrimsInterface::slotResetVars()
+{
+    cvViewerForm.voOffset->setValue(0);
+    cvViewerForm.hzVoltOffset->setValue(0);
+    cvViewerForm.oneTwoVoOffset->setValue(0);
+
+    cvViewerForm.voTrim->setValue(1.000);
+    cvViewerForm.hzVoltTrim->setValue(1.000);
+    cvViewerForm.oneTwoVoTrim->setValue(1.000);
+
+    voltPerOctaveOffset = 0;
+    _1_2_voltPerOctaveOffset = 0;
+    hzPerVoltTrim = 0;
+
+    hzPerVoltTrim = 1.000;
+    voltPerOctaveTrim = 1.000;
+    _1_2_voltPerOctaveTrim = 1.000;
+
+    timeout->start(250);
+}
 
 void CvTrimsInterface::slotSetVars()
 {

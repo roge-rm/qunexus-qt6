@@ -13,7 +13,7 @@ QT       += core gui \
 
 TARGET = "QuNexus Editor"
 TEMPLATE = app
-VERSION = 2.1.1.B
+VERSION = 2.2.0
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 #uncomment this to build a console version of the app. Do this once before deploying the app.
@@ -256,8 +256,8 @@ isEmpty(DEPLOY) {
 
 
     win32 {
-        package_dir = $$shell_path($$absolute_path("..\\win-build\\packages\\com.keithmcmillen.qunexuseditor\\data\\$${TARGET}", $$PWD))
-        content_dir = $$shell_path($$absolute_path("..\\win-build\\packages\\com.keithmcmillen.qunexuseditor\\data\\Content", $$PWD))
+        package_dir = $$shell_path($$absolute_path("..\\win-build\\packages\\com.musekinetics.qunexuseditor\\data\\$${TARGET}", $$PWD))
+        content_dir = $$shell_path($$absolute_path("..\\win-build\\packages\\com.musekinetics.qunexuseditor\\data\\Content", $$PWD))
         repo_root_dir = $$shell_path($$absolute_path("..", $$PWD))
 
         changelog_src = "$${repo_root_dir}\\CHANGELOG.md"

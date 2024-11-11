@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>160</width>
-    <height>350</height>
+    <height>385</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,6 +25,22 @@
 															stop:0.5 rgba(200, 200, 200, 255),
 															stop:1 rgba(230,230, 230, 255)
 															);
+}
+
+
+QPushButton {
+	font-family: &quot;Arial&quot;;
+	font-size: 10px;
+	background-color: rgba(162, 0, 0, 255);
+	border-style: outset;
+	border-radius: 4.0;
+	border-width: 1px;
+	border-color: rgba(0, 51, 76, 255);
+	color: white;
+}
+
+QPushButton:pressed {
+	background-color: rgba(122, 0, 0, 255);
 }</string>
   </property>
   <widget class="QFrame" name="Library_Frame">
@@ -178,7 +194,16 @@ QLabel {
            </color>
           </brush>
          </colorrole>
-         </active>
+         <colorrole role="PlaceholderText">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </active>
         <inactive>
          <colorrole role="WindowText">
           <brush brushstyle="SolidPattern">
@@ -234,7 +259,16 @@ QLabel {
            </color>
           </brush>
          </colorrole>
-         </inactive>
+         <colorrole role="PlaceholderText">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </inactive>
         <disabled>
          <colorrole role="WindowText">
           <brush brushstyle="SolidPattern">
@@ -290,12 +324,20 @@ QLabel {
            </color>
           </brush>
          </colorrole>
-         </disabled>
+         <colorrole role="PlaceholderText">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </disabled>
        </palette>
       </property>
       <property name="font">
        <font>
-        <family>Arial</family>
         <pointsize>-1</pointsize>
        </font>
       </property>
@@ -548,7 +590,16 @@ color: white;
            </color>
           </brush>
          </colorrole>
-         </active>
+         <colorrole role="PlaceholderText">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </active>
         <inactive>
          <colorrole role="WindowText">
           <brush brushstyle="SolidPattern">
@@ -604,7 +655,16 @@ color: white;
            </color>
           </brush>
          </colorrole>
-         </inactive>
+         <colorrole role="PlaceholderText">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </inactive>
         <disabled>
          <colorrole role="WindowText">
           <brush brushstyle="SolidPattern">
@@ -660,12 +720,20 @@ color: white;
            </color>
           </brush>
          </colorrole>
-         </disabled>
+         <colorrole role="PlaceholderText">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </disabled>
        </palette>
       </property>
       <property name="font">
        <font>
-        <family>Arial</family>
         <pointsize>-1</pointsize>
        </font>
       </property>
@@ -880,7 +948,16 @@ color: white;
            </color>
           </brush>
          </colorrole>
-         </active>
+         <colorrole role="PlaceholderText">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </active>
         <inactive>
          <colorrole role="WindowText">
           <brush brushstyle="SolidPattern">
@@ -936,7 +1013,16 @@ color: white;
            </color>
           </brush>
          </colorrole>
-         </inactive>
+         <colorrole role="PlaceholderText">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </inactive>
         <disabled>
          <colorrole role="WindowText">
           <brush brushstyle="SolidPattern">
@@ -992,12 +1078,20 @@ color: white;
            </color>
           </brush>
          </colorrole>
-         </disabled>
+         <colorrole role="PlaceholderText">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </disabled>
        </palette>
       </property>
       <property name="font">
        <font>
-        <family>Arial</family>
         <pointsize>-1</pointsize>
        </font>
       </property>
@@ -1198,10 +1292,10 @@ color: white;
    </property>
    <property name="geometry">
     <rect>
-     <x>-10</x>
-     <y>-10</y>
-     <width>191</width>
-     <height>361</height>
+     <x>0</x>
+     <y>0</y>
+     <width>160</width>
+     <height>385</height>
     </rect>
    </property>
    <property name="toolTip">
@@ -1234,8 +1328,22 @@ QLabel {
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
+  <widget class="QPushButton" name="resetGlobalCVSettings">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>350</y>
+     <width>141</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Reset to Defaults</string>
+   </property>
+  </widget>
   <zorder>masterFrame</zorder>
   <zorder>Library_Frame</zorder>
+  <zorder>resetGlobalCVSettings</zorder>
  </widget>
  <resources/>
  <connections/>

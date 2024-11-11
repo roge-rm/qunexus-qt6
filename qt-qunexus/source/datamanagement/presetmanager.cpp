@@ -9,7 +9,7 @@
 
     Updated in 2021 by Eric Bateman
 
-    Copyright (c) 2013-2021 Keith McMillen Instruments
+    Copyright (c) 2013-2024 KMI Music, Inc., all rights reserved.
 
     Description:
         - Updates preset parameter changes from UI
@@ -1207,6 +1207,62 @@ void PresetManager::slotRemovePresetFromJSON(int presetIndex)
     }
 }
 
+void PresetManager::slotUpdateKeyOnOffThresholds()
+{
+    // Ensure the edit buffer contains the required parameters
+    if (!editBufferPresetMap.contains("Globals_Off_Thresh") || !editBufferPresetMap.contains("Globals_On_Thresh"))
+    {
+        qDebug() << "Edit buffer does not contain Globals_Off_Thresh or Globals_On_Thresh. Aborting update.";
+        return;
+    }
+
+    // Retrieve the current global threshold values from the edit buffer
+    int offThresh = editBufferPresetMap.value("Globals_Off_Thresh").toInt();
+    int onThresh = editBufferPresetMap.value("Globals_On_Thresh").toInt();
+
+    qDebug() << "Updating Globals_Off_Thresh to" << offThresh << "and Globals_On_Thresh to" << onThresh << "in all presets.";
+
+    // Iterate through each preset in both jsonMasterMap and jsonMasterMapEDITABLE
+    for (auto it = jsonMasterMap.begin(), itEditable = jsonMasterMapEDITABLE.begin();
+         it != jsonMasterMap.end() && itEditable != jsonMasterMapEDITABLE.end();
+         ++it, ++itEditable)
+    {
+        QVariantMap preset = it.value().toMap();
+        QVariantMap editablePreset = itEditable.value().toMap();
+
+        // Update the threshold parameters in both maps
+        preset["Globals_Off_Thresh"] = offThresh;
+        preset["Globals_On_Thresh"] = onThresh;
+        editablePreset["Globals_Off_Thresh"] = offThresh;
+        editablePreset["Globals_On_Thresh"] = onThresh;
+
+        // Re-insert the updated presets back into their respective maps
+        it.value() = preset;
+        itEditable.value() = editablePreset;
+    }
+
+    // Write the updated jsonMasterMap to the .json file
+    if (jsonFile->open(QIODevice::ReadWrite | QIODevice::Text))
+    {
+        jsonFile->resize(0); // Clear the existing file content
+
+        // Create a QJsonDocument from the updated jsonMasterMap and write it to the file
+        QJsonDocument updatedJsonDoc = QJsonDocument::fromVariant(jsonMasterMap);
+        jsonFile->write(updatedJsonDoc.toJson()); // Write the JSON data to the file
+
+        jsonFile->close(); // Close the file after writing
+        qDebug() << "Global thresholds updated and saved to QuNexus.json.";
+    }
+    else
+    {
+        qDebug() << "Failed to open QuNexus.json for writing. Update not saved.";
+    }
+
+    // Emit signals to update the UI if needed
+    emit signalUpdateLibraryPresetsUi(jsonMasterMapEDITABLE, SAVE_PRESET, 0);
+}
+
+
 //-------- Called when UI value is changed, controls timeout --------//
 void PresetManager::slotValueChanged()
 {
@@ -1537,6 +1593,11 @@ void PresetManager::slotValueChanged()
                     QSpinBox *numberBox = reinterpret_cast<QSpinBox *>(QObject::sender());
                     editBufferPresetMap.insert(numberBox->objectName(), numberBox->value());
 
+                    if (numberBox->objectName() == "Globals_On_Thresh" || numberBox->objectName() == "Globals_Off_Thresh")
+                    {
+                        slotUpdateKeyOnOffThresholds();
+                    }
+
                     //qDebug() << "Value Changed  :" << QObject::sender()->metaObject()->className() << QObject::sender()->objectName() << numberBox->value();
                 }
                 else if(QObject::sender()->metaObject()->className() == QString("QDoubleSpinBox"))
@@ -1751,7 +1812,7 @@ void PresetManager::slotSelectControllerLayerKey()
 
 ///////////////////////////////////////////////////////////////////
 ///////////// Library Preset & Edit Buffer Fucntions //////////////
-///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////ø////////
 
 //-------- Timeout used to trigger Edit Buffer Update --------//
 void PresetManager::slotTimeoutSyncPreset()
@@ -1970,6 +2031,152 @@ void PresetManager::slotImportFactory()
     }
 }
 
+void PresetManager::slotDeleteMatchingFactoryPresets()
+{
+    qDebug() << "slotDeleteMatchingFactoryPresets called - searching and deleting factory presets";
+
+    // List of factory preset names to search for
+    QStringList factoryPresetNames = {
+        "Basic 2.0",
+        "Aftertouch and Mod",
+        "MPE and Sequencer",
+        "Drums & Clips 2.0"
+    };
+
+    // Temporary map to hold modified library after deletion
+    QVariantMap tempMasterMap = jsonMasterMapEDITABLE;
+    bool presetDeleted = false;
+
+    // Iterate through each factory preset name
+    for (const QString &presetName : factoryPresetNames)
+    {
+        // Iterate through the library to find and remove matching presets
+        QMapIterator<QString, QVariant> mapIterator(tempMasterMap);
+        while (mapIterator.hasNext())
+        {
+            mapIterator.next();
+            QVariantMap currentPreset = mapIterator.value().toMap();
+            if (currentPreset.value("Preset_Name").toString() == presetName)
+            {
+                // Remove the matching preset
+                tempMasterMap.remove(mapIterator.key());
+                presetDeleted = true;
+                qDebug() << "Deleted factory preset: " << presetName;
+                break; // Exit the loop after deleting the matching preset
+            }
+        }
+    }
+
+    // Update the editable master map and write changes to JSON if any presets were deleted
+    if (presetDeleted)
+    {
+        jsonMasterMapEDITABLE.clear();
+        int mapIndex = 0;
+
+        // Reconstruct jsonMasterMapEDITABLE with correct preset_NNN naming
+        QMapIterator<QString, QVariant> tempMapIterator(tempMasterMap);
+        while (tempMapIterator.hasNext())
+        {
+            tempMapIterator.next();
+            jsonMasterMapEDITABLE.insert(slotGetPresetNameFromIndex(mapIndex), tempMapIterator.value());
+            mapIndex++;
+        }
+
+        // Write updated library to JSON file
+        slotWriteJSON(jsonMasterMapEDITABLE);
+
+        // Update the library UI
+        emit signalUpdateLibraryPresetsUi(jsonMasterMapEDITABLE, DELETE_PRESET, 0);
+        emit signalUpdateLibraryPresetsUi(QVariantMap(), LOAD_PRESET, 0);
+
+        qDebug() << "Library updated after deleting factory presets.";
+    }
+    else
+    {
+        qDebug() << "No factory presets found to delete.";
+    }
+}
+
+void PresetManager::slotResetFactoryPresets()
+{
+    qDebug() << "slotResetToFactoryPresets called - deleting and re-importing factory presets";
+
+    // Step 1: Delete all factory presets
+    slotDeleteMatchingFactoryPresets();
+
+    // Step 2: Define the factory preset file names
+    QStringList factoryPresetFiles = {
+        ":factorypresets/resources/factorypresets/Basic 2.0.qunexuspreset",
+        ":factorypresets/resources/factorypresets/Aftertouch and Modulation.qunexuspreset",
+        ":factorypresets/resources/factorypresets/MPE and Sequencer.qunexuspreset",
+        ":factorypresets/resources/factorypresets/Drums and Clips 2.0.qunexuspreset"
+    };
+
+    // Step 3: Import each factory preset into the edit buffer and save to the library
+    for (const QString &filename : factoryPresetFiles)
+    {
+        qDebug() << "Importing factory preset: " << filename;
+
+        // Load the factory preset into the edit buffer
+        if (slotLoadPresetFileIntoEditBuffer(filename))
+        {
+            // Save the loaded preset into the library
+            slotSaveEditBufferToLibrary(editBufferPresetMap.value("Preset_Name").toString());
+
+            // Update parameter UI for the newly added preset
+            emit signalUpdateParameterUi(editBufferPresetMap);
+            emit signalControlLayerSelectedComponents(controllerLayerSelectedComponents);
+            emit signalUpdateLibraryPresetsUi(QVariantMap(), LOAD_PRESET, 0);
+        }
+        else
+        {
+            qDebug() << "Error loading factory preset file: " << filename;
+        }
+    }
+
+    qDebug() << "Factory presets successfully imported.";
+}
+
+void PresetManager::slotSendFactoryPresetsToQuNexus()
+{
+    qDebug() << "slotSendFactoryPresetsToQuNexus called - loading and sending factory presets";
+
+    // List of factory preset file paths and their corresponding slot numbers on the QuNexus
+    struct FactoryPreset {
+        QString filename;
+        int slotNumber;
+    };
+
+    QVector<FactoryPreset> factoryPresets = {
+        {":factorypresets/resources/factorypresets/Basic 2.0.qunexuspreset", 0},
+        {":factorypresets/resources/factorypresets/Aftertouch and Modulation.qunexuspreset", 1},
+        {":factorypresets/resources/factorypresets/MPE and Sequencer.qunexuspreset", 2},
+        {":factorypresets/resources/factorypresets/Drums and Clips 2.0.qunexuspreset", 3}
+    };
+
+    // Iterate through each factory preset, load it, and send it to the corresponding slot
+    for (const FactoryPreset &preset : factoryPresets)
+    {
+        qDebug() << "Loading and sending factory preset: " << preset.filename;
+
+        // Load the factory preset into the edit buffer
+        if (slotLoadPresetFileIntoEditBuffer(preset.filename))
+        {
+            QString presetName = editBufferPresetMap.value("Preset_Name").toString();
+            qDebug() << "Preset loaded: " << presetName << " - Sending to slot " << preset.slotNumber;
+
+            // Send the loaded preset to the specified QuNexus slot
+            emit signalSysExEncodePreset(editBufferPresetMap, preset.slotNumber); // used to be 0xFF
+        }
+        else
+        {
+            qDebug() << "Error loading factory preset file: " << preset.filename;
+        }
+    }
+
+    qDebug() << "All factory presets sent to QuNexus.";
+}
+
 // export the edit buffer to a preset file
 void PresetManager::slotExportPreset()
 {
@@ -2108,41 +2315,6 @@ void PresetManager::slotSyncEditBufferToDevicePreset()
 
 }
 
-/*
-void PresetManager::slotSaveAndSend()
-{
-    if(selectedLibraryPreset != -1)
-    {
-        slotWritePresetToJSON(jsonMasterMapEDITABLE.value(slotGetPresetNameFromIndex(selectedLibraryPreset)).toMap(), EXISTING_PRESET);
-
-        //emit signalUpdateParameterUi(editBufferPresetMap);
-        emit signalUpdateLibraryPresetsUi(QVariantMap(), SET_MODIFIED, 0);
-
-        //emit signalSendPresetsToBoardDialog(jsonMasterMapEDITABLE.value(slotGetPresetNameFromIndex(selectedLibraryPreset)).toMap().value("Preset_Name").toString());
-    }
-
-    QPushButton *button = reinterpret_cast<QPushButton *>(QObject::sender());
-
-    if(button->text() == "Save (Not Sent)")
-    {
-        qDebug() << "Save not sent";
-    }
-    else
-    {
-        for(int i = 0; i < 4; i ++)
-        {
-            if(settings->value(QString("boardPreset%1").arg(i)) == selectedLibraryPreset)
-            {
-                qDebug() << "Saved && Sent";
-                emit signalSysExEncodePreset(editBufferPresetMap, i);
-                break;
-            }
-        }
-    }
-
-    //qDebug() << "Save && Send or Save (Not Sent)";
-}
-*/
 
 // save the current preset and then call slotLoadLibraryPresetIntoEditBuffer
 void PresetManager::slotSaveThenLoadPreset(QListWidgetItem* selectedItem)
@@ -2202,6 +2374,43 @@ void PresetManager::slotLoadLibraryPresetIntoEditBuffer(QListWidgetItem* selecte
         presetIsDirty = false;
         slotSyncEditBufferToDevice();
     }
+}
+
+void PresetManager::slotDeleteAllPresets()
+{
+    qDebug() << "slotDeleteAllPresets called - deleting all presets";
+
+    // Clear the in-memory maps holding the presets
+    jsonMasterMap.clear();
+    jsonMasterMapEDITABLE.clear();
+
+    // Write the cleared map to the JSON file to persist the changes
+    if (jsonFile->open(QIODevice::ReadWrite | QIODevice::Text))
+    {
+        jsonFile->resize(0); // Clear the existing file content
+
+        // Create an empty QJsonDocument and write it to the file
+        QJsonDocument emptyJsonDoc = QJsonDocument::fromVariant(jsonMasterMap);
+        jsonFile->write(emptyJsonDoc.toJson()); // Write the empty JSON data to the file
+
+        jsonFile->close(); // Close the file after writing
+        qDebug() << "All presets deleted and changes saved to QuNexus.json.";
+    }
+    else
+    {
+        qDebug() << "Failed to open QuNexus.json for writing. Presets not deleted from file.";
+    }
+
+    // Notify the UI to update the preset library display
+    emit signalUpdateLibraryPresetsUi(jsonMasterMapEDITABLE, DELETE_PRESET, 0);
+    emit signalUpdateLibraryPresetsUi(QVariantMap(), LOAD_PRESET, 0);
+
+    // Reset relevant variables and flags
+    selectedLibraryPreset = -1;
+    highlightedLibraryPreset = -1;
+    presetIsDirty = false;
+
+    qDebug() << "Finished deleting all presets and updating UI.";
 }
 
 //-------- Delete's preset from libarary and JSON file --------//
