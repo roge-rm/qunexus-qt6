@@ -1,7 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=QuNexus Editor
-Exec=AppRun %F
-Icon=QuNexus
-Comment=QuNexus Editor
-Terminal=true

@@ -1,6 +1,6 @@
 #### QuNexus RED Editor and Firmware Changelog
 
-### 2.2.0 (2024-11-10)
+### 2.2.1 (2024-11-10)
 - New Features/Changes:
 	- Added new Arpeggiator Velocity Modulation.
 		- This mode only works when MPE is not enabled

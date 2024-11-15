@@ -116,10 +116,6 @@ QListView#presetLibraryList::item:selected, QListView:item:focus
 /*---------------------------------*/
 
 
-QCheckBox
-{
-    background-color: transparent;
-}
 
 QToolTip {
 	border: 1px solid black;
@@ -287,34 +283,6 @@ border:0;
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="MK_logo">
-     <property name="enabled">
-      <bool>true</bool>
-     </property>
-     <property name="geometry">
-      <rect>
-       <x>579</x>
-       <y>3</y>
-       <width>266</width>
-       <height>66</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true"/>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap resource="resources.qrc">:/images/resources/images/muse_kinetics_logo_white.svg</pixmap>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
     <widget class="QFrame" name="QuNexus_Connected_Frame">
      <property name="geometry">
       <rect>
@@ -433,6 +401,29 @@ Click the label to open the Connection Troubleshooting window.</string>
      </property>
      <property name="text">
       <string>Not Connected</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_7">
+     <property name="geometry">
+      <rect>
+       <x>546</x>
+       <y>-5</y>
+       <width>301</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLabel {
+    image: url(:/images/resources/images/muse_kinetics_logo_white.svg);
+
+    width: 400px;
+    height: auto; /* Maintain aspect ratio */
+}
+
+</string>
+     </property>
+     <property name="text">
+      <string/>
      </property>
     </widget>
    </widget>
@@ -812,7 +803,7 @@ QPushButton:pressed {
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <property name="elideMode">
       <enum>Qt::ElideRight</enum>
@@ -19702,8 +19693,7 @@ background: qlineargradient(spread: pan,
          <enum>Qt::RightToLeft</enum>
         </property>
         <property name="styleSheet">
-         <string notr="true">
-background:transparent;</string>
+         <string notr="true"/>
         </property>
         <property name="text">
          <string/>
@@ -19753,7 +19743,7 @@ background:transparent;</string>
          <enum>Qt::RightToLeft</enum>
         </property>
         <property name="styleSheet">
-         <string notr="true">background:transparent;</string>
+         <string notr="true"/>
         </property>
         <property name="text">
          <string/>
@@ -21651,39 +21641,12 @@ QPushButton:checked{ border-color: rgba(10, 255, 0,0);}</string>
        <property name="palette">
         <palette>
          <active>
-          <colorrole role="WindowText">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>255</red>
-             <green>255</green>
-             <blue>255</blue>
-            </color>
-           </brush>
-          </colorrole>
           <colorrole role="Button">
            <brush brushstyle="SolidPattern">
             <color alpha="0">
              <red>120</red>
              <green>120</green>
              <blue>120</blue>
-            </color>
-           </brush>
-          </colorrole>
-          <colorrole role="Text">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>255</red>
-             <green>255</green>
-             <blue>255</blue>
-            </color>
-           </brush>
-          </colorrole>
-          <colorrole role="ButtonText">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>255</red>
-             <green>255</green>
-             <blue>255</blue>
             </color>
            </brush>
           </colorrole>
@@ -21707,39 +21670,12 @@ QPushButton:checked{ border-color: rgba(10, 255, 0,0);}</string>
           </colorrole>
          </active>
          <inactive>
-          <colorrole role="WindowText">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>255</red>
-             <green>255</green>
-             <blue>255</blue>
-            </color>
-           </brush>
-          </colorrole>
           <colorrole role="Button">
            <brush brushstyle="SolidPattern">
             <color alpha="0">
              <red>120</red>
              <green>120</green>
              <blue>120</blue>
-            </color>
-           </brush>
-          </colorrole>
-          <colorrole role="Text">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>255</red>
-             <green>255</green>
-             <blue>255</blue>
-            </color>
-           </brush>
-          </colorrole>
-          <colorrole role="ButtonText">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>255</red>
-             <green>255</green>
-             <blue>255</blue>
             </color>
            </brush>
           </colorrole>
@@ -21763,39 +21699,12 @@ QPushButton:checked{ border-color: rgba(10, 255, 0,0);}</string>
           </colorrole>
          </inactive>
          <disabled>
-          <colorrole role="WindowText">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>255</red>
-             <green>255</green>
-             <blue>255</blue>
-            </color>
-           </brush>
-          </colorrole>
           <colorrole role="Button">
            <brush brushstyle="SolidPattern">
             <color alpha="0">
              <red>120</red>
              <green>120</green>
              <blue>120</blue>
-            </color>
-           </brush>
-          </colorrole>
-          <colorrole role="Text">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>255</red>
-             <green>255</green>
-             <blue>255</blue>
-            </color>
-           </brush>
-          </colorrole>
-          <colorrole role="ButtonText">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>255</red>
-             <green>255</green>
-             <blue>255</blue>
             </color>
            </brush>
           </colorrole>
@@ -21821,7 +21730,7 @@ QPushButton:checked{ border-color: rgba(10, 255, 0,0);}</string>
         </palette>
        </property>
        <property name="styleSheet">
-        <string notr="true">QStackedWidget {
+        <string notr="true">QStackedWidget#Edit_Panes {
 	background-color: rgba(120, 120, 120, 0);
 	border-top-left-radius:0;
 	border-top-right-radius:0;
@@ -21843,7 +21752,7 @@ QPushButton:checked{ border-color: rgba(10, 255, 0,0);}</string>
           </rect>
          </property>
          <property name="styleSheet">
-          <string notr="true">QFrame {
+          <string notr="true">QFrame#noteToggleFrame {
 	background:rgba(120, 120, 120, 255);
 	border-style:none;
 	border-bottom-left-radius:4.0;
@@ -21871,7 +21780,14 @@ QPushButton:checked{ border-color: rgba(10, 255, 0,0);}</string>
            <cursorShape>PointingHandCursor</cursorShape>
           </property>
           <property name="styleSheet">
-           <string notr="true">background:transparent;</string>
+           <string notr="true">QCheckBox {
+    font-family: &quot;Open Sans&quot;;
+    font-size: 12px;
+    color: white;
+    padding: 2px;
+    spacing: 4px;
+}
+</string>
           </property>
           <property name="text">
            <string/>
@@ -22643,7 +22559,7 @@ border-radius: 0px;
           </rect>
          </property>
          <property name="styleSheet">
-          <string notr="true">QFrame {
+          <string notr="true">QFrame#frame_21 {
 	background:rgba(120, 120, 120, 255);
 	border-style:none;
 	border-bottom-left-radius:4.0;
@@ -22674,10 +22590,14 @@ border-radius: 0px;
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If disabled, this removes specific keys from playing Notes, Bends, etc. from Keyboard Layer. Useful for isolating keys to control FX, loops, etc…&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="styleSheet">
-           <string notr="true">        font-family: &quot;Open Sans&quot;;
-        font-size: 12px;
-        color: white;
-        background-color: rgba(0,0,0,0);</string>
+           <string notr="true">QCheckBox {
+    font-family: &quot;Open Sans&quot;;
+    font-size: 12px;
+    color: white;
+    padding: 2px;
+    spacing: 4px;
+}
+</string>
           </property>
           <property name="text">
            <string>Keyboard Layer</string>
@@ -22699,10 +22619,14 @@ border-radius: 0px;
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If disabled, sensor settings in Controller Layer will not output the Note or CC#s for this key.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="styleSheet">
-           <string notr="true">        font-family: &quot;Open Sans&quot;;
-        font-size: 12px;
-        color: white;
-        background-color: rgba(0,0,0,0);</string>
+           <string notr="true">QCheckBox {
+    font-family: &quot;Open Sans&quot;;
+    font-size: 12px;
+    color: white;
+    padding: 2px;
+    spacing: 4px;
+}
+</string>
           </property>
           <property name="text">
            <string>Controller Layer</string>
@@ -22814,7 +22738,7 @@ border-radius: 0px;
           </rect>
          </property>
          <property name="styleSheet">
-          <string notr="true">QFrame {
+          <string notr="true">QFrame#noteToggleFrame_2 {
 	background:rgba(120, 120, 120, 255);
 	border-style:none;
 	border-bottom-left-radius:4.0;
@@ -22996,7 +22920,7 @@ border-radius: 0px;
           </rect>
          </property>
          <property name="styleSheet">
-          <string notr="true">QFrame {
+          <string notr="true">QFrame#frame_23{
 	background:rgba(120, 120, 120, 255);
 	border-style:none;
 	border-bottom-left-radius:4.0;
@@ -23334,7 +23258,7 @@ border-radius: 0px;
           </rect>
          </property>
          <property name="styleSheet">
-          <string notr="true">QFrame {
+          <string notr="true">QFrame#frame_26 {
 	background:rgba(120, 120, 120, 255);
 	border-style:none;
 	border-bottom-left-radius:4.0;
@@ -23362,10 +23286,14 @@ border-radius: 0px;
            <cursorShape>PointingHandCursor</cursorShape>
           </property>
           <property name="styleSheet">
-           <string notr="true">        font-family: &quot;Open Sans&quot;;
-        font-size: 12px;
-        color: white;
-        background-color: rgba(0,0,0,0);</string>
+           <string notr="true">QCheckBox {
+    font-family: &quot;Open Sans&quot;;
+    font-size: 12px;
+    color: white;
+    padding: 2px;
+    spacing: 4px;
+}
+</string>
           </property>
           <property name="text">
            <string>Keyboard Layer</string>
@@ -23384,10 +23312,14 @@ border-radius: 0px;
            <cursorShape>PointingHandCursor</cursorShape>
           </property>
           <property name="styleSheet">
-           <string notr="true">        font-family: &quot;Open Sans&quot;;
-        font-size: 12px;
-        color: white;
-        background-color: rgba(0,0,0,0);</string>
+           <string notr="true">QCheckBox {
+    font-family: &quot;Open Sans&quot;;
+    font-size: 12px;
+    color: white;
+    padding: 2px;
+    spacing: 4px;
+}
+</string>
           </property>
           <property name="text">
            <string>Controller Layer</string>
@@ -24232,7 +24164,7 @@ border: none;
          <enum>Qt::RightToLeft</enum>
         </property>
         <property name="styleSheet">
-         <string notr="true">background:transparent;</string>
+         <string notr="true"/>
         </property>
         <property name="text">
          <string/>

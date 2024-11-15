@@ -283,6 +283,7 @@ public slots:
     void    slotTabChanged(int index);
 
     void    slotLoadPresetSlot(QAction*);
+    void    slotResetFactoryPresets();
     void    slotHardwareFactoryReset();
     void    slotSetLedRefreshMode();
     void    slotEnableDisableMidiFunctions(bool connected);

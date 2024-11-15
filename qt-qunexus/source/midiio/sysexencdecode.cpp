@@ -2426,15 +2426,15 @@ void SysExEncDecode::slotEncodePresetBytes(int position, unsigned char length, i
     if (length == 2) // if this is an integer
     {
         midi_sx_encode_char((unsigned char)((value >> 8) & 0xFF)); // encode the MSB
-        qDebug() << "encode MSB";
+        //qDebug() << "encode MSB";
     }
     else
     {
-        qDebug() << "encode zero";
+        //qDebug() << "encode zero";
         midi_sx_encode_char(0);
     }
 
-    qDebug() << "encode LSB";
+    //qDebug() << "encode LSB";
     midi_sx_encode_char((unsigned char)(value & 0xFF)); // encode the LSB
 
     midi_sx_flush(); // finish encoding

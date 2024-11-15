@@ -2086,8 +2086,8 @@ void PresetManager::slotDeleteMatchingFactoryPresets()
         slotWriteJSON(jsonMasterMapEDITABLE);
 
         // Update the library UI
-        emit signalUpdateLibraryPresetsUi(jsonMasterMapEDITABLE, DELETE_PRESET, 0);
-        emit signalUpdateLibraryPresetsUi(QVariantMap(), LOAD_PRESET, 0);
+        //emit signalUpdateLibraryPresetsUi(jsonMasterMapEDITABLE, DELETE_PRESET, 0);
+        //emit signalUpdateLibraryPresetsUi(QVariantMap(), LOAD_PRESET, 0);
 
         qDebug() << "Library updated after deleting factory presets.";
     }
@@ -2124,9 +2124,9 @@ void PresetManager::slotResetFactoryPresets()
             slotSaveEditBufferToLibrary(editBufferPresetMap.value("Preset_Name").toString());
 
             // Update parameter UI for the newly added preset
-            emit signalUpdateParameterUi(editBufferPresetMap);
-            emit signalControlLayerSelectedComponents(controllerLayerSelectedComponents);
-            emit signalUpdateLibraryPresetsUi(QVariantMap(), LOAD_PRESET, 0);
+            //emit signalUpdateParameterUi(editBufferPresetMap);
+            //emit signalControlLayerSelectedComponents(controllerLayerSelectedComponents);
+            //emit signalUpdateLibraryPresetsUi(QVariantMap(), LOAD_PRESET, 0);
         }
         else
         {

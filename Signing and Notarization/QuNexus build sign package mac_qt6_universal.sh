@@ -4,7 +4,7 @@
 # - You must use the entitlements included in this directory.
 
 # app_name is the name of the dmg volume
-version=2.2.0
+version=2.2.1
 this_year=2024
 app_name="QuNexus Editor"
 bundle_name="QuNexusEditor"

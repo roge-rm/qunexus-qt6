@@ -60,7 +60,7 @@ void PresetNameDialog::slotCancel()
 void PresetNameDialog::slotSave()
 {
 
-    if(lineEdit->text().count() > 0)
+    if(lineEdit->text().length() > 0)
     {
         emit signalSaveNewPreset(lineEdit->text());
         this->close();

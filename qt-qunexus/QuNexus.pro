@@ -13,7 +13,7 @@ QT       += core gui \
 
 TARGET = "QuNexus Editor"
 TEMPLATE = app
-VERSION = 2.2.0
+VERSION = 2.2.1
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 #uncomment this to build a console version of the app. Do this once before deploying the app.

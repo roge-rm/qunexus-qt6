@@ -277,7 +277,7 @@ MainWindow::MainWindow(QWidget *parent) :
     syncQuNexusDialog->setModal(false);
     connect(syncQuNexusDialog, SIGNAL(signalCloseWindow()), this, SLOT(slotHideGreyRect()));
 
-#ifdef Q_OS_WIN
+#ifndef Q_OS_MAC
 
 #define MENU_BAR_HEIGHT 24
 #define MENU_BAR_OFFSET MENU_BAR_HEIGHT - 6
@@ -2482,7 +2482,7 @@ void MainWindow::slotSetupMenuBar()
 
     //--------------------------------------------------------------- Revert To Factory Presets ---------------------------------------------------------------//
     QAction* revertToFactory = new QAction("Reset Factory Presets to Defaults", file);
-    connect(revertToFactory, SIGNAL(triggered()), presetManager, SLOT(slotResetFactoryPresets()));
+    connect(revertToFactory, SIGNAL(triggered()), this, SLOT(slotResetFactoryPresets()));
     file->addAction(revertToFactory);
 
     file->addSeparator();
@@ -3146,17 +3146,41 @@ void MainWindow::slotLoadPresetSlot(QAction *menuItem)
     slotRequestPreset(thisPreset);
 }
 
+
+void MainWindow::slotResetFactoryPresets()
+{
+    presetManager->presetLoading = true;
+    presetManager->slotRevertSelectedPreset();
+
+    presetManager->slotResetFactoryPresets();
+
+    presetManager->slotRevertSelectedPreset();
+    presetManager->presetLoading = false;
+
+    presetManager->slotLoadLibraryPresetIntoEditBuffer(libraryPresetsList->item(0));
+    libraryPresetsList->setCurrentItem(libraryPresetsList->item(0));
+
+}
+
 void MainWindow::slotHardwareFactoryReset()
 {
+    presetManager->presetLoading = true;
+    presetManager->slotRevertSelectedPreset();
     ui->Globals_On_Thresh->setValue(20);
     ui->Globals_Off_Thresh->setValue(15);
     ui->Globals_On_Thresh->editingFinished();
     ui->Globals_Off_Thresh->editingFinished();
-    //presetManager->slotUpdateKeyOnOffThresholds();
+    presetManager->slotUpdateKeyOnOffThresholds();
 
+    presetManager->presetLoading = false;
     slotResetPerKeySensitivities();
     cvTrimsInterface->slotResetVars();
     presetManager->slotSendFactoryPresetsToQuNexus();
+
+    presetManager->slotRevertSelectedPreset();
+    presetManager->slotLoadLibraryPresetIntoEditBuffer(libraryPresetsList->item(0));
+    libraryPresetsList->setCurrentItem(libraryPresetsList->item(0));
+    presetManager->slotRevertSelectedPreset();
 }
 
 void MainWindow::slotSetLedRefreshMode()

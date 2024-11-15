@@ -455,7 +455,7 @@
     "Keyboard_Global_CV_Clock_3_Mode": "AND",
     "Keyboard_Global_Channel_Rotation_Active": 0,
     "Keyboard_Global_Key_Selection_Criteria": "Latest",
-    "Keyboard_Global_LED_Mode": 0,
+    "Keyboard_Global_LED_Mode": 1,
     "Keyboard_Global_LED_Remote_Channel": 8,
     "Keyboard_Global_Mode": "Off",
     "Keyboard_Global_Pitch_Bend_Range": 2,
