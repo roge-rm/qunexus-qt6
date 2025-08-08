@@ -1,6 +1,6 @@
 #### QuNexus RED Editor and Firmware Changelog
 
-### 2.2.0 (2024-11-10)
+### 2.2.1 (2024-11-10)
 - New Features/Changes:
 	- Added new Arpeggiator Velocity Modulation.
 		- This mode only works when MPE is not enabled
@@ -10,6 +10,8 @@
 		- Added "Factory Reset" to the hardware menu - this resets cv trims, per key sensitivities, globals, and reloads the four factory presets. This also resets Key On and Key Off thresholds to 20/15 defaults (and all presets in library)
 		- Added a "Reset Factory Presets to Defaults" function to the file menu, which will check the library for factory presets and return them to the original defaults
 		- Added a "RESET" button to the CV Trims window. 
+	- Updated factory presets to include proper key sensitivity settings
+	- Fixed Drum Mode preset so that it doesn't disable key LEDs
 - Bug Fixes:
 	- Toggling through arp modes (play, hold, modulation edit) now correctly returns to play mode
 	- Bad CV Trim or LED brightness values are now caught and corrected when the QuNexus powers on
