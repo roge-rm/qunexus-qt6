@@ -41,7 +41,7 @@ lessThan(QT_MAJOR_VERSION, 6){
 versionAtLeast(QT_VERSION, 6.2.1){
     macx{
         message("Building Apple M1/Intel Universal Binary")
-        QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.14
+        QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.15
         QMAKE_APPLE_DEVICE_ARCHS = x86_64 arm64
     }
 }
@@ -256,8 +256,8 @@ isEmpty(DEPLOY) {
 
 
     win32 {
-        package_dir = $$shell_path($$absolute_path("..\\win-build\\packages\\com.musekinetics.qunexuseditor\\data\\$${TARGET}", $$PWD))
-        content_dir = $$shell_path($$absolute_path("..\\win-build\\packages\\com.musekinetics.qunexuseditor\\data\\Content", $$PWD))
+        package_dir = $$shell_path($$absolute_path("..\\win-deploy\\packages\\com.musekinetics.qunexuseditor\\data\\$${TARGET}", $$PWD))
+        content_dir = $$shell_path($$absolute_path("..\\win-deploy\\packages\\com.musekinetics.qunexuseditor\\data\\Content", $$PWD))
         repo_root_dir = $$shell_path($$absolute_path("..", $$PWD))
 
         changelog_src = "$${repo_root_dir}\\CHANGELOG.md"
@@ -274,7 +274,7 @@ isEmpty(DEPLOY) {
 
         path_to_bincreate = C:\\Qt6\\QtIFW-4.6.0\\bin\\binarycreator.exe
         path_to_installerbase = C:\\Qt6\\QtIFW-4.6.0\\bin\\installerbase.exe
-        path_to_install = $$shell_path($$absolute_path("..\\win-build", $$PWD))
+        path_to_install = $$shell_path($$absolute_path("..\\win-deploy", $$PWD))
 
         # Corrected variable assignments without escaped quotes
         app_name = $${TARGET}

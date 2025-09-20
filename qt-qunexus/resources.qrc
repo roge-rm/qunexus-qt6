@@ -61,9 +61,6 @@
         <file>resources/stylesheets/LabelH2Mac.qss</file>
     </qresource>
     <qresource prefix="/firmware"/>
-    <qresource prefix="/versioning">
-        <file>resources/versioning/version.txt</file>
-    </qresource>
     <qresource prefix="/factorypresets">
         <file>resources/factorypresets/Reason Controls.qunexuspreset</file>
         <file>resources/factorypresets/SymphonixEvolution.qunexuspreset</file>
@@ -74,9 +71,6 @@
     </qresource>
     <qresource prefix="/qml">
         <file>source/TableEditor.qml</file>
-    </qresource>
-    <qresource prefix="/help">
-        <file>resources/help.txt</file>
     </qresource>
     <qresource prefix="/">
         <file>resources/images/qunexus_white_trans_logo.png</file>
