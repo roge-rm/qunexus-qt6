@@ -1,2 +1,0 @@
-
-var parameterPage = new Page();

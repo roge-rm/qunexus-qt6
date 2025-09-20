@@ -1,12 +1,12 @@
 [submodule "qt-qunexus/inc/KMI_Ports"]
 	path = qt-qunexus/inc/KMI_Ports
-	url=ssh://git@bitbucket.org/keith-mcmillen-instruments/kmi_ports.git
+	url=ssh://git@github.com:Muse-Kinetics/kmi_ports.git
 [submodule "qt-qunexus/inc/KMI_MIDI_Device_Manager"]
 	path = qt-qunexus/inc/KMI_MIDI_Device_Manager
-	url=ssh://git@bitbucket.org/keith-mcmillen-instruments/kmi_midi_device_manager.git
+	url=ssh://git@github.com:Muse-Kinetics/kmi_midi_device_manager.git
 [submodule "qt-qunexus/inc/rtmidi"]
 	path = qt-qunexus/inc/rtmidi
 	url=https://github.com/thestk/rtmidi.git
 [submodule "qt-qunexus/inc/KMI_Updates"]
 	path = qt-qunexus/inc/KMI_Updates
-	url=ssh://git@bitbucket.org/keith-mcmillen-instruments/kmi_updates.git
+	url=ssh://git@github.com:Muse-Kinetics/kmi_updates.git

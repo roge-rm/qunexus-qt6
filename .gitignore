@@ -56,4 +56,6 @@ compile_commands.json
 *.dmg
 *.app
 *.exe
-/win-build/*.zip
+win-deploy/*.zip
+win-deploy/packages/com.musekinetics.qunexuseditor/data
+Signing\ and\ Notarization/dmg/QuNexus\ Editor
