@@ -21,7 +21,7 @@
 #include "sendpresetsdialog.h"
 #include "syncqunexusdialog.h"
 #include "KMI_FwVersions.h"
-#include "inc/KMI_Updates/kmi_updates.h"
+#include "KMI_updates.h"
 #include <qicon.h>
 
 MainWindow::MainWindow(QWidget *parent) :

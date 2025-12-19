@@ -10,13 +10,13 @@
 #include <QtGlobal>
 
 // midi overhaul
-#include "kmi_ports.h"
+#include "KMI_ports.h"
 #include "KMI_mdm.h"
 #include "RtMidi.h"
 #include "KMI_DevData.h"
 #include <fwupdate.h>
 #include <troubleshoot.h>
-#include "kmi_updates.h"
+#include "KMI_updates.h"
 
 // qunexus
 //#include "qunexusmidi.h" // renamed from mididevicemanager.h for midi overhaul

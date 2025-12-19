@@ -26,23 +26,33 @@ DEPLOY = 1
 INCLUDE_QML = 1
 
 # still holding onto support for High Sierra here, separate build
-
 message("Building with Qt $${QT_VERSION}")
 
 # build with Qt 5.11.3 to support El Capitan, Sierra, and High Sierra
 lessThan(QT_MAJOR_VERSION, 6){
+    message("Building legacy MacOS Intel Binary")
     macx{
-        message("Building legacy MacOS Intel Binary")
         QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.11
     }
 }
 
 # build with Qt 6.2.1 to support Mojave and later
-versionAtLeast(QT_VERSION, 6.2.1){
+versionAtLeast(QT_VERSION, 6.2.1):!versionAtLeast(QT_VERSION, 6.9.0){
     macx{
-        message("Building Apple M1/Intel Universal Binary")
-        QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.15
+        message("Building Apple M1/Intel Universal Binary for macOS 10.14+")
+        QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.14
         QMAKE_APPLE_DEVICE_ARCHS = x86_64 arm64
+    }
+}
+
+# build with Qt 6.9+ for macOS 12.0+ (Qt 6.9.2 requires macOS 12.0)
+versionAtLeast(QT_VERSION, 6.9.0){
+    macx{
+        message("Building Apple M1/Intel Universal Binary for macOS 12.0+")
+        QMAKE_MACOSX_DEPLOYMENT_TARGET = 12.0
+        QMAKE_APPLE_DEVICE_ARCHS = x86_64 arm64
+        QMAKE_LFLAGS += -Wl,-w  # suppress harmless alignment warnings in Universal builds
+        CONFIG+=sdk_no_version_check
     }
 }
 
@@ -61,8 +71,8 @@ SOURCES +=  main.cpp\
     inc/KMI_MIDI_Device_Manager/fwupdate/fwupdate.cpp \
     inc/KMI_MIDI_Device_Manager/KMI_mdm.cpp \
     inc/KMI_MIDI_Device_Manager/troubleshoot/troubleshoot.cpp \
-    inc/KMI_Ports/kmi_ports.cpp \
-    inc/KMI_Updates/kmi_updates.cpp \
+    inc/KMI_MIDI_Device_Manager/KMI_ports.cpp \
+    inc/KMI_MIDI_Device_Manager/KMI_updates.cpp \
     inc/rtmidi/RtMidi.cpp \
             mainwindow.cpp \
             source/datamanagement/presetmanager.cpp \
@@ -81,8 +91,8 @@ HEADERS  += mainwindow.h \
     inc/KMI_MIDI_Device_Manager/KMI_mdm.h \
     inc/KMI_MIDI_Device_Manager/midi.h \
     inc/KMI_MIDI_Device_Manager/troubleshoot/troubleshoot.h \
-    inc/KMI_Ports/kmi_ports.h \
-    inc/KMI_Updates/kmi_updates.h \
+    inc/KMI_MIDI_Device_Manager/KMI_ports.h \
+    inc/KMI_MIDI_Device_Manager/KMI_updates.h \
     inc/rtmidi/RtMidi.h \
             source/datamanagement/presetmanager.h \
             source/datamanagement/presetnamedialog.h \
@@ -117,11 +127,9 @@ CONFIG += qtquickcompiler
 
 INCLUDEPATH += \
     inc/rtmidi \
-    inc/KMI_Ports \
     inc/KMI_MIDI_Device_Manager \
     inc/KMI_MIDI_Device_Manager/fwupdate \
     inc/KMI_MIDI_Device_Manager/troubleshoot \
-    inc/KMI_Updates
 
 #DEFINES += \
 #    MDM_DEBUG_ENABLED # enable deeper deebugging for KMI Midi Device Manager
@@ -226,8 +234,8 @@ DISTFILES += \
 
 # copy SSL DLLs for checking kmi.com for updates
 win32 {
-    LIBCRYPTO_SRC = $$PWD/inc/KMI_Updates/ssl/libcrypto-1_1-x64.dll
-    LIBSSL_SRC = $$PWD/inc/KMI_Updates/ssl/libssl-1_1-x64.dll
+    LIBCRYPTO_SRC = $$PWD/inc/KMI_MIDI_Device_Manager/ssl/libcrypto-1_1-x64.dll
+    LIBSSL_SRC = $$PWD/inc/KMI_MIDI_Device_Manager/ssl/libssl-1_1-x64.dll
 
     LIBCRYPTO_DST = $$replace(LIBCRYPTO_SRC, '/', '\\')
     LIBSSL_DST = $$replace(LIBSSL_SRC, '/', '\\')
