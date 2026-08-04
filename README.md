@@ -12,9 +12,12 @@ The QuNexus Editor is a cross-platform Qt application that provides complete con
 - **Key Sensitivity Configuration**: Individual per-key velocity and pressure settings
 - **CV Trim Controls**: Precise calibration of continuous voltage outputs
 - **Global Settings**: System-wide configuration options
-- **Firmware Updates**: Built-in firmware update capability
+- **Firmware Updates**: Built-in firmware update capability, using a packetized, chunk-safe transfer
+- **Windows MIDI Services (WMS)**: Uses WMS when available, with automatic fallback to WinMM on machines without the WMS runtime installed
 - **Factory Reset Options**: Reset CV trims, key sensitivities, and restore factory presets
 - **Cross-Platform Support**: Native builds for macOS and Windows
+
+Current version: **2.2.2** (Editor), **2.2.1** (Firmware). See [CHANGELOG.md](CHANGELOG.md) for release notes.
 
 ## System Requirements
 
@@ -56,9 +59,7 @@ Download the latest release for your platform from the [Muse Kinetics downloads 
    ```
 
 4. **Windows-specific build steps**:
-   - Additional deployment steps are required for Windows
-   - See the deployment section in the .PRO file for detailed instructions
-   - Ensure proper Qt DLL deployment for distribution
+   - Windows installer creation is handled by `.vscode/make-installer.ps1` (run via the "Deploy QuNexus Windows Installer" VS Code task), not the `.pro` file — it has no deploy-related build steps.
 
 ## Usage
 
@@ -83,11 +84,14 @@ Download the latest release for your platform from the [Muse Kinetics downloads 
 ### Project Structure
 ```
 qt-qunexus/                 # Main application source
-├── resources/              # Application resources
-│   ├── firmware/          # Firmware files
-│   └── images/            # UI graphics and icons
-├── Signing and Notarization/  # macOS code signing scripts
-└── win-build/             # Windows build configurations
+├── inc/                    # Include files
+│   ├── KMI_MIDI_Device_Manager/  # KMI MIDI Device Manager (submodule)
+│   └── rtmidi/              # RtMidi library (submodule)
+└── resources/               # Application resources
+    ├── firmware/             # Firmware files
+    └── images/                # UI graphics and icons
+Signing and Notarization/   # macOS code signing scripts
+win-deploy/                 # Windows installer configuration (QtIFW)
 ```
 
 ### Code Signing (macOS)
@@ -116,7 +120,7 @@ Unless otherwise noted, all contributions are accepted under the MPL-2.0 with th
 // Copyright (c) 2025 KMI Music, Inc.
 // This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
 // If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
-
+```
 
 ## Third-Party Licenses
 

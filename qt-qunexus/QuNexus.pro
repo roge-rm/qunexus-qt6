@@ -13,7 +13,7 @@ QT       += core gui \
 
 TARGET = "QuNexus Editor"
 TEMPLATE = app
-VERSION = 2.2.1
+VERSION = 2.2.2
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 #uncomment this to build a console version of the app. Do this once before deploying the app.
@@ -69,6 +69,8 @@ INCLUDEPATH +=  source \
 SOURCES +=  main.cpp\
     inc/KMI_MIDI_Device_Manager/KMI_SysexMessages.c \
     inc/KMI_MIDI_Device_Manager/fwupdate/fwupdate.cpp \
+    inc/KMI_MIDI_Device_Manager/KMI_fwupdate.cpp \
+    inc/KMI_MIDI_Device_Manager/diagnosticlogger.cpp \
     inc/KMI_MIDI_Device_Manager/KMI_mdm.cpp \
     inc/KMI_MIDI_Device_Manager/troubleshoot/troubleshoot.cpp \
     inc/KMI_MIDI_Device_Manager/KMI_ports.cpp \
@@ -85,6 +87,8 @@ SOURCES +=  main.cpp\
 
 HEADERS  += mainwindow.h \
     inc/KMI_MIDI_Device_Manager/fwupdate/fwupdate.h \
+    inc/KMI_MIDI_Device_Manager/KMI_fwupdate.h \
+    inc/KMI_MIDI_Device_Manager/diagnosticlogger.h \
     inc/KMI_MIDI_Device_Manager/KMI_DevData.h \
     inc/KMI_MIDI_Device_Manager/KMI_FwVersions.h \
     inc/KMI_MIDI_Device_Manager/KMI_SysexMessages.h \
@@ -175,8 +179,47 @@ linux{
 }
 
 win32{
+    WMS_SDK_ROOT = C:/PROGRA~2/WI3CF2~1/10
+
+    WMS_SDK_VERSION = $$replace($$(WindowsSDKVersion), \\\\, /)
+    WMS_SDK_VERSION = $$replace(WMS_SDK_VERSION, /$, )
+    isEmpty(WMS_SDK_VERSION): WMS_SDK_VERSION = 10.0.26100.0
+
+    WMS_CPPWINRT = $${WMS_SDK_ROOT}/Include/$${WMS_SDK_VERSION}/cppwinrt
+    WMS_WINDOWS_WINMD = $${WMS_SDK_ROOT}/UnionMetadata/$${WMS_SDK_VERSION}/Windows.winmd
+    WMS_CPPWINRT_EXE = $${WMS_SDK_ROOT}/bin/$${WMS_SDK_VERSION}/x64/cppwinrt.exe
+    WMS_RUNTIME_WINMD = C:/Program Files/Windows MIDI Services/Desktop App SDK Runtime/Microsoft.Windows.Devices.Midi2.winmd
+    WMS_PROJECTION_DIR = $$OUT_PWD/generated/winrt
+    WMS_PROJECTION_HEADER = $${WMS_PROJECTION_DIR}/winrt/Microsoft.Windows.Devices.Midi2.h
+
+    !exists($$WMS_CPPWINRT): error(Windows SDK cppwinrt headers not found at $$WMS_CPPWINRT)
+    !exists($$WMS_WINDOWS_WINMD): error(Windows.winmd not found at $$WMS_WINDOWS_WINMD)
+    !exists($$WMS_CPPWINRT_EXE): error(cppwinrt.exe not found at $$WMS_CPPWINRT_EXE)
+    !exists($$WMS_RUNTIME_WINMD): error(Windows MIDI Services runtime winmd not found at $$WMS_RUNTIME_WINMD)
+
+    INCLUDEPATH += $$WMS_CPPWINRT $$WMS_PROJECTION_DIR
+    # Both WinMM and WMS compiled in — backend is selected at runtime based on SDK availability.
     DEFINES += __WINDOWS_MM__=1
-        LIBS += -lwinmm
+    DEFINES += __WINDOWS_MIDI_SERVICES__=1
+    LIBS += -lwinmm
+    LIBS += -lole32
+    LIBS += -lruntimeobject
+    LIBS += -lwindowsapp
+
+    wms_projection.target = $$WMS_PROJECTION_HEADER
+    export(wms_projection.target)
+
+    wms_projection.commands = if not exist $$shell_path(\"$$WMS_PROJECTION_DIR\") mkdir $$shell_path(\"$$WMS_PROJECTION_DIR\") $$escape_expand(\n\t) \
+                              $$shell_path(\"$$WMS_CPPWINRT_EXE\") -input $$shell_path(\"$$WMS_RUNTIME_WINMD\") -reference $$shell_path(\"$$WMS_WINDOWS_WINMD\") -output $$shell_path(\"$$WMS_PROJECTION_DIR\")
+    export(wms_projection.commands)
+
+    PRE_TARGETDEPS += $$WMS_PROJECTION_HEADER
+    export(PRE_TARGETDEPS)
+
+    first.depends += $(first) wms_projection
+    export(first.depends)
+
+    QMAKE_EXTRA_TARGETS += first wms_projection
 }
 # end rtmidi defines
 
@@ -251,110 +294,9 @@ win32 {
     }
 }
 
-
-# ********************************************************************************************************
-# NOTE for the deployment process to work you MUST add an additional "make" build step, arguments: deploy
-# ********************************************************************************************************
-
-isEmpty(DEPLOY) {
-    # Define a dummy deploy target that does nothing
-    QMAKE_EXTRA_TARGETS += deploy
-    deploy.commands = @echo "Deploy is disabled"
-} else {
-
-
-    win32 {
-        package_dir = $$shell_path($$absolute_path("..\\win-deploy\\packages\\com.musekinetics.qunexuseditor\\data\\$${TARGET}", $$PWD))
-        content_dir = $$shell_path($$absolute_path("..\\win-deploy\\packages\\com.musekinetics.qunexuseditor\\data\\Content", $$PWD))
-        repo_root_dir = $$shell_path($$absolute_path("..", $$PWD))
-
-        changelog_src = "$${repo_root_dir}\\CHANGELOG.md"
-        content_src = "$${repo_root_dir}\\Content"
-
-        LIBCRYPTO_SRC = $$PWD/inc/KMI_Updates/ssl/libcrypto-1_1-x64.dll
-        LIBSSL_SRC = $$PWD/inc/KMI_Updates/ssl/libssl-1_1-x64.dll
-
-        LIBCRYPTO_DST = $$replace(LIBCRYPTO_SRC, '/', '\\')
-        LIBSSL_DST = $$replace(LIBSSL_SRC, '/', '\\')
-
-        path_to_signtool = C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.22000.0\\x64\\signtool.exe
-        path_to_qtwindeploy = $$[QT_INSTALL_BINS]\\windeployqt.exe
-
-        path_to_bincreate = C:\\Qt6\\QtIFW-4.6.0\\bin\\binarycreator.exe
-        path_to_installerbase = C:\\Qt6\\QtIFW-4.6.0\\bin\\installerbase.exe
-        path_to_install = $$shell_path($$absolute_path("..\\win-deploy", $$PWD))
-
-        # Corrected variable assignments without escaped quotes
-        app_name = $${TARGET}
-        installer_name = \"$$app_name v$$VERSION Windows Installer\"
-        installer_file = \"$$app_name v$$VERSION Windows Installer.exe\"
-
-
-        message("path_to_bincreate is: " $$quote($$path_to_bincreate))
-        message("installer_file is: " $$quote($$installer_file))
-
-        build_subdir = release  # Default to release
-        CONFIG(debug, debug|release): build_subdir = debug
-
-        temp_out_pwd = $$replace(OUT_PWD, "/", "\\")
-        binary_src = "$${temp_out_pwd}\\$${build_subdir}\\$${TARGET}.exe"
-        binary_dest = "$${package_dir}\\$${TARGET}.exe"
-        app_name = $${TARGET}
-
-        debug_src = "$${temp_out_pwd}\\$${build_subdir}\\$${TARGET} (debug console).exe"
-        debug_dest = "$${package_dir}\\$${TARGET} (debug console).exe"
-
-
-
-        deploy_opts = "--compiler-runtime"
-        !isEmpty(INCLUDE_QML) {
-            deploy_opts += " --qmldir \"$$PWD\""
-        }
-
-
-        # Define custom deployment commands after all variables have been defined
-        DEPLOY_COMMANDS = \
-            echo Deploying for Windows && \
-            echo Copying executable to package_dir && \
-            copy /y \"$$binary_src\" \"$$binary_dest\" && \
-            copy /y \"$$debug_src\" \"$$debug_dest\" && \
-            \
-            echo Signing App Executable && \
-            \"$$path_to_signtool\" sign /v /debug /a /tr http://timestamp.digicert.com /td SHA256 /fd certHash \"$$binary_dest\" && \
-            \"$$path_to_signtool\" sign /v /debug /a /tr http://timestamp.digicert.com /td SHA256 /fd certHash \"$$debug_dest\" && \
-            \
-            echo Running qtwindeploy: \"$$package_dir\" && \
-            \"$$path_to_qtwindeploy\" $$deploy_opts --dir \"$$package_dir\" \"$$binary_dest\" && \
-            \
-            echo Copying SSL dlls to package_dir && \
-            copy /y \"$$LIBCRYPTO_DST\" \"$$package_dir\" && \
-            copy /y \"$$LIBSSL_DST\" \"$$package_dir\" && \
-            \
-            echo Clearing content && \
-            (if exist \"$$content_dir\" rmdir /s /q \"$$content_dir\" || echo Directory not found, skipping deletion) && \
-            mkdir \"$$content_dir\" && \
-            \
-            echo Copying content && \
-            Robocopy \"$$content_src\" \"$$content_dir\" /MIR && \
-            echo Robocopy Exit Code: %ERRORLEVEL% & \
-            \
-            echo Copying changelog && \
-            copy /y \"$$changelog_src\" \"$$content_dir\" && \
-            \
-            echo Creating Installer && \
-            cd \"$$path_to_install\" && \
-            \"$$path_to_bincreate\" --verbose --offline-only -c config/config.xml -p packages $$installer_name && \
-            \
-            echo Signing Installer && \
-            \"$$path_to_signtool\" sign /v /debug /a /tr http://timestamp.globalsign.com/tsa/advanced /td SHA256 /fd certHash $$installer_file
-
-        # Define a phony target for deployment
-            QMAKE_EXTRA_TARGETS += deploy
-            deploy.commands = $$DEPLOY_COMMANDS
-            deploy.depends = first  # ensures this runs after the first build
-
-    }
-}
+# Release packaging (signing, windeployqt, installer creation) lives in
+# .vscode/make-installer.ps1, not here — see SoftStep's equivalent .pro
+# (no deploy target at all) for the pattern this follows.
 
 
 

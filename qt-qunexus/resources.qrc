@@ -79,5 +79,7 @@
         <file>presets/QuNexus.json</file>
         <file>presets/QuNexus.json.zip</file>
         <file>resources/firmware/QuNexus_Firmware_v2.2.0.syx</file>
+        <file>resources/firmware/QuNexus_Firmware_v2.2.0-cs512.syx</file>
+        <file>resources/firmware/QuNexus_Firmware_v2.2.1-cs512.syx</file>
     </qresource>
 </RCC>

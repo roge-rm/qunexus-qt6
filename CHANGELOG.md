@@ -1,5 +1,17 @@
 #### QuNexus RED Editor and Firmware Changelog
 
+### Editor 2.2.2, Firmware 2.2.1 (2026-08-04)
+- New Features/Changes:
+	- Migrated to Windows MIDI Services (WMS), with automatic fallback to WinMM on machines without the WMS runtime installed.
+	- Firmware updates now use a packetized, chunk-safe transfer with a per-packet identity handshake instead of sending the whole firmware image as one block.
+	- Updated firmware to 2.2.1: adds a boot-time tare capture for key sensors to reduce stuck-key false triggers, and fixes a bug where a positive per-key sensitivity offset could permanently zero out pressure, bend, aftertouch, and CC output for that key.
+	- The Windows installer now detects an existing installation and offers to remove it before installing, instead of failing with no way forward.
+	- Added Help menu items: "Open Log File Location" (debug console output is now also captured to a log file) and, on Windows, "Install Windows MIDI Services" (links to Microsoft's WMS installer page).
+- Bug Fixes:
+	- Fixed a firmware update over the new packetized transport occasionally being reported as failed even though it completed successfully — the app wasn't waiting for the device's MIDI port to reopen after it reboots from bootloader into application mode.
+	- Fixed the Windows installer bundling a years-stale Visual C++ Redistributable that was never actually installed, which could crash the app on first launch on a machine with no compatible runtime present.
+	- Fixed the Windows installer silently omitting most of its bundled content (manuals, DAW support scripts, SysEx presets, and the app icon), which left the Start Menu shortcut without an icon.
+
 ### 2.2.1 (2024-11-10)
 - New Features/Changes:
 	- Added new Arpeggiator Velocity Modulation.

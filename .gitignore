@@ -60,3 +60,6 @@ win-deploy/*.zip
 win-deploy/packages/com.musekinetics.qunexuseditor/data
 Signing\ and\ Notarization/dmg/QuNexus\ Editor
 qt-qunexus/build
+
+# Agent workspace (never tracked — see SoftStep's decisions.md for what happens if this is added after the fact)
+/.buddy-project/

@@ -22,7 +22,9 @@
 #include "syncqunexusdialog.h"
 #include "KMI_FwVersions.h"
 #include "KMI_updates.h"
+#include "diagnosticlogger.h"
 #include <qicon.h>
+#include <QDir>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -33,6 +35,10 @@ MainWindow::MainWindow(QWidget *parent) :
     QCoreApplication::setApplicationName("QuNexus Editor");
     QCoreApplication::setOrganizationName("Keith McMillen Instruments");
     QCoreApplication::setOrganizationDomain("keithmcmillen.com");
+
+    // Must come after the app-identity calls above (QStandardPaths::AppDataLocation
+    // depends on them) and before any qDebug()/etc. we want captured in the log file.
+    DiagnosticLogger::initialize();
 
     qDebug() << "System Locale: " << QLocale::system().name();
 
@@ -92,8 +98,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QuNexus->fwSaveRestoreGlobals = true; // set flag to preserve globals during fw update
 
+    // Use the packetized (chunked, per-packet identity-request/ACK) firmware transport
+    // instead of the legacy whole-file send. See KMI_mdm.cpp's isPacketizedFirmwareUpdateEnabled().
+    QuNexus->slotSetFirmwareUpdateTransportMode(FW_TRANSPORT_PACKETIZED);
+
     // setup firmware image
-    QString thisFwFile = QString(":/resources/firmware/QuNexus_Firmware_v%1.%2.%3.syx")
+    QString thisFwFile = QString(":/resources/firmware/QuNexus_Firmware_v%1.%2.%3-cs512.syx")
             .arg(uchar(thisFw.at(0)))
             .arg(uchar(thisFw.at(1)))
             .arg(uchar(thisFw.at(2)));
@@ -2755,6 +2765,22 @@ void MainWindow::slotSetupMenuBar()
     connect(doc, SIGNAL(triggered()), this, SLOT(slotOpenDocumentation()));
     help->addAction(doc);
 
+    //Open Log File Location
+    QAction* openLogLocation = new QAction("Open Log File Location", help);
+    connect(openLogLocation, SIGNAL(triggered()), this, SLOT(slotOpenLogDirectory()));
+    help->addAction(openLogLocation);
+
+#ifdef Q_OS_WIN
+    //Windows MIDI Services (WMS) - the Microsoft-provided runtime/SDK, not something we can
+    //bundle an installer for (see ../SOP-WMS-and-Chunked-Firmware-Update-Migration.md). Just
+    //points the user at Microsoft's own "get latest" page.
+    QAction* installWMS = new QAction("Install Windows MIDI Services", help);
+    connect(installWMS, &QAction::triggered, this, []() {
+        QDesktopServices::openUrl(QUrl("https://microsoft.github.io/MIDI/get-latest/"));
+    });
+    help->addAction(installWMS);
+#endif
+
     help->addSeparator();
 
     //Tool tips
@@ -2843,6 +2869,20 @@ void MainWindow::slotOpenDocumentation()
 
     QDesktopServices::openUrl(QUrl(manualURL));
 
+}
+
+void MainWindow::slotOpenLogDirectory()
+{
+    QString logDir = DiagnosticLogger::logDirectoryPath();
+
+    if (logDir.isEmpty())
+    {
+        logDir = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/logs";
+    }
+
+    QDir().mkpath(logDir);
+
+    QDesktopServices::openUrl(QUrl::fromLocalFile(logDir));
 }
 
 void MainWindow::slotSubmitBugReport()

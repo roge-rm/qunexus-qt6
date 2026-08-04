@@ -271,6 +271,7 @@ public slots:
     void    slotSyncQuNexusDialog();
     void    slotOpenAboutScreen();
     void    slotOpenDocumentation();
+    void    slotOpenLogDirectory();
     void    slotSubmitBugReport();
     void    slotOpenTroubleshooting();
     void    slotShowGreyRect();

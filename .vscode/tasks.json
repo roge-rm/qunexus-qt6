@@ -1,0 +1,143 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build QuNexus Editor Debug",
+      "type": "process",
+      "command": "${workspaceFolder}\\.vscode\\run-msvc-qmake-task.cmd",
+      "args": [
+        "..\\QuNexus.pro",
+        "build"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}\\qt-qunexus\\build-QuNexus-Desktop_Qt_6_3_2_MSVC2019_64bit-Debug",
+        "dedicatedTasks": {
+          "label": "$(rocket) Build QuNexus Editor Debug",
+          "detail": "Build the QuNexus Editor debug binary",
+          "groups": [
+            [
+              "QuNexus"
+            ],
+            "Debug"
+          ],
+          "order": 1
+        }
+      },
+      "problemMatcher": [
+        "$msCompile"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Build QuNexus Editor Release",
+      "type": "process",
+      "command": "${workspaceFolder}\\.vscode\\run-msvc-qmake-task.cmd",
+      "args": [
+        "..\\QuNexus.pro",
+        "build",
+        "${workspaceFolder}\\qt-qunexus\\build-QuNexus-Desktop_Qt_6_3_2_MSVC2019_64bit-Release"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "dedicatedTasks": {
+          "label": "$(package) Build QuNexus Editor Release",
+          "detail": "Build the QuNexus Editor release binary",
+          "groups": [
+            [
+              "QuNexus"
+            ],
+            "Release"
+          ],
+          "order": 1
+        }
+      },
+      "problemMatcher": [
+        "$msCompile"
+      ]
+    },
+    {
+      "label": "Clean QuNexus Editor Debug",
+      "type": "process",
+      "command": "${workspaceFolder}\\.vscode\\run-msvc-qmake-task.cmd",
+      "args": [
+        "..\\QuNexus.pro",
+        "clean"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}\\qt-qunexus\\build-QuNexus-Desktop_Qt_6_3_2_MSVC2019_64bit-Debug"
+      },
+      "problemMatcher": [
+        "$msCompile"
+      ]
+    },
+    {
+      "label": "Tail QuNexus Editor Log",
+      "type": "shell",
+      "command": "powershell",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "${workspaceFolder}\\.vscode\\tail-log.ps1",
+        "${env:APPDATA}\\Keith McMillen Instruments\\QuNexus Editor\\logs"
+      ],
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "Make QuNexus Windows Installer",
+      "type": "shell",
+      "command": "powershell",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "${workspaceFolder}\\.vscode\\make-installer.ps1"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Make QuNexus Windows Installer (No Signing)",
+      "type": "shell",
+      "command": "powershell",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "${workspaceFolder}\\.vscode\\make-installer.ps1",
+        "-DisableSigning"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Deploy QuNexus Windows Installer",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "Build QuNexus Editor Release",
+        "Make QuNexus Windows Installer"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Deploy QuNexus Windows Installer (No Signing)",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "Build QuNexus Editor Release",
+        "Make QuNexus Windows Installer (No Signing)"
+      ],
+      "problemMatcher": []
+    }
+  ]
+}

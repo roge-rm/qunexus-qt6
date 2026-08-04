@@ -1,0 +1,19 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch QuNexus Editor",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File \"${workspaceFolder}\\.vscode\\launch-and-tail.ps1\" \"${workspaceFolder}\\qt-qunexus\\build-QuNexus-Desktop_Qt_6_3_2_MSVC2019_64bit-Release\\release\\QuNexus Editor.exe\" \"${workspaceFolder}\" \"${env:APPDATA}\\Keith McMillen Instruments\\QuNexus Editor\\logs\"",
+      "preLaunchTask": "Build QuNexus Editor Release"
+    },
+    {
+      "name": "Launch QuNexus Editor (Force WinMM)",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File \"${workspaceFolder}\\.vscode\\launch-and-tail.ps1\" \"${workspaceFolder}\\qt-qunexus\\build-QuNexus-Desktop_Qt_6_3_2_MSVC2019_64bit-Release\\release\\QuNexus Editor.exe\" \"${workspaceFolder}\" \"${env:APPDATA}\\Keith McMillen Instruments\\QuNexus Editor\\logs\" -MidiBackend winmm",
+      "preLaunchTask": "Build QuNexus Editor Release"
+    }
+  ]
+}

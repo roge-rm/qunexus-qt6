@@ -1,0 +1,97 @@
+{
+  "version": 4,
+  "configurations": [
+    {
+      "name": "Mac",
+      "intelliSenseMode": "macos-clang-arm64",
+      "compilerPath": "/usr/bin/clang++",
+      "cStandard": "c17",
+      "cppStandard": "c++17",
+      "defines": [
+        "APP_VERSION=\"2.2.2\"",
+        "__MACOSX_CORE__=1",
+        "QT_CORE_LIB",
+        "QT_GUI_LIB",
+        "QT_WIDGETS_LIB",
+        "QT_QML_LIB",
+        "QT_QUICK_LIB",
+        "QT_QUICKWIDGETS_LIB",
+        "QT_NETWORK_LIB"
+      ],
+      "includePath": [
+        "${workspaceFolder}/qt-qunexus",
+        "${workspaceFolder}/qt-qunexus/source",
+        "${workspaceFolder}/qt-qunexus/source/datamanagement",
+        "${workspaceFolder}/qt-qunexus/source/midiio",
+        "${workspaceFolder}/qt-qunexus/inc/rtmidi",
+        "${workspaceFolder}/qt-qunexus/inc/KMI_MIDI_Device_Manager",
+        "${workspaceFolder}/qt-qunexus/inc/KMI_MIDI_Device_Manager/fwupdate",
+        "${workspaceFolder}/qt-qunexus/inc/KMI_MIDI_Device_Manager/troubleshoot",
+        "${workspaceFolder}/qt-qunexus/build/Qt_6_9_2_for_macOS-Release"
+      ],
+      "browse": {
+        "path": [
+          "${workspaceFolder}/qt-qunexus"
+        ],
+        "limitSymbolsToIncludedHeaders": true
+      }
+    },
+    {
+      "name": "Win32 Qt 6.3.2 MSVC2019",
+      "intelliSenseMode": "windows-msvc-x64",
+      "compilerPath": "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.27.29110/bin/Hostx64/x64/cl.exe",
+      "cStandard": "c17",
+      "cppStandard": "c++17",
+      "defines": [
+        "UNICODE",
+        "_UNICODE",
+        "WIN32",
+        "WIN64",
+        "APP_VERSION=\"2.2.2\"",
+        "__WINDOWS_MM__=1",
+        "__WINDOWS_MIDI_SERVICES__=1",
+        "QT_QUICKWIDGETS_LIB",
+        "QT_WIDGETS_LIB",
+        "QT_QUICK_LIB",
+        "QT_OPENGL_LIB",
+        "QT_GUI_LIB",
+        "QT_QMLMODELS_LIB",
+        "QT_QML_LIB",
+        "QT_QMLINTEGRATION_LIB",
+        "QT_NETWORK_LIB",
+        "QT_CORE_LIB"
+      ],
+      "includePath": [
+        "${workspaceFolder}/qt-qunexus",
+        "${workspaceFolder}/qt-qunexus/source",
+        "${workspaceFolder}/qt-qunexus/source/datamanagement",
+        "${workspaceFolder}/qt-qunexus/source/midiio",
+        "${workspaceFolder}/qt-qunexus/inc/rtmidi",
+        "${workspaceFolder}/qt-qunexus/inc/KMI_MIDI_Device_Manager",
+        "${workspaceFolder}/qt-qunexus/inc/KMI_MIDI_Device_Manager/fwupdate",
+        "${workspaceFolder}/qt-qunexus/inc/KMI_MIDI_Device_Manager/troubleshoot",
+        "${workspaceFolder}/qt-qunexus/build-QuNexus-Desktop_Qt_6_3_2_MSVC2019_64bit-Debug",
+        "C:/Qt6/6.3.2/msvc2019_64/include",
+        "C:/Qt6/6.3.2/msvc2019_64/include/QtCore",
+        "C:/Qt6/6.3.2/msvc2019_64/include/QtGui",
+        "C:/Qt6/6.3.2/msvc2019_64/include/QtWidgets",
+        "C:/Qt6/6.3.2/msvc2019_64/include/QtQml",
+        "C:/Qt6/6.3.2/msvc2019_64/include/QtQmlIntegration",
+        "C:/Qt6/6.3.2/msvc2019_64/include/QtQmlModels",
+        "C:/Qt6/6.3.2/msvc2019_64/include/QtQuick",
+        "C:/Qt6/6.3.2/msvc2019_64/include/QtQuickWidgets",
+        "C:/Qt6/6.3.2/msvc2019_64/include/QtNetwork",
+        "C:/Qt6/6.3.2/msvc2019_64/include/QtOpenGL",
+        "C:/Qt6/6.3.2/msvc2019_64/mkspecs/win32-msvc"
+      ],
+      "browse": {
+        "path": [
+          "${workspaceFolder}/qt-qunexus",
+          "C:/Qt6/6.3.2/msvc2019_64/include",
+          "C:/Qt6/6.3.2/msvc2019_64/mkspecs/win32-msvc"
+        ],
+        "limitSymbolsToIncludedHeaders": true
+      }
+    }
+  ]
+}

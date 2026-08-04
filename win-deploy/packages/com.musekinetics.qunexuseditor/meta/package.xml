@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Package>
+    	<DisplayName>QuNexus Editor</DisplayName>
+    	<Description>The Windows editor for the QuNexus controller. Includes DAW scripts and other content.</Description>
+    	<Version>2.2.2</Version>
+    	<Default>true</Default>    
+    	<ReleaseDate>2024-02-24</ReleaseDate>
+	<Script>installscript.qs</Script>
+</Package>
