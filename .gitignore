@@ -63,3 +63,6 @@ qt-qunexus/build
 
 # Agent workspace (never tracked — see SoftStep's decisions.md for what happens if this is added after the fact)
 /.buddy-project/
+
+# macOS VS Code build output
+build-macos-*/

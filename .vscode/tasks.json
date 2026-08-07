@@ -2,7 +2,7 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Build QuNexus Editor Debug",
+      "label": "QuNexus Win Build (Debug)",
       "type": "process",
       "command": "${workspaceFolder}\\.vscode\\run-msvc-qmake-task.cmd",
       "args": [
@@ -27,12 +27,11 @@
         "$msCompile"
       ],
       "group": {
-        "kind": "build",
-        "isDefault": true
+        "kind": "build"
       }
     },
     {
-      "label": "Build QuNexus Editor Release",
+      "label": "QuNexus Win Build",
       "type": "process",
       "command": "${workspaceFolder}\\.vscode\\run-msvc-qmake-task.cmd",
       "args": [
@@ -59,7 +58,7 @@
       ]
     },
     {
-      "label": "Clean QuNexus Editor Debug",
+      "label": "QuNexus Win Clean",
       "type": "process",
       "command": "${workspaceFolder}\\.vscode\\run-msvc-qmake-task.cmd",
       "args": [
@@ -74,7 +73,7 @@
       ]
     },
     {
-      "label": "Tail QuNexus Editor Log",
+      "label": "QuNexus Win Tail Log",
       "type": "shell",
       "command": "powershell",
       "args": [
@@ -89,7 +88,7 @@
       "problemMatcher": []
     },
     {
-      "label": "Make QuNexus Windows Installer",
+      "label": "QuNexus Win Installer",
       "type": "shell",
       "command": "powershell",
       "args": [
@@ -105,7 +104,7 @@
       "problemMatcher": []
     },
     {
-      "label": "Make QuNexus Windows Installer (No Signing)",
+      "label": "QuNexus Win Installer (No Signing)",
       "type": "shell",
       "command": "powershell",
       "args": [
@@ -122,21 +121,133 @@
       "problemMatcher": []
     },
     {
-      "label": "Deploy QuNexus Windows Installer",
+      "label": "QuNexus Win Deploy",
       "dependsOrder": "sequence",
       "dependsOn": [
-        "Build QuNexus Editor Release",
-        "Make QuNexus Windows Installer"
+        "QuNexus Win Build",
+        "QuNexus Win Installer"
       ],
       "problemMatcher": []
     },
     {
-      "label": "Deploy QuNexus Windows Installer (No Signing)",
+      "label": "QuNexus Win Deploy (No Signing)",
       "dependsOrder": "sequence",
       "dependsOn": [
-        "Build QuNexus Editor Release",
-        "Make QuNexus Windows Installer (No Signing)"
+        "QuNexus Win Build",
+        "QuNexus Win Installer (No Signing)"
       ],
+      "problemMatcher": []
+    },
+    {
+      "label": "QuNexus Mac Build",
+      "type": "process",
+      "command": "${workspaceFolder}/.vscode/run-qmake-task.sh",
+      "args": [
+        "${workspaceFolder}/qt-qunexus/QuNexus.pro",
+        "build",
+        "${workspaceFolder}/build-macos-release",
+        "CONFIG+=release"
+      ],
+      "problemMatcher": [
+        "$gcc"
+      ],
+      "group": "build"
+    },
+    {
+      "label": "QuNexus Mac Build (Debug)",
+      "type": "process",
+      "command": "${workspaceFolder}/.vscode/run-qmake-task.sh",
+      "args": [
+        "${workspaceFolder}/qt-qunexus/QuNexus.pro",
+        "build",
+        "${workspaceFolder}/build-macos-debug",
+        "CONFIG+=debug"
+      ],
+      "problemMatcher": [
+        "$gcc"
+      ],
+      "group": "build"
+    },
+    {
+      "label": "QuNexus Mac Clean",
+      "type": "process",
+      "command": "${workspaceFolder}/.vscode/run-qmake-task.sh",
+      "args": [
+        "${workspaceFolder}/qt-qunexus/QuNexus.pro",
+        "clean",
+        "${workspaceFolder}/build-macos-release"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "QuNexus Mac Launch (Console)",
+      "type": "shell",
+      "command": "${workspaceFolder}/.vscode/launch-on-console.sh",
+      "args": [
+        "${workspaceFolder}/build-macos-release/QuNexus Editor.app/Contents/MacOS/QuNexus Editor"
+      ],
+      "dependsOn": [
+        "QuNexus Mac Build"
+      ],
+      "dependsOrder": "sequence",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true,
+        "clear": true
+      }
+    },
+    {
+      "label": "QuNexus Mac Make DMG",
+      "type": "shell",
+      "command": "${workspaceFolder}/.vscode/make-dmg-mac.sh",
+      "args": [
+        "QuNexus Editor",
+        "${workspaceFolder}/build-macos-release/QuNexus Editor.app"
+      ],
+      "options": {
+        "env": {
+          "KMI_VERSION_PRO": "${workspaceFolder}/qt-qunexus/QuNexus.pro",
+          "KMI_QMLDIR": "${workspaceFolder}/qt-qunexus"
+        }
+      },
+      "dependsOn": [
+        "QuNexus Mac Build"
+      ],
+      "dependsOrder": "sequence",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true,
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "QuNexus Mac Deploy",
+      "type": "shell",
+      "command": "${workspaceFolder}/.vscode/release-github-mac.sh",
+      "args": [
+        "Muse-Kinetics/qunexus-qt6",
+        "QuNexus Editor",
+        "${workspaceFolder}/build-macos-release/QuNexus Editor.app"
+      ],
+      "options": {
+        "env": {
+          "KMI_VERSION_PRO": "${workspaceFolder}/qt-qunexus/QuNexus.pro"
+        }
+      },
+      "dependsOn": [
+        "QuNexus Mac Make DMG"
+      ],
+      "dependsOrder": "sequence",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true,
+        "clear": true
+      },
       "problemMatcher": []
     }
   ]

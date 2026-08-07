@@ -2,18 +2,36 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Launch QuNexus Editor",
+      "name": "QuNexus Win Launch",
       "type": "node-terminal",
       "request": "launch",
       "command": "powershell -NoProfile -ExecutionPolicy Bypass -File \"${workspaceFolder}\\.vscode\\launch-and-tail.ps1\" \"${workspaceFolder}\\qt-qunexus\\build-QuNexus-Desktop_Qt_6_3_2_MSVC2019_64bit-Release\\release\\QuNexus Editor.exe\" \"${workspaceFolder}\" \"${env:APPDATA}\\Keith McMillen Instruments\\QuNexus Editor\\logs\"",
-      "preLaunchTask": "Build QuNexus Editor Release"
+      "preLaunchTask": "QuNexus Win Build"
     },
     {
-      "name": "Launch QuNexus Editor (Force WinMM)",
+      "name": "QuNexus Win Launch (Force WinMM)",
       "type": "node-terminal",
       "request": "launch",
       "command": "powershell -NoProfile -ExecutionPolicy Bypass -File \"${workspaceFolder}\\.vscode\\launch-and-tail.ps1\" \"${workspaceFolder}\\qt-qunexus\\build-QuNexus-Desktop_Qt_6_3_2_MSVC2019_64bit-Release\\release\\QuNexus Editor.exe\" \"${workspaceFolder}\" \"${env:APPDATA}\\Keith McMillen Instruments\\QuNexus Editor\\logs\" -MidiBackend winmm",
-      "preLaunchTask": "Build QuNexus Editor Release"
+      "preLaunchTask": "QuNexus Win Build"
+    },
+    {
+      "name": "QuNexus Mac Launch (Console)",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "\"${workspaceFolder}/.vscode/launch-on-console.sh\" \"${workspaceFolder}/build-macos-release/QuNexus Editor.app/Contents/MacOS/QuNexus Editor\"",
+      "preLaunchTask": "QuNexus Mac Build"
+    },
+    {
+      "name": "QuNexus Mac Debug (lldb)",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build-macos-release/QuNexus Editor.app/Contents/MacOS/QuNexus Editor",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "MIMode": "lldb",
+      "preLaunchTask": "QuNexus Mac Build"
     }
   ]
 }
