@@ -1961,7 +1961,7 @@ void PresetManager::slotImportPreset()
 
     const QString DEFAULT_DIR_KEY("default_dir");
 
-    filename = QFileDialog::getOpenFileName(this, tr("Import Preset"), settings.value(DEFAULT_DIR_KEY).toString(),tr("QuNexus Preset Files (*.qunexuspreset)"));
+    filename = QFileDialog::getOpenFileName(this, tr("Import Preset"), settings.value(DEFAULT_DIR_KEY).toString(),tr("QuNexus Preset Files (*.qunexuspreset)"), nullptr, QFileDialog::DontUseNativeDialog);
 
     if(!filename.isEmpty() && !filename.isNull())
     {
@@ -2188,7 +2188,7 @@ void PresetManager::slotExportPreset()
     //Set path and filename (default filename is Preset_Name
     QString filename = QFileDialog::getSaveFileName(this, tr("Save Preset"),
                                                     settings.value(DEFAULT_DIR_KEY).toString().append(editBufferPresetMap.value("Preset_Name").toString()),
-                                                    tr("QuNexus Preset Files (*.qunexuspreset)"));
+                                                    tr("QuNexus Preset Files (*.qunexuspreset)"), nullptr, QFileDialog::DontUseNativeDialog);
     if(!filename.isEmpty() && !filename.isNull())
     {
         // store this file location for the next time we open/save a file
