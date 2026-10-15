@@ -66,3 +66,7 @@ qt-qunexus/build
 
 # macOS VS Code build output
 build-macos-*/
+
+# Linux build and deb staging
+/build/
+!linux-deploy/build-deb.sh

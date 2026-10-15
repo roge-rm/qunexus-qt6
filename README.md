@@ -15,7 +15,7 @@ The QuNexus Editor is a cross-platform Qt application that provides complete con
 - **Firmware Updates**: Built-in firmware update capability, using a packetized, chunk-safe transfer
 - **Windows MIDI Services (WMS)**: Uses WMS when available, with automatic fallback to WinMM on machines without the WMS runtime installed
 - **Factory Reset Options**: Reset CV trims, key sensitivities, and restore factory presets
-- **Cross-Platform Support**: Native builds for macOS and Windows
+- **Cross-Platform Support**: Native builds for macOS, Windows and Linux
 
 Current version: **2.2.2** (Editor), **2.2.1** (Firmware). See [CHANGELOG.md](CHANGELOG.md) for release notes.
 
@@ -60,6 +60,27 @@ Download the latest release for your platform from the [Muse Kinetics downloads 
 
 4. **Windows-specific build steps**:
    - Windows installer creation is handled by `.vscode/make-installer.ps1` (run via the "Deploy QuNexus Windows Installer" VS Code task), not the `.pro` file — it has no deploy-related build steps.
+
+### Linux
+
+On Debian 13 (trixie), install the build packages:
+
+```bash
+sudo apt install build-essential qmake6 qt6-base-dev qt6-declarative-dev qt6-declarative-dev-tools libasound2-dev
+```
+
+Then build it and make a `.deb`:
+
+```bash
+git clone --recurse-submodules -b linux https://github.com/roge-rm/qunexus-qt6.git
+cd qunexus-qt6
+linux-deploy/build-deb.sh
+sudo apt install ./build/qunexus-editor_*.deb
+```
+
+On other distros, install Qt 6 (base and declarative) and the ALSA headers, then build with `qmake6` and `make` in a `build` folder.
+
+The editor talks to the QuNexus through the ALSA sequencer. If it says it couldn't open MIDI, run `sudo modprobe snd-seq`.
 
 ## Usage
 

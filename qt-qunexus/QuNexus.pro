@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui \
+            network \
             #declarative \
             widgets \
             qml \
@@ -146,9 +147,6 @@ macx{
     LIBS += -framework CoreFoundation
 }
 
-linux{
-    DEFINES += __LINUX_ALSA__
-}
 
 #ios{
 #    DEFINES += TARGET_OS_IPHONE=1
@@ -174,7 +172,7 @@ linux{
 
 
 linux{
-    DEFINES += define __LINUX_ALSA__=1
+    DEFINES += __LINUX_ALSA__=1
     LIBS += -lasound
 }
 

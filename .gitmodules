@@ -1,6 +1,6 @@
 [submodule "qt-qunexus/inc/KMI_MIDI_Device_Manager"]
 	path = qt-qunexus/inc/KMI_MIDI_Device_Manager
-	url = git@github.com:Muse-Kinetics/kmi_midi_device_manager.git
+	url = https://github.com/Muse-Kinetics/kmi_midi_device_manager.git
 [submodule "qt-qunexus/inc/rtmidi"]
 	path = qt-qunexus/inc/rtmidi
-	url = git@github.com:Muse-Kinetics/rtmidi.git
+	url = https://github.com/Muse-Kinetics/rtmidi.git

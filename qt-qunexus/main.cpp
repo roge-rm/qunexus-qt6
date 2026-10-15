@@ -6,6 +6,9 @@
 #include <QFontDatabase>
 #include <QQmlApplicationEngine>
 #include <QSettings>
+#include <QMessageBox>
+#include <memory>
+#include "RtMidi.h"
 
 int main(int argc, char *argv[])
 {
@@ -46,6 +49,10 @@ int main(int argc, char *argv[])
 //#endif
 
     QApplication a(argc, argv);
+#ifdef Q_OS_LINUX
+    // matches qunexus-editor.desktop so Wayland docks show the right icon
+    a.setDesktopFileName("qunexus-editor");
+#endif
 
     // this sets the correct OpenGL api depending on which version of Qt we are using
 #if QT_VERSION >= 0x060000
@@ -57,7 +64,20 @@ int main(int argc, char *argv[])
     //QQmlApplicationEngine engine;
     //engine.load(QUrl(QStringLiteral("qrc:/qml/source/TableEditor.qml")));
 
-    MainWindow w;
+    // RtMidi throws if the MIDI system can't be opened, e.g. Linux without /dev/snd/seq
+    std::unique_ptr<MainWindow> mw;
+    try {
+        mw = std::make_unique<MainWindow>();
+    } catch (RtMidiError &e) {
+        QMessageBox::critical(nullptr, "QuNexus Editor",
+            QString("Couldn't open MIDI: %1").arg(QString::fromStdString(e.getMessage()))
+#ifdef Q_OS_LINUX
+            + "\n\nCheck that the ALSA sequencer is loaded (sudo modprobe snd-seq)."
+#endif
+        );
+        return 1;
+    }
+    MainWindow &w = *mw;
     //w.resize(800, 600);
     w.setWindowTitle("QuNexus Editor");
 
