@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Builds build/qunexus-editor_<version>-1_<arch>.deb. Set NO_BUILD=1 to reuse an existing build.
+# Builds build/qunexus-editor_<version>-<DEB_REVISION>_<arch>.deb (revision defaults to 2). Set NO_BUILD=1 to reuse an existing build.
+# For a cross build set DEB_ARCH, BUILD_DIR, QMAKE and STRIP (see build-deb-arm64.sh).
 set -euo pipefail
 
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -8,24 +9,28 @@ cd "$root"
 pkg=qunexus-editor
 upstream=$(sed -n 's/^VERSION *= *\([0-9][0-9.]*\).*/\1/p' qt-qunexus/QuNexus.pro | head -n1)
 [ -n "$upstream" ] || { echo "No VERSION found in QuNexus.pro" >&2; exit 1; }
-version="$upstream-1"
-arch=$(dpkg --print-architecture)
+version="$upstream-${DEB_REVISION:-2}"
+arch="${DEB_ARCH:-$(dpkg --print-architecture)}"
+bdir="${BUILD_DIR:-build}"
+qmake="${QMAKE:-qmake6}"
+strip="${STRIP:-strip}"
+jobs="${JOBS:-$(nproc)}"
 maint="${MAINTAINER:-Dan <dan@hunke.ws>}"
 name="${pkg}_${version}_${arch}"
 stage="$root/build/deb/$name"
 deb="$root/build/$name.deb"
 
 if [ "${NO_BUILD:-0}" != 1 ]; then
-    mkdir -p build
-    (cd build && qmake6 ../qt-qunexus/QuNexus.pro CONFIG+=release && make -j"$(nproc)")
+    mkdir -p "$bdir"
+    (cd "$bdir" && "$qmake" "$root/qt-qunexus/QuNexus.pro" CONFIG+=release && make -j"$jobs")
 fi
-[ -f "build/QuNexus Editor" ] || { echo "build/QuNexus Editor not found" >&2; exit 1; }
+[ -f "$bdir/QuNexus Editor" ] || { echo "$bdir/QuNexus Editor not found" >&2; exit 1; }
 
 rm -rf "$stage"
 install -d -m 0755 "$stage/DEBIAN" "$stage/usr/bin" "$stage/usr/share/applications" \
     "$stage/usr/share/icons/hicolor/256x256/apps" "$stage/usr/share/doc/$pkg"
 
-install -m 0755 -s "build/QuNexus Editor" "$stage/usr/bin/$pkg"
+install -m 0755 -s --strip-program="$strip" "$bdir/QuNexus Editor" "$stage/usr/bin/$pkg"
 install -m 0644 qt-qunexus/resources/images/quNexusIcon-9.png \
     "$stage/usr/share/icons/hicolor/256x256/apps/$pkg.png"
 
@@ -76,7 +81,7 @@ sd="$root/build/shlibdeps"
 rm -rf "$sd"
 mkdir -p "$sd/debian"
 printf 'Source: %s\n\nPackage: %s\nArchitecture: any\n' "$pkg" "$pkg" > "$sd/debian/control"
-shlibs=$(cd "$sd" && dpkg-shlibdeps -O -e"$stage/usr/bin/$pkg" | sed -n 's/^shlibs:Depends=//p')
+shlibs=$(cd "$sd" && DEB_HOST_ARCH="$arch" dpkg-shlibdeps -O -e"$stage/usr/bin/$pkg" | sed -n 's/^shlibs:Depends=//p')
 rm -rf "$sd"
 [ -n "$shlibs" ] || { echo "dpkg-shlibdeps found no dependencies" >&2; exit 1; }
 # QML modules are loaded at run time, so shlibdeps can't see them

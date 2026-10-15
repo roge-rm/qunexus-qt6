@@ -70,3 +70,4 @@ build-macos-*/
 # Linux build and deb staging
 /build/
 !linux-deploy/build-deb.sh
+!linux-deploy/build-deb-arm64.sh
