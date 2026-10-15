@@ -18,6 +18,8 @@ sudo apt update
 sudo apt install qunexus-editor
 ```
 
+Or download the `.deb` for your machine from the [latest release](https://github.com/roge-rm/qunexus-qt6/releases/latest) and install it with `sudo apt install ./qunexus-editor_*.deb`.
+
 It shows up in your menu as QuNexus Editor, or run `qunexus-editor`. The manual, firmware files and DAW support files go in `/usr/share/doc/qunexus-editor`.
 
 Plug in the QuNexus and it connects by itself. The editor uses the ALSA sequencer, so if it says it couldn't open MIDI, run `sudo modprobe snd-seq`.
